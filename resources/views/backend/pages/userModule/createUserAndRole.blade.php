@@ -17,6 +17,7 @@
       <div class="col-md-7">
             <div class="tile">
               <div class="tile-body">
+{{-- {{Auth::user()->getPermissionsViaRoles('name')}} --}}
                 <div class="table-responsive">
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
@@ -35,8 +36,11 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->mobile}}</td>
                             <td>{{$user->email}}</td>
-                            <td>{{'user->role'}}</td>
-
+                            <td>
+                                @foreach ($user->roles as $role)
+                                    {{$role->name}}
+                                @endforeach
+                            </td>
                           </tr>
                       @endforeach
 
@@ -109,7 +113,7 @@
                   <div class="tile-footer">
                         <div class="row">
                           <div class="col-md-12 col-sm-12">
-                            <button class="btn btn-primary" type="submit" id='submit'  style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+                            <button class="btn btn-primary" type="submit" id="submit" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                           </div>
                         </div>
                     </div>
@@ -126,12 +130,12 @@
       <script type="text/javascript" src="{{ asset('admin/js/plugins/bootstrap-datepicker.min.js') }}"></script>
 
       <script>
-        //   $('#demoSelect').select2();
-        //   $('#demoDate').datepicker({
-        //     format: "dd/mm/yyyy",
-        //     autoclose: true,
-        //     todayHighlight: true
-        // });
+          $('#demoSelect').select2();
+          $('#demoDate').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true
+        });
 
 
         $(document).ready(function () {
@@ -142,8 +146,6 @@
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     },
                 });
-
-
                 jQuery.ajax({
                     method: 'post',
                     url: "{{ url('/add/userAndRole') }}",
@@ -157,27 +159,22 @@
                     address: $('#address').val(),
                     },
                     success: function(result){
-console.log(result);
-                        swal({
-                        title: result.message,
-                        type: "success",
-                        confirmButtonText: "Ok !",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    }, function(isConfirm) {
-                        if (isConfirm) {
-                            window.location.reload();
-                        }
-                    });
-
+                    console.log(result);
+                    if(result.errors){
+                        $( "div" ).remove( ".text-danger" );
+                            for (err in result.errors) {
+                            $('<div>'+result.errors[err]+'</div>').insertAfter('#'+err).addClass('text-danger').attr('id','error');
+                            console.log(err);
+                            }
+                    }
                 }, error: function(xhr, status, error){
-         var errorMessage = xhr.status + ': ' + xhr.statusText
-         alert('Error - ' + errorMessage);
-     }
-                });
-
-            });
+                    var errorMessage = xhr.status + ': ' + xhr.statusText
+                    alert('Error - ' + errorMessage);
+            }
         });
+
+    });
+});
       </script>
     @endsection
 

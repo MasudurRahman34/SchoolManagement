@@ -4,6 +4,7 @@
     <script src="{{ asset('admin/js/main.js') }} "></script>
     <script src="{{ asset('admin/js/plugins/pace.min.js') }} "></script>
     <script src="{{ asset('admin/js/plugins/sweetalert.min.js') }} "></script>
+    <script src="{{ asset('admin/js/plugins/bootstrap-notify.min.js') }} "></script>
 
 
    <!-- <script src="{{ asset('admin/js/plugins/fakeLoader.min.js') }}" ></script> -->

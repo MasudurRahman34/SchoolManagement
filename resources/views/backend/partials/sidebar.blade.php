@@ -1,9 +1,9 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
         <div>
-          {{-- <p class="app-sidebar__user-name">{{Auth::user()->name}} --}}
+          <p class="app-sidebar__user-name">{{Auth::user()->name}}
         </p>
-          <p class="app-sidebar__user-designation">Admin</p>
+          <p class="app-sidebar__user-designation">{{Auth::user()->mobile}}</p>
         </div>
       </div>
       <ul class="app-menu">
@@ -13,10 +13,13 @@
               <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i>ALL User</a></li>
               <li><a class="treeview-item" href="createSchoolBranch"><i class="icon fa fa-circle-o"></i>Add School Branch</a></li>
               <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i>User & Password</a></li>
-            <li><a class="treeview-item" href="{{route('createUserAndRole')}}"><i class="icon fa fa-circle-o"></i>User & Role</a></li>
+                <li><a class="treeview-item" href="{{route('createUserAndRole')}}"><i class="icon fa fa-circle-o"></i>User & Role</a></li>
               <li><a class="treeview-item" href="{{route('createRole')}}"><i class="icon fa fa-circle-o"></i>Role & Permission</a></li>
-              <li><a class="treeview-item" href="{{route('createPermission')}}"><i class="icon fa fa-circle-o"></i>All Permission</a></li>
+              @can('User Management')
+                <li><a class="treeview-item" href="{{route('createPermission')}}"><i class="icon fa fa-circle-o"></i>All Permission</a></li>
+                @endcan
               <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"> All Classes</i></a></li>
+
             </ul>
           </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Classes</span><i class="treeview-indicator fa fa-angle-right"></i></a>

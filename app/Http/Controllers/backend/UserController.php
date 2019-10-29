@@ -40,20 +40,10 @@ class UserController extends Controller
     }
     public function addUserAndRole(Request $request)
     {
-
-        $rules = [
-            'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
-            'name'=>'required', 'string', 'max:255',
-            'mobile'=>'required', 'string', 'max:255',
-            'designation'=>'string', 'max:255',
-            'joinDate'=>'string',  'max:255',
-            'address'=>'required', 'string',  'max:255',
-
-        ];
-        $validator= Validator::make($request->all(), $rules);
+        $validator= Validator::make($request->all(), User::$rules);
         if ($validator->fails()) {
-            return response()->json([$validator->errors(), 400]);
-        }
+            return response()->json(["errors"=>$validator->errors(), 400]);
+        }else{
             $password=mt_rand(100000,999999);
 
             $user=new User;
@@ -68,6 +58,7 @@ class UserController extends Controller
             $user->password=Hash::make($password);
             $user->readablePassword=$password;
             $user->save();
+            $user->assignRole($request->role);
 
             return response()->json([
                 "user"=>$request,
@@ -75,7 +66,7 @@ class UserController extends Controller
                 "password"=>$password,
                 200
             ]);
-
+        }
 
 
     }

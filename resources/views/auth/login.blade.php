@@ -26,8 +26,8 @@
 
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-graduation-cap"></i> SIGN IN</h3>
           <div class="form-group">
-            <label class="control-label">Email</label>
-            <input id="email" class="form-control" type="text" placeholder="Enter Email" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            <label class="control-label">Email Or Mobile Number</label>
+            <input id="email" class="form-control" type="text" placeholder="Enter Email Or Mobile Number" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
             @error('email')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
