@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\model\schoolBranch;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -47,6 +48,10 @@ class User extends Authenticatable
         'address'=>'required', 'string',  'max:255',
 
     ];
+
+    public function schoolBranch(){
+        return $this->belongsTo(schoolBranch::class);
+    }
 
 
 }

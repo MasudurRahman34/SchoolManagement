@@ -52,8 +52,7 @@
           </div>
           <div class="col-md-5">
                 <div class="tile">
-                 <form class="form-horizontal ml-5" style="font-size: 1rem;
-                        font-weight: 400;" method="post" action="{{ url('/add/userAndRole') }}">
+                 <form class="form-horizontal ml-5" style="" method="post" action="{{ url('/add/userAndRole') }}">
                         @csrf
                   <h3 class="tile-title border-bottom p-2">Add New User</h3>
                   <div class="tile-body">

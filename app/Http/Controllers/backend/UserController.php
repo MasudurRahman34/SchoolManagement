@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use Validator;
+use PDF;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -38,7 +40,9 @@ class UserController extends Controller
 
         return view('backend.pages.userModule.createUserAndRole')->with('Users', $Users)->with('roles', $roles);
     }
+
     public function addUserAndRole(Request $request)
+
     {
         $validator= Validator::make($request->all(), User::$rules);
         if ($validator->fails()) {
@@ -72,16 +76,12 @@ class UserController extends Controller
     }
 
 
-    public function createSchoolBranch()
-    {
-
-        return view('backend.pages.userModule.createSchoolBranch');
-    }
     public function createPermission()
     {
+        $roles=Role::all();
         $prms=Permission::all();
 
-        return view('backend.pages.userModule.createPermission')->with('prms', $prms);
+        return view('backend.pages.userModule.createPermission')->with('prms', $prms)->with('roles', $roles);
     }
 
     public function addPermission(Request $request)
@@ -89,6 +89,7 @@ class UserController extends Controller
         $prm= new Permission();
         $prm->name=$request->permissionName;
         $prm->save();
+        $prm->syncRoles($request->role);
         return response()->json([
             "data"=>$prm,
             "message" => "Success",
@@ -117,37 +118,52 @@ class UserController extends Controller
         ]);
     }
 
+    public function createSchoolBranch()
+    {
+
+        return view('backend.pages.userModule.createSchoolBranch');
+    }
     public function addSchoolBranch(Request $request)
     {
+
         $password=mt_rand(100000,999999);
-        $apIns= New schoolBranch;
-        $apIns->nameOfTheInstitution=$request->nameOfTheInstitution;
-        $apIns->eiinNumber=$request->eiinNumber;
-        $apIns->phoneNumber=$request->phoneNumber;
-        $apIns->email=$request->email;
-        $apIns->district=$request->district;
-        $apIns->upazilla=$request->upazilla;
-        $apIns->nameOfHead=$request->nameOfHead;
-        $apIns->schoolType=$request->schoolType;
-        $apIns->address=$request->address;
-        $apIns->save();
+
+        $sc= New schoolBranch;
+        $sc->nameOfTheInstitution=$request->nameOfTheInstitution;
+        $sc->eiinNumber=$request->eiinNumber;
+        $sc->phoneNumber=$request->phoneNumber;
+        $sc->email=$request->email;
+        $sc->district=$request->district;
+        $sc->upazilla=$request->upazilla;
+        $sc->nameOfHead=$request->nameOfHead;
+        $sc->schoolType=$request->schoolType;
+        $sc->address=$request->address;
+        $sc->save();
 
         $user=new User;
         $user->email=$request->email;
         $user->name=$request->nameOfHead;
         $user->mobile=$request->phoneNumber;
-        $user->branchId=$apIns->id;
+        $user->branchId=$sc->id;
         $user->password=Hash::make($password);
         $user->readablePassword=$password;
         $user->save();
 
-        return response()->json([
-            "data"=>$apIns,
-            "user"=>$user,
-            "message" => "Success",
-            "password"=>$password,
-            200
-        ]);
+        // return response()->json([
+        //     "data"=>$apIns,
+        //     "user"=>$user,
+        //     "message" => "Success",
+        //     "password"=>$password,
+        //     200
+        // ]);
+
+$branchid=$user->branchId;
+
+        $user=DB::select("select * from users,school_branches where users.branchId =school_branches.id and users.branchId= '$branchid'");
+        $pdf = PDF::loadView('backend.pages.pdf.schoolBranchPdf', ['user'=>$user])->setPaper('a4','portrait');
+        $pdf->download('SchoolBranch.pdf');
+        return $pdf->stream('SchoolBranch.pdf');
+
     }
 
     /**

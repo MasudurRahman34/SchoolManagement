@@ -4,6 +4,10 @@ namespace App\Http\Controllers\backend;
 use App\model\classes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
+use Spatie\Permission\Models\Permission;
+use PHPUnit\Util\Json;
+use App\User;
 
 class AdminController extends Controller
 {
@@ -14,7 +18,29 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.index');
+        $data=[];
+        $upr= Auth::user()->getAllPermissions('name');
+        $perm=Permission::get('id');
+
+
+        foreach ($upr as $value) {
+            if($value->name=='User Management'){
+                $user=User::all();
+
+                $data['user']=$user;
+
+            }elseif($value->name=='Class'){
+                $permission=Permission::all();
+                $data['permission']=$permission;
+            }
+        }
+        if(is_null($data)){
+            return 'not available';
+        }else{
+            return view('backend.pages.index', array("data"=>$data));
+        }
+
+
     }
 
     /**

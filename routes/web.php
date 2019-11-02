@@ -20,23 +20,51 @@ Route::get('/manage/classes', 'backend\ClassesController@index')->name('manage.c
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
+
+//only for Super Admin
+Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin']], function () {
+    Route::post('/addSchoolBranch/store', 'backend\UserController@addSchoolBranch')->name('addSchoolBranch.store');
+    Route::get('/createSchoolBranch', 'backend\UserController@createSchoolBranch')->name('createSchoolBranch');
+    Route::get('/requestedUser', 'backend\UserController@requestedUser')->name('requestedUser');
+});
+
+
+//
+
+//open route
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/applyInstitute', 'ApplyInstituteController@create')->name('applyInstitute');
 Route::post('/applyInstitute/store', 'ApplyInstituteController@store')->name('applyInstitute.store');
+Route::get('/createPermission', 'backend\UserController@createPermission')->name('createPermission');
+Route::post('/addPermission', 'backend\UserController@addPermission')->name('addPermission');
+//end open route
 
 
 
 //userManagement
-Route::get('/requestedUser', 'backend\UserController@requestedUser')->name('requestedUser');
+Route::group(['middleware' => ['auth','role_or_permission:User Management']], function () {
+    Route::get('/create/userAndRole', 'backend\UserController@createUserAndRole')->name('createUserAndRole');
+    Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
+    Route::get('/createRole', 'backend\UserController@createRole')->name('createRole');
+    Route::post('/addRole', 'backend\UserController@addRole')->name('addRole');
+});
+Route::group(['middleware' => ['api']], function () {
+    Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
+});
+//opens for All
 
-Route::get('/create/userAndRole', 'backend\UserController@createUserAndRole')->name('createUserAndRole');
-Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
-Route::post('/addSchoolBranch/store', 'backend\UserController@addSchoolBranch')->name('addSchoolBranch.store');
-Route::get('/createSchoolBranch', 'backend\UserController@createSchoolBranch')->name('createSchoolBranch');
+//
+
+
+
+
+
+
+
 //permission and role
-Route::get('/createPermission', 'backend\UserController@createPermission')->name('createPermission');
-Route::get('/createRole', 'backend\UserController@createRole')->name('createRole');
-Route::post('/addPermission', 'backend\UserController@addPermission')->name('addPermission');
-Route::post('/addRole', 'backend\UserController@addRole')->name('addRole');
-Route::get('/createRole', 'backend\UserController@createRole')->name('createRole');
+
+
+
+//misuk
+
