@@ -5,6 +5,10 @@ namespace App\Http\Controllers\backend;
 use App\model\classes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
+use DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class ClassesController extends Controller
 {
@@ -15,6 +19,7 @@ class ClassesController extends Controller
      */
     public function index()
     {
+
         return view('backend.pages.classes.manageClass');
     }
 
@@ -36,7 +41,18 @@ class ClassesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $Classes = new Classes();
+        $Classes->className = $request->className;
+        $Classes->duration = $request->duration;
+        $Classes->bId = Auth::user()->bId;
+        $Classes->seat= $request->seat;
+        $Classes->save();
+
+        //message
+        return Response()->json(["data"=>$Classes]);
+        // Session::flash('success','Succesfully Add Class Data Saved');
+        // return redirect()->back();
     }
 
     /**
@@ -45,9 +61,24 @@ class ClassesController extends Controller
      * @param  \App\model\classes  $classes
      * @return \Illuminate\Http\Response
      */
-    public function show(classes $classes)
+    public function show()
     {
-        //
+
+        $Class=Classes::orderBy('id','DESC')->get();
+
+        $data_table_render = DataTables::of($Class)
+            ->addColumn('hash',function ($row){
+                $i=0;
+                return ++$i;
+            })
+            ->addColumn('action',function ($row){
+
+                return '<button class="btn btn-info btn-sm" onClick="editClass('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
+                    '<button  onClick="deleteStudentCls('.$row['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></button>';
+            })
+            ->rawColumns(['hash','action'])
+            ->make(true);
+        return $data_table_render;
     }
 
     /**
@@ -56,9 +87,10 @@ class ClassesController extends Controller
      * @param  \App\model\classes  $classes
      * @return \Illuminate\Http\Response
      */
-    public function edit(classes $classes)
+    public function edit($id)
     {
-        //
+        $studentclg = Classes::find($id);
+        return Response()->json($studentclg);
     }
 
     /**
@@ -68,9 +100,17 @@ class ClassesController extends Controller
      * @param  \App\model\classes  $classes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, classes $classes)
+    public function update(Request $request, $id)
     {
-        //
+
+       $studentClg = Classes::find($id);
+       $studentClg->className = $request->className;
+       $studentClg->duration = $request->duration;
+       $studentClg->seat = $request->seat;
+
+       $studentClg->save();
+
+        return response()->json([$studentClg ,$id,201]);
     }
 
     /**
@@ -79,8 +119,13 @@ class ClassesController extends Controller
      * @param  \App\model\classes  $classes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(classes $classes)
+    public function destroy($id)
     {
-        //
+        $studentCls = Classes::find($id);
+        if($studentCls){
+            $studentCls->delete();
+            return response()->json('successful',201);
+        }
+        return response()->json('error',422);
     }
 }

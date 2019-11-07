@@ -20,6 +20,7 @@ class CreatePermissionTables extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->integer('status')->default(0)->comment('0=superAdmin,schoolAdmin, 1=other');
             $table->timestamps();
         });
 
@@ -27,6 +28,7 @@ class CreatePermissionTables extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->integer('status')->default(0)->comment('0=superAdmin,schoolAdmin, 1=other');
             $table->timestamps();
         });
 

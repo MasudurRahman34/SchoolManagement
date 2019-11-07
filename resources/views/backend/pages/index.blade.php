@@ -5,7 +5,7 @@
       <div class="app-title">
         <div>
           <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
-        <p>Role: {{Auth::user()->getRoleNames('')}}</p>
+        <p>Role: {{Auth::user()->getRoleNames()}}</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -34,7 +34,7 @@
             </div>
         </div>
         @endcan
-        @can('student')
+        @can('Student')
         <div class="col-md-6 col-lg-3">
           <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
             <div class="info">
@@ -54,7 +54,7 @@
           </div>
         </div>
         @endcan
-        @can('staff')
+        @can('Staff')
         <div class="col-md-6 col-lg-3">
           <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
             <div class="info">
@@ -64,7 +64,7 @@
           </div>
         </div>
         @endcan
-        @can('library')
+        @can('Library')
         <div class="col-md-6 col-lg-3">
           <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
             <div class="info">
@@ -74,7 +74,7 @@
           </div>
         </div>
         @endcan
-        @can('notice')
+        @can('Notice')
         <div class="col-md-6 col-lg-3">
           <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
             <div class="info">
@@ -94,7 +94,7 @@
           </div>
         </div>
         @endcan
-        @can('attendence')
+        @can('Attendence')
         <div class="col-md-6 col-lg-3">
                 <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
                   <div class="info">
@@ -104,6 +104,16 @@
                 </div>
             </div>
       @endcan
+      @can('Class')
+      <div class="col-md-6 col-lg-3">
+              <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+                <div class="info">
+                  <h4>Class</h4>
+                  <p><b>500</b></p>
+                </div>
+              </div>
+          </div>
+    @endcan
     </div>
 
       @endsection

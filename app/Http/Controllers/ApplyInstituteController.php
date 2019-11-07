@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\model\ApplyInstitute;
+use App\model\schoolBranch;
 use Illuminate\Http\Request;
 
 class ApplyInstituteController extends Controller
@@ -35,7 +35,7 @@ class ApplyInstituteController extends Controller
      */
     public function store(Request $request)
     {
-        $apIns= New ApplyInstitute;
+        $apIns= New schoolBranch;
         $apIns->nameOfTheInstitution=$request->nameOfTheInstitution;
         $apIns->eiinNumber=$request->eiinNumber;
         $apIns->phoneNumber=$request->phoneNumber;

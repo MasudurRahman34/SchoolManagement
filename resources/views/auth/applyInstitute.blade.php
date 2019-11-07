@@ -23,7 +23,7 @@
 
         </div>
         <div class="login-box" style="min-width: 430px;
-      min-height: 790px;">
+      min-height: 915px;">
           <form class="login-form" style="top: -28px">
 
             <h3 class="login-head"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Apply For Service</h3>
