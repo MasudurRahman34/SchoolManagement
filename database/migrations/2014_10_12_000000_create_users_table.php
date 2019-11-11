@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('designation',100)->nullable();
             $table->string('joinDate',25)->nullable();
             $table->text('address')->nullable();
-            $table->unsignedInteger('branchId')->nullable();
+            $table->unsignedInteger('bId')->nullable();
             $table->string('password');
             $table->string('readablePassword')->nullable();
             $table->rememberToken();

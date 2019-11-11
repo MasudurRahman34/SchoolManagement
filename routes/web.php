@@ -83,7 +83,13 @@ Route::get('/sessionyear/delete/{id}','backend\SessionYearController@destroy')->
 
 
 
-
+// test section Management
+Route::get('/section','backend\SectionController@index')->name('section.index');
+Route::post('/section/store','backend\SectionController@store')->name('section.store');
+Route::get('/section/show','backend\SectionController@show')->name('section.show');
+Route::get('/section/edit/{id}','backend\SectionController@edit')->name('section.edt');
+Route::post('/section/update/{id}','backend\SectionController@update')->name('section.update');
+Route::get('/section/delete/{id}','backend\SectionController@destroy')->name('section.delete');
 
 
 //permission and role
