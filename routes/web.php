@@ -81,6 +81,13 @@ Route::get('/sessionyear/edit/{id}','backend\SessionYearController@edit')->name(
 Route::post('/sessionyear/update/{id}','backend\SessionYearController@update')->name('sessionyear.update');
 Route::get('/sessionyear/delete/{id}','backend\SessionYearController@destroy')->name('sessionyear.delete');
 
+//test 
+Route::get('/sessionyear','backend\SessionYearController@index')->name('sessionyear.index');
+Route::post('/sessionyear/store','backend\SessionYearController@store')->name('sessionyear.store');
+Route::get('/sessionyear/show','backend\SessionYearController@show')->name('sessionyear.show');
+Route::get('/sessionyear/edit/{id}','backend\SessionYearController@edit')->name('sessionyear.edt');
+Route::post('/sessionyear/update/{id}','backend\SessionYearController@update')->name('sessionyear.update');
+Route::get('/sessionyear/delete/{id}','backend\SessionYearController@destroy')->name('sessionyear.delete');
 
 
 // test section Management
