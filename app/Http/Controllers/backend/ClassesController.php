@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ClassesController extends Controller
 {
@@ -40,8 +41,11 @@ class ClassesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    { $validator= Validator::make($request->all(), Classes::$rules);
+        if ($validator->fails()) {
+            return response()->json(["errors"=>$validator->errors(), 400]);
+        }else{
+
         $Classes = new Classes();
         $Classes->className = $request->className;
         $Classes->duration = $request->duration;
@@ -54,6 +58,7 @@ class ClassesController extends Controller
         // Session::flash('success','Succesfully Add Class Data Saved');
         // return redirect()->back();
     }
+}
 
     /**
      * Display the specified resource.
@@ -102,15 +107,20 @@ class ClassesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator= Validator::make($request->all(), Classes::$rules);
+        if ($validator->fails()) {
+            return response()->json(["errors"=>$validator->errors(), 400]);
+        }else{
 
-       $studentClg = Classes::find($id);
-       $studentClg->className = $request->className;
-       $studentClg->duration = $request->duration;
-       $studentClg->seat = $request->seat;
+       $class = Classes::find($id);
+       $class->className = $request->className;
+       $class->duration = $request->duration;
+       $class->seat = $request->seat;
 
-       $studentClg->save();
+       $class->save();
 
-        return response()->json([$studentClg ,$id,201]);
+        return response()->json(["success"=>'Stored', "data"=>$class ,201]);
+        }
     }
 
     /**

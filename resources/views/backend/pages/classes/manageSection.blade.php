@@ -36,10 +36,10 @@
         </div>
 
         <div class="col-md-5">
-        {{-- <form action="{{route('store.section')}}" method="POST"> --}}
+        <form id="myform" action="javascript:void(0)">
         @csrf
           <div class="tile">
-              <h3 class="tile-title border-bottom p-2" id="section_data"> Add Study Section</h3>
+              <h3 class="tile-title border-bottom p-2" id="title"> Add Study Section</h3>
             <div class="tile-body">
 
                 <div class="form-group">
@@ -83,6 +83,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <button class="btn btn-primary" type="submit" id="submit" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button></a>
+                      {{-- <input class="btn btn-primary" type="reset" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Reset</button></a> --}}
                     </div>
                   </div>
               </div>
@@ -144,29 +145,25 @@
                     shift: $('#shift:checked').val(),
                     },
                     success: function(result){
-                    console.log(result);
-                    successNotification();
-
-                    if(result.errors){
-                        $( "div" ).remove( ".text-danger" );
-                            for (err in result.errors) {
-                            $('<div>'+result.errors[err]+'</div>').insertAfter('#'+err).addClass('text-danger').attr('id','error');
-                            console.log(err);
-                            }
-                    }
-                }, error: function(xhr, status, error){
-                    var errorMessage = xhr.status + ': ' + xhr.statusText
-                    alert('Error - ' + errorMessage);
-            }
+                        if (result.success) {
+                            $( "div" ).remove( ".text-danger" );
+                            console.log(result);
+                            successNotification();
+                            removeUpdateProperty("section");
+                            document.getElementById("myform").reset();
+                        }
+                        if(result.errors){
+                            getError(result.errors);
+                        }
+                }
+            });
         });
-    });
     //edit view
+
 
     function editSection(id) {
          var editId=id;
-         $("#submit").html('<i class="fa fa-save"></i> Update Section');
-         $("#section_data").html('<i class="fa fa-save"></i> Update  student Section');
-         $("#submit").val(id);
+         setUpdateProperty(editId, "section");
          var url="{{url('/section/edit')}}";
          $.ajax({
              type:'GET',
@@ -179,41 +176,16 @@
                  console.log(data);
                  $("input[name='shift'][value='"+data.shift+"']").prop('checked', true);
                  //$('#shift').val('"+data.shift+"').prop('checked', true);
-
           }
          });
 
      }
+
      function deleteSection(id) {
-           swal({
-                 title: "Are you sure?",
-                 text: "You will not be able to recover this imaginary file!",
-                 type: "warning",
-                 showCancelButton: true,
-                 confirmButtonText: "Yes, delete it!",
-                 cancelButtonText: "No, cancel plx!",
-                 closeOnConfirm: true,
-                 closeOnCancel: true,
-             }, function(isConfirm) {
-                 if (isConfirm) {
-                   var url = "{{url('/section/delete')}}";
-                   $.ajax({
-                       url:url+"/"+id,
-                       type:"GET",
-                       dataType:"json",
-                       success:function(data) {
-                           console.log(data)
-                           table.draw();
-                       }
-                   })
+        var url = "{{url('/section/delete')}}";
+        deleteAttribute(url,id);
 
-
-                 } else {
-                     swal("Cancelled", "Your imaginary file is safe :)", "error");
-                 }
-             });
-        }
-
+    }
 
     </script>
 

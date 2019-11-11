@@ -53,7 +53,7 @@ class SectionController extends Controller
         $section->sectionName = $request->sectionName;
         $section->shift = $request->shift;
         $section->save();
-        return Response()->json(["data"=>$section]);
+        return Response()->json(["success"=>'Stored', "data"=>$section,201]);
         }
     }
 
@@ -116,7 +116,7 @@ class SectionController extends Controller
         $section->sectionName = $request->sectionName;
         $section->shift = $request->shift;
         $section->save();
-        return Response()->json(["data"=>$section]);
+        return Response()->json(["success"=>'Updated', "data"=>$section,201]);
         }
     }
 
@@ -131,8 +131,8 @@ class SectionController extends Controller
         $sectionDelete = Section::find($id);
         if($sectionDelete){
             $sectionDelete->delete();
-            return response()->json(['successful',201]);
+            return response()->json(["success"=>'data deleted',201]);
         }
-        return response()->json(['error',422]);
+        return response()->json(["error"=>'error',422]);
     }
 }

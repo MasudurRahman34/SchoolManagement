@@ -36,8 +36,9 @@
         </div>
 
         <div class="col-md-5">
+                <form id="myform" action="javascript:void(0)">
             <div class="tile">
-                <h3 class="tile-title border-bottom p-2" id="date">Add New Class</h3>
+                <h3 class="tile-title border-bottom p-2" id="title">Add New Class</h3>
                 <div class="tile-body">
                         <div class="form-group row">
                             <label class="control-label col-md-3 pl-4"> Class Name</label>
@@ -67,6 +68,7 @@
                     </div>
                 </div>
             </div>
+                </form>
         </div>
 
     </div>
@@ -97,40 +99,14 @@
         // });
 
         function deleteStudentCls(id) {
-           swal({
-                 title: "Are you sure?",
-                 text: "You will not be able to recover this imaginary file!",
-                 type: "warning",
-                 showCancelButton: true,
-                 confirmButtonText: "Yes, delete it!",
-                 cancelButtonText: "No, cancel plx!",
-                 closeOnConfirm: true,
-                 closeOnCancel: true
-             }, function(isConfirm) {
-                 if (isConfirm) {
-                   var url = "{{url('/class/delete')}}";
-                   $.ajax({
-                       url:url+"/"+id,
-                       type:"GET",
-                       dataType:"json",
-                       success:function(data) {
-                           console.log(data)
-                           swal("Deleted!", "Your imaginary file has been deleted.", "success");
 
-                       }
-                   })
-
-
-                 } else {
-                     swal("Cancelled", "Your imaginary file is safe :)", "error");
-                 }
-             });
+            var url = "{{url('/class/delete')}}";
+            deleteAttribute(url,id);
         }
         //edit
         function editClass(id) {
             var editId=id;
-            $("#submit").html('<i class="fa fa-save"></i> Update Class');
-            $("#date").html('<i class="fa fa-save"></i> Update  student Class');
+            setUpdateProperty(editId, "Class");
             $("#submit").val(id);
             var url="{{url('class/edit')}}";
             $.ajax({
@@ -171,8 +147,16 @@
                    url: url,
                    data: data,
                    success:function (result) {
-                   console.log(result);
-                   successNotification();
+                    if (result.success) {
+                            $( "div" ).remove( ".text-danger" );
+                            console.log(result);
+                            successNotification();
+                            removeUpdateProperty("Class");
+                            document.getElementById("myform").reset();
+                        }
+                        if(result.errors){
+                            getError(result.errors);
+                        }
                 }
             });
 

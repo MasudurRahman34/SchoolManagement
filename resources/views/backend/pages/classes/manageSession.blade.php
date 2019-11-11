@@ -33,7 +33,9 @@
             </div>
         </div>
 
+
         <div class="col-md-5">
+                <form id="myform" action="javascript:void(0)">
             <div class="tile">
                 <h3 class="tile-title border-bottom p-2" id="date">Add Session Year</h3>
                 <div class="tile-body">
@@ -47,12 +49,15 @@
                 <div class="tile-footer">
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-primary edit_studClass"  style="float: right;" id="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                            <button class="btn btn-primary edit_studClass" type="submit" style="float: right;" id="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                            {{-- <input class="btn btn-primary edit_studClass" type="reset" style="float: right;" id="reset"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button> --}}
                         </div>
                     </div>
                 </div>
             </div>
+        </form>
         </div>
+
 
     </div>
 
@@ -96,9 +101,12 @@
                     data: data,
                     // dataType: "dataType",
                     success: function (response) {
-                        console.log(response);
+                        successNotification();
+                        document.getElementById("myform").reset();
+
                     }
                 });
+
             })
 
     </script>

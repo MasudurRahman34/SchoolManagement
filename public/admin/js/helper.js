@@ -1,0 +1,63 @@
+function setUpdateProperty(id,  propertyName){
+    $("#submit").html("<i class='fa fa-save'></i> Update "+propertyName+"");
+    $("#title").html("<i class='fa fa-save'></i> Update "+propertyName+"");
+    $("#submit").val(id);
+}
+function removeUpdateProperty(propertyName){
+    $("#submit").html('<i class="fa fa-save"></i> Submit');
+    $("#title").html("<i class='fa fa-save'></i> "+propertyName+"");
+    $("#submit").val();
+}
+function getError(errorMessage){
+    $( "div" ).remove( ".text-danger" );
+                for (err in errorMessage) {
+                $('<div>'+errorMessage[err]+'</div>').insertAfter('#'+err).addClass('text-danger').attr('id','error');
+                console.log(err);
+    }
+}
+
+function successNotification() {
+    $.notify({
+            title: "Update Complete : ",
+            message: "Something cool is just updated!",
+            icon: 'fa fa-exclamation-triangle'
+        }, {
+            type: "success",
+            delay: 100,
+            timer: 600,
+
+        });
+        // setTimeout(function() {window.location.reload();}, 600);
+        setTimeout(function() {table.draw()}, 600);
+}
+
+function deleteAttribute(url, id){
+    swal({
+             title: "Are you sure?",
+             text: "You will not be able to recover this imaginary file!",
+             type: "warning",
+             showCancelButton: true,
+             confirmButtonText: "Yes, delete it!",
+             cancelButtonText: "No, cancel plx!",
+             closeOnConfirm: true,
+             closeOnCancel: true,
+         }, function(isConfirm) {
+             if (isConfirm) {
+            //    var url = "{{url('/section/delete')}}";
+               $.ajax({
+                   url:url+"/"+id,
+                   type:"GET",
+                   dataType:"json",
+                   success:function(data) {
+                       console.log(data)
+                       table.draw();
+                   }
+               })
+
+
+             } else {
+                 swal("Cancelled", "Your imaginary file is safe :)", "error");
+             }
+         });
+
+ }
