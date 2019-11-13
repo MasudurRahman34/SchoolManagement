@@ -1,6 +1,7 @@
 <?php
 
 namespace App\model;
+use App\model\SessionYear;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ class Section extends Model
         return $this->belongsTo('App\model\classes','classId');
     }
     public function sessionYear(){
-        return $this->belongsTo('App\model\sessionYear','sessionYearId');
+        return $this->belongsTo(SessionYear::class,'sessionYearId');
     }
 
     public static $rules = [

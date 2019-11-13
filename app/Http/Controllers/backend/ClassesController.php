@@ -54,7 +54,7 @@ class ClassesController extends Controller
         $Classes->save();
 
         //message
-        return Response()->json(["data"=>$Classes]);
+        return Response()->json(["success"=>'saved',"data"=>$Classes]);
         // Session::flash('success','Succesfully Add Class Data Saved');
         // return redirect()->back();
     }

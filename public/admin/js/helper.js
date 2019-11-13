@@ -5,8 +5,8 @@ function setUpdateProperty(id,  propertyName){
 }
 function removeUpdateProperty(propertyName){
     $("#submit").html('<i class="fa fa-save"></i> Submit');
-    $("#title").html("<i class='fa fa-save'></i> "+propertyName+"");
-    $("#submit").val();
+    $("#title").html("<i class='fa fa-save'></i> Add "+propertyName+"");
+    $("#submit").val(0);
 }
 function getError(errorMessage){
     $( "div" ).remove( ".text-danger" );

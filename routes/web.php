@@ -56,28 +56,70 @@ Route::group(['middleware' => ['api']], function () {
 });
 
 //class Management
-Route::get('/class','backend\ClassesController@index')->name('class.index');
-Route::post('/class/store','backend\ClassesController@store')->name('class.store');
-Route::get('/class/show','backend\ClassesController@show')->name('class.show');
-Route::get('/class/edit/{id}','backend\ClassesController@edit')->name('class.edt');
-Route::post('/class/update/{id}','backend\ClassesController@update')->name('class.update');
-Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
+//Route::group(['middleware' => ['auth','role_or_permission:class']], function () {});
+Route::group(['middleware' => ['auth','role_or_permission:Class']], function () {
 
-//
+    Route::get('/class','backend\ClassesController@index')->name('class.index');
+    Route::post('/class/store','backend\ClassesController@store')->name('class.store');
+    Route::get('/class/show','backend\ClassesController@show')->name('class.show');
+    Route::get('/class/edit/{id}','backend\ClassesController@edit')->name('class.edt');
+    Route::post('/class/update/{id}','backend\ClassesController@update')->name('class.update');
+    Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
+});
 
 //section Management
-Route::get('/section','backend\SectionController@index')->name('section.index');
-Route::post('/section/store','backend\SectionController@store')->name('section.store');
-Route::get('/section/show','backend\SectionController@show')->name('section.show');
-Route::get('/section/edit/{id}','backend\SectionController@edit')->name('section.edt');
-Route::post('/section/update/{id}','backend\SectionController@update')->name('section.update');
-Route::get('/section/delete/{id}','backend\SectionController@destroy')->name('section.delete');
+Route::group(['middleware' => ['auth','role_or_permission:Section']], function () {
+
+    Route::get('/section','backend\SectionController@index')->name('section.index');
+    Route::post('/section/store','backend\SectionController@store')->name('section.store');
+    Route::get('/section/show','backend\SectionController@show')->name('section.show');
+    Route::get('/section/edit/{id}','backend\SectionController@edit')->name('section.edt');
+    Route::post('/section/update/{id}','backend\SectionController@update')->name('section.update');
+    Route::get('/section/delete/{id}','backend\SectionController@destroy')->name('section.delete');
+
+});
 
 //sessionYear Management
-Route::get('/sessionyear','backend\SessionYearController@index')->name('sessionyear.index');
-Route::post('/sessionyear/store','backend\SessionYearController@store')->name('sessionyear.store');
-Route::get('/sessionyear/show','backend\SessionYearController@show')->name('sessionyear.show');
-Route::get('/sessionyear/edit/{id}','backend\SessionYearController@edit')->name('sessionyear.edt');
-Route::post('/sessionyear/update/{id}','backend\SessionYearController@update')->name('sessionyear.update');
-Route::get('/sessionyear/delete/{id}','backend\SessionYearController@destroy')->name('sessionyear.delete');
+Route::group(['middleware' => ['auth','role_or_permission:SessionYear']], function () {
+
+    Route::get('/sessionyear','backend\SessionYearController@index')->name('sessionyear.index');
+    Route::post('/sessionyear/store','backend\SessionYearController@store')->name('sessionyear.store');
+    Route::get('/sessionyear/show','backend\SessionYearController@show')->name('sessionyear.show');
+    Route::get('/sessionyear/edit/{id}','backend\SessionYearController@edit')->name('sessionyear.edt');
+    Route::post('/sessionyear/update/{id}','backend\SessionYearController@update')->name('sessionyear.update');
+    Route::get('/sessionyear/delete/{id}','backend\SessionYearController@destroy')->name('sessionyear.delete');
+
+});
+
+
+//group Management
+Route::group(['middleware' => ['auth','role_or_permission:Group']], function () {
+
+    Route::get('/group','backend\GroupController@index')->name('group.index');
+    Route::post('/group/store','backend\GroupController@store')->name('group.store');
+    Route::get('/group/show','backend\GroupController@show')->name('group.show');
+    Route::get('/group/edit/{id}','backend\GroupController@edit')->name('group.edt');
+    Route::post('/group/update/{id}','backend\GroupController@update')->name('group.update');
+    Route::get('/group/delete/{id}','backend\GroupController@destroy')->name('group.delete');
+
+});
+
+//subject Management
+Route::group(['middleware' => ['auth','role_or_permission:Subject']], function () {
+
+    Route::get('/subject','backend\SubjectController@index')->name('subject.index');
+    Route::post('/subject/store','backend\SubjectController@store')->name('subject.store');
+    Route::get('/subject/show','backend\SubjectController@show')->name('subject.show');
+    Route::get('/subject/edit/{id}','backend\SubjectController@edit')->name('subject.edt');
+    Route::post('/subject/update/{id}','backend\SubjectController@update')->name('subject.update');
+    Route::get('/subject/delete/{id}','backend\SubjectController@destroy')->name('subject.delete');
+});
+
+
+
+//permission and role
+
+
+
+//misuk
 

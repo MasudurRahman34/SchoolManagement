@@ -99,7 +99,6 @@
         // });
 
         function deleteStudentCls(id) {
-
             var url = "{{url('/class/delete')}}";
             deleteAttribute(url,id);
         }

@@ -97,8 +97,6 @@
     @section('script')
       @include('backend.partials.js.datatable');
       <script>
-
-        // $(document).ready( function () {
             var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
@@ -117,8 +115,6 @@
              ]
          });
 
-
-        //  });
          //update and submit
 
          $('#submit').click(function (e) {

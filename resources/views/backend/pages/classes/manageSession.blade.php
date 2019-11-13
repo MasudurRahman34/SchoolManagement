@@ -35,9 +35,10 @@
 
 
         <div class="col-md-5">
-                <form id="myform" action="javascript:void(0)">
+        <form id="myform" action="javascript:void(0)">
+        @csrf
             <div class="tile">
-                <h3 class="tile-title border-bottom p-2" id="date">Add Session Year</h3>
+                <h3 class="tile-title border-bottom p-2" id="title">Add Session Year</h3>
                 <div class="tile-body">
                         <div class="form-group row">
                             <label class="control-label col-md-3 pl-4"> Session Year</label>
@@ -86,28 +87,94 @@
         // $(document).ready( function () {
             $('#submit').click(function(e) {
                 e.preventDefault();
-
-                var data={
-                    'sessionYear':$('#sessionYear').val(),
-                }
+                var id=$('#submit').val();
                 $.ajaxSetup({
                headers: {
                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                    },
                });
+               if (id>0) {
+                   var url="{{url('sessionyear/update')}}"+"/"+id;
+               }else{
+                   var url="{{url('/sessionyear/store')}}"
+               }
                 $.ajax({
                     type: "post",
-                    url: "{{url('/sessionyear/store')}}",
-                    data: data,
-                    // dataType: "dataType",
-                    success: function (response) {
-                        successNotification();
-                        document.getElementById("myform").reset();
-
+                    url: url,
+                    data: {
+                    sessionYear: $('#sessionYear').val(),    
+                    },
+                    success: function (result) {
+                        if (result.success) {
+                            $( "div" ).remove( ".text-danger" );
+                            console.log(result);
+                            successNotification();
+                            removeUpdateProperty("SessionYear");
+                            document.getElementById("myform").reset();
+                        }
+                        if(result.errors){
+                            getError(result.errors);
+                        }
                     }
                 });
+            });
+            //edit view
+            function editSession(id){
+                var editId=id;
+                $("#submit").html('<i class="fa fa-save"></i> Update Session');
+                $("#session_data").html('<i class="fa fa-save"></i> Update Session Year');
+                $("#submit").val(id);
+                var url="{{url('/sessionyear/edit')}}";
+                $.ajax({
+                    type:'GET',
+                    url:url+"/"+id,
+                    success:function(data) {
 
-            })
+                        $('#sessionYear').val(data.sessionYear);
+                        console.log(data);
+
+                        }
+                    });  
+            }
+
+            //delete
+            function deleteSession(id) {
+                var url = "{{url('/sessionyear/delete')}}";
+           
+
+         swal({
+             title: "Are you sure?",
+             text: "You will not be able to recover this imaginary file!",
+             type: "warning",
+             showCancelButton: true,
+             confirmButtonText: "Yes, delete it!",
+             cancelButtonText: "No, cancel plx!",
+             closeOnConfirm: false,
+             closeOnCancel: true,
+         }, function(isConfirm) {
+             if (isConfirm) {
+            //    var url = "{{url('/section/delete')}}";
+               $.ajax({
+                   url:url+"/"+id,
+                   type:"GET",
+                   dataType:"json",
+                   success:function(data) {
+                       if(data.error){
+                        swal("Sorry",data.error , "error");
+                       console.log(data.error);
+                       }if(data.success){
+                        table.draw();
+                        swal(data.success);
+                       }
+                   }
+               })
+
+             } else {
+                 swal("Cancelled", "Your imaginary file is safe :)", "error");
+             }
+         });
+        }
+
 
     </script>
 
