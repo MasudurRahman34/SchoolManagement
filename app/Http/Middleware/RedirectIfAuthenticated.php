@@ -15,12 +15,30 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/admin2');
-        }
+    // public function handle($request, Closure $next, $guard = null)
+    // {
+    //     if (Auth::guard($guard)->check()) {
+    //         return redirect('/admin2');
+    //     }
 
-        return $next($request);
+    //     return $next($request);
+    // }
+    public function handle($request, Closure $next, $guard = null)
+  {
+    switch ($guard) {
+      case 'student':
+      if (Auth::guard($guard)->check()) {
+        return redirect()->route('/');
+      }
+      break;
+
+      case 'web':
+      if (Auth::guard($guard)->check()) {
+        return redirect('/admin2');
+      }
+      break;
     }
+
+    return $next($request);
+  }
 }

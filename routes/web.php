@@ -20,6 +20,21 @@ Route::get('/manage/classes', 'backend\ClassesController@index')->name('manage.c
 
 Auth::routes();
 
+//student login
+Route::group(['prefix' => 'student', 'namespace'=>'auth\student'], function () {
+    Route::get('/login', 'LoginController@showLoginForm')->name('student.login');
+    Route::post('/login', 'LoginController@login')->name('student.login');
+    Route::post('/logout', 'LoginController@logout')->name('student.logout');
+});
+
+
+//student pages
+Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function () {
+Route::get('/index', 'StudentController@index')->name('student.index');
+Route::get('/show', 'StudentController@show')->name('student.show');
+});
+//
+
 
 
 //only for Super Admin
