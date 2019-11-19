@@ -102,7 +102,7 @@
                     type: "post",
                     url: url,
                     data: {
-                    sessionYear: $('#sessionYear').val(),    
+                    sessionYear: $('#sessionYear').val(),
                     },
                     success: function (result) {
                         if (result.success) {
@@ -134,13 +134,13 @@
                         console.log(data);
 
                         }
-                    });  
+                    });
             }
 
             //delete
             function deleteSession(id) {
                 var url = "{{url('/sessionyear/delete')}}";
-           
+
 
          swal({
              title: "Are you sure?",

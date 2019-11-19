@@ -2,6 +2,7 @@
 
 namespace App\model;
 use App\model\schoolBranch;
+use App\model\Section;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -51,7 +52,10 @@ class Student extends Authenticatable
     ];
 
     public function schoolBranch(){
-        return $this->belongsTo(schoolBranch::class);
+        return $this->belongsTo(schoolBranch::class,'bId');
+    }
+    public function Section(){
+        return $this->belongsTo(Section::class,'sectionId');
     }
 
 

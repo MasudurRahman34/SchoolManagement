@@ -261,7 +261,9 @@ th {
 
 label {
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    /*overright*/
+    margin-top: .6rem;
 }
 
 button {

@@ -22,13 +22,13 @@
               <div class="form-group row">
                 <label class="control-label col-md-3 pl-4 col-sm-12"> Permission Name</label>
                 <div class="col-md-9 col-sm-12">
-                  <input class="form-control col-md-10 col-sm-12" type="text" id="permissionName" name="permissionName">
+                  <input class="form-control col-md-10 col-sm-12" type="text" id="permissionName" name="permissionName" required>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-12 pl-4">Assing To Role</label>
                 <div class="col-md-9 col-sm-12">
-                        <select class="pr-5"  multiple="" id="role" >
+                        <select class="pr-5" id="role" multiple="multiple" required>
                             @foreach ($roles as $role)
                                 <option value="{{$role->id}}" class="form-control">{{$role->name}}</option>
                             @endforeach
@@ -39,7 +39,7 @@
           <div class="tile-footer">
                 <div class="row">
                   <div class="col-md-12 col-sm-12">
-                    <button class="btn btn-primary" type="" style="float: right;" id="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+                    <button class="btn btn-primary" type="submit" style="float: right;" id="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                   </div>
                 </div>
             </div>
@@ -88,12 +88,14 @@
                     }
                 });
                 var name=$(permissionName).val();
+                var role=$('#role').val() || [];
+                console.log(role);
                 jQuery.ajax({
                     method: 'post',
                     url: "{{ url('/addPermission') }}",
                     data: {
                     permissionName: $('#permissionName').val(),
-                    role: $('#role option:selected').val(),
+                    role: $('#role').val() || [],
 
                     },
                     success: function(result){

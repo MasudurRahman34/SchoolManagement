@@ -68,14 +68,20 @@
                       <legend type="hidden">Study Shift</legend>
                       <div class="form-check">
                       <label class="radio">
-                        <input type="radio" id="shift" name="shift"  value="morning">
+                        <input type="radio" id="shift" name="shift"  value="Morning" checked>
                           Morning
                       </label>
                         &nbsp;
                         <label class="radio">
-                          <input type="radio"  id="shift" name="shift"  value="evening">
-                            Evening
+                          <input type="radio"  id="shift" name="shift"  value="Day">
+                            Day
                         </label>
+                        <label class="radio">
+                            <input type="radio"  id="shift" name="shift"  value="Evening">
+                              Evening
+                          </label>
+
+
                       </div>
 
             </div>

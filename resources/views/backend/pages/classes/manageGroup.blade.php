@@ -22,7 +22,6 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Class Name</th>
                                 <th>Group Name</th>
                                 <th>Created Date</th>
                                 <th>Action</th>
@@ -38,9 +37,9 @@
             <form id="myform" action="javascript:void(0)">
             <div class="tile">
                 <h3 class="tile-title border-bottom p-2" id="title">Add Group</h3>
-                
+
                 <div class="tile-body">
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                   <label for="exampleSelect1" class="control-label col-md-3 pl-4">Select Class</label>
                   <select class="form-control col-md-7"  id="classId" name="classId">
                    @foreach ($class as $class)
@@ -48,7 +47,7 @@
                    @endforeach
 
                   </select>
-                </div>
+                </div> --}}
                         <div class="form-group row">
                             <label class="control-label col-md-3 pl-4"> Group Name</label>
                             <div class="col-md-9">
@@ -85,7 +84,7 @@
                 ajax:"{{url('group/show')}}",
                 columns:[
                     { data: 'hash', name: 'hash' },
-                    { data: 'classes.className', name: 'classes.className' },
+                    // { data: 'classes.className', name: 'classes.className' },
                     { data: 'group', name: 'group' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'action', name: 'action' }
@@ -109,8 +108,7 @@
                     type: "post",
                     url: url,
                     data: {
-                    classId: $('#classId option:selected').val(),    
-                    group: $('#group').val(),    
+                    group: $('#group').val(),
                     },
                     success: function (result) {
                         if (result.success) {
@@ -141,7 +139,7 @@
                         console.log(data);
 
                         }
-                     });  
+                     });
              }
             //delete
             function deleteGroup(id) {
@@ -152,5 +150,4 @@
 
     </script>
 
-    @endsection   
-  
+    @endsection

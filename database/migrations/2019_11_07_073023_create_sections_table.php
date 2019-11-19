@@ -19,7 +19,7 @@ class CreateSectionsTable extends Migration
             $table->unsignedInteger('classId')->comment('classId');
             $table->unsignedInteger('sessionYearId')->comment('sessionYearId');
             $table->string('sectionName',50);
-            $table->string('shift',20)->comment('morning, evening');
+            $table->string('shift',20)->comment('morning, day, evening');
             $table->softDeletes();
             $table->timestamps();
         });

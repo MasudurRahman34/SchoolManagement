@@ -125,7 +125,7 @@ class UserController extends Controller
     public function createRole()
     {
 
-        if (Auth::user()->HasRole('Super Admin')) {
+        if (Auth::guard('web')->user()->HasRole('Super Admin')) {
             $prms=Permission::all();
             $roles=Role::all();
         }else{

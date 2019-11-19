@@ -19,8 +19,14 @@ Route::get('/admin2', 'backend\AdminController@index')->name('admin.index');
 Route::get('/manage/classes', 'backend\ClassesController@index')->name('manage.class');
 
 Auth::routes();
+//api routes
+Route::post('api/search/section', 'backend\api\apiController@section')->name('api.section');
+
+//end api routes
+
 
 //student login
+
 Route::group(['prefix' => 'student', 'namespace'=>'auth\student'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('student.login');
     Route::post('/login', 'LoginController@login')->name('student.login');
@@ -70,8 +76,14 @@ Route::group(['middleware' => ['api']], function () {
     Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
 });
 
+//Admission
+Route::group(['middleware' => ['auth','role_or_permission:Class'],'prefix'=>'admission', 'namespace'=>'backend'], function () {
+
+    Route::get('/','AdmissionController@index')->name('admissison.index');
+    Route::post('/store','AdmissionController@store')->name('admission.store');
+
+});
 //class Management
-//Route::group(['middleware' => ['auth','role_or_permission:class']], function () {});
 Route::group(['middleware' => ['auth','role_or_permission:Class']], function () {
 
     Route::get('/class','backend\ClassesController@index')->name('class.index');
@@ -130,6 +142,10 @@ Route::group(['middleware' => ['auth','role_or_permission:Subject']], function (
     Route::get('/subject/delete/{id}','backend\SubjectController@destroy')->name('subject.delete');
 });
 
+//admission Management
+
+
+//
 
 
 //permission and role

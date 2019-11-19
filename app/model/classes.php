@@ -11,4 +11,5 @@ class classes extends Model
         'duration'=>'required', 'string',
         'seat'=>'required','integer',
     ];
+    
 }

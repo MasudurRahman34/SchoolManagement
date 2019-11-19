@@ -47,7 +47,7 @@ class GroupController extends Controller
             return response()->json(["errors"=>$validator->errors(),400]);
         }else{
             $group= new Group();
-            $group->classId = $request->classId;
+            // $group->classId = $request->classId;
             $group->group = $request->group;
             $group->bId = Auth::user()->bId;
             $group->save();
@@ -121,7 +121,7 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $groupDelete = Group::find($id);
         if($groupDelete){
             $groupDelete->delete();

@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\backend\student;
-use App\Http\Controllers\Controller;
-use App\model\Student;
+namespace App\Http\Controllers\backend\api;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\model\classes;
+use App\model\Section;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
-class StudentController extends Controller
+class apiController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:student');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +18,16 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view('backend.student.pages.index');
+        //
+    }
+
+    public function section(Request $request)
+    {
+        $section= Section::where('classId', $request->classId)
+                        ->where('sessionYearId', $request->sessionYearId)
+                        ->where('shift', $request->shift)
+                        ->get();
+        return Response()->json($section);
     }
 
     /**
@@ -28,7 +35,10 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,21 +54,21 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\model\Student  $student
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('backend.student.pages.profile.profile');
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\model\Student  $student
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
         //
     }
@@ -67,10 +77,10 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\model\Student  $student
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -78,10 +88,10 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\model\Student  $student
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
         //
     }

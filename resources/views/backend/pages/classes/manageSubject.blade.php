@@ -36,7 +36,7 @@
         </div>
 
         <div class="col-md-5">
-        <!--Start form-->    
+        <!--Start form-->
         <form id="myform" action="javascript:void(0)">
         @csrf
           <div class="tile">
@@ -59,13 +59,13 @@
                   <label for="exampleSelect1">Subject Code</label>
                     <input class="form-control"  type="text" id="subjectCode" name="subjectCode" placeholder="Enter Section Name">
                 </div>
-                
+
                 <div class="form-group">
                     <fieldset class="form-group">
                         <legend >Subject Type</legend>
                         <div class="form-check">
                         <label class="form-check-label">
-                            <input class="form-check-input"  type="radio" value="General" id="group" name="group" >General
+                            <input class="form-check-input"  type="radio" value="General" id="group" name="group" checked>General
                         </label>
                         &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
                         <label class="form-check-label">
@@ -86,7 +86,7 @@
                         </div>
                     </fieldset>
                   </div>
-                
+
             </div>
             <div class="tile-footer">
                   <div class="row">
@@ -166,7 +166,7 @@
 
         //edit view
         function editSubject(id) {
-           
+
             setUpdateProperty(id, "subject");
             var url="{{url('/subject/edit')}}";
             $.ajax({
@@ -179,7 +179,7 @@
                     $('#subjectCode').val(data.subjectCode);
                     console.log(data);
                     $("input[name='group'][value='"+data.group+"']").prop('checked', true);
-                    
+
             }
             });
 

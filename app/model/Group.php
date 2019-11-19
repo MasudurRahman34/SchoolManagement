@@ -12,9 +12,8 @@ class Group extends Model
     }
     public static $rules = [
 
-        'classId'=>'required',
         'group'=>'required','string','max:255',
-        
+
     ];
 
 }

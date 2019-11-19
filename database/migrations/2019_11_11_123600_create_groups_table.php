@@ -16,7 +16,7 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('group');
-            $table->unsignedInteger('classId')->comment('classId');
+            // $table->unsignedInteger('classId')->comment('classId');
             $table->unsignedInteger('bId');
             $table->timestamps();
         });
