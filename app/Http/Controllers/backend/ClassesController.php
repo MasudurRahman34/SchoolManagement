@@ -49,7 +49,7 @@ class ClassesController extends Controller
         $Classes = new Classes();
         $Classes->className = $request->className;
         $Classes->duration = $request->duration;
-        $Classes->bId = Auth::user()->bId;
+        $Classes->bId = Auth::guard('web')->user()->bId;
         $Classes->seat= $request->seat;
         $Classes->save();
 
@@ -69,7 +69,7 @@ class ClassesController extends Controller
     public function show()
     {
 
-        $Class=Classes::orderBy('id','DESC')->get();
+        $Class=Classes::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->get();
 
         $data_table_render = DataTables::of($Class)
             ->addColumn('hash',function ($row){

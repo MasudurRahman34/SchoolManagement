@@ -24,20 +24,23 @@ class CreateStudentsTable extends Migration
             $table->string('blood', 20)->nullable();
             $table->text('address')->nullable();
             $table->string('password');
-            $table->string('readablePassword')->nullable();
-            $table->string('fatherName')->nullable();
-            $table->string('motherName')->nullable();
-            $table->string('fatherOccupation')->nullable();
-            $table->string('MotherOccupation')->nullable();
-            $table->string('fatherIncome')->nullable();
-            $table->string('motherIncome')->nullable();
+            $table->integer('readablePassword')->nullable();
+            $table->string('fatherName', 60)->nullable();
+            $table->string('motherName', 60)->nullable();
+            $table->string('fatherOccupation', 50)->nullable();
+            $table->string('MotherOccupation', 50)->nullable();
+            $table->integer('fatherIncome')->nullable();
+            $table->integer('motherIncome')->nullable();
+            $table->integer('age')->nullable();
+            $table->integer('roll')->nullable();
+            $table->string('gender', 20)->nullable();
+            $table->string('religion', 20)->nullable();
             $table->unsignedBigInteger('bId');
             $table->unsignedBigInteger('sectionId');
-            $table->string('group');
+            $table->string('group', 30);
             $table->unsignedInteger('optionalSubjectId')->nullable();
             $table->rememberToken();
             $table->timestamps();
-
             $table->foreign('bId')
             ->references('id')->on('school_branches')
             ->onDelete('cascade');

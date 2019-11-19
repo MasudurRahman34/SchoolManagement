@@ -19,8 +19,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $class= classes::where('bId', Auth::user()->bId)->get();
-        $sessionYear= SessionYear::where('bId', Auth::user()->bId)->get();
+        $class= classes::where('bId', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
         return view('backend.pages.classes.manageSection', compact("class","sessionYear"));
     }
 
@@ -65,7 +65,7 @@ class SectionController extends Controller
      */
     public function show()
     {
-        $sections=Section::orderBy('id','DESC')->with('classes')->with('sessionYear')->get();
+        $sections=Section::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->with('sessionYear')->get();
 
         $data_table_render = DataTables::of($sections)
             ->addColumn('hash',function ($row){

@@ -147,6 +147,13 @@ Route::group(['middleware' => ['auth','role_or_permission:Subject']], function (
 
 //
 
+//Attendance Management
+Route::get('/student/attendance','backend\AttendanceController@index')->name('attendance.index');
+Route::post('/student/attendance/store','backend\AttendanceController@storeAttendence')->name('store.attendence');
+Route::post('/student/attendance/update','backend\AttendanceController@update')->name('update.attendence');
+Route::post('/student/attendance/studentData','backend\AttendanceController@studentData')->name('studentData.attendence');
+
+Route::get('/student/attendance/edit','backend\AttendanceController@edit')->name('attendance.edit');
 
 //permission and role
 

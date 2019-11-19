@@ -68,7 +68,7 @@ class SubjectController extends Controller
      */
     public function show()
     {
-        $subjects=Subject::orderBy('id','DESC')->with('classes')->get();
+        $subjects=Subject::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
         $data_table_render = DataTables::of($subjects)
             ->addColumn('hash',function ($row){
                 $i=0;

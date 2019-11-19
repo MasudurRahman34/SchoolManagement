@@ -63,7 +63,7 @@ class GroupController extends Controller
      */
     public function show()
     {
-        $group=Group::orderBy('id','DESC')->with('classes')->get();
+        $group=Group::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
         $data_table_render = DataTables::of($group)
             ->addColumn('hash',function ($row){
                 $i=0;

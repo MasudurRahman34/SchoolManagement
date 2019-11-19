@@ -61,3 +61,41 @@ function deleteAttribute(url, id){
          });
 
  }
+
+ function dynamicSectionSelection(){
+    $('#classId').change(function (e) {
+        e.preventDefault();
+        var classId= $("#classId").val();
+        var sessionYearId=$('#sessionYear').val();
+        var shift=$('input[name="shift"]:checked').val();
+        var url='http://localhost:8000/api/search/section';
+
+        var data= {
+            'classId' : classId,
+            'sessionYearId' : sessionYearId,
+            'shift' : shift,
+        }
+        if(classId>0){
+            $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                    });
+            $.ajax({
+                type: "post",
+                url:url,
+                data: data,
+                success: function (data) {
+                    console.log(data);
+                    var option="<option>--Please Select--</option>";
+                    data.forEach(element => {
+                       
+                        option+=("<option value='"+element.id+"'>"+element.sectionName+"</option>");
+        
+                    });             
+                    $('#sectionId').html(option);
+                }
+            });
+        }
+    });
+ }

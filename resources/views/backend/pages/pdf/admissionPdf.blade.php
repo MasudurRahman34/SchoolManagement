@@ -12,7 +12,7 @@
 <body>
     <div class="row">
         <div class="col-md-12">
-            {{-- @foreach ($students as $student) --}}
+            <!-- {{-- @foreach ($students as $student) --}} -->
 
 
             <div class="text-center m-5">
@@ -52,7 +52,7 @@
         </tr>
     </table>
 
-    {{-- @endforeach --}}
+    <!-- {{-- @endforeach --}} -->
     <h6 class="text-center m-5 text-success">Thanks for being with us !! <br></h6>
     <a class="float-right" href="www.schoolmanagement.com">www.schoolmanagement.com</a>
 

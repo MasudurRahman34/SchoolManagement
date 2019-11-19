@@ -60,6 +60,7 @@ class AdmissionController extends Controller
         $Student->readablePassword=$password;
         $Student->bId=Auth::guard('web')->user()->bId;
         $Student->sectionId=$request->sectionId;
+        $Student->roll=$request->roll;
         $Student->group=$request->group;
         $Student->optionalSubjectId=$request->optionalSubjectId;
         $Student->save();

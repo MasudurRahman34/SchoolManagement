@@ -104,6 +104,10 @@
                     <option value="">--Please Select--</option>
                 </select>
               </div>
+              <div class="form group col-md-6">
+                <label class="control-label">Roll Number</label>
+                <input class="form-control admission" id="roll" name="roll" type="number" >
+              </div>
 
               <div class="form-group col-md-12">
                     <label class="control-label mt-3 bg-secondary text-light"><h5>Group</h5></label><br>
@@ -128,7 +132,7 @@
                         <label class="custom-control-label" for="group5">Vocational</label>
                 </div>
               </div>
-            {{-- <div class="form-group col-md-6">
+            <!-- {{-- <div class="form-group col-md-6">
               <label for="exampleFormControlSelect1"> Fourth Subject</label>
               <select class="form-control admission" id="fourthSubject">
                 <option>Highter Math</option>
@@ -136,18 +140,18 @@
                 <option>Agriculture</option>
                 <option>Economics</option>
               </select>
-            </div> --}}
+            </div> --}} -->
             <div class="form-group col-md-12">
                     <label for=""> Picture</label>
                    <input type="file" name="" id="" class="form-control admission">
             </div>
-            {{-- <div class="form-group col-md-6">
+            <!-- {{-- <div class="form-group col-md-6">
               <div class="form-check">
                 <label class="form-check-label check-inline">
                   <input class="form-check-input admission" type="checkbox" name="scholarship" value="yes">Schoolarship
                 </label>
               </div>
-            </div> --}}
+            </div> --}} -->
           <div class="form-check">
             <label class="form-check-label check-inline">
               <input class="form-check-input admission" type="checkbox">I accept the terms and conditions
