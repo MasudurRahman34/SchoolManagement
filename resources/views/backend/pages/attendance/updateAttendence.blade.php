@@ -13,26 +13,58 @@
         </ul>
     </div>
     @include('backend.partials._message')
-    <div class="row">
-        <div class="col-md-8">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10">
+            <div class="tile">
+            
+                <div class="tile-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="app-breadcrumb breadcrumb side">
+                    
+                        @php
+                        $i = 1;
+                        @endphp
+                        
+                        @foreach($attendences as $attendence)
+                        @if ($i > 0)
+                        <li class="breadcrumb-item"><a href="#">Class : {{$attendence->student->section->classes->className }}</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$attendence->section->sectionName}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"> {{$attendence->section->shift}}</li>
+                            <li class="breadcrumb-item active" aria-current="page"> {{$attendence->created_at}}&nbsp;{{$attendence->created_at->diffForHumans()}}</li>
+                        @endif
+                        @php
+                        $i--;
+                        @endphp
+                        @endforeach
+                        <a href="{{route('attendance.index') }}" class="btn btn-info float-right ml-auto mt-2"> <i class="fa fa-arrow-left"></i> Go Back</a>
+                    </ol>
+                    
+                </nav>
+               
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="clearix"></div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-10">
             <div class="tile">
                 <div class="tile-body">
-                    
-                        
                         <form action="{{ route('update.attendence') }}" method="post">
                                 @csrf
+                        <div class="tableresponsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
                                 <th>Attendence</th>
-                                <th>Student Roll</th>
-                                <th>Student Name</th>
+                                <th>Roll</th>
+                                <th>Name</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($attendences as $attendence)
-                            <tr>
-                                
+                            <tr> 
                                 <td>
                                     <div class="control">
                                         <label class="radio">
@@ -59,14 +91,15 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <button class="btn btn-primary btn-lg" type="submit"><i class="fa fa-plus-square" aria-hidden="true"></i> Update attendence</button>
+                        </div>        
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-plus-square" aria-hidden="true"></i> Update Attendence</button>
                     </form>
                 </div>
             </div>
         </div>
-        </div>
     </div>
-    <div class="clearix"></div>
+</div>
+<div class="clearix"></div>
 @endsection
 @section('script')
     @include('backend.partials.js.datatable');

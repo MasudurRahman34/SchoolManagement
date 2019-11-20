@@ -99,3 +99,7 @@ function deleteAttribute(url, id){
         }
     });
  }
+ function reloadThePage(){
+    document.getElementById("myform").reset();
+} 
+ 

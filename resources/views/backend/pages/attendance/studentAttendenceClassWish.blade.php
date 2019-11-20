@@ -19,14 +19,13 @@
       <div class="clearix"></div>
       <div class="col-md-10">
         <div class="tile">
-        <button type="button" class="btn-info float-right" onClick="reloadThePage()">Refresh!</button>
           <h3 class="tile-title border-bottom p-2">Student Search</h3>
           <div class="tile-body">
-            <form class="row" id="myform" action="javascript:void(0)">
+            <form class="row">
             <div class="form-group col-md-3">
                 <label for="exampleFormControlSelect1">Session Year</label>
                 <select class="form-control admission" id="sessionYear">
-                  <option value="">--Please Select--</option>
+                  <option value="">select</option>
                   @foreach ($sessionYear as $year)
                     <option value="{{$year->id}}">{{$year->sessionYear}}</option>
                   @endforeach
@@ -52,7 +51,7 @@
               <div class="form-group col-md-3">
                 <label for="exampleFormControlSelect1">Select Class</label>
                 <select class="form-control admission" id="classId">
-                  <option value="">--Please Select-- </option>
+                  <option value="">select Class </option>
                   @foreach ($class as $class)
                   <option value="{{$class->id}}">{{$class->className}}</option>
                   @endforeach
@@ -61,7 +60,7 @@
               <div class="form-group col-md-3">
                 <label for="exampleFormControlSelect1"> Section</label>
                 <select class="form-control" id="sectionId">
-                <option value=""> --Please Select--  </option>
+                <option value=""> --Please Section--  </option>
                 </select>
               </div>
               <!-- <div class="form-group col-md-12">
@@ -77,11 +76,11 @@
     <div class="row justify-content-md-center">
         <div class="col-md-10">
             <div class="tile">
-                <div class="tile-body" id="tblHidden" hidden>
+                <div class="tile-body">
                     <form action="{{route('store.attendence')}}" method="post" id="attendence">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" hidden>
-                        <div class="table-responsive" >
+                        <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
@@ -97,7 +96,7 @@
                             </tbody>
                         </table>
                         </div>
-                        <button class="btn btn-primary " type="submit" id="btnAttendance" disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Attendance</button>
+                        <button class="btn btn-lg btn-primary " type="submit"><i class="fa fa-plus-square" aria-hidden="true"></i>attendence</button>
                     </form>
                 </div>
             </div>
@@ -115,7 +114,7 @@
     <script>
       $('#sectionId').change(function (e) {
         e.preventDefault();
-      
+       
         var sectionId= $("#sectionId").val();
         $("#sectionId2").attr('value',sectionId);
 
@@ -129,30 +128,22 @@
           success: function (response) {
           console.log(response.redirectToEdit);
           if(response.redirectToEdit){
-            var txt;
-              if (confirm("Attendance has been Taken At This Date, Do You Need update ?")) {
-                window.location.href = response.redirectToEdit;
-              } else {
-                document.getElementById("myform").reset();
-              }
-           
+            window.location.href = response.redirectToEdit;
           }else{
-            $('#tblHidden').attr('hidden',false);
-            $('#btnAttendance').attr('disabled',false);
           
-            var tr='';
+          var tr='';
             $.each (response, function (key, value) {
             tr +=
-                "<tr>"+
-                    "<td>"+
-                    '<label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="present">present</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="late">late</label>'
-                    +"</td>"+
-                    "<td>"+value.roll+"</td>"+
-                    "<td>"+value.firstName+"</td>"+
-                    
-              "</tr>";
+            "<tr>"+
+                "<td>"+
+                '<label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="present">present</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="late">late</label>'
+                +"</td>"+
+                "<td>"+value.roll+"</td>"+
+                "<td>"+value.firstName+"</td>"+
+                
+           "</tr>";
           
-           });
+   });
 
             $('tbody').html(tr);
           }

@@ -151,10 +151,14 @@ Route::group(['middleware' => ['auth','role_or_permission:Subject']], function (
 Route::get('/student/attendance','backend\AttendanceController@index')->name('attendance.index');
 Route::post('/student/attendance/store','backend\AttendanceController@storeAttendence')->name('store.attendence');
 Route::post('/student/attendance/update','backend\AttendanceController@update')->name('update.attendence');
-Route::post('/student/attendance/studentData','backend\AttendanceController@studentData')->name('studentData.attendence');
-
 Route::get('/student/attendance/edit','backend\AttendanceController@edit')->name('attendance.edit');
 
+Route::get('/student/attendance/classwish','backend\AttendanceController@classwish')->name('attendance.classwish');
+
+Route::get('/student/attendance/bydate','backend\AttendanceController@bydate')->name('attendance.bydate');
+Route::post('/student/attendance/studentData','backend\AttendanceController@studentData')->name('studentData.attendence');
+Route::post('/student/attendance/studentDatabydate','backend\AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
+Route::get('/student/attendance/datewishAttendance/{dateId}','backend\AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
 //permission and role
 
 

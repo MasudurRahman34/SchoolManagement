@@ -20,7 +20,8 @@
       <div class="col-md-10">
         <div class="tile">
         <button type="button" class="btn-info float-right" onClick="reloadThePage()">Refresh!</button>
-          <h3 class="tile-title border-bottom p-2">Student Search</h3>
+          <h3 class="tile-title border-bottom p-2">Student Search</h3> 
+         
           <div class="tile-body">
             <form class="row" id="myform" action="javascript:void(0)">
             <div class="form-group col-md-3">
@@ -50,9 +51,9 @@
 
               <!-- single section-->
               <div class="form-group col-md-3">
-                <label for="exampleFormControlSelect1">Select Class</label>
+                <label for="exampleFormControlSelect1">--Please Select--</label>
                 <select class="form-control admission" id="classId">
-                  <option value="">--Please Select-- </option>
+                  <option value="">select Class </option>
                   @foreach ($class as $class)
                   <option value="{{$class->id}}">{{$class->className}}</option>
                   @endforeach
@@ -61,8 +62,14 @@
               <div class="form-group col-md-3">
                 <label for="exampleFormControlSelect1"> Section</label>
                 <select class="form-control" id="sectionId">
-                <option value=""> --Please Select--  </option>
+                <option value=""> --Please Section--  </option>
                 </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="exampleFormControlSelect1">Date</label>
+                <div class="">
+                  <input class="form-control admission" type="date" name="dateId" id="dateId" >
+                </div>
               </div>
               <!-- <div class="form-group col-md-12">
               <button class="btn btn-lg btn-primary edit_studClass" type="submit" style="float: right;" id="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
@@ -74,13 +81,14 @@
       <!--End inline section -->
     </div>
     <!--End Row-->
-    <div class="row justify-content-md-center">
-        <div class="col-md-10">
-            <div class="tile">
+    <div class="row justify-content-md-center" >
+        <div class="col-md-10" >
+            <div class="tile" >
                 <div class="tile-body" id="tblHidden" hidden>
                     <form action="{{route('store.attendence')}}" method="post" id="attendence">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" hidden>
+                       <input type="date" name="dateId" id="dateId2" hidden>
                         <div class="table-responsive" >
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
@@ -88,16 +96,13 @@
                                 <th>Attendence</th>
                                 <th>Student Roll</th>
                                 <th>Student Name</th>
-                                
                             </tr>
                             </thead>
                             <tbody>
-                       
-                           
                             </tbody>
                         </table>
                         </div>
-                        <button class="btn btn-primary " type="submit" id="btnAttendance" disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Attendance</button>
+                        <button class="btn btn-primary " type="submit" id="btnAttendance" disabled="true"<i class="fa fa-plus-square" aria-hidden="true"></i>Attendance</button>
                     </form>
                 </div>
             </div>
@@ -113,19 +118,22 @@
      dynamicSectionSelection();
     </script>
     <script>
-      $('#sectionId').change(function (e) {
-        e.preventDefault();
       
+      $('#dateId').change(function (e) {
+        e.preventDefault();
+        // alert('working');
+       
         var sectionId= $("#sectionId").val();
+        var dateId= $("#dateId").val();
         $("#sectionId2").attr('value',sectionId);
 
         $.ajax({
           type: "post",
-          url: "{{ url('/student/attendance/studentData')}}",
+          url: "{{ url('/student/attendance/studentDatabydate')}}",
           data: {
-            sectionId:sectionId
+            sectionId:sectionId,
+            dateId:dateId,
           },
-          
           success: function (response) {
           console.log(response.redirectToEdit);
           if(response.redirectToEdit){
@@ -135,24 +143,24 @@
               } else {
                 document.getElementById("myform").reset();
               }
-           
           }else{
+
             $('#tblHidden').attr('hidden',false);
             $('#btnAttendance').attr('disabled',false);
           
-            var tr='';
+          var tr='';
             $.each (response, function (key, value) {
             tr +=
-                "<tr>"+
-                    "<td>"+
-                    '<label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="present">present</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="late">late</label>'
-                    +"</td>"+
-                    "<td>"+value.roll+"</td>"+
-                    "<td>"+value.firstName+"</td>"+
-                    
-              "</tr>";
+            "<tr>"+
+                "<td>"+
+                '<label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="present">present</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="late">late</label>'
+                +"</td>"+
+                "<td>"+value.roll+"</td>"+
+                "<td>"+value.firstName+"</td>"+
+                
+           "</tr>";
           
-           });
+          });
 
             $('tbody').html(tr);
           }

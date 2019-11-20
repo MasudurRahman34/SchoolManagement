@@ -99,6 +99,45 @@ class AttendanceController extends Controller
         // return response()->json($attendences);
     }
 
+    //student attandance date wish 
+    public function studentDatabydate(Request $request)
+    {
+        
+        $attendences=Attendance::where('sectionId', $request->sectionId)
+        ->whereDate('created_at',$request->dateId)
+        ->where('bId' , Auth::guard('web')->user()->bId)
+        ->first();
+        if($attendences!=null){
+            // $attendences=Attendance::where('sectionId', $request->sectionId)
+            // ->whereDate('created_at',date('Y-m-d'))
+            // ->where('bId' , Auth::guard('web')->user()->bId)
+            // ->get();
+            
+            // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
+
+           return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/datewishAttendance/$request->dateId"]);
+        }else{
+            $sectionId= $request->sectionId;
+            $students = Student::where('sectionId',$sectionId)->get();
+            return response()->json($students);
+        }
+
+ 
+        // $sectionId= $request->sectionId;
+        // $students = Student::where('sectionId',$sectionId)->get();
+        // return response()->json($students);
+        // return response()->json($attendences);
+    }
+
+    //DateWishAttendabce
+    public function datewishAttendance($dateId)
+    {
+        $attendences=Attendance::whereDate('created_at',$dateId)->where('bId', Auth::user()->bId)->with('section', 'student')->get();
+       
+        return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
+    
+    }
+
     //edit
     public function edit(){
 
@@ -127,4 +166,17 @@ class AttendanceController extends Controller
         Session::flash('success','Successfully Updated The Attendence');
         return redirect()->back();
     }
+    public function classwish(){
+
+        $class= classes::where('bId', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.attendance.studentAttendenceClassWish', compact("class","sessionYear"));
+    }
+    public function bydate(Request $request)
+    {
+        $class= classes::where('bId', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.attendance.studentAttendenceByDate', compact("class","sessionYear"));
+    }
+    
 }
