@@ -64,7 +64,7 @@ class AdmissionController extends Controller
         $Student->group=$request->group;
         $Student->optionalSubjectId=$request->optionalSubjectId;
         $Student->save();
-        $students=$Student::with('schoolBranch','Section')->latest()->First();
+        $students=$Student::with('schoolBranch','Section')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
         // dd($students);
         // dd($students);
         // $StdbId=$Student->bId;

@@ -37,9 +37,14 @@ Route::group(['prefix' => 'student', 'namespace'=>'auth\student'], function () {
 //student pages
 Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function () {
 Route::get('/index', 'StudentController@index')->name('student.index');
-Route::get('/show', 'StudentController@show')->name('student.show');
+Route::get('/show/profile', 'StudentController@show')->name('student.show');
+Route::get('edit/profile','StudentController@edit')->name('edit.profile');
+Route::post('update/profile','StudentController@update')->name('update.profile');
+
+//Student school Corner
+Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
+Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
 });
-//
 
 
 

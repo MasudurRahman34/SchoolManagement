@@ -48,7 +48,7 @@ class SectionController extends Controller
         }else{
         $section = new Section();
         $section->classId = $request->classId;
-        $section->bId = Auth::user()->bId;
+        $section->bId = Auth::guard('web')->user()->bId;
         $section->sessionYearId = $request->sessionYearId;
         $section->sectionName = $request->sectionName;
         $section->shift = $request->shift;
