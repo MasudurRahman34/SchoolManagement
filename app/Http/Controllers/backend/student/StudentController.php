@@ -12,6 +12,7 @@ class StudentController extends Controller
     public function __construct()
     {
         $this->middleware('auth:student');
+
     }
 
     /**
@@ -99,7 +100,7 @@ class StudentController extends Controller
         $student->blood = $request->blood;
         //dd($student);
         $student->save();
-        
+
         //return response()->json('success',201);
     }
 

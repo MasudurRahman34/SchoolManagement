@@ -19,7 +19,7 @@
       <div class="tile">
         <h3 class="tile-title border-bottom p-2">Student Admission Form</h3>
         <div class="tile-body">
-          <form class="row" method="post" action="{{route('admission.store')}}">
+          <form class="row" method="post" action="{{route('admission.store')}}" enctype='multipart/form-data'>
             @csrf
             <div class="form group col-md-6">
               <label class="control-label">First Name</label>
@@ -171,7 +171,7 @@
 @endsection
 @section('script')
 <script>
-
+dynamicSectionSelection();
 //     var sessionId=$('#sessionYear option:selected').val();
 //     var shift=[];
 //     $(".admission").change(function(e){
@@ -194,38 +194,7 @@
 
 //     });
 
-$('#classId').change(function (e) {
-    e.preventDefault();
-    var classId= $("#classId").val();
-    var sessionYearId=$('#sessionYear').val();
-    var shift=$('input[name="shift"]:checked').val();
 
-    var data= {
-        'classId' : classId,
-        'sessionYearId' : sessionYearId,
-        'shift' : shift,
-    }
-    if(classId>0){
-        $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                });
-        $.ajax({
-            type: "post",
-            url: "{{url('api/search/section')}}",
-            data: data,
-            success: function (data) {
-                console.log(data);
-                var option="";
-                data.forEach(element => {
-                    option+=("<option value='"+element.id+"'>"+element.sectionName+"</option>");
-                });
-                $('#sectionId').html(option);
-            }
-        });
-    }
-});
 
 
 </script>

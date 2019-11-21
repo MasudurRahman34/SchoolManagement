@@ -12,11 +12,7 @@
 <body>
     <div class="row">
         <div class="col-md-12">
-<<<<<<< Updated upstream
             <!-- {{-- @foreach ($students as $student) --}} -->
-=======
-            
->>>>>>> Stashed changes
 
 
             <div class="text-center m-5">

@@ -54,7 +54,15 @@ Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.cor
 Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
 });
 
+//student pages for admin
+Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin'], 'prefix'=>'mystudent', 'namespace'=>'backend'], function () {
+    Route::get('/list/index', 'MyStudentConttroller@index')->name('mystudent.index');
+    Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
+    Route::get('/classwise/', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
+    Route::get('/classwiseList/{id}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
+    Route::get('/previous', 'MyStudentConttrollerr@previous')->name('mystudent.previous');
 
+});
 
 //only for Super Admin
 Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin']], function () {
