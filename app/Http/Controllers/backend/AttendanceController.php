@@ -57,11 +57,11 @@ class AttendanceController extends Controller
         
         }
         
-    return('saved');
 
-        // Session::flash('success','Succesfully Student Attendence Data Saved');
-        // $attendences=Attendance::orderBy('id','ASC')->get();
-        // return redirect()->route('attendance.index');
+
+        Session::flash('success','Succesfully Student Attendence Data Saved');
+        $attendences=Attendance::orderBy('id','ASC')->get();
+        return redirect()->route('attendance.index');
     }
         
     //viewStudentAttendenceDetails

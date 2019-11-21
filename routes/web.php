@@ -41,6 +41,14 @@ Route::get('/show/profile', 'StudentController@show')->name('student.show');
 Route::get('edit/profile','StudentController@edit')->name('edit.profile');
 Route::post('update/profile','StudentController@update')->name('update.profile');
 
+//student Attendance view
+Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
+Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
+Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
+
+
+ 
+
 //Student school Corner
 Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
 Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
