@@ -37,9 +37,8 @@ class MyStudentConttroller extends Controller
                 return '#';
             })
             ->addColumn('action',function ($row){
-
-                return '<button class="btn btn-info btn-sm" onClick="viewProfile('.$row['id'].')"><i class="fa fa-edit"></i></button>';
-                    // '<button  onClick="deleteStudentCls('.$row['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></button>';
+               $edit_url = url('mystudent/show/studentProfile/'.$row['id']);
+                return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
             })
             ->editColumn('section.classes', function($student)
                           {
@@ -63,16 +62,18 @@ class MyStudentConttroller extends Controller
             $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId'");
 
                 $data_table_render = DataTables::of($class)
-                        ->addColumn('hash',function ($row){
+                        ->addColumn('hash',function ($class){
 
                             return '#';
                         })
-                        // ->addColumn('action',function ($row){
-
-                        //     return '<button class="btn btn-info btn-sm" onClick="viewProfile('.$row['id'].')"><i class="fa fa-edit"></i></button>';
-                        //         // '<button  onClick="deleteStudentCls('.$row['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></button>';
-                        // })
-                        ->rawColumns(['hash'])
+                        ->addColumn('action',function ($class){
+                            foreach ($class as $key => $cl) {
+                                $edit_url = url('mystudent/show/studentProfile/'.$cl);
+                                return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
+                            }
+                            
+                         })
+                        ->rawColumns(['hash','action'])
                         ->make(true);
             return $data_table_render;
     }
@@ -112,7 +113,10 @@ class MyStudentConttroller extends Controller
      */
     public function show($id)
     {
-        //
+        $students=Student::with('schoolBranch','Section')
+        ->where('bId', Auth::guard('web')->user()->bId)
+        ->findOrFail($id);
+        return view('backend.pages.mystudent.myStudentProfile',['students' => $students]);
     }
 
     /**
@@ -121,9 +125,12 @@ class MyStudentConttroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $students=Student::with('schoolBranch','Section')
+        ->where('bId', Auth::guard('web')->user()->bId)
+        ->findOrFail(Auth::guard('web')->user()->id);
+        return view('backend.pages.mystudent.updateProfile',['students' => $students]);
     }
 
     /**
@@ -147,5 +154,14 @@ class MyStudentConttroller extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //showProfile method
+    public function showProfile($id){
+
+        
+
+
+        //return view('backend.pagesmystudent.myStudentProfile');
     }
 }

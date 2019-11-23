@@ -1,4 +1,4 @@
-@extends('backend.student.layouts.master')
+@extends('backend.layouts.master')
 	@section('title', 'Home Page')
     @section('content')
             <div class="row user">
@@ -13,7 +13,7 @@
                   <ul class="nav flex-column nav-tabs user-tabs">
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
 
-                    <li class="nav-item"><a class="nav-link" href="#"> Update Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="updateStudentProfile.html"> Update Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
@@ -56,9 +56,9 @@
                             <label class="control-label" name="gender">Gender</label>
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="gender" value="male" @if(old('gender') ==  1) checked="checked" @endif>Male
+                                <input class="form-check-input" type="radio" name="gender" value="male">Male
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input class="form-check-input" type="radio" name="gender" value="Female" @if(old('gender') ==  0) checked="checked" @endif>FeMale
+                                <input class="form-check-input" type="radio" name="gender" value="Female">FeMale
                               </label>
                             </div>
                           </div>

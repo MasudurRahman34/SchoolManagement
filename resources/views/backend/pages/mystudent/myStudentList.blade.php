@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-	@section('title', 'Home Page')
+	@section('title', 'Student List Page')
     @section('content')
     <div class="app-title">
         <div>

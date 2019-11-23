@@ -46,7 +46,7 @@
                                 <th>Section</th>
                                 <th>Shift</th>
                                 <th>Contact</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -84,7 +84,7 @@
                     { data: 'sectionName', name: 'sectionName'},
                     { data: 'shift', name: 'shift'},
                     { data: 'mobile', name: 'mobile'},
-                    // { data: 'action', name: 'action' }
+                    { data: 'action', name: 'action' }
                 ]
             });
             // table.destroy();

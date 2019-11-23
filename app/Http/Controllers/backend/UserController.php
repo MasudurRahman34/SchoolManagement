@@ -84,8 +84,8 @@ class UserController extends Controller
         })
 
             ->addColumn('action',function ($row){
-
-                return '<button class="btn btn-success btn-sm" onClick="viewProfile('.$row['id'].')" data-toggle="tooltip" data-placement="bottom" title="View Profile!"><i class="fa fa-edit"></i></button>'.
+                $edit_url = url('show/'.$row['id']);
+                return '<a href="'.$edit_url.'" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>'.
                     '<button  onClick="btnDecline('.$row['id'].')" class="btn btn-dark btn-sm delete_class"><i class="fa fa-trash-o"></i></button>';
             })
             ->editColumn('role', function($Users)
@@ -268,7 +268,7 @@ class UserController extends Controller
     {
         //
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -288,7 +288,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $users=User::find($id);
+        return view('backend.pages.userModule.show',['users' => $users]);
     }
 
     /**

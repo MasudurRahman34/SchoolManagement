@@ -58,9 +58,11 @@ Route::get('/event/details', 'StudentController@eventDetails')->name('event.deta
 Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin'], 'prefix'=>'mystudent', 'namespace'=>'backend'], function () {
     Route::get('/list/index', 'MyStudentConttroller@index')->name('mystudent.index');
     Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
-    Route::get('/classwise/', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
+    Route::get('/classwise', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
     Route::get('/classwiseList/{id}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
     Route::get('/previous', 'MyStudentConttrollerr@previous')->name('mystudent.previous');
+    Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
+    Route::get('edit/studentProfile','MyStudentConttroller@edit')->name('mystudent.editProfile');
 
 });
 
@@ -93,6 +95,7 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
+    Route::get('/show/{id}', 'UserController@show')->name('user.show');
 });
 Route::group(['middleware' => ['api']], function () {
     Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
