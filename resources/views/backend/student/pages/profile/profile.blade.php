@@ -18,6 +18,7 @@
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
+               
               </div>
               <div class="col-md-9">
                 <div class="">

@@ -66,6 +66,7 @@
            
             <div class="col-md-7">
                 <div class="tile">
+                <h3 class=" row justify-content-md-center">Attendance Information </h3>
                     <div class="tile-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered" id="sampleTable">
@@ -75,6 +76,7 @@
                                         <th>StudentId</th>
                                         <th>attendance</th>
                                         <th>Date</th>
+                                        <th>Last Attendance</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -117,15 +119,18 @@
             ],
              processing:true,
              serverSide:true,
+             paging : true,
+             destroy : true,
              ajax:"{{url('/student/attendance/show/')}}"+"/"+month,
              columns:[
                  { data: 'hash', name: 'hash' },
                  { data: 'studentId', name: 'studentId' },
                  { data: 'attendence', name: 'attendence' },
+                 { data: 'created_at1', name: 'created_at1' },
                  { data: 'created_at', name: 'created_at' },
              ]
          });
-        table.destroy();
+        // table.destroy();
         table.draw();
         $.ajax({
             type: "get",

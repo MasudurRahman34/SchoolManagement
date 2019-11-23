@@ -41,6 +41,21 @@ Route::get('/show/profile', 'StudentController@show')->name('student.show');
 Route::get('edit/profile','StudentController@edit')->name('edit.profile');
 Route::post('update/profile','StudentController@update')->name('update.profile');
 
+//studentTeacherList
+Route::get('/teacher/list', 'StudentTeacherListController@index')->name('student.teacherList');
+Route::get('/teacher/list/show', 'StudentTeacherListController@show')->name('student.teacherList.show');
+
+//student subject List
+Route::get('/subject/list', 'StudentSubjectListController@index')->name('student.subjectlist');
+
+//student class information
+Route::get('/class/classmates', 'StudentClassController@index')->name('student.classmates');
+Route::get('/class/classmates/show', 'StudentClassController@show')->name('student.classmates.show');
+
+//student dashBord card
+
+Route::get('/totalstudent', 'StudentController@totalStudent')->name('student.totalStudent');
+
 //student Attendance view
 Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
 Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');

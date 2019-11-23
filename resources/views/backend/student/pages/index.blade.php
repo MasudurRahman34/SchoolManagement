@@ -41,22 +41,18 @@
     </div>
       <!-- Will be applied progress bar -->
       <div class="row">
-        <div class="col-md-12">
+          <div class="col-md-12">
           <div class="tile">
-             <div class="progress" id="pg">
-                <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-                 
-                    <span class="sr-only">50% Complete</span>
-                </div>
-                <span class="progress-type text-uppercase">Profile</span>
-                <span class="progress-completed">50%</span>
-             </div>
-          </div>
-        </div>
+          <div class="progress-bar" role="progressbar" style="width: 50%;" >25% Profile Progress</div>
+</div>
+          </div></div>
+
+
+        
       </div>
 
-      <div class="row mb-3">
-        <div class="col-xl-3 col-sm-6 py-2">
+      <div class="row mb-5">
+       <!--  <div class="col-xl-3 col-sm-6 py-2">
             <div class="card bg-success text-white h-100">
                 <div class="card-body bg-success">
                     <div class="rotate">
@@ -77,30 +73,31 @@
                     <h1 class="display-4">10</h1>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 py-2">
+        </div> -->
+        
+        <div class="col-xl-3 col-sm-6 py-2 mb-2">
             <div class="card text-white bg-info h-100">
                 <div class="card-body bg-info">
                     <div class="rotate">
                         <i class="fa fa-twitter fa-4x"></i>
                     </div>
-                    <h6 class="text-uppercase">Attendance</h6>
-                    <h1 class="display-4">95%</h1>
+                    <h6 class="text-uppercase">My Attendance</h6>
+                    <p class="display-4" id="Attendance"> </p>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 py-2">
+        <div class="col-xl-3 col-sm-6 py-2 mb-2">
             <div class="card text-white bg-warning h-100">
                 <div class="card-body">
                     <div class="rotate">
                         <i class="fa fa-share fa-4x"></i>
                     </div>
-                    <h6 class="text-uppercase">Exam Result</h6>
-                    <h1 class="display-4">10</h1>
+                    <h6 class="text-uppercase">Total Class Mates</h6>
+                    <h1 class="display-4" id="totalstudent"></h1>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 py-2">
+        <!-- <div class="col-xl-3 col-sm-6 py-2">
             <div class="card text-white bg-warning h-100">
                 <div class="card-body">
                     <div class="rotate">
@@ -132,66 +129,36 @@
                         <h1 class="display-4">2</h1>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>-->
+     </div>  
 
         <div class="row">
             <div class="col-md-5">
-                <div class="tile">
-                    <h3 class="tile-title">Attendance Information</h3>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-7">
+                  <div class="tile">
+                      <h3 class="tile-title">My Attendance Information <?php echo date('M Y'); ?> in Pie Chart</h3>
+                      <div class="embed-responsive embed-responsive-16by9">
+                          <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-7">
                 <div class="tile">
                     <div class="tile-body">
-                        <h6 class="text-uppercase">Last Exam Result</h6><hr>
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="sampleTable">
-                          <thead>
-                              <tr>
-                              <th>Subject Name</th>
-                              <th>Subject Code</th>
-                              <th>Marks</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                              <td>physics</td>
-                              <td>767697661</td>
-                              <td>80</td>
-                              </tr>
-                              <tr>
-                              <td>physics</td>
-                              <td>767697661</td>
-                              <td>70</td>
-                              </tr>
-                              <tr>
-                              <td>physics</td>
-                              <td>767697661</td>
-                              <td>85</td>
-                              </tr>
-                              <tr>
-                              <td>physics</td>
-                              <td>767697661</td>
-                              <td>78</td>
-                              </tr>
-                              <tr>
-                              <td>English</td>
-                              <td>767697661</td>
-                              <td>76</td>
-                              </tr>
-                              <tr>
-                              <td>English</td>
-                              <td>767697661</td>
-                              <td>81</td>
-                              </tr>
-                          </tbody>
-                        </table>
+                        <h3 class=" row justify-content-md-center">My Attendance Information of: <?php echo date('M Y'); ?> </h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>StudentId</th>
+                                        <th>attendance</th>
+                                        <th>Date</th>
+                                        <th>Last Attendance</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
@@ -284,29 +251,81 @@
         </div>
       @endsection
       @section('script')
-      {{-- @include('backend.partials.js.map'); --}}
-      <script>
-        //   adminIndexMap();
-      </script>
-      <script type="text/javascript">
-        var pdata = [{
-                value: 4,
-                color: "#46BFBD",
-                highlight: "#5AD3D1",
-                label: "Persent"
-            },
-            {
-                value: 1,
-                color: "#F7464A",
-                highlight: "#FF5A5E",
-                label: "Absent"
-            }
-            
-        ]
+      @include('backend.student.partials.js.datatable'); 
+      <script src="{{ asset('admin/js/plugins/chart.js') }} "></script>
+       <script type="text/javascript">
+       
+      $(document).ready(function () {
+          
 
-        var ctxp = $("#pieChartDemo").get(0).getContext("2d");
-        var pieChart = new Chart(ctxp).Pie(pdata);
-      </script>
+        var d = new Date();  
+      var month=d.getMonth()+1;
+      //document.getElementById("date").innerHTML = month;
+    //   $('table').attr('id',month);
+      var table=$('#sampleTable').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+             processing:true,
+             serverSide:true,
+             ajax:"{{url('/student/attendance/show/')}}"+"/"+month,
+             columns:[
+                 { data: 'hash', name: 'hash' },
+                 { data: 'studentId', name: 'studentId' },
+                 { data: 'attendence', name: 'attendence' },
+                 { data: 'created_at1', name: 'created_at1' },
+                 { data: 'created_at', name: 'created_at' },
+             ]
+         });
+        // table.destroy();
+        // table.draw();
+        $.ajax({
+            type: "get",
+            url: "{{url('/student/attendance/attendancePercentage/')}}"+"/"+month,
+            data: "data",
+           
+            success: function (response) {
+                console.log(response);
+                document.getElementById("Attendance").innerHTML= parseFloat(response).toFixed(2);
+                var absent=100- response;
+                console.log(absent);
+                var pdata = [{
+                  value: response,
+                  color: "#46BFBD",
+                  highlight: "#5AD3D1",
+                  label: "Persent"
+              },
+              {
+                  value: absent,
+                  color: "#F7464A",
+                  highlight: "#FF5A5E",
+                  label: "Absent"
+              }
+              
+          ]
+  
+  
+  
+          var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+          var pieChart = new Chart(ctxp).Pie(pdata);
+                
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "{{url('/student/totalstudent')}}",
+            data: "data",
+            success: function (data) {
+               $('#totalstudent').html(data.data);
+            }
+        });
+    
+  });
+
+
+  </script>
       @endsection
 
     <!-- Essential javascripts for application to work-->

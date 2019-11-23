@@ -4,11 +4,8 @@ namespace App\Http\Controllers\backend\student;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\model\Attendance;
-use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\Facades\DataTables;
 
-class StudentAttendanceController extends Controller
+class StudentSubjectListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +14,7 @@ class StudentAttendanceController extends Controller
      */
     public function index()
     {
-        return view('backend.student.pages.attendance.studentAttendanceview');
+        return view('backend.student.pages.subject.subjectList');
     }
 
     /**
@@ -47,46 +44,10 @@ class StudentAttendanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($month)
+    public function show($id)
     {
-     
-        $Attendance=Attendance::orderBy('id','DESC')
-                        ->where('studentId', Auth::guard('student')->user()->id)
-                        ->whereMonth('created_at', $month)
-                        ->get();
-        $data_table_render = DataTables::of($Attendance)
-        ->addColumn('hash',function ($row){
-            $i=0;
-            return ++$i;
-               
-        })
-        ->editColumn('created_at1', function($Attendance)
-        {
-           return $Attendance->created_at;
-        }) 
-        ->editColumn('created_at', function($Attendance)
-            {
-               return $Attendance->created_at->diffForHumans();
-            }) 
-       
-        ->rawColumns(['hash'])
-        ->make(true);
-    return $data_table_render;
-
-
+        //
     }
-
-    public function attendancePercentage($month)
-    {
-     
-        $Attendance=Attendance::where('attendence','present')
-                        ->where('studentId', Auth::guard('student')->user()->id)
-                        ->whereMonth('created_at', $month)
-                        ->count();
-         $percentage = (100*$Attendance)/30;
-         return $percentage;
-    }
-
 
     /**
      * Show the form for editing the specified resource.

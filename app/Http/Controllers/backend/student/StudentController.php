@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend\student;
 use App\Http\Controllers\Controller;
 use App\model\Student;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -21,7 +22,9 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
+
         return view('backend.student.pages.index');
     }
 
@@ -56,6 +59,13 @@ class StudentController extends Controller
         ->findOrFail(Auth::guard('student')->user()->id);
         return view('backend.student.pages.profile.profile',['students' => $students]);
     }
+
+   public function totalStudent(){
+    $classId=Auth::guard('student')->user()->Section->classes->id;
+    $totalStudent=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId'");
+    $totalStudent =count($totalStudent);
+    return Response()->json(["success"=>'Counted', "data"=>$totalStudent,201]);
+   }
 
     /**
      * Show the form for editing the specified resource.
