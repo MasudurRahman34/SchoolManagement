@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function requestedUserData()
     {
-        $applyInstitutes=schoolBranch::get();
+        $applyInstitutes=schoolBranch::orderBy('id', 'DESC')->where('activeStatus', false)->get();
         $data_table_render = DataTables::of($applyInstitutes)
         ->addColumn('Status',function ($row){
 
@@ -55,16 +55,49 @@ class UserController extends Controller
 
     public function createUserAndRole()
     {
-        $id=Auth::user()->branchId;
-        if (Auth::user()->branchId==0) {
+        $id=Auth::guard('web')->user()->bId;
+        if (Auth::guard('web')->user()->bId==0) {
             $Users=User::all();
             $roles=Role::all();
         }else{
-            $Users=User::where('branchId', $id)->get();
+            $Users=User::where('bId', $id)->get();
             $roles=Role::whereNotIn('status', [1])->get();
         }
 
         return view('backend.pages.userModule.createUserAndRole')->with('Users', $Users)->with('roles', $roles);
+    }
+
+    public function UserAndRoleList(){
+        $id=Auth::guard('web')->user()->bId;
+        if (Auth::guard('web')->user()->bId==0) {
+            $Users=User::with('roles')->get();
+        }else{
+            $Users=User::where('bId', $id)->with(['roles'=>function($query){
+                $query->whereNotIn('status', [1]);
+            }])->get();
+        }
+
+        $data_table_render = DataTables::of($Users)
+        ->addColumn('hash',function ($row){
+
+            return '#';
+        })
+
+            ->addColumn('action',function ($row){
+
+                return '<button class="btn btn-success btn-sm" onClick="viewProfile('.$row['id'].')" data-toggle="tooltip" data-placement="bottom" title="View Profile!"><i class="fa fa-edit"></i></button>'.
+                    '<button  onClick="btnDecline('.$row['id'].')" class="btn btn-dark btn-sm delete_class"><i class="fa fa-trash-o"></i></button>';
+            })
+            ->editColumn('role', function($Users)
+                          {
+                              foreach ($Users->roles as $role) {
+                                return $role->name;
+                              }
+
+                          })
+            ->rawColumns(['hash','action'])
+            ->make(true);
+        return $data_table_render;
     }
 
     public function addUserAndRole(Request $request)
@@ -85,7 +118,7 @@ class UserController extends Controller
             // $user->role=$request->role;
             $user->joinDate=$request->joinDate;
             $user->address=$request->address;
-            $user->branchId=Auth::user()->branchId;
+            $user->bId=Auth::guard('web')->user()->bId;
             $user->password=Hash::make($password);
             $user->readablePassword=$password;
             $user->save();
@@ -93,7 +126,7 @@ class UserController extends Controller
 
             return response()->json([
                 "user"=>$request,
-                "message" => "Success",
+                "success" => "stored",
                 "password"=>$password,
                 200
             ]);
@@ -118,7 +151,7 @@ class UserController extends Controller
         $prm->syncRoles($request->role);
         return response()->json([
             "data"=>$prm,
-            "message" => "Success",
+            "success" => "stored",
             200
         ]);
     }
@@ -145,7 +178,7 @@ class UserController extends Controller
         // $prm->name=$request->permissionName;
         // $prm->save();
         return response()->json([
-            "message" => "Success",
+            "success" => "stored",
             200
         ]);
     }
@@ -167,21 +200,22 @@ class UserController extends Controller
             $user->name=$sc->nameOfHead;
             $user->mobile=$sc->phoneNumber;
             $user->designation="School Admin";
-            $user->branchId=$sc->id;
+            $user->bId=$sc->id;
             $user->password=Hash::make($password);
             $user->readablePassword=$password;
             $user->save();
             $user->assignRole(['School Admin']);
-            // $user=DB::select("select * from users,school_branches where users.branchId =school_branches.id and users.branchId= '$request->id'");
+            // $user=DB::select("select * from users,school_branches where users.bId =school_branches.id and users.bId= '$request->id'");
 
                 return response()->json([
                     "user"=>$user,
                     "schoolName"=>$sc->nameOfTheInstitution,
-                    "message" => "Success",
+                    "success" => "stored",
                         200
                     ]);
 
         }else{
+            return "here";
 
         $password=mt_rand(100000,999999);
 
@@ -201,7 +235,7 @@ class UserController extends Controller
         $user->email=$request->email;
         $user->name=$request->nameOfHead;
         $user->mobile=$request->phoneNumber;
-        $user->branchId=$sc->id;
+        $user->bId=$sc->id;
         $user->password=Hash::make($password);
         $user->readablePassword=$password;
         $user->save();
@@ -216,8 +250,8 @@ class UserController extends Controller
         // ]);
 
 
-        $branchid=$user->branchId;
-        $user=DB::select("select * from users,school_branches where users.branchId =school_branches.id and users.branchId= '$branchid'");
+        $bId=$user->bId;
+        $user=DB::select("select * from users,school_branches where users.bId =school_branches.id and users.bId= '$bId'");
         $pdf = PDF::loadView('backend.pages.pdf.schoolBranchPdf', ['user'=>$user])->setPaper('a4','portrait');
         $pdf->download('SchoolBranch.pdf');
         return $pdf->stream('SchoolBranch.pdf');

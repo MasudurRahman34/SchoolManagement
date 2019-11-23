@@ -47,7 +47,7 @@ Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('a
 Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
 
 
- 
+
 
 //Student school Corner
 Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
@@ -87,11 +87,12 @@ Route::post('/addPermission', 'backend\UserController@addPermission')->name('add
 
 
 //userManagement
-Route::group(['middleware' => ['auth','role_or_permission:User Management']], function () {
-    Route::get('/create/userAndRole', 'backend\UserController@createUserAndRole')->name('createUserAndRole');
-    Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
-    Route::get('/createRole', 'backend\UserController@createRole')->name('createRole');
-    Route::post('/addRole', 'backend\UserController@addRole')->name('addRole');
+Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'namespace'=>'backend'], function () {
+    Route::get('/create/userAndRole', 'UserController@createUserAndRole')->name('createUserAndRole');
+    Route::get('/userAndRole/list', 'UserController@UserAndRoleList')->name('UserAndRole.list');
+    Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
+    Route::get('/createRole', 'UserController@createRole')->name('createRole');
+    Route::post('/addRole', 'UserController@addRole')->name('addRole');
 });
 Route::group(['middleware' => ['api']], function () {
     Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');

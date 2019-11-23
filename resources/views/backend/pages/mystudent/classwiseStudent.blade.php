@@ -73,6 +73,8 @@
                 ],
                 processing:true,
                 serverSide:true,
+                pagin:true,
+                destroy:true,
                 ajax:"{{url('mystudent/classwiseList/')}}"+'/'+classId,
                 columns:[
                     { data: 'hash', name: 'hash' },
@@ -85,7 +87,7 @@
                     // { data: 'action', name: 'action' }
                 ]
             });
-            table.destroy();
+            // table.destroy();
 
     });
 

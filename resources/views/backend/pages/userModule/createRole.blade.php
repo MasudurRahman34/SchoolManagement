@@ -29,11 +29,25 @@
               <div class="form-group row">
                 <label class="control-label col-md-3 col-sm-12 pl-4">Assign Permissions</label>
                 <div class="col-md-9 col-sm-12">
+                    <div class="row">
+
                     @foreach ($prms as $prm)
-                    <label class="pr-5">
+                    @if($prm->id % 2==0)
+                    <div class="col-md-6">
+                        <label class="pr-5">
                             <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions"><span class="label-text">{{$prm->name}}</span>
                         </label>
+                    </div>
+                    @else
+                    <div class="col-md-6">
+                            <label class="pr-5">
+                                <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions"><span class="label-text">{{$prm->name}}</span>
+                            </label>
+                        </div>
+                    @endif
                     @endforeach
+
+                    </div>
                 </div>
               </div>
           </div>

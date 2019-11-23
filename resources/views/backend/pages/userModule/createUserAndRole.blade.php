@@ -22,27 +22,16 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>SL</th>
+                      <th>hash</th>
                       <th>Name</th>
                       <th>Mobile</th>
                       <th>Email</th>
+                      <th>Designation</th>
                       <th>Role</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                      @foreach ($Users as $user)
-                        <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->mobile}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>
-                                @foreach ($user->roles as $role)
-                                    {{$role->name}}
-                                @endforeach
-                            </td>
-                          </tr>
-                      @endforeach
 
                   </tbody>
                 </table>
@@ -52,7 +41,7 @@
           </div>
           <div class="col-md-5">
                 <div class="tile">
-                 <form class="form-horizontal ml-5" style="" method="post" action="{{ url('/add/userAndRole') }}">
+                 <form class="form-horizontal ml-5" id="myform" style="" method="post" action="javascript:void(0)">
                         @csrf
                   <h3 class="tile-title border-bottom p-2">Add New User</h3>
                   <div class="tile-body">
@@ -78,7 +67,16 @@
                         <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-12 pl-4">Designation</label>
                                 <div class="col-md-9 col-sm-12">
-                                  <input class="form-control col-md-10 col-sm-12" type="text" id="designation" name="designation">
+                                    <select id="designation" name="designation" class="control" required>
+
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Accountant">Accountant</option>
+                                    <option value="Librarian">Librarian</option>
+                                    <option value="Principal">Principal</option>
+                                    <option value="Sr Pricipal">Sr Pricipal</option>
+                                    <option value="Employee">Employee</option>
+
+                                    </select>
                                 </div>
                         </div>
                         <div class="form-group row">
@@ -136,6 +134,25 @@
             todayHighlight: true
         });
 
+        var table= $('#sampleTable').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                processing:true,
+                serverSide:true,
+                ajax:"{{url('/userAndRole/list')}}",
+                columns:[
+                    { data: 'hash', name: 'hash' },
+                    { data: 'name', name: 'name' },
+                    { data: 'mobile', name: 'mobile' },
+                    { data: 'email', name: 'email' },
+                    { data: 'designation', name: 'designation' },
+                    { data: 'role', name: 'role' },
+                    { data: 'action', name: 'action' }
+                ]
+            });
+
 
         $(document).ready(function () {
             $('#submit').click(function (e) {
@@ -152,20 +169,23 @@
                     name: $('#name').val(),
                     mobile: $('#mobile').val(),
                     email: $('#email').val(),
-                    designation: $('#designation').val(),
+                    designation: $('#designation option:selected').val(),
                     role: $('#demoSelect option:selected').val(),
                     joinDate: $('#demoDate').val(),
                     address: $('#address').val(),
                     },
                     success: function(result){
                     console.log(result);
-                    if(result.errors){
-                        $( "div" ).remove( ".text-danger" );
-                            for (err in result.errors) {
-                            $('<div>'+result.errors[err]+'</div>').insertAfter('#'+err).addClass('text-danger').attr('id','error');
-                            console.log(err);
-                            }
-                    }
+                   if (result.success) {
+                            $( "div" ).remove( ".text-danger" );
+                            console.log(result);
+                            successNotification();
+                            removeUpdateProperty("Class");
+                            document.getElementById("myform").reset();
+                        }
+                        if(result.errors){
+                            getError(result.errors);
+                        }
                 }, error: function(xhr, status, error){
                     var errorMessage = xhr.status + ': ' + xhr.statusText
                     alert('Error - ' + errorMessage);
