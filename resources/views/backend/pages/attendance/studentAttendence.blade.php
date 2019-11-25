@@ -81,6 +81,7 @@
                     <form action="{{route('store.attendence')}}" method="post" id="attendence">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" hidden>
+                       <input type="text" name="classId2" id="classId2" hidden>
                         <div class="table-responsive" >
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
@@ -118,6 +119,8 @@
       
         var sectionId= $("#sectionId").val();
         $("#sectionId2").attr('value',sectionId);
+        var classId= $("#classId").val();
+        $("#classId2").attr('value',classId);
 
         $.ajax({
           type: "post",

@@ -19,11 +19,15 @@ class CreateAttendancesTable extends Migration
             $table->string('attendence');
             $table->unsignedInteger('bId');
             $table->unsignedBigInteger('sectionId');
+            $table->unsignedBigInteger('classId');
             $table->foreign('sectionId')
                     ->references('id')->on('sections')
                     ->onDelete('cascade');
             $table->foreign('studentId')
                     ->references('id')->on('students')
+                    ->onDelete('cascade');
+            $table->foreign('classId')
+                    ->references('id')->on('classes')
                     ->onDelete('cascade');
             $table->timestamps();
         });

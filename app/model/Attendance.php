@@ -3,6 +3,7 @@
 namespace App\model;
 use App\model\SessionYear;
 use App\model\Section;
+use App\model\classes;
 
 use Illuminate\Database\Eloquent\Model;
 

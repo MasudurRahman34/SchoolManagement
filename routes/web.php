@@ -18,6 +18,16 @@ Route::get('/', function () {
 Route::get('/admin2', 'backend\AdminController@index')->name('admin.index');
 Route::get('/manage/classes', 'backend\ClassesController@index')->name('manage.class');
 
+//admin deshboard totalstudent
+Route::get('/api/search/totalstudent', 'backend\api\apiController@totalStudent')->name('api.totalStudent');
+Route::get('api/search/StudentAttendancePercentage/{id}', 'backend\api\apiController@StudentAttendancePercentage')->name('api.StudentAttendancePercentage');
+Route::get('api/search/totalTeacher', 'backend\api\apiController@totalTeacher')->name('api.totalTeacher');
+Route::get('api/search/totalUser', 'backend\api\apiController@totalUser')->name('api.totalUser');
+Route::get('api/search/totalsection', 'backend\api\apiController@totalsection')->name('api.totalsection');
+Route::get('api/search/classwishAttentage', 'backend\api\apiController@classwishAttentage')->name('api.classwishAttentage');
+
+
+
 Auth::routes();
 //api routes
 Route::post('api/search/section', 'backend\api\apiController@section')->name('api.section');
@@ -68,9 +78,10 @@ Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController
 Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
 Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
 });
+//endforstudent
 
 //student pages for admin
-Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin'], 'prefix'=>'mystudent', 'namespace'=>'backend'], function () {
+Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>'mystudent', 'namespace'=>'backend'], function () {
     Route::get('/list/index', 'MyStudentConttroller@index')->name('mystudent.index');
     Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
     Route::get('/classwise', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
@@ -188,17 +199,19 @@ Route::group(['middleware' => ['auth','role_or_permission:Subject']], function (
 //
 
 //Attendance Management
-Route::get('/student/attendance','backend\AttendanceController@index')->name('attendance.index');
-Route::post('/student/attendance/store','backend\AttendanceController@storeAttendence')->name('store.attendence');
-Route::post('/student/attendance/update','backend\AttendanceController@update')->name('update.attendence');
-Route::get('/student/attendance/edit','backend\AttendanceController@edit')->name('attendance.edit');
+Route::group(['middleware' => ['auth','role_or_permission:Attendance']], function () {
+    Route::get('/student/attendance','backend\AttendanceController@index')->name('attendance.index');
+    Route::post('/student/attendance/store','backend\AttendanceController@storeAttendence')->name('store.attendence');
+    Route::post('/student/attendance/update','backend\AttendanceController@update')->name('update.attendence');
+    Route::get('/student/attendance/edit','backend\AttendanceController@edit')->name('attendance.edit');
 
-Route::get('/student/attendance/classwish','backend\AttendanceController@classwish')->name('attendance.classwish');
+    Route::get('/student/attendance/classwish','backend\AttendanceController@classwish')->name('attendance.classwish');
 
-Route::get('/student/attendance/bydate','backend\AttendanceController@bydate')->name('attendance.bydate');
-Route::post('/student/attendance/studentData','backend\AttendanceController@studentData')->name('studentData.attendence');
-Route::post('/student/attendance/studentDatabydate','backend\AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
-Route::get('/student/attendance/datewishAttendance/{dateId}','backend\AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
+    Route::get('/student/attendance/bydate','backend\AttendanceController@bydate')->name('attendance.bydate');
+    Route::post('/student/attendance/studentData','backend\AttendanceController@studentData')->name('studentData.attendence');
+    Route::post('/student/attendance/studentDatabydate','backend\AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
+    Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','backend\AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
+});
 //permission and role
 
 

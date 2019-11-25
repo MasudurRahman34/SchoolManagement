@@ -14,6 +14,7 @@ use Auth;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
+
 class AttendanceController extends Controller
 {
     public function index(){
@@ -45,13 +46,18 @@ class AttendanceController extends Controller
 
     //store
     public function storeAttendence(Request $request){
+        // return ($request);
         
         $attendence= $request->attend;
         foreach ($attendence as $id => $value) {  
         $stAttendence = new Attendance();
         $stAttendence->attendence = $value;
         $stAttendence->sectionId = $request->sectionId;
+        $stAttendence->classId = $request->classId2;
         $stAttendence->studentId = $id;
+        if($request->created_date !=null){
+            $stAttendence->created_at=$request->created_date;
+        }
         $stAttendence->bId= Auth::user()->bId;
         $stAttendence->save();
         
@@ -61,7 +67,12 @@ class AttendanceController extends Controller
 
         Session::flash('success','Succesfully Student Attendence Data Saved');
         $attendences=Attendance::orderBy('id','ASC')->get();
-        return redirect()->route('attendance.index');
+if((url()->previous())!==(url('/student/attendance'))){
+    return redirect()->route('attendance.bydate');
+}else{
+    return redirect()->route('attendance.index');
+}
+        
     }
         
     //viewStudentAttendenceDetails
@@ -103,10 +114,12 @@ class AttendanceController extends Controller
     public function studentDatabydate(Request $request)
     {
         
+        
         $attendences=Attendance::where('sectionId', $request->sectionId)
         ->whereDate('created_at',$request->dateId)
         ->where('bId' , Auth::guard('web')->user()->bId)
         ->first();
+        
         if($attendences!=null){
             // $attendences=Attendance::where('sectionId', $request->sectionId)
             // ->whereDate('created_at',date('Y-m-d'))
@@ -115,7 +128,7 @@ class AttendanceController extends Controller
             
             // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
-           return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/datewishAttendance/$request->dateId"]);
+           return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/datewishAttendance/$request->dateId/$request->sectionId"]);
         }else{
             $sectionId= $request->sectionId;
             $students = Student::where('sectionId',$sectionId)->get();
@@ -130,9 +143,9 @@ class AttendanceController extends Controller
     }
 
     //DateWishAttendabce
-    public function datewishAttendance($dateId)
+    public function datewishAttendance($dateId, $sectionId)
     {
-        $attendences=Attendance::whereDate('created_at',$dateId)->where('bId', Auth::user()->bId)->with('section', 'student')->get();
+        $attendences=Attendance::whereDate('created_at',$dateId)->where('sectionId', $sectionId)->where('bId', Auth::user()->bId)->with('section', 'student')->get();
        
         return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
     

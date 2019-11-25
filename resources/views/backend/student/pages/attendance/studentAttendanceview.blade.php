@@ -64,7 +64,7 @@
    
             
            
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="tile">
                 <h3 class=" row justify-content-md-center">Attendance Information </h3>
                     <div class="tile-body">

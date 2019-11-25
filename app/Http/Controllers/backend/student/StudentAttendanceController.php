@@ -78,12 +78,20 @@ class StudentAttendanceController extends Controller
 
     public function attendancePercentage($month)
     {
+        $totalday=Attendance::where('studentId', Auth::guard('student')->user()->id)
+                        ->whereMonth('created_at', $month)
+                        ->count();
+                        if($totalday==0){
+                            $totalday=1;
+                        }else{
+                            $totalday=$totalday;
+                        }
      
         $Attendance=Attendance::where('attendence','present')
                         ->where('studentId', Auth::guard('student')->user()->id)
                         ->whereMonth('created_at', $month)
                         ->count();
-         $percentage = (100*$Attendance)/30;
+         $percentage = (100*$Attendance)/$totalday;
          return $percentage;
     }
 

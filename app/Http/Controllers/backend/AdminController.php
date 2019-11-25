@@ -4,10 +4,13 @@ namespace App\Http\Controllers\backend;
 use App\model\classes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Auth;
 use Spatie\Permission\Models\Permission;
 use PHPUnit\Util\Json;
 use App\User;
+use App\model\Attendance;
+use Illuminate\Support\Facades\Auth;
+use DB;
+
 
 class AdminController extends Controller
 {
@@ -63,6 +66,19 @@ class AdminController extends Controller
     {
         //
     }
+
+    public function totalStudent(){
+        $bId=Auth::guard('web')->user()->bId;
+        $totalStudent=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And students.bId='$bId'");
+        $totalStudent =count($totalStudent);
+        return Response()->json(["success"=>'Counted', "data"=>$totalStudent,201]);
+       }
+
+
+
+
+    //attendance    
+   
 
     /**
      * Display the specified resource.
