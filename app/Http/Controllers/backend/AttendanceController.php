@@ -96,7 +96,7 @@ if((url()->previous())!==(url('/student/attendance'))){
             
             // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
-            return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/edit"]);
+            return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/edit/$request->sectionId"]);
         }else{
             $sectionId= $request->sectionId;
             $students = Student::where('sectionId',$sectionId)->get();
@@ -152,9 +152,9 @@ if((url()->previous())!==(url('/student/attendance'))){
     }
 
     //edit
-    public function edit(){
+    public function edit( $sectionId){
 
-        $attendences=Attendance::whereDate('created_at',date('Y-m-d'))->where('bId', Auth::user()->bId)->with('section', 'student')->get();
+        $attendences=Attendance::whereDate('created_at',date('Y-m-d'))->where('sectionId', $sectionId)->where('bId', Auth::user()->bId)->with('section', 'student')->get();
         // foreach($attendences as $attn){
         //     foreach($attn->section->student as $stn){
         //         dd($stn->firstName);

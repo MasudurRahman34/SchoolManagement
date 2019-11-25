@@ -213,7 +213,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance']], functio
     Route::get('/student/attendance','backend\AttendanceController@index')->name('attendance.index');
     Route::post('/student/attendance/store','backend\AttendanceController@storeAttendence')->name('store.attendence');
     Route::post('/student/attendance/update','backend\AttendanceController@update')->name('update.attendence');
-    Route::get('/student/attendance/edit','backend\AttendanceController@edit')->name('attendance.edit');
+    Route::get('/student/attendance/edit/{sectionId}','backend\AttendanceController@edit')->name('attendance.edit');
 
     Route::get('/student/attendance/classwish','backend\AttendanceController@classwish')->name('attendance.classwish');
 
