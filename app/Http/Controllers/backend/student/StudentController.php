@@ -6,6 +6,8 @@ use App\model\Student;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use DB;
 
 class StudentController extends Controller
@@ -75,6 +77,7 @@ class StudentController extends Controller
      */
     public function edit()
     {
+       
         $students=Student::with('schoolBranch','Section')
         ->where('bId', Auth::guard('student')->user()->bId)
         ->findOrFail(Auth::guard('student')->user()->id);
@@ -89,29 +92,55 @@ class StudentController extends Controller
      * @param  \App\model\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        // //validate
-        // $this->validated($request,[
-        //     'firstName'=>'required',
-        //     'birthDate'=>'required',
-        //     'email'=>'required|array',
-        //     'address'=>'required',
-        //     'mobile'=>'required',
-        //     'blood'=>'required',
+    public function update(Request $request)
+    {  
+        // $this->validate($request,[
+        //     'firstName'=>'string',
+        //     'fatherName'=>'string',
+        //     'motherName'=>'string',
+        //     'gender'=>'',
+        //     'birthDate'=>'',
+        //     'religion'=>'',
+        //     'email'=>'required|email|unique:students,email,'.Auth::guard('student')->user()->id,
+        //     'address'=>'string',
+        //     'mobile'=>'',
+        //     'blood'=>'',
+        //     'fatherOccupation'=>'',
+        //     'MotherOccupation'=>'',
+        //     'fatherIncome'=>'string',
+        //     'motherIncome'=>'',
+        //     'address'=>'string',
+        //     'mobile'=>'',
         // ]);
         // 2. data update
-        $student = Student::find($id);
-        $student->firstName = $request->firstName;
-        $student->birthDate = $request->birthDate;
-        $student->email = $request->email;
-        $student->address = $request->address;
-        $student->mobile = $request->mobile;
-        $student->blood = $request->blood;
-        //dd($student);
-        $student->save();
-
-        //return response()->json('success',201);
+        $std = Student::find(Auth::guard('student')->user()->id);
+        $std->firstName = $request->firstName;
+        $std->fatherName = $request->fatherName;
+        $std->motherName = $request->motherName;
+        $std->gender = $request->gender;
+        $std->birthDate = $request->birthDate;
+        $std->religion = $request->religion;
+        $std->email = $request->email;
+        $std->address = $request->address;
+        $std->mobile = $request->mobile;
+        $std->blood = $request->blood;
+        $std->fatherOccupation = $request->fatherOccupation;
+        $std->MotherOccupation = $request->MotherOccupation;
+        $std->fatherIncome = $request->fatherIncome;
+        $std->motherIncome = $request->motherIncome;
+        $std->address = $request->address;
+        $std->mobile = $request->mobile;
+        // file upload
+        if ($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().".".$image->getClientOriginalExtension();
+            $destination_path = public_path('images');
+            $image->move($destination_path,$filename);
+            $std->image = $filename;
+        }
+        $std->save();
+        Session::flash('success','Successfully Student Profile Updated');
+        return redirect()->back();
     }
 
     /**
@@ -134,5 +163,40 @@ class StudentController extends Controller
     //event
     public function eventDetails(){
         return view('backend.student.pages.schoolCorner.eventDetails');
+    }
+
+    //Student's other information updated method
+    // public function otherInfo(Request $request){
+    //     $this->validate($request,[
+    //         'fatherOccupation'=>'required',
+    //         'MotherOccupation'=>'',
+    //         'fatherIncome'=>'string',
+    //         'motherIncome'=>'',
+    //         'address'=>'string',
+    //         'mobile'=>'',
+    //     ]); 
+    //     // 2. data update
+    //     $stud = Student::find(Auth::guard('student')->user()->id);
+    //     $stud->fatherOccupation = $request->fatherOccupation;
+    //     $stud->MotherOccupation = $request->MotherOccupation;
+    //     $stud->fatherIncome = $request->fatherIncome;
+    //     $stud->motherIncome = $request->motherIncome;
+    //     $stud->address = $request->address;
+    //     $stud->mobile = $request->mobile;
+       
+    //     $stud->save();
+    //     Session::flash('success','Successfully Student Information Updated');
+    //     return redirect()->back();
+    // }
+
+    public function changePassword(Request $request){
+        // $this->validate($request,[
+        //     'password'=>'required|string|confirmed|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/'
+        // ]);
+        $student = Student::find(Auth::guard('student')->user()->id);
+        $student->password = Hash::make($request->password);
+        $student->save();
+        Session::flash('success','You Have Successfully Changed Password');
+        return redirect()->back();
     }
 }

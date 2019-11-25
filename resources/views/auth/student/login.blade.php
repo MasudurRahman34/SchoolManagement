@@ -42,14 +42,26 @@
       </div>
 </div>
 
-<div class="container-fluid bg-3 text-center">
+<div class="container-fluid bg-3">
   <div class="row">
-    <div class="col-sm-6">
-      <p class="mt-5">Education Is The Most Powerful Weapon Which You Can Use To Change The World !!</p>
+    <div class="col-sm-6 text-center">
+      <!-- <p class="mt-5">Education Is The Most Powerful Weapon Which You Can Use To Change The World !!</p> -->
       <img src="{{ asset('images/login_image.png') }}" class="img-responsive margin" style="width:70%" alt="Image">
     </div>
     <div class="col-sm-6">
-     <form class="login-form mt-5 mb-5" style="margin: auto; width:70%" action="#">
+    <h3 class="login-head mb-5"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Success Notes</h3>
+    <hr>
+    <ul class="list-group list-group-flush">
+  <li class="list-group-item">Challenges are what make life interesting. Overcoming them is what makes life meaningful. – Joshua J. Marine</li>
+  <li class="list-group-item">I’ve failed over and over and over again in my life. And that is why I succeed. – Michael Jordan</li>
+  <li class="list-group-item">I don’t measure a man’s success by how high he climbs, but how high he bounces when he hits the bottom. – George S. Patton</li>
+  <li class="list-group-item">If you’re going through hell, keep going. – Winston Churchill</li>
+  <li class="list-group-item">Don’t let your victories go to your head, or your failures go to your heart.</li>
+  <li class="list-group-item">Failure is the opportunity to begin again more intelligently. – Henry Ford</li>
+</ul>
+    
+    
+     <!-- <form class="login-form mt-5 mb-5" style="margin: auto; width:70%" action="#">
 
           <h3 class="login-head mb-5"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Apply For Service</h3>
           <div class="form-group">
@@ -97,7 +109,8 @@
             <button class="btn btn-success btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>Sent Request</button>
           </div>
           <br>
-        </form>
+        </form> -->
+        
     </div>
 
   </div>

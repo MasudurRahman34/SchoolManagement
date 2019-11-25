@@ -48,8 +48,13 @@ Route::group(['prefix' => 'student', 'namespace'=>'auth\student'], function () {
 Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function () {
 Route::get('/index', 'StudentController@index')->name('student.index');
 Route::get('/show/profile', 'StudentController@show')->name('student.show');
-Route::get('edit/profile','StudentController@edit')->name('edit.profile');
-Route::post('update/profile','StudentController@update')->name('update.profile');
+Route::get('edit/profile','StudentController@edit')->name('student.edit.profile');
+Route::post('update/profile','StudentController@update')->name('student.update.profile');
+//Student password change route
+Route::post('/change/password','StudentController@changePassword')->name('change.password');
+//Other information route
+Route::post('update/otherInfo','StudentController@otherInfo')->name('update.otherInfo');
+
 
 //studentTeacherList
 Route::get('/teacher/list', 'StudentTeacherListController@index')->name('student.teacherList');
@@ -88,7 +93,8 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
     Route::get('/classwiseList/{id}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
     Route::get('/previous', 'MyStudentConttrollerr@previous')->name('mystudent.previous');
     Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
-    Route::get('edit/studentProfile','MyStudentConttroller@edit')->name('mystudent.editProfile');
+    Route::get('edit/studentProfile/{id}','MyStudentConttroller@edit')->name('mystudent.editProfile');
+    Route::post('update/studentProfile/{id}','MyStudentConttroller@update')->name('mystudent.update');
 
 });
 
@@ -121,7 +127,11 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
-    Route::get('/show/{id}', 'UserController@show')->name('user.show');
+   
+    Route::get('/profile', 'UserController@profile')->name('user.profile');
+    //edit & update
+    Route::get('edit/profile','UserController@edit')->name('edit.profile');
+    Route::post('update/profile','UserController@update')->name('update.profile');
 });
 Route::group(['middleware' => ['api']], function () {
     Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');

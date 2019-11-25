@@ -215,7 +215,6 @@ class UserController extends Controller
                     ]);
 
         }else{
-            return "here";
 
         $password=mt_rand(100000,999999);
 
@@ -292,15 +291,22 @@ class UserController extends Controller
         return view('backend.pages.userModule.show',['users' => $users]);
     }
 
+    public function profile()
+    {
+        $users=User::FindOrFail(Auth::guard('web')->user()->id);
+        return view('backend.pages.userModule.show',['users' => $users]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $user=User::all();
+        return view('backend.pages.userModule.updateProfile',['user' => $user]);
     }
 
     /**

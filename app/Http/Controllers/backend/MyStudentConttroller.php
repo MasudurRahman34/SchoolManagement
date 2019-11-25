@@ -10,6 +10,7 @@ use App\model\Section;
 use Illuminate\Support\Facades\Auth;
 use DataTables;
 use DB;
+use Session;
 
 class MyStudentConttroller extends Controller
 {
@@ -125,11 +126,11 @@ class MyStudentConttroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         $students=Student::with('schoolBranch','Section')
         ->where('bId', Auth::guard('web')->user()->bId)
-        ->findOrFail(Auth::guard('web')->user()->id);
+        ->findOrFail($id);
         return view('backend.pages.mystudent.updateProfile',['students' => $students]);
     }
 
@@ -142,7 +143,52 @@ class MyStudentConttroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $this->validate($request,[
+        //     'firstName'=>'string',
+        //     'fatherName'=>'string',
+        //     'motherName'=>'string',
+        //     'gender'=>'',
+        //     'birthDate'=>'',
+        //     'religion'=>'',
+        //     'address'=>'string',
+        //     'mobile'=>'',
+        //     'blood'=>'',
+        //     'fatherOccupation'=>'required',
+        //     'MotherOccupation'=>'',
+        //     'fatherIncome'=>'string',
+        //     'motherIncome'=>'',
+        //     'address'=>'string',
+        //     'mobile'=>'',
+        // ]);
+        // 2. data update
+        $std = Student::find($id);
+        $std->firstName = $request->firstName;
+        $std->fatherName = $request->fatherName;
+        $std->motherName = $request->motherName;
+        $std->gender = $request->gender;
+        $std->birthDate = $request->birthDate;
+        $std->religion = $request->religion;
+        $std->email = $request->email;
+        $std->address = $request->address;
+        $std->mobile = $request->mobile;
+        $std->blood = $request->blood;
+        $std->fatherOccupation = $request->fatherOccupation;
+        $std->MotherOccupation = $request->MotherOccupation;
+        $std->fatherIncome = $request->fatherIncome;
+        $std->motherIncome = $request->motherIncome;
+        $std->address = $request->address;
+        $std->mobile = $request->mobile;
+        // file upload
+        if ($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().".".$image->getClientOriginalExtension();
+            $destination_path = public_path('images');
+            $image->move($destination_path,$filename);
+            $std->image = $filename;
+        }
+        $std->save();
+        Session::flash('success','Successfully Student Profile Updated');
+        return redirect()->back();
     }
 
     /**

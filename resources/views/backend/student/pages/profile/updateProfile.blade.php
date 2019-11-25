@@ -1,11 +1,12 @@
 @extends('backend.student.layouts.master')
-	@section('title', 'Home Page')
+	@section('title', 'Student Update page')
     @section('content')
             <div class="row user">
               <div class="col-md-3">
                 <div class="profile" style="display: contents;">
                   <div class="info"><img class="user-img" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg">
-                    <p>{{$students->firstName}}</p>
+                    <h5>{{$students->firstName}}</h5>
+                    <h6>{{$students->studentId}}</h6>
                     <h4>{{$students->schoolBranch->nameOfTheInstitution}}</h4>
                   </div>
                 </div>
@@ -13,7 +14,6 @@
                   <ul class="nav flex-column nav-tabs user-tabs">
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
 
-                    <li class="nav-item"><a class="nav-link" href="#"> Update Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
@@ -25,17 +25,36 @@
           <div class="tile-body">
             
               <h2>Student Information</h2>
-              <br>
+              @if(count($errors)>0)
+                <div class="alert alert-danger" role="alert">
+                  <ul>
+                     @foreach($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                     @endforeach 
+                  </ul>
+                 </div>
+              @endif
+              @if(Session::has('success'))
+                 <div class="alert alert-success" role="alert">
+                    {{ Session::get('success') }}
+                 </div>
+                @endif
+                @if(Session::has('failed'))
+                 <div class="alert alert-danger" role="alert">
+                     {{ Session::get('failed') }}
+                  </div>
+                @endif
+                 <br>
               <!-- Nav tabs -->
               <ul class="nav nav-tabs">
                 <li class="nav-item">
                   <a class="nav-link active" href="#home">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#menu1">Parent</a>
+                  <a class="nav-link" href="#menu2">Other Information</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#menu2">Other Information</a>
+                  <a class="nav-link" href="#menu3">Change Password</a>
                 </li>
               </ul>
             
@@ -45,20 +64,35 @@
                   <h4>Update student Information</h4>
                   <hr>
                   <div class="row">
-                      <form class="row" action="{{route('update.profile')}}" method="post">
+                      <form class="row" action="{{route('student.update.profile')}}" method="post" enctype="multipart/form-data">
                       @csrf
+                         <div class="form group col-md-3">
+                            <label class="control-label">Id</label>
+                            <input class="form-control" type="text" name="studentId"
+                              id="studentname" value="{{$students->studentId}}">
+                          </div>
                           <div class="form group col-md-3">
                             <label class="control-label">Name</label>
-                            <input class="form-control" type="text" placeholder="Enter full name" name="studentname"
+                            <input class="form-control" type="text" name="firstName"
                               id="studentname" value="{{$students->firstName}}">
+                          </div>
+                          <div class="form group col-md-3">
+                            <label class="control-label">Father's Name</label>
+                            <input class="form-control" type="text" name="fatherName"
+                              id="studentname" value="{{$students->fatherName}}">
+                          </div>
+                          <div class="form group col-md-3">
+                            <label class="control-label">Mother Name</label>
+                            <input class="form-control" type="text" name="motherName"
+                              id="studentname" value="{{$students->motherName}}">
                           </div>
                           <div class="form-group col-md-3">
                             <label class="control-label" name="gender">Gender</label>
                             <div class="form-check">
                               <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="gender" value="male" @if(old('gender') ==  1) checked="checked" @endif>Male
+                                <input class="form-check-input" type="radio" name="gender" value="male" {{ $students->gender=='male'?'checked':'' }}>Male
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input class="form-check-input" type="radio" name="gender" value="Female" @if(old('gender') ==  0) checked="checked" @endif>FeMale
+                                <input class="form-check-input" type="radio" name="gender" value="Female" {{ $students->gender=='female'?'checked':'' }}>FeMale
                               </label>
                             </div>
                           </div>
@@ -66,7 +100,7 @@
                           <div class="form-group col-md-3">
                             <label class=" control-label">Date of Birth*</label>
                             <div class="">
-                              <input class="form-control"type="date" id="birthDate" value="{{$students->birthDate}}">
+                              <input class="form-control"type="date" id="birthDate" name="birthDate" value="{{$students->birthDate}}">
                             </div>
                           </div>
                           <div class="form group col-md-3">
@@ -76,15 +110,15 @@
                           
                           <div class="form group col-md-3">
                             <label class="control-label">Email</label>
-                            <input class="form-control" type="email" placeholder="Enter Email Address" id="email" name="email" value="{{$students->email}}">
+                            <input class="form-control" type="email" id="email" name="email" value="{{$students->email}}">
                           </div>
                           <div class="form group col-md-3">
                             <label class="control-label">Address</label>
-                            <input class="form-control" type="text" placeholder="Enter full Address" id="address" name="address" value="{{$students->address}}">
+                            <input class="form-control" type="text" id="address" name="address" value="{{$students->address}}">
                           </div>
                           <div class="form group col-md-3">
                             <label class="control-label">Mobile No</label>
-                            <input class="form-control" type="text" placeholder="Enter Your mobile Number" name="mobileno"
+                            <input class="form-control" type="text" name="mobile"
                               id="mobileno" value="{{$students->mobile}}">
                           </div>
                           <!-- single section-->
@@ -103,168 +137,83 @@
                           </div>
                           <!--End primary dev section-->
                             
-                            <div class="form-group col-md-3">
+                            <!-- <div class="form-group col-md-3">
                                 <lable class="">Change Image</lable>
                                 <input type="file" name="image" id="image" class="form-control btn btn-light">
                             </div>
-                            
+                            <div class="form-group col-md-3">
+                                <lable class="">Preview Image</lable>
+                                <img id="image_preview" src="" style="width: 180px;height: 180px">
+                            </div>    -->
                       </div>
                       <div class="tile-footer">
-                        <a class="btn btn-secondary"><i
-                            class="fa fa-fw  fa-check-circle"></i> Update </a>
+                      <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Profile</button>
                     </div>
-                  </form>
                 </div>
-                <div id="menu1" class="container tab-pane fade"><br>
-                  <h3> Parent Information</h3><hr>
-                  <div class="row">
-                      <form class="row">
-                          <div class="form group col-md-3">
-                            <label class="control-label">Father Name</label>
-                            <input class="form-control" type="text" placeholder="Enter Father full name" name="fathername"
-                              id="fathername">
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Mother Name</label>
-                            <input class="form-control" type="text" placeholder="Enter Mother full name" name="mothername"
-                              id="mothername">
-                          </div>
-                          
-                          <div class="form group col-md-3">
-                            <label class="control-label">Religion</label>
-                            <input class="form-control" type="text" placeholder="Enter Religion name" name="religion" id="religion">
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Father Occupation</label>
-                            <input class="form-control" type="text" placeholder="Enter Father Occupation" id="fatheroccuption"
-                              name="fatheroccuption">
-                          </div>
-                          <div class="form group col-md-3">
-                              <label class="control-label">Mother Occupation</label>
-                              <input class="form-control" type="text" placeholder="Enter Father Occupation" id="fatheroccuption"
-                                name="fatheroccuption">
-                            </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Email</label>
-                            <input class="form-control" type="email" placeholder="Enter Email Address" id="email" name="email">
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Address</label>
-                            <input class="form-control" type="text" placeholder="Enter full Address" id="address" name="address">
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Mobile No</label>
-                            <input class="form-control" type="text" placeholder="Enter Your mobile Number" name="mobileno"
-                              id="mobileno">
-                          </div>
-                          <!-- single section-->
-                          <div class="form-group col-md-3">
-                            <label for="exampleFormControlSelect1">Father Blood Group</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="bloodgroup" id="bloodgroup">
-                              <option>O+</option>
-                              <option>O-</option>
-                              <option>A-</option>
-                              <option>A+</option>
-                              <option>B+</option>
-                              <option>B-</option>
-                              <option>AB-</option>
-                              <option>AB+</option>
-                            </select>
-                          </div>
-                          <div class="form-group col-md-3">
-                              <label for="exampleFormControlSelect1">Mother Blood Group</label>
-                              <select class="form-control" id="exampleFormControlSelect1" name="bloodgroup" id="bloodgroup">
-                                <option>O+</option>
-                                <option>O-</option>
-                                <option>A-</option>
-                                <option>A+</option>
-                                <option>B+</option>
-                                <option>B-</option>
-                                <option>AB-</option>
-                                <option>AB+</option>
-                              </select>
-                            </div>
-                          <!--End primary dev section-->
-                            
-                            <div class="form-group col-md-3">
-                                <lable class="">upload Parent Image</lable>
-                                <input type="file" name="image" id="image" class="form-control btn btn-light">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <lable class="">upload Parent NID</lable>
-                                <input type="file" name="image" id="image" class="form-control btn btn-light">
-                            </div>
-                            
-                      </div>
-                        <div class="tile-footer">
-                          <a class="btn btn-secondary" href="#"><i
-                                class="fa fa-fw fa-times-circle"></i>Cancel</a><a href="studentProfile.html"
-                                 class="btn btn-primary float-right" type="button" id="demoSwal" name=""><i
-                              class="fa fa-fw fa-check-circle"></i> Update </a>
-                        </div>
-                    </form>
-              </div>
             <div id="menu2" class="container tab-pane fade"><br>
-
                   <div class="row">
-                      <form class="row">
+                     
+                           <div class="form group col-md-3">
+                              <label class="control-label">Father occupation</label>
+                              <input class="form-control" type="int" min="0" name="fatherOccupation"
+                                id="studentname" value="{{$students->fatherOccupation}}">
+                           </div>
+                           <div class="form group col-md-3">
+                              <label class="control-label">Mother occupation</label>
+                              <input class="form-control" type="int" min="0" name="MotherOccupation"
+                                id="studentname" value="{{$students->MotherOccupation}}">
+                           </div>
+                           <div class="form group col-md-3">
+                              <label class="control-label">FAther's income</label>
+                              <input class="form-control" type="int" min="0" name="fatherIncome"
+                                id="studentname" value="{{$students->fatherIncome}}">
+                           </div>
+                           <div class="form group col-md-3">
+                              <label class="control-label">Mother's income</label>
+                              <input class="form-control" type="int" min="0" name="motherIncome"
+                                id="studentname" value="{{$students->motherIncome}}">
+                           </div>
                           <div class="form group col-md-3">
-                              <label class="control-label">Number of brother&Sister</label>
-                              <input class="form-control" type="int" min="0" placeholder="Number of sibling" name="studentname"
-                                id="studentname">
-                            </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Previous School</label>
-                            <input class="form-control" type="text" placeholder="Previous Scholl name" name="studentname"
-                              id="studentname">
-                          </div>
-                          
-                          <div class="form group col-md-3">
-                            <label class="control-label">Hobby</label>
-                            <input class="form-control" type="text" placeholder="your Hobby" name="fathername"
-                              id="fathername">
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Extra cariculam Activity</label>
-                            <input class="form-control" type="text" placeholder="Enter Mother full name" name="mothername"
-                              id="mothername">
-                          </div>
-                          <div class="form-group col-md-3">
-                            <label class=" control-label">Home District</label>
-                            <div class="">
-                              <input class="form-control"type="text" id="birthDate" >
-                            </div>
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Valiage</label>
-                            <input class="form-control" type="text" placeholder="valiage name" name="religion" id="religion">
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Thana</label>
-                            <input class="form-control" type="text" placeholder="Thana" id="fatheroccuption"
-                              name="fatheroccuption">
-                          </div>
-                          <div class="form group col-md-3">
-                            <label class="control-label">Post Code</label>
-                            <input class="form-control" type="text" placeholder="Post Code" id="email" name="email">
+                            <label class="control-label">Village</label>
+                            <input class="form-control" type="text" name="village" id="village" value="{{$students->address}}">
                           </div>
                           
                           <div class="form group col-md-3">
                             <label class="control-label">Emergency Contact No</label>
-                            <input class="form-control" type="text" placeholder="Emergency Mobile Number" name="mobileno"
-                              id="mobileno">
+                            <input class="form-control" type="text" name="mobileno"
+                              id="mobileno" value="{{$students->mobile}}">
                           </div>
                           <!-- single section-->
                           <!--End primary dev section-->  
                       </div>
                         <div class="tile-footer">
-                          <a class="btn btn-secondary" href="#"><i
-                                class="fa fa-fw  fa-times-circle"></i>Cancel</a><a href="studentProfile.html"
-                                 class="btn btn-primary float-right" type="button" id="demoSwal" name=" "><i
-                              class="fa fa-fw fa-check-circle"></i> Update </a>
+                          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Information</button>
                         </div>
-                    </form>
-                    
+                      </div>
+                 </form>
+
+                 <!-- change Password -->
+             <div id="menu3" class="container tab-pane fade"><br>
+             <form action="{{route('change.password')}}" method="post">
+               @csrf
+                <div class="row">
+                    <div class="form group col-md-3">
+                      <label class="control-label">New Password</label>
+                      <input type="password" class="form-control" name="password">
+                    </div>
+                    <div class="form group col-md-3">
+                      <label class="control-label">Confirm Password</label>
+                      <input type="password" class="form-control" name="password_confirmation">
+                    </div>
+                    </div>
+                        <div class="tile-footer">
+                          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Password</button>
+                        </div>
+                      </div>
+                </div>
+                </form>
+             </div> 
+                 
           </div>
         </div>
       </div>
@@ -279,5 +228,23 @@
     @section('script')
       {{-- @include('backend.partials.js.datatable'); --}}
       <script>
-        </script>
+        $(document).ready(function(){
+        $(".nav-tabs a").click(function(){
+          $(this).tab('show');
+        });
+      });
+       
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#image_preview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#image").change(function() {
+            readURL(this);
+        });
+    </script>
 @endsection

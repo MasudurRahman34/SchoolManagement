@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-	@section('title', 'User profile Page')
+	@section('title', 'Studenty profile Page')
     @section('content')
             <div class="row user">
               <div class="col-md-3">
@@ -14,7 +14,7 @@
                   <ul class="nav flex-column nav-tabs user-tabs">
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
 
-                    <li class="nav-item"><a class="nav-link" href="{{route('mystudent.editProfile')}}"> Update Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('mystudent.editProfile', $students->id)}}"> Update Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
@@ -35,7 +35,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Age
-                              <p class="list-group justify-content-between align-items-center"> {{$students->age}} </p>
+                              <p class="list-group justify-content-between align-items-center"> {{$students->age}}  </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Location
@@ -80,7 +80,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Roll Number
-                              <p class="list-group justify-content-between align-items-center"> {{$students->roll}} </p>
+                              <p class="list-group justify-content-between align-items-center"> {{$students->roll}}  </p>
                             </li>
                           </ul>
                         </div>
@@ -88,27 +88,27 @@
                           <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Father name
-                              <p class="list-group justify-content-between align-items-center"> {{$students->fatherName}} </p>
+                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Mother Name
-                              <p class="list-group justify-content-between align-items-center"> {{$students->motherName}} </p>
+                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Father Mobile No
-                              <p class="list-group justify-content-between align-items-center">  </p>
+                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               father/mother NID
-                              <p class="list-group justify-content-between align-items-center"> </p>
+                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Father occopation
-                              <p class="list-group justify-content-between align-items-center"> {{$students->fatherOccupation}} </p>
+                              <p class="list-group justify-content-between align-items-center"> Not complete yet</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Mother occopation
-                              <p class="list-group justify-content-between align-items-center">{{$students->MotherOccupation	}}</p>
+                              <p class="list-group justify-content-between align-items-center"> Not complete yet</p>
                             </li>
                           </ul>
                         </div>

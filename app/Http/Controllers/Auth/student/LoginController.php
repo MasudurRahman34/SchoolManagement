@@ -63,7 +63,7 @@ class LoginController extends Controller
             return redirect()->intended(route('student.index'));
         }else{
             session()->flash('sticky_error', 'Invalid Login');
-        return "error";
+            return redirect()->back();
         }
 
     }
