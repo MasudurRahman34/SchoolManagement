@@ -30,7 +30,13 @@ Route::get('api/search/classwishAttentage', 'backend\api\apiController@classwish
 
 Auth::routes();
 //api routes
-Route::post('api/search/section', 'backend\api\apiController@section')->name('api.section');
+
+Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
+    Route::post('/search/section', 'apiController@section')->name('api.section');
+    Route::get('/roleHasClassTeacher/{id}', 'apiController@roleHasClassTeacher')->name('api.roleHasClassTeacher');
+    Route::get('/lastRoll/{sectionId}', 'apiController@lastRoll')->name('api.lastRoll');
+});
+
 
 //end api routes
 
@@ -127,7 +133,7 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
-   
+
     Route::get('/profile', 'UserController@profile')->name('user.profile');
     //edit & update
     Route::get('edit/profile','UserController@edit')->name('edit.profile');

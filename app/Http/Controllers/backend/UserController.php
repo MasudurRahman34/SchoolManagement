@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\backend;
 
 use App\model\schoolBranch;
+use App\model\classes;
 use App\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\model\ClassTeacher;
 use Auth;
 use Validator;
 use PDF;
@@ -59,12 +61,14 @@ class UserController extends Controller
         if (Auth::guard('web')->user()->bId==0) {
             $Users=User::all();
             $roles=Role::all();
+            $classes=classes::where('bId', Auth::guard('web')->user()->bId)->get();
         }else{
             $Users=User::where('bId', $id)->get();
-            $roles=Role::whereNotIn('status', [1])->get();
+            $roles=Role::whereNotIn('status', [1])->where('bId', Auth::guard('web')->user()->bId)->get();
+            $classes=classes::where('bId', Auth::guard('web')->user()->bId)->get();
         }
 
-        return view('backend.pages.userModule.createUserAndRole')->with('Users', $Users)->with('roles', $roles);
+        return view('backend.pages.userModule.createUserAndRole')->with('Users', $Users)->with('roles', $roles)->with('classes', $classes);
     }
 
     public function UserAndRoleList(){
@@ -73,7 +77,7 @@ class UserController extends Controller
             $Users=User::with('roles')->get();
         }else{
             $Users=User::where('bId', $id)->with(['roles'=>function($query){
-                $query->whereNotIn('status', [1]);
+                $query->whereNotIn('status', [1])->where('bId', Auth::guard('web')->user()->bId);
             }])->get();
         }
 
@@ -121,8 +125,16 @@ class UserController extends Controller
             $user->bId=Auth::guard('web')->user()->bId;
             $user->password=Hash::make($password);
             $user->readablePassword=$password;
+
             $user->save();
             $user->assignRole($request->role);
+            if($request->classId !=null){
+                $ClassTeacher= new ClassTeacher();
+                $ClassTeacher->classId=$request->classId;
+                $ClassTeacher->userId=$user->id;
+                $ClassTeacher->bId=$user->bId;
+                $ClassTeacher->save();
+            }
 
             return response()->json([
                 "user"=>$request,
@@ -163,7 +175,7 @@ class UserController extends Controller
             $roles=Role::all();
         }else{
             $prms=Permission::where('status',0)->get();
-            $roles=Role::where('status',0)->get();
+            $roles=Role::where('status',0)->where('bId', Auth::guard('web')->user()->bId)->get();
         }
 
         return view('backend.pages.userModule.createRole')->with('prms', $prms)->with('roles', $roles);
@@ -172,6 +184,7 @@ class UserController extends Controller
     {
         $role = new Role();
         $role->name=$request->roleName;
+        $role->bId=Auth::guard('web')->user()->bId;
         $role->save();
         $role->syncPermissions($request->permissions);
         // $prm= new Permission();
@@ -215,6 +228,7 @@ class UserController extends Controller
                     ]);
 
         }else{
+
 
         $password=mt_rand(100000,999999);
 
@@ -267,7 +281,7 @@ class UserController extends Controller
     {
         //
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *

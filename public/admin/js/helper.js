@@ -63,8 +63,8 @@ function deleteAttribute(url, id){
  }
 
  function dynamicSectionSelection(){
-    $('#classId').change(function (e) {
-        e.preventDefault();
+    $('.admission').change(function () {
+
         var classId= $("#classId").val();
         var sessionYearId=$('#sessionYear').val();
         var shift=$('input[name="shift"]:checked').val();
@@ -89,10 +89,10 @@ function deleteAttribute(url, id){
                     console.log(data);
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
-                       
+
                         option+=("<option value='"+element.id+"'>"+element.sectionName+"</option>");
-        
-                    });             
+
+                    });
                     $('#sectionId').html(option);
                 }
             });
@@ -101,5 +101,4 @@ function deleteAttribute(url, id){
  }
  function reloadThePage(){
     document.getElementById("myform").reset();
-} 
- 
+}

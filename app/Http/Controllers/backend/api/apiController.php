@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\model\classes;
 use App\model\Section;
-use App\model\Attendance; 
+use App\model\Attendance;
+use App\model\Student;
+use App\model\Subject;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use DB;
 use Yajra\DataTables\Facades\DataTables;
+use Spatie\Permission\Models\Role;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class apiController extends Controller
 {
@@ -32,6 +36,16 @@ class apiController extends Controller
                         ->where('shift', $request->shift)
                         ->get();
         return Response()->json($section);
+    }
+
+    public function roleHasClassTeacher($id)
+    {
+        $roleHasClassTeacher = Role::with('permissions')->where('bId', '=', Auth::guard('web')->user()->bId)
+				->whereHas('permissions', function($query) use ($id) {
+    				$query->where('role_id', $id)->where('permission_id',106);
+				})
+  				->pluck('id');
+        return Response()->json($roleHasClassTeacher);
     }
 
     /**
@@ -113,7 +127,7 @@ class apiController extends Controller
 
         $totalday=Attendance::where('bId',Auth::guard('web')->user()->bId)
                         ->whereMonth('created_at', $month)
-                        ->count();             
+                        ->count();
                         if($totalday==0){
                             $totalday=1;
                         }else{
@@ -128,32 +142,32 @@ class apiController extends Controller
         // return $percentage;
         return Response()->json(["success"=>'Counted', "data"=>$percentage,201]);
     }
-    
+
     public function totalTeacher(){
 
     $totalteacher=User::where('bId',Auth::guard('web')->user()->bId)
                         ->where('designation','Teacher')
-                        ->count(); 
+                        ->count();
 
     return Response()->json(["success"=>'Counted', "data"=>$totalteacher,201]);
-    }   
+    }
     public function totalUser(){
 
     $totalUser=User::where('bId',Auth::guard('web')->user()->bId)
-                    ->count(); 
+                    ->count();
 
     return Response()->json(["success"=>'Counted', "data"=>$totalUser,201]);
     }
     public function totalsection(){
 
-    $totalUser=Section::where('bId',Auth::guard('web')->user()->bId)
-                    ->count(); 
+        $totalUser=Section::where('bId',Auth::guard('web')->user()->bId)->count();
 
-    return Response()->json(["success"=>'Counted', "data"=>$totalUser,201]);
-    } 
+        return Response()->json(["success"=>'Counted', "data"=>$totalUser,201]);
+    }
+
     public function classwishAttentage(){
 
-        $bId=Auth::guard('web')->user()->bId;    
+        $bId=Auth::guard('web')->user()->bId;
         //$totalStudent=DB::select("select count(students.id) as totalStudent from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And students.bId='$bId' groupby ");
         // $totalStudent=DB::select("select count(attendences.attendances) as totalStudent from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And students.bId='$bId'");
         // $attendances = DB::table('sections')
@@ -175,7 +189,7 @@ class apiController extends Controller
                 // attnArray=array(
                 //     'sections'=>
                 // )
-        
+
 
                 $data_table_render = DataTables::of($attendances)
                     ->addColumn('hash',function ($row){
@@ -186,13 +200,30 @@ class apiController extends Controller
                     // {
                     //    return $attendances->Section->classes->className;
                     // })
-                   
+
                     ->rawColumns(['hash'])
                     ->make(true);
                 return $data_table_render;
 
-        // return response()->json(["success"=>'Counted', "attn"=>$attendances,201]);       
-        
-    }    
+        // return response()->json(["success"=>'Counted', "attn"=>$attendances,201]);
+
+    }
+
+    public function lastRoll($sectionId){
+        try {
+            $lastRoll= Student::where('sectionId', $sectionId)->latest()->FirstOrFail();
+
+        } catch (ModelNotFoundException $exception) {
+
+            return response()->json("Not Found");
+        }
+
+        return response()->json($lastRoll->roll);
+    }
+
+    public function optionalsubjectList(){
+        $optinalsubject=Subject::get();
+        return response()->json($optinalsubject);
+    }
 
 }

@@ -67,8 +67,8 @@
                         <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-12 pl-4">Designation</label>
                                 <div class="col-md-9 col-sm-12">
-                                    <select id="designation" name="designation" class="control" required>
-
+                                    <select id="designation" name="designation" class="col-md-10 form-control" required>
+                                    <option>--Please Select---</option>
                                     <option value="Teacher">Teacher</option>
                                     <option value="Accountant">Accountant</option>
                                     <option value="Librarian">Librarian</option>
@@ -82,7 +82,8 @@
                         <div class="form-group row">
                             <label class="control-label col-md-3 col-sm-12 pl-4">Role</label>
                             <div class="col-md-9 col-sm-12">
-                                    <select id="demoSelect" name="role" class="control">
+                                    <select id="role" name="role" class="form-control col-md-10">
+                                    <option>--Please Select---</option>
                                         @foreach ($roles as $role)
                                     <option value="{{$role->id}}">{{$role->name}}</option>
 
@@ -91,6 +92,21 @@
                                     </select>
                             </div>
                         </div>
+
+                        <div class="form-group row" hidden id="class">
+                                <label class="control-label col-md-3 col-sm-12 pl-4">Class Teacher To</label>
+                                <div class="col-md-9 col-sm-12">
+                                        <select id="classId" name="role" class="form-control col-md-10">
+                                        <option>Select Class</option>
+                                            @foreach ($classes as $class)
+                                            <option value="{{$class->id}}">{{$class->className}}</option>
+
+                                            @endforeach
+
+                                        </select>
+                                </div>
+                            </div>
+
                         <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-12 pl-4">Joining Date</label>
                                 <div class="col-md-9 col-sm-12">
@@ -127,12 +143,36 @@
       <script type="text/javascript" src="{{ asset('admin/js/plugins/bootstrap-datepicker.min.js') }}"></script>
 
       <script>
-          $('#demoSelect').select2();
+
+        //   $('#demoSelect').select2();
           $('#demoDate').datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true
         });
+
+        // function checkRoleHasClassTeacher(){
+
+        // }
+        $('#role').change(function (e) {
+            e.preventDefault();
+            var role=$('#role').val();
+            $.ajax({
+                type: "get",
+                url: "{{url('/api/roleHasClassTeacher')}}"+'/'+role,
+                data: role,
+                success: function (response) {
+                    if(response>0){
+                        $('#class').attr('hidden', false);
+                    }else{
+                        $('#class').attr('hidden', true);
+                    }
+                }
+            });
+
+        });
+
+
 
         var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
@@ -170,7 +210,8 @@
                     mobile: $('#mobile').val(),
                     email: $('#email').val(),
                     designation: $('#designation option:selected').val(),
-                    role: $('#demoSelect option:selected').val(),
+                    role: $('#role option:selected').val(),
+                    classId: $('#classId option:selected').val(),
                     joinDate: $('#demoDate').val(),
                     address: $('#address').val(),
                     },

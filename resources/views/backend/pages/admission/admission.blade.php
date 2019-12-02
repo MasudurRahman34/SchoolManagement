@@ -68,14 +68,14 @@
                 <select class="form-control admission" id="sessionYear" name="sessionYear">
                   <option value="">--Please Select--</option>
                     @foreach ($SessionYear as $SYear)
-                    <option value="{{$SYear->id}}">{{$SYear->sessionYear}}</option>
+                <option value="{{$SYear->id}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>
                     @endforeach
                 </select>
               </div>
               <div class="form-group col-md-6">
                     <label class="control-label mt-3">Shift</label><br>
                 <div class="custom-control shift-radio custom-control-inline">
-                    <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission">
+                    <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
                     <label class="custom-control-label"  for="shift1">Morning</label>
                  </div>
                 <div class="custom-control shift-radio custom-control-inline">
@@ -89,7 +89,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Select Class</label>
-                <select class="form-control" id="classId">
+                <select class="form-control admission" id="classId">
                         <option value="">--Please Select--</option>
                     @foreach ($classes as $class)
                         <option value="{{$class->id}}">{{$class->className}}</option>
@@ -100,38 +100,55 @@
               <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1"> Section</label>
 
-                <select class="form-control admission" id="sectionId" name="sectionId">
+                <select class="form-control" id="sectionId" name="sectionId">
                     <option value="">--Please Select--</option>
                 </select>
               </div>
+              <div class="form-group col-md-12">
+                    <label class="control-label mt-3 bg-secondary text-light"><h5>Group</h5></label><br>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input admission">
+                        <label class="custom-control-label" for="group1">General</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" name="group" id="group2" value="Science"  class="custom-control-input admission">
+                        <label class="custom-control-label" for="group2">Science</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" name="group" id="group3" value="Arts"  class="custom-control-input admission">
+                        <label class="custom-control-label" for="group3">Arts</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="group" id="group4" value="Commerce"  class="custom-control-input admission">
+                            <label class="custom-control-label" for="group4">Commerce</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" name="group" id="group5" value="Vocational" class="custom-control-input admission">
+                            <label class="custom-control-label" for="group5">Vocational</label>
+                    </div>
+                </div>
+
+                  <div class="form-group col-md-6">
+                    <label for="exampleFormControlSelect1"> 4th subject</label>
+
+                    <select class="form-control" id="sectionId" name="sectionId">
+                        <option value="">--Select One--</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleFormControlSelect1">Main Subject</label>
+
+                    <select class="form-control" id="sectionId" name="sectionId">
+                        <option value="">--Select One--</option>
+                    </select>
+                  </div>
+
               <div class="form group col-md-6">
-                <label class="control-label">Roll Number</label>
+                <label class="control-label">Roll Number <sub id="lastRoll" class="text-danger"></sub></label>
                 <input class="form-control admission" id="roll" name="roll" type="number" >
               </div>
 
-              <div class="form-group col-md-12">
-                    <label class="control-label mt-3 bg-secondary text-light"><h5>Group</h5></label><br>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="group" id="group1" value="General" class="custom-control-input admission">
-                    <label class="custom-control-label" for="group1">General</label>
-                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="group" id="group2" value="Science"  class="custom-control-input admission">
-                    <label class="custom-control-label" for="group2">Science</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="group" id="group3" value="Arts"  class="custom-control-input admission">
-                    <label class="custom-control-label" for="group3">Arts</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group4" value="Commerce"  class="custom-control-input admission">
-                        <label class="custom-control-label" for="group4">Commerce</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group5" value="Vocational" class="custom-control-input admission">
-                        <label class="custom-control-label" for="group5">Vocational</label>
-                </div>
-              </div>
+
             <!-- {{-- <div class="form-group col-md-6">
               <label for="exampleFormControlSelect1"> Fourth Subject</label>
               <select class="form-control admission" id="fourthSubject">
@@ -172,6 +189,26 @@
 @section('script')
 <script>
 dynamicSectionSelection();
+$("#sectionId").change(function () {
+var sectionId=$(this).val();
+    lastRollFind(sectionId);
+});
+//last role Find
+function lastRollFind(sectionId){
+    $.ajax({
+        type: "get",
+        url: "{{url('api/lastRoll')}}"+"/"+sectionId,
+        success: function (response) {
+            $("#lastRoll").html('Last Roll '+ response);
+        }
+    });
+}
+//optional subject
+
+//end optional subject
+
+//end last roll find
+
 //     var sessionId=$('#sessionYear option:selected').val();
 //     var shift=[];
 //     $(".admission").change(function(e){
@@ -181,18 +218,24 @@ dynamicSectionSelection();
 // console.log('working');
 
 // });
-//         var bloodGroup=$('#blood').val();
-//         var sessionYearId=$('#sessionYear').val();
-//         var address=$('#address').val();
-//         var shift=$('input[name="shift"]:checked').val();
-//         var classId=$('#classId').val();
 
-//         var sectionId=$('#sectionId').val();
-//         var group=$('input[name="group"]:checked').val();
-//         var fourthSubject=$('#fourthSubject').val();
-//         console.log(bloodGroup, sessionYearId, address, shift, classId, sectionId,group);
 
 //     });
+
+    // $(".admission").change(function () {
+    //     // element == this
+    //     var bloodGroup=$('#blood').val();
+    //     var sessionYearId=$('#sessionYear').val();
+    //     var address=$('#address').val();
+    //     var shift=$('input[name="shift"]:checked').val();
+    //     var classId=$('#classId').val();
+
+    //     var sectionId=$('#sectionId').val();
+    //     var group=$('input[name="group"]:checked').val();
+    //     var fourthSubject=$('#fourthSubject').val();
+    //     console.log(bloodGroup, sessionYearId, address, shift, classId, sectionId,group);
+
+    // });
 
 
 
