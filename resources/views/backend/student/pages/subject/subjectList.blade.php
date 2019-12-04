@@ -43,7 +43,7 @@
                   @endforeach
                  
                   {{-- for optional subject --}}
-                  @foreach($subjectlists as $subject)
+                  @foreach($opsubjectlist as $subject)
                     <tr>
                     <td>#</td>
                     <td>{{$subject->subjectName}}</td>

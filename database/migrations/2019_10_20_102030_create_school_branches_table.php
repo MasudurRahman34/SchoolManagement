@@ -15,6 +15,7 @@ class CreateSchoolBranchesTable extends Migration
     {
         Schema::create('school_branches', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('brancheId')->unique()->nullable();
             $table->text('nameOfTheInstitution');
             $table->string('eiinNumber', 50);
             $table->string('email')->nullable()->unique();

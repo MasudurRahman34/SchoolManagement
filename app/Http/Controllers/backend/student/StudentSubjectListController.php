@@ -27,7 +27,9 @@ class StudentSubjectListController extends Controller
         $subjectlists=DB::select("select  subjects.*  from classes, sections, students, subjects
         where students.sectionId=sections.id and sections.classId=classes.id and classes.id=subjects.classId and subjects.group in (students.group, 'General') and subjects.optionalstatus=false and students.id='$id'");
         // return $subjectlist;
-        return view('backend.student.pages.subject.subjectList',compact('subjectlists'));
+        $opsubjectlist=DB::select("select  subjects.*  from classes, sections, students, subjects
+        where students.sectionId=sections.id and sections.classId=classes.id and classes.id=subjects.classId and subjects.group in (students.group, 'General') and subjects.optionalstatus=1 and students.id='$id'");
+        return view('backend.student.pages.subject.subjectList',compact('subjectlists','opsubjectlist'));
     }
 
     /**
@@ -60,8 +62,8 @@ class StudentSubjectListController extends Controller
     public function show()
     {
         $id=Auth::guard('student')->user()->id;
-        $subjectlist=DB::select("select  subjects.subjectName  from classes, sections, students, subjects
-        where students.sectionId=sections.id and sections.classId=classes.id and classes.id=subjects.classId and subjects.group in (student.group, 'General') and subjects.optionalstatus=false and students.id='$id'");
+        $opsubjectlist=DB::select("select  subjects.subjectName  from classes, sections, students, subjects
+        where students.sectionId=sections.id and sections.classId=classes.id and classes.id=subjects.classId and subjects.group in (student.group, 'General') and subjects.optionalstatus=1 and students.id='$id'");
 
         // $data_table_render = DataTables::of($subjectlist)
         // ->addColumn('hash',function ($row){

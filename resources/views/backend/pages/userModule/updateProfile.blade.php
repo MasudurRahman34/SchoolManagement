@@ -110,9 +110,9 @@
                             <label class="control-label">Certificate</label>
                             <input class="form-control" type="file" name="certificate" value="{{$user->certificate}}">
                           </div> -->
-                          <div class="form group col-md-3">
+                          <div class="form group col-md-3" hidden>
                             <label class="control-label">bId</label>
-                            <input class="form-control" type="text" name="bId" value="{{$user->bId}}">
+                            <input class="form-control" type="text" name="bId" value="{{$user->bId}}" readonly>
                           </div>
                           <!--End primary dev section-->
                             

@@ -17,13 +17,13 @@
     <div class="row justify-content-md-center"><!-- justify-content-md-center-->
       <!--Start inline section-->
       <div class="clearix"></div>
-      <div class="col-md-10">
+      <div class="col-md-8">
         <div class="tile">
         <button type="button" class="btn-info float-right" onClick="reloadThePage()">Refresh!</button>
           <h3 class="tile-title border-bottom p-2">Student Search</h3>
           <div class="tile-body">
             <form class="row" id="myform" action="javascript:void(0)">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-3" hidden>
                 <label for="exampleFormControlSelect1">Session Year</label>
                 <select class="form-control admission" id="sessionYear">
                   <option value="">--Please Select--</option>
@@ -32,7 +32,7 @@
                   @endforeach
                 </select>
               </div>
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-4">
               <label class="control-label mt-3">Shift</label><br>
                 <div class="custom-control shift-radio custom-control-inline">
                     <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
@@ -49,7 +49,7 @@
               </div>
 
               <!-- single section-->
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-4">
                 <label for="exampleFormControlSelect1">Select Class</label>
                 <select class="form-control admission" id="classId">
                   <option value="">--Please Select-- </option>
@@ -58,7 +58,7 @@
                   @endforeach
                 </select>
               </div>
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-4">
                 <label for="exampleFormControlSelect1"> Section</label>
                 <select class="form-control" id="sectionId">
                 <option value=""> --Please Select--  </option>
@@ -75,7 +75,7 @@
     </div>
     <!--End Row-->
     <div class="row justify-content-md-center">
-        <div class="col-md-10">
+        <div class="col-md-8">
             <div class="tile">
                 <div class="tile-body" id="tblHidden" hidden>
                     <form action="{{route('store.attendence')}}" method="post" id="attendence">

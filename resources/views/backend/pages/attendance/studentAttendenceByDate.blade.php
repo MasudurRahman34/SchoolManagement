@@ -24,7 +24,7 @@
          
           <div class="tile-body">
             <form class="row" id="myform" action="javascript:void(0)">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-3" hidden>
                 <label for="exampleFormControlSelect1">Session Year</label>
                 <select class="form-control admission" id="sessionYear">
                   <option value="">--Please Select--</option>

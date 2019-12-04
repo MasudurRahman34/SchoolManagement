@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigint('studentId',50);
+            $table->unsignedBigInteger('studentId')->unique()->nullable();
             $table->string('firstName',50);
             $table->string('lastName',50);
             $table->string('email',100)->nullable()->unique();
@@ -39,7 +39,7 @@ class CreateStudentsTable extends Migration
             $table->unsignedBigInteger('bId');
             $table->unsignedBigInteger('sectionId');
             $table->string('group', 30);
-            $table->unsignedInteger('optionalSubjectId')->nullable();
+            // $table->unsignedInteger('optionalSubjectId')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('bId')
