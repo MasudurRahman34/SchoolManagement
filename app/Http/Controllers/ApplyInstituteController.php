@@ -35,8 +35,10 @@ class ApplyInstituteController extends Controller
      */
     public function store(Request $request)
     {
+        $branchId=mt_rand(100000,999999);
         $apIns= New schoolBranch;
         $apIns->nameOfTheInstitution=$request->nameOfTheInstitution;
+        $apIns->branchId=$branchId;
         $apIns->eiinNumber=$request->eiinNumber;
         $apIns->phoneNumber=$request->phoneNumber;
         $apIns->district=$request->district;

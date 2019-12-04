@@ -38,6 +38,7 @@ Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
     Route::post('/search/section', 'apiController@section')->name('api.section');
     Route::get('/roleHasClassTeacher/{id}', 'apiController@roleHasClassTeacher')->name('api.roleHasClassTeacher');
     Route::get('/lastRoll/{sectionId}', 'apiController@lastRoll')->name('api.lastRoll');
+    Route::get('/checkClassHasOptionalSubject/{classId}/{group}', 'apiController@checkClassHasOptionalSubject')->name('api.checkClassHasOptionalSubject');
 });
 
 
@@ -102,7 +103,7 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
     Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
     Route::get('/classwise', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
     Route::get('/classwiseList/{id}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
-    
+
 
     Route::get('/sectionwise', 'MyStudentConttroller@Sectionwise')->name('mystudent.sectionwise');
     Route::get('/sectionwiselist/{classId}/{sectionId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
@@ -157,7 +158,7 @@ Route::group(['middleware' => ['api']], function () {
 });
 
 //Admission
-Route::group(['middleware' => ['auth','role_or_permission:Class'],'prefix'=>'admission', 'namespace'=>'backend'], function () {
+Route::group(['middleware' => ['auth','role_or_permission:Admission'],'prefix'=>'admission', 'namespace'=>'backend'], function () {
 
     Route::get('/','AdmissionController@index')->name('admissison.index');
     Route::post('/store','AdmissionController@store')->name('admission.store');

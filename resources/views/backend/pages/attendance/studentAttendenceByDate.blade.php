@@ -20,8 +20,8 @@
       <div class="col-md-10">
         <div class="tile">
         <button type="button" class="btn-info float-right" onClick="reloadThePage()">Refresh!</button>
-          <h3 class="tile-title border-bottom p-2">Student Search</h3> 
-         
+          <h3 class="tile-title border-bottom p-2">Student Search</h3>
+
           <div class="tile-body">
             <form class="row" id="myform" action="javascript:void(0)">
             <div class="form-group col-md-3" hidden>
@@ -29,7 +29,7 @@
                 <select class="form-control admission" id="sessionYear">
                   <option value="">--Please Select--</option>
                   @foreach ($sessionYear as $year)
-                    <option value="{{$year->id}}">{{$year->sessionYear}}</option>
+                    <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
                   @endforeach
                 </select>
               </div>
@@ -51,9 +51,9 @@
 
               <!-- single section-->
               <div class="form-group col-md-3">
-                <label for="exampleFormControlSelect1">--Please Select--</label>
+                <label for="exampleFormControlSelect1">Class</label>
                 <select class="form-control admission" id="classId">
-                  <option value="">select Class </option>
+                  <option value="">--Select Class--- </option>
                   @foreach ($class as $class)
                   <option value="{{$class->id}}">{{$class->className}}</option>
                   @endforeach
@@ -114,16 +114,16 @@
     <div class="clearix"></div>
 @endsection
 @section('script')
-  
+
     <script>
      dynamicSectionSelection();
     </script>
     <script>
-      
+
       $('#dateId').change(function (e) {
         e.preventDefault();
         // alert('working');
-       
+
         var sectionId= $("#sectionId").val();
         var dateId= $("#dateId").val();
         var classId= $("#classId").val();
@@ -153,7 +153,7 @@
 
             $('#tblHidden').attr('hidden',false);
             $('#btnAttendance').attr('disabled',false);
-          
+
           var tr='';
             $.each (response, function (key, value) {
             tr +=
@@ -163,16 +163,16 @@
                 +"</td>"+
                 "<td>"+value.roll+"</td>"+
                 "<td>"+value.firstName+"</td>"+
-                
+
            "</tr>";
-          
+
           });
 
             $('tbody').html(tr);
           }
         }
         });
-      
+
         })
     </script>
 

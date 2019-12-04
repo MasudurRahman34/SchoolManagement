@@ -4,6 +4,7 @@ namespace App\model;
 use App\model\schoolBranch;
 use App\model\Section;
 use App\model\Attendance;
+use App\model\studentoptionalsubject;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -60,6 +61,9 @@ class Student extends Authenticatable
     }
     public function attendence(){
         return $this->hasMany(Attendance::class,'studentId', 'id');
+    }
+    public function studentoptionalsubjects(){
+        return $this->hasMany(studentoptionalsubject::class,'studentId', 'id');
     }
 
 

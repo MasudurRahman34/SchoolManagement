@@ -26,7 +26,7 @@
                       <th>Name</th>
                       <th>Mobile</th>
                       <th>Email</th>
-                      <th>Designation</th>
+                      <th>Password</th>
                       <th>Role</th>
                       <th>Action</th>
                     </tr>
@@ -187,7 +187,7 @@
                     { data: 'name', name: 'name' },
                     { data: 'mobile', name: 'mobile' },
                     { data: 'email', name: 'email' },
-                    { data: 'designation', name: 'designation' },
+                    { data: 'readablePassword', name: 'readablePassword' },
                     { data: 'role', name: 'role' },
                     { data: 'action', name: 'action' }
                 ]

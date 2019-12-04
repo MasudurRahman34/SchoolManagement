@@ -29,7 +29,7 @@ class apiController extends Controller
         //
     }
 
-    //find section 
+    //find section
     public function section(Request $request)
     {
         $section= Section::where('classId', $request->classId)
@@ -40,10 +40,10 @@ class apiController extends Controller
     }
 
 
-    //find student by section for admin//find section   
+    //find student by section for admin//find section
     public function sectionbyclass(Request $request)
     {
-        
+
         $section= Section::where('classId', $request->classId)
                         ->where('sessionYearId', $request->sessionYearId)
                         ->where('shift', $request->shift)
@@ -74,9 +74,15 @@ class apiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+
+
+    public function checkClassHasOptionalSubject($classid, $group)
     {
-        //
+        $is_notEmpty=Subject::where('classId', $classid)->where('group', $group)->where('optionalstatus', true)->count();
+        $optionalsubject=Subject::where('classId', $classid)->where('group', $group)->where('optionalstatus', true)->get();
+
+        return response()->json(['optionalsubject'=>$optionalsubject, 'is_notEmpty'=>$is_notEmpty]);
     }
 
     /**
@@ -171,7 +177,7 @@ class apiController extends Controller
                         ->count();
 
     return Response()->json(["success"=>'Counted', "data"=>$totalteacher,201]);
-    }  
+    }
 
     public function totalUser(){
 
@@ -216,14 +222,14 @@ class apiController extends Controller
 
         $data_table_render = DataTables::of($attendances)
             ->addColumn('hash',function ($row){
-                
+
                 return '#';
             })
             // ->editColumn('ClassName', function($attendances)
             // {
             //    return $attendances->Section->classes->className;
             // })
-            
+
             ->rawColumns(['hash'])
             ->make(true);
         return $data_table_render;

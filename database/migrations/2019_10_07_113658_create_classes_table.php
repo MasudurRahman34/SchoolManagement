@@ -17,8 +17,8 @@ class CreateClassesTable extends Migration
             $table->bigIncrements('id');
             $table->string('className', 20);
             $table->string('duration', 20);
-            $table->unsignedInteger('seat');
-            $table->unsignedInteger('bid')->comment('branch_id');
+            $table->unsignedBigInteger('seat');
+            $table->unsignedBigInteger('bid')->comment('branch_id');
             $table->timestamps();
         });
     }

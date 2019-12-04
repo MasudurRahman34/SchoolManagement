@@ -23,7 +23,7 @@
           <h3 class="tile-title border-bottom p-2">Student Search</h3>
           <div class="tile-body">
             <form class="row" id="myform" action="javascript:void(0)">
-            <div class="form-group col-md-3" hidden>
+            <div class="form-group col-md-3" >
                 <label for="exampleFormControlSelect1">Session Year</label>
                 <select class="form-control admission" id="sessionYear">
                   <option value="">--Please Select--</option>
@@ -89,12 +89,12 @@
                                 <th>Attendence</th>
                                 <th>Student Roll</th>
                                 <th>Student Name</th>
-                                
+
                             </tr>
                             </thead>
                             <tbody>
-                       
-                           
+
+
                             </tbody>
                         </table>
                         </div>
@@ -109,14 +109,14 @@
     <div class="clearix"></div>
 @endsection
 @section('script')
-  
+
     <script>
      dynamicSectionSelection();
     </script>
     <script>
       $('#sectionId').change(function (e) {
         e.preventDefault();
-      
+
         var sectionId= $("#sectionId").val();
         $("#sectionId2").attr('value',sectionId);
         var classId= $("#classId").val();
@@ -128,7 +128,7 @@
           data: {
             sectionId:sectionId
           },
-          
+
           success: function (response) {
           console.log(response.redirectToEdit);
           if(response.redirectToEdit){
@@ -138,11 +138,11 @@
               } else {
                 document.getElementById("myform").reset();
               }
-           
+
           }else{
             $('#tblHidden').attr('hidden',false);
             $('#btnAttendance').attr('disabled',false);
-          
+
             var tr='';
             $.each (response, function (key, value) {
             tr +=
@@ -152,30 +152,30 @@
                     +"</td>"+
                     "<td>"+value.roll+"</td>"+
                     "<td>"+value.firstName+"</td>"+
-                    
+
               "</tr>";
-          
+
            });
 
             $('tbody').html(tr);
           }
         }
         });
-      
+
         });
         $(document).ready(function () {
-          $("form").submit(function () { 
-            
+          $("form").submit(function () {
+
             var roll=true;
             $(":radio").each(function () {
               name=$(this).attr('class');
-              
+
               if(roll && !$(':radio[class="'+name+'"]:checked').length){
                 alert(' missing  '+ name);
                 console.log(name);
                 roll=false;
               }
-              
+
             });
             return roll;
 

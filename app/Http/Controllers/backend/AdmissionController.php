@@ -8,11 +8,12 @@ use App\model\classes;
 use App\model\SessionYear;
 use App\model\Student;
 use App\model\schoolBranch;
+use App\model\studentoptionalsubject;
 use App\model\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 Use Illuminate\Support\Facades\DB;
-use PDF;
+Use Barryvdh\DomPDF\Facade as PDF;
 
 
 class AdmissionController extends Controller
@@ -46,11 +47,13 @@ class AdmissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+{
         $password=mt_rand(100000,999999);
         $Student= new Student();
+        $Student->studentId=mt_rand(100000,999999);
         $Student->firstName=$request->firstName;
         $Student->lastName=$request->lastName;
+        $Student->gender=$request->gender;
         $Student->email=$request->email;
         $Student->mobile=$request->mobile;
         $Student->birthDate=$request->birthDate;
@@ -62,8 +65,23 @@ class AdmissionController extends Controller
         $Student->sectionId=$request->sectionId;
         $Student->roll=$request->roll;
         $Student->group=$request->group;
-        $Student->optionalSubjectId=$request->optionalSubjectId;
         $Student->save();
+        //if optinal subject
+            if($request->has('optionalSubjectId')){
+                $optionalSubjectId= $request->optionalSubjectId;
+                foreach ($optionalSubjectId as $is_optional => $subjectId) {
+                    if($subjectId!==null){
+                    $studentoptionalsubject = new studentoptionalsubject();
+                    $studentoptionalsubject->subjectId = $subjectId;
+                    $studentoptionalsubject->studentId = $Student->id;
+                    $studentoptionalsubject->optional = $is_optional;
+                    $studentoptionalsubject->bId= Auth::user()->bId;
+                    $studentoptionalsubject->save();
+                    }
+                }
+            }
+         //endoptinal subject
+
         $students=$Student::with('schoolBranch','Section')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
         // dd($students);
         // dd($students);
@@ -71,8 +89,14 @@ class AdmissionController extends Controller
         // // dd($Student->Section->classes);
         // $students=DB::select("select * from students, school_branches where students.bId = school_branches.id and students.bId= '$StdbId'");
         $pdf = PDF::loadView('backend.pages.pdf.admissionPdf', ['students' => $students])->setPaper('a4','portrait');
-        $pdf->download('admissionPdf.pdf');
-        return $pdf->stream('admissionPdf.pdf');
+        // return $pdf->stream($Student->firstName.$Student->roll.$Student->mobile.'.pdf');
+
+        $pdf->download('student.pdf');
+        return $pdf->stream('student.pdf');
+
+        // return $pdf->download($Student->firstName.$Student->roll.$Student->mobile.'.pdf');
+        // return route('admissison.index');
+        // return redirect()->route('admissison.index');
 
     }
 

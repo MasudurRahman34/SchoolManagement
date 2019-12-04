@@ -14,7 +14,9 @@
         <div class="col-md-12">
             <!-- {{-- @foreach ($students as $student) --}} -->
 
-
+            <div class="float-right">
+            <a class="" href="{{route('admissison.index')}}">New Admission</a>
+            </div>
             <div class="text-center m-5">
                 <h1 class="text-warning">{{$students->schoolBranch->nameOfTheInstitution}}</h1>
                 <hr>
@@ -31,6 +33,14 @@
             <td>{{$students->Section->classes->className}}</td>
         </tr>
         <tr>
+            <th>Section</th>
+            <td>{{$students->Section->sectionName}}</td>
+        </tr>
+        <tr>
+            <th>Class Roll</th>
+            <td>{{$students->roll}}</td>
+        </tr>
+        <tr>
             <th>Email:</th>
             <td>{{$students->email}}</td>
         </tr>
@@ -42,19 +52,16 @@
             <th>Password</th>
             <td>{{$students->readablePassword}}</td>
         </tr>
+
         <tr>
-            <th>Adderss</th>
-            <td>{{$students->address}}</td>
-        </tr>
-        <tr>
-            <th>Join Date</th>
+            <th>Admit Date</th>
             <td>{{$students->created_at}}</td>
         </tr>
     </table>
 
     <!-- {{-- @endforeach --}} -->
-    <h6 class="text-center m-5 text-success">Thanks for being with us !! <br></h6>
-    <a class="float-right" href="www.schoolmanagement.com">www.schoolmanagement.com</a>
+    <h6 class="text-center m-5 text-success">Thanks For Your Admission !! <br></h6>
+    <a class="float-right" href="http://www.sms.quadinfoltd.com/">http://www.sms.quadinfoltd.com/</a>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

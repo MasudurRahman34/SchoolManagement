@@ -16,7 +16,8 @@ class CreateSessionYearsTable extends Migration
         Schema::create('session_years', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('sessionYear');
-            $table->unsignedInteger('bId');
+            $table->boolean('status')->default(0);
+            $table->unsignedBigInteger('bId');
             $table->timestamps();
         });
     }

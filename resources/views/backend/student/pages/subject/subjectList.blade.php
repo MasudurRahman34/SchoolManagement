@@ -32,33 +32,31 @@
                     <tr>
                     <td>#</td>
                     <td>{{$subject->subjectName}}</td>
-                   
+
                     <td>{{$subject->subjectCode}}</td>
                     <td>{{$subject->group}}</td>
-                    
+
                     <td>
                     <button class="btn btn-primary"><i class="fa fa-edit" onclick="subject() "></i></button>
                     </td>
                   </tr>
                   @endforeach
-                 
+
                   {{-- for optional subject --}}
-                  @foreach($opsubjectlist as $subject)
+                  @foreach($Student->studentoptionalsubjects as $optionalSubject)
                     <tr>
                     <td>#</td>
-                    <td>{{$subject->subjectName}}</td>
-                   
-                    <td>{{$subject->subjectCode}}</td>
-                    <td>{{$subject->group}}</td>
-                    
+                    <td>{{$optionalSubject->Subject->subjectName}} <span class="text-danger">{{$optionalSubject->optional==0 ? "(optinal)": ""}}</span></td>
+                    <td>{{$optionalSubject->Subject->subjectCode}}</td>
+                    <td>{{$optionalSubject->Subject->group}}</td>
                     <td>
                     <button class="btn btn-primary"><i class="fa fa-edit" onclick="subject() "></i></button>
                     </td>
                   </tr>
                   @endforeach
-                 
-                 
-                 
+
+
+
                 </tbody>
                 </table>
                 </div>
@@ -70,13 +68,13 @@
     @endsection
     @section('script')
        <!-- @include('backend.student.partials.js.datatable');  -->
-       
+
     <!-- <script src="{{ asset('admin/js/plugins/chart.js') }} "></script> -->
     <script type="text/javascript">
-    
+
 //     $(function(){
 //     $(document).ready(function () {
-        
+
 //       var table=$('#sampleTable').DataTable({
 //             dom: 'lBfrtip',
 //             buttons: [

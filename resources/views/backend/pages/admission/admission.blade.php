@@ -23,29 +23,35 @@
             @csrf
             <div class="form group col-md-6">
               <label class="control-label">First Name</label>
-              <input class="form-control admission" name="firstName" id="firstName" type="text">
+              <input class="form-control" name="firstName" id="firstName" type="text" required>
             </div>
             <div class="form group col-md-6">
                 <label class="control-label">Last Name</label>
-                <input class="form-control admission" name="lastName" id="lastName" type="text" >
+                <input class="form-control" name="lastName" id="lastName" type="text" required>
+            </div>
+            <div class="form group col-md-6">
+                    <label class="control-label mt-3">Gender</label><br>
+                    <label class="radio-inline"><input type="radio" name="gender" checked>Male</label>
+                    <label class="radio-inline"><input type="radio" name="gender">Female</label>
+                    <label class="radio-inline"><input type="radio" name="gender">Other</label>
             </div>
             <div class="form group col-md-6">
               <label class="control-label">Mobile No</label>
-              <input class="form-control admission" id="mobile" name="mobile" type="text" >
+              <input class="form-control" id="mobile" name="mobile" type="text" required>
             </div>
             <div class="form group col-md-6">
                 <label class="control-label">Email</label>
-                <input class="form-control admission" id="email" name="email" type="email" >
+                <input class="form-control" id="email" name="email" type="email" >
             </div>
             <div class="form-group col-md-6">
-                <label class=" control-label admission">Date of Birth*</label>
+                <label class=" control-label">Date of Birth*</label>
                 <div class="">
-                  <input class="form-control admission" type="date" name="birthDate" id="birthDate" >
+                  <input class="form-control" type="date" name="birthDate" id="birthDate" required>
                 </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Student BLood Group</label>
-                <select class="form-control admission" id="blood" name="blood">
+                <select class="form-control" id="blood" name="blood">
                 <option value="">--Please Select--</option>
                   <option value="0+">O+</option>
                   <option value="0-">O-</option>
@@ -60,12 +66,12 @@
 
             <div class="form group col-md-12">
                 <label class="control-label">Address</label>
-                <textarea class="form-control admission" name="address" id="address" cols="2" rows="2"></textarea>
+                <textarea class="form-control" name="address" id="address" cols="2" rows="2"></textarea>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Session Year</label>
-                <select class="form-control admission" id="sessionYear" name="sessionYear">
+                <select class="form-control admission" id="sessionYear" name="sessionYear" required>
                   <option value="">--Please Select--</option>
                     @foreach ($SessionYear as $SYear)
                 <option value="{{$SYear->id}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>
@@ -89,7 +95,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Select Class</label>
-                <select class="form-control admission" id="classId">
+                <select class="form-control admission opsub" id="classId" required>
                         <option value="">--Please Select--</option>
                     @foreach ($classes as $class)
                         <option value="{{$class->id}}">{{$class->className}}</option>
@@ -100,52 +106,53 @@
               <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1"> Section</label>
 
-                <select class="form-control" id="sectionId" name="sectionId">
+                <select class="form-control" id="sectionId" name="sectionId" required>
                     <option value="">--Please Select--</option>
                 </select>
               </div>
               <div class="form-group col-md-12">
                     <label class="control-label mt-3 bg-secondary text-light"><h5>Group</h5></label><br>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input admission">
+                    {{-- <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input opsub" required>
                         <label class="custom-control-label" for="group1">General</label>
-                    </div>
+                    </div> --}}
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group2" value="Science"  class="custom-control-input admission">
+                        <input type="radio" name="group" id="group2" value="Science"  class="custom-control-input opsub" required>
                         <label class="custom-control-label" for="group2">Science</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group3" value="Arts"  class="custom-control-input admission">
+                        <input type="radio" name="group" id="group3" value="Arts"  class="custom-control-input opsub" required>
                         <label class="custom-control-label" for="group3">Arts</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="group" id="group4" value="Commerce"  class="custom-control-input admission">
+                            <input type="radio" name="group" id="group4" value="Commerce"  class="custom-control-input opsub" required>
                             <label class="custom-control-label" for="group4">Commerce</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="group" id="group5" value="Vocational" class="custom-control-input admission">
+                            <input type="radio" name="group" id="group5" value="Vocational" class="custom-control-input opsub" required>
                             <label class="custom-control-label" for="group5">Vocational</label>
                     </div>
                 </div>
 
-                  <div class="form-group col-md-6">
+
+                  <div class="form-group col-md-6 opmainsubject" hidden>
                     <label for="exampleFormControlSelect1"> 4th subject</label>
 
-                    <select class="form-control" id="sectionId" name="sectionId">
+                    <select class="form-control opubs" id="optionalSubjectId" name="optionalSubjectId[0]">
                         <option value="">--Select One--</option>
                     </select>
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-6 opmainsubject" hidden>
                     <label for="exampleFormControlSelect1">Main Subject</label>
 
-                    <select class="form-control" id="sectionId" name="sectionId">
+                    <select class="form-control opubs" id="optionalSubjectId" name="optionalSubjectId[1]">
                         <option value="">--Select One--</option>
                     </select>
                   </div>
 
               <div class="form group col-md-6">
                 <label class="control-label">Roll Number <sub id="lastRoll" class="text-danger"></sub></label>
-                <input class="form-control admission" id="roll" name="roll" type="number" >
+                <input class="form-control" id="roll" name="roll" type="number" required>
               </div>
 
 
@@ -158,10 +165,10 @@
                 <option>Economics</option>
               </select>
             </div> --}} -->
-            <div class="form-group col-md-12">
+            {{-- <div class="form-group col-md-12">
                     <label for=""> Picture</label>
                    <input type="file" name="" id="" class="form-control admission">
-            </div>
+            </div> --}}
             <!-- {{-- <div class="form-group col-md-6">
               <div class="form-check">
                 <label class="form-check-label check-inline">
@@ -169,11 +176,11 @@
                 </label>
               </div>
             </div> --}} -->
-          <div class="form-check">
+          {{-- <div class="form-check">
             <label class="form-check-label check-inline">
               <input class="form-check-input admission" type="checkbox">I accept the terms and conditions
             </label>
-          </div>
+          </div> --}}
         </div>
         <div class="tile-footer">
           <a class="btn btn-secondary" href="#"><i
@@ -188,7 +195,9 @@
 @endsection
 @section('script')
 <script>
+
 dynamicSectionSelection();
+checkClassTenOrNine();
 $("#sectionId").change(function () {
 var sectionId=$(this).val();
     lastRollFind(sectionId);
@@ -201,6 +210,35 @@ function lastRollFind(sectionId){
         success: function (response) {
             $("#lastRoll").html('Last Roll '+ response);
         }
+    });
+}
+
+function checkClassTenOrNine(){
+    $('.opsub').change(function (e) {
+
+        e.preventDefault();
+        var classId=$("#classId").val();
+        var group = $("input[name='group']:checked").val();
+        $.ajax({
+            type: "get",
+            url: "api/checkClassHasOptionalSubject"+"/"+classId+"/"+group,
+            success: function (response) {
+                    console.log(response.is_notEmpty);
+                    if(response.is_notEmpty==0){
+                        var option="";
+                        $('.opmainsubject').attr('hidden', true);
+                        $('.opubs').html(option);
+                    }else{
+                        $('.opmainsubject').attr('hidden', false);
+                        var option="<option>--Please Select--</option>";
+                        response.optionalsubject.forEach(element => {
+                        option+=("<option value='"+element.id+"'>"+element.subjectName+"</option>");
+                    });
+                    $('.opubs').html(option);
+                    }
+            }
+        });
+
     });
 }
 //optional subject

@@ -18,8 +18,9 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('userId')->unique()->nullable();
             $table->string('name',50);
             $table->string('email',100)->nullable()->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('mobile',20)->nullable()->unique();
+            $table->string('readablePassword')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('designation',100)->nullable();
             $table->string('joinDate',25)->nullable();
             $table->text('address',80)->nullable();
@@ -28,12 +29,11 @@ class CreateUsersTable extends Migration
             $table->string('biography',80)->nullable();
             $table->string('resume',100)->nullable();
             $table->string('certificate',100)->nullable();
-            $table->unsignedInteger('bId')->nullable();
+            $table->unsignedBigInteger('bId')->nullable();
             $table->string('password');
-            $table->string('readablePassword')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            
+
         });
     }
 

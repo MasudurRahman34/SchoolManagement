@@ -129,7 +129,7 @@ class UserController extends Controller
 
             $user->save();
             $user->assignRole($request->role);
-            if($request->classId !=null){
+            if($request->classId >0){
                 $ClassTeacher= new ClassTeacher();
                 $ClassTeacher->classId=$request->classId;
                 $ClassTeacher->userId=$user->id;
@@ -232,9 +232,11 @@ class UserController extends Controller
 
 
         $password=mt_rand(100000,999999);
+        $branchId=mt_rand(100000,999999);
 
         $sc= New schoolBranch;
         $sc->nameOfTheInstitution=$request->nameOfTheInstitution;
+        $sc->branchId=$branchId;
         $sc->eiinNumber=$request->eiinNumber;
         $sc->phoneNumber=$request->phoneNumber;
         $sc->email=$request->email;
@@ -344,7 +346,7 @@ class UserController extends Controller
         //         'resume'=>'',
         //         'certificate'=>'',
         //         'bId'=>'',
-        //         ]); 
+        //         ]);
         // 2. data update
         $userss = User::find(Auth::guard('web')->user()->id);
         $userss->name = $request->name;
@@ -359,7 +361,7 @@ class UserController extends Controller
         $userss->resume = $request->resume;
         $userss->certificate = $request->certificate;
         $userss->bId = $request->bId;
-        
+
         $userss->save();
         Session::flash('success','Successfully User Information Updated');
         return redirect()->back();

@@ -34,7 +34,7 @@ $factory->define(User::class, function (Faker $faker) {
 // $factory->define(schoolBranch::class, function (Faker $faker) {
 //     return [
 //         'brancheId' => rand(0,100),
-        
+
 //     ];
 // });
 $factory->define(classes::class, function (Faker $faker) {
@@ -45,8 +45,8 @@ $factory->define(classes::class, function (Faker $faker) {
         'duration' => '1 Year',
         'seat' => 100,
         'bId' => rand(0,30),
-       
-        
+
+
     ];
 });
 
@@ -61,17 +61,20 @@ $factory->define(Subject::class, function (Faker $faker) {
         ','Sharirik Shikka and Shosto','Bangladesh and Global Studies','Civics and Good Citizenship','Finance and Banking
         ','']),
         'subjectCode' => $numbersetone,
-        'classId' => $class,
+        // 'classId' => $class,
+        'classId' =>1,
         'group' =>$faker->randomElement(['General','Science','Arts','Commerce']),
-        'bId' => rand(0,30),
-        'optionalstatus' => rand(0,1),
-        
+        // 'bId' => rand(0,30),
+        'bId' => 2,
+        // 'optionalstatus' => rand(0,1),
+        'optionalstatus' => 0,
+
     ];
 });
 
 $factory->define(Student::class, function (Faker $faker) {
     return [
-        'studentId' =>rand(), 
+        'studentId' =>rand(),
         'firstName' => $faker->firstname,
         'lastName' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
@@ -97,7 +100,7 @@ $factory->define(Student::class, function (Faker $faker) {
         'group' => $faker->randomElement(['General','Science','Arts','Commerce']),
         // 'optionalSubjectId' => rand(0,1),
         'remember_token' => Str::random(10),
-        
+
     ];
 });
 $factory->define(studentoptionalsubject::class, function (Faker $faker) {
@@ -108,8 +111,8 @@ $factory->define(studentoptionalsubject::class, function (Faker $faker) {
         'subjectId' => $numbersetone,
         'optional' => rand(0,1),
         'bId' => rand(0,30),
-       
-        
+
+
     ];
 });
 
