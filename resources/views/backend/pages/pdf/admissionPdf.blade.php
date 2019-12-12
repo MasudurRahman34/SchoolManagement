@@ -17,6 +17,9 @@
             <div class="float-right">
             <a class="" href="{{route('admissison.index')}}">New Admission</a>
             </div>
+            <div class="float-left">
+               <p>{{$students->created_at }}</p>
+                </div>
             <div class="text-center m-5">
                 <h1 class="text-warning">{{$students->schoolBranch->nameOfTheInstitution}}</h1>
                 <hr>
@@ -26,7 +29,11 @@
         <table class="table table-striped" id="">
         <tr>
             <th>Students Name:</th>
-        <td>{{$students->firstName }}.{{$students->lastName}}</td>
+        <td>{{$students->firstName }} {{$students->lastName}}</td>
+        </tr>
+        <tr>
+            <th>Roll</th>
+            <td>{{$students->roll}}</td>
         </tr>
         <tr>
             <th>Class</th>
@@ -37,30 +44,45 @@
             <td>{{$students->Section->sectionName}}</td>
         </tr>
         <tr>
-            <th>Class Roll</th>
-            <td>{{$students->roll}}</td>
+            <th>shift</th>
+            <td>{{$students->Section->shift}}</td>
         </tr>
         <tr>
-            <th>Email:</th>
-            <td>{{$students->email}}</td>
+            <th>Year/Session</th>
+            <td>{{$students->Section->sessionYear->sessionYear}}</td>
         </tr>
         <tr>
-            <th>Mobile Number:</th>
+            <th>Schoolarship</th>
+            <td>{{$students->schoolarshipStatus==0 ? "N/A" : "Yes"}}</td>
+        </tr>
+        <tr>
+            <th>Blood Group</th>
+            <td>{{$students->blood}}</td>
+        </tr>
+        <tr>
+            <th>Date Of Birth</th>
+            <td>{{$students->birthDate}}</td>
+        </tr>
+        <tr>
+            <th>Group</th>
+            <td>{{$students->group}}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{$students->type}}</td>
+        </tr>
+        <tr>
+            <th>Mobile Number</th>
             <td>{{$students->mobile}}</td>
         </tr>
+
         <tr>
             <th>Password</th>
             <td>{{$students->readablePassword}}</td>
         </tr>
-
-        <tr>
-            <th>Admit Date</th>
-            <td>{{$students->created_at}}</td>
-        </tr>
     </table>
-
     <!-- {{-- @endforeach --}} -->
-    <h6 class="text-center m-5 text-success">Thanks For Your Admission !! <br></h6>
+    <h6 class="text-center m-5 text-success">Thanks You For Your Admission !! <br></h6>
     <a class="float-right" href="http://www.sms.quadinfoltd.com/">http://www.sms.quadinfoltd.com/</a>
 
 

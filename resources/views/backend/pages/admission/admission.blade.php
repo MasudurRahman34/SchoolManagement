@@ -39,10 +39,6 @@
               <label class="control-label">Mobile No</label>
               <input class="form-control" id="mobile" name="mobile" type="text" required>
             </div>
-            <div class="form group col-md-6">
-                <label class="control-label">Email</label>
-                <input class="form-control" id="email" name="email" type="email" >
-            </div>
             <div class="form-group col-md-6">
                 <label class=" control-label">Date of Birth*</label>
                 <div class="">
@@ -63,11 +59,6 @@
                   <option value="AB+">AB+</option>
                 </select>
               </div>
-
-            <div class="form group col-md-12">
-                <label class="control-label">Address</label>
-                <textarea class="form-control" name="address" id="address" cols="2" rows="2"></textarea>
-            </div>
 
             <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Session Year</label>
@@ -110,12 +101,16 @@
                     <option value="">--Please Select--</option>
                 </select>
               </div>
+              <div class="form group col-md-6">
+                <label class="control-label">Roll Number <sub id="lastRoll" class="text-danger"></sub></label>
+                <input class="form-control" id="roll" name="roll" type="number" required>
+              </div>
               <div class="form-group col-md-12">
                     <label class="control-label mt-3 bg-secondary text-light"><h5>Group</h5></label><br>
-                    {{-- <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input opsub" required>
-                        <label class="custom-control-label" for="group1">General</label>
-                    </div> --}}
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input opsub" required checked>
+                        <label class="custom-control-label" for="group1">General (1 to 8)</label>
+                    </div>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" name="group" id="group2" value="Science"  class="custom-control-input opsub" required>
                         <label class="custom-control-label" for="group2">Science</label>
@@ -150,10 +145,41 @@
                     </select>
                   </div>
 
-              <div class="form group col-md-6">
-                <label class="control-label">Roll Number <sub id="lastRoll" class="text-danger"></sub></label>
-                <input class="form-control" id="roll" name="roll" type="number" required>
-              </div>
+
+
+              <div class="form-group col-md-4">
+                <label class="control-label mt-3"><h5>Student Status</h5></label><br>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="type" id="type" value="regular" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="type">Regular</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="type" id="typeir" value="Irregular" class="custom-control-input">
+                    <label class="custom-control-label" for="typeir">Irregular</label>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label mt-3"><h5>Schoolarship</h5></label><br>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="schoolarshipStatus" id="schoolarshipStatus" value="0" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="schoolarshipStatus">No</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="schoolarshipStatus" id="schoolarshipStatus1" value="1" class="custom-control-input">
+                    <label class="custom-control-label" for="schoolarshipStatus1">Yes</label>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label mt-3"><h5>Payment Clearance</h5></label><br>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="checkbox" name="payment" id="Payment" value="0" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="Payment">Yes</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" name="payment" id="Payment2" value="1" class="custom-control-input">
+                    <label class="custom-control-label" for="Payment2">No</label>
+                </div>
+            </div>
 
 
             <!-- {{-- <div class="form-group col-md-6">

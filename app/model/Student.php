@@ -3,6 +3,7 @@
 namespace App\model;
 use App\model\schoolBranch;
 use App\model\Section;
+use App\model\studentHistory;
 use App\model\Attendance;
 use App\model\studentoptionalsubject;
 
@@ -64,6 +65,9 @@ class Student extends Authenticatable
     }
     public function studentoptionalsubjects(){
         return $this->hasMany(studentoptionalsubject::class,'studentId', 'id');
+    }
+    public function studentHistory(){
+        return $this->hasMany(studentHistory::class,'studentId', 'id');
     }
 
 

@@ -230,6 +230,7 @@ return [
         //package facades
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+
         //
 
 

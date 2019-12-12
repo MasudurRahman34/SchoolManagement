@@ -13,7 +13,8 @@ use App\model\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 Use Illuminate\Support\Facades\DB;
-Use Barryvdh\DomPDF\Facade as PDF;
+Use PDF;
+
 
 
 class AdmissionController extends Controller
@@ -65,6 +66,8 @@ class AdmissionController extends Controller
         $Student->sectionId=$request->sectionId;
         $Student->roll=$request->roll;
         $Student->group=$request->group;
+        $Student->type=$request->type;
+        $Student->schoolarshipStatus=$request->schoolarshipStatus;
         $Student->save();
         //if optinal subject
             if($request->has('optionalSubjectId')){
@@ -80,6 +83,7 @@ class AdmissionController extends Controller
                     }
                 }
             }
+            
          //endoptinal subject
 
         $students=$Student::with('schoolBranch','Section')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();

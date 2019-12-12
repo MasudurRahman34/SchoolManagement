@@ -107,8 +107,6 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
 
     Route::get('/sectionwise', 'MyStudentConttroller@Sectionwise')->name('mystudent.sectionwise');
     Route::get('/sectionwiselist/{classId}/{sectionId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
-
-    Route::get('/previous', 'MyStudentConttrollerr@previous')->name('mystudent.previous');
     Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
     Route::get('edit/studentProfile/{id}','MyStudentConttroller@edit')->name('mystudent.editProfile');
     Route::post('update/studentProfile/{id}','MyStudentConttroller@update')->name('mystudent.update');
