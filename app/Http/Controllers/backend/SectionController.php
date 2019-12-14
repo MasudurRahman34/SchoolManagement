@@ -8,7 +8,7 @@ use App\model\classes;
 use App\model\Section;
 use App\model\SessionYear;
 use Yajra\DataTables\DataTables;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 class SectionController extends Controller
 {
@@ -69,16 +69,13 @@ class SectionController extends Controller
         $sections=Section::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->with('sessionYear')->get();
 
         $data_table_render = DataTables::of($sections)
-            ->addColumn('hash',function ($row){
-                $i='#';
-                
-                return $i;
-            })
+            
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editSection('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteSection('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
             })
-            ->rawColumns(['hash','action'])
+            ->rawColumns(['action'])
+            ->addIndexColumn()
             ->make(true);
         return $data_table_render;
     }

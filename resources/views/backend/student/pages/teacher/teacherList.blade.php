@@ -10,7 +10,7 @@
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th></th>
                                         <th> Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
@@ -42,7 +42,7 @@
              serverSide:true,
              ajax:"{{url('student/teacher/list/show')}}",
              columns:[
-                 { data: 'hash', name: 'hash' },
+                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                  { data: 'name', name: 'name' },
                  { data: 'email', name: 'email' },
                  { data: 'mobile', name: 'mobile' },

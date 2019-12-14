@@ -21,7 +21,7 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th></th>
                                 <th>Group Name</th>
                                 <th>Created Date</th>
                                 <th>Action</th>
@@ -83,7 +83,7 @@
                 serverSide:true,
                 ajax:"{{url('group/show')}}",
                 columns:[
-                    { data: 'hash', name: 'hash' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     // { data: 'classes.className', name: 'classes.className' },
                     { data: 'group', name: 'group' },
                     { data: 'created_at', name: 'created_at' },

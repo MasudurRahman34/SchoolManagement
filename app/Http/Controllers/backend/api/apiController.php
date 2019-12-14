@@ -7,15 +7,17 @@ use App\Http\Controllers\Controller;
 use App\model\classes;
 use App\model\Section;
 use App\model\Attendance;
+use App\model\schoolBranch;
 use App\model\Subject;
 use App\model\Student;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use LengthException;
 
 class apiController extends Controller
 {
@@ -24,6 +26,7 @@ class apiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         //
@@ -169,6 +172,46 @@ class apiController extends Controller
         // return $percentage;
         return Response()->json(["success"=>'Counted', "data"=>$percentage,201]);
     }
+    //for individual student
+    public function present($month)
+    {
+    //$bId=Auth::guard('web')->user()->bId;
+
+    $id=Auth::guard('student')->user()->id;
+        $presentAttendance=Attendance::where('attendence','present')
+                        ->where('studentId',$id)
+                        ->whereMonth('created_at', $month)
+                        ->count();
+
+        // return $percentage;
+        return Response()->json(["success"=>'presentThisMonth', "data"=>$presentAttendance,201]);
+    }
+
+    public function absent($month)
+    {
+    //$bId=Auth::guard('web')->user()->bId;
+    $id=Auth::guard('student')->user()->id;
+
+    $absent=Attendance::where('attendence','absent')
+                    ->where('studentId',$id)
+                    ->whereMonth('created_at', $month)
+                    ->count();
+
+         return Response()->json(["success"=>'Absent', "data"=>$absent,201]);
+
+    }
+
+    public function studentname()
+    {
+
+    $id=Auth::guard('student')->user()->id;
+
+        $studentname=Student::where('id',$id)->with('schoolBranch')->get();
+
+        // return $studentname;
+        return Response()->json($studentname);
+
+    }
 
     public function totalTeacher(){
 
@@ -221,20 +264,51 @@ class apiController extends Controller
 
 
         $data_table_render = DataTables::of($attendances)
-            ->addColumn('hash',function ($row){
+            // ->addColumn('hash',function ($row){
+            //     for($i = 1; $i <$row().Length;) {
 
-                return '#';
-            })
+            //         return $i;
+
+
+            //     }$i --;
+
+            // })
             // ->editColumn('ClassName', function($attendances)
             // {
             //    return $attendances->Section->classes->className;
             // })
 
-            ->rawColumns(['hash'])
+            // ->rawColumns(['hash'])
             ->make(true);
         return $data_table_render;
 
         // return response()->json(["success"=>'Counted', "attn"=>$attendances,201]);
+
+    }
+    public function sectionAttendance($classId,$sectionId,$dateId)
+    {
+
+        $bId=Auth::guard('web')->user()->bId;
+        $attendance=Attendance::where('bId',$bId)
+                        ->whereDate('created_at', $dateId)
+                        ->where('sectionId', $sectionId)
+                        ->where('classId', $classId)
+                        ->with('student')->get();
+        // $attendance=DB::select("SELECT * FROM students,attendances WHERE students.id=attendances.studentId AND attendances.classId='$classId' AND attendances.sectionId='$sectionId' AND attendances.bId='$bId' AND attendances.created_at='$dateId'");
+        $data_table_render = DataTables::of($attendance)
+        ->editColumn('created_at', function($attendance)
+         {
+            return $attendance->created_at->format('d-M-Y');
+         })
+         ->editColumn('student.firstName', function($attendance)
+         {
+            return $attendance->Student->firstName. " ".$attendance->Student->lastName;
+         })
+
+
+        ->addIndexColumn()
+        ->make(true);
+    return $data_table_render;
 
     }
 

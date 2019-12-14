@@ -22,7 +22,7 @@ class StudentTeacherListController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    //form view 
+    //form view
     public function index()
     {
         return view('backend.student.pages.teacher.teacherList');
@@ -56,10 +56,10 @@ class StudentTeacherListController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //teacher list from user 
+     //teacher list from user
     public function show()
     {
-        
+
         // ->findOrFail(Auth::guard('student')->user()->id);
 
         $teacher=User::where('designation','Teacher')
@@ -67,11 +67,8 @@ class StudentTeacherListController extends Controller
                         ->get();
 
                         $data_table_render = DataTables::of($teacher)
-                        ->addColumn('hash',function ($row){
-                            $i=0;
-                            return ++$i;
-                             })
-                        ->rawColumns(['hash'])
+
+                        ->addIndexColumn()
                         ->make(true);
                     return $data_table_render;
     }

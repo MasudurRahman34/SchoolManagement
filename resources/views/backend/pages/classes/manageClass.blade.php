@@ -21,7 +21,7 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th></th>
                                 <th>Class Name</th>
                                 <th>Duration</th>
                                 <th>Available Seat</th>
@@ -88,7 +88,7 @@
                 serverSide:true,
                 ajax:"{{url('class/show')}}",
                 columns:[
-                    { data: 'hash', name: 'hash' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'className', name: 'className' },
                     { data: 'duration', name: 'duration' },
                     { data: 'seat', name: 'seat' },

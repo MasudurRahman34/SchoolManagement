@@ -21,7 +21,7 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>#</th>
+                      <th></th>
                       <th>Class Name</th>
                       <th>Section</th>
                       <th>Study Shift</th>
@@ -112,7 +112,7 @@
              serverSide:true,
              ajax:"{{url('/section/show')}}",
              columns:[
-                 { data: 'hash', name: 'hash' },
+                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                  { data: 'classes.className', name: 'classes.className' },
                  { data: 'sectionName', name: 'sectionName' },
                  { data: 'shift', name: 'shift' },

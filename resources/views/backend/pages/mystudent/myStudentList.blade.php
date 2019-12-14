@@ -13,19 +13,22 @@
         </ul>
     </div>
 <div class="row justify-content-md-center">
-    <div class="col-md-7">
+    <div class="col-md-9">
         <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
+                                <th></th>
+                                <th>ID</th>
                                 <th>Roll</th>
+                                <th>Name</th>
                                 <th>Class</th>
                                 <th>Section</th>
                                 <th>Shift</th>
+                                <th>Father Name</th>
+                                <th>Mother Name</th>
                                 <th>Contact</th>
                                 <th>Action</th>
                             </tr>
@@ -50,18 +53,24 @@
                 ],
                 processing:true,
                 serverSide:true,
+                
+                // fixedColumns: true,
                 ajax:"{{url('mystudent/list')}}",
                 columns:[
-                    { data: 'hash', name: 'hash' },
-                    { data: 'firstName', name: 'firstName' },
+                    {data: 'DT_RowIndex',name: 'DT_RowIndex'},
+                    { data: 'studentId', name: 'studentId' },
                     { data: 'roll', name: 'roll' },
+                    { data: 'firstName', name: 'firstName' },
                     { data: 'section.classes', name: 'section.classes' },
                     { data: 'section.sectionName', name: 'section.sectionName'},
                     { data: 'section.shift', name: 'section.shift'},
+                    { data: 'fatherName', name: 'fatherName'},
+                    { data: 'motherName', name: 'motherName'},
                     { data: 'mobile', name: 'mobile'},
                     { data: 'action', name: 'action' }
                 ]
             });
+           
 
     </script>
 

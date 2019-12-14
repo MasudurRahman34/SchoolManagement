@@ -21,7 +21,7 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th></th>
                                 <th>Session Year</th>
                                 <th>Created Date</th>
                                 <th>Action</th>
@@ -76,7 +76,7 @@
                 serverSide:true,
                 ajax:"{{url('sessionyear/show')}}",
                 columns:[
-                    { data: 'hash', name: 'hash' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'sessionYear', name: 'sessionYear' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'action', name: 'action' }

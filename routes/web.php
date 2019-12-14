@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/admin2', 'backend\AdminController@index')->name('admin.index');
+// Route::get('/admin/sectionAttendance', 'backend\AdminController@sectionAttendance')->name('admin.sectionAttendance');
 Route::get('/manage/classes', 'backend\ClassesController@index')->name('manage.class');
 
 //admin deshboard api
@@ -25,6 +26,13 @@ Route::get('api/search/totalTeacher', 'backend\api\apiController@totalTeacher')-
 Route::get('api/search/totalUser', 'backend\api\apiController@totalUser')->name('api.totalUser');
 Route::get('api/search/totalsection', 'backend\api\apiController@totalsection')->name('api.totalsection');
 Route::get('api/search/classwishAttentage', 'backend\api\apiController@classwishAttentage')->name('api.classwishAttentage');
+Route::get('api/search/sectionAttendance/{classId}/{sectionId}/{dateId}', 'backend\api\apiController@sectionAttendance')->name('api.sectionAttendance');
+
+//student section api for attendance count
+Route::get('api/search/present/{id}', 'backend\api\apiController@present')->name('api.present');
+Route::get('api/search/absent/{id}', 'backend\api\apiController@absent')->name('api.absent');
+//student section api for datatable
+Route::get('/api/search/studentname', 'backend\api\apiController@studentname')->name('api.studentname');
 
 
 
@@ -56,44 +64,45 @@ Route::group(['prefix' => 'student', 'namespace'=>'auth\student'], function () {
 
 //student pages
 Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function () {
-Route::get('/index', 'StudentController@index')->name('student.index');
-Route::get('/show/profile', 'StudentController@show')->name('student.show');
-Route::get('edit/profile','StudentController@edit')->name('student.edit.profile');
-Route::post('update/profile','StudentController@update')->name('student.update.profile');
-//Student password change route
-Route::post('/change/password','StudentController@changePassword')->name('change.password');
-//Other information route
-Route::post('update/otherInfo','StudentController@otherInfo')->name('update.otherInfo');
+    Route::get('/index', 'StudentController@index')->name('student.index');
+    Route::get('/show/profile', 'StudentController@show')->name('student.show');
+    Route::get('edit/profile','StudentController@edit')->name('student.edit.profile');
+    Route::post('update/profile','StudentController@update')->name('student.update.profile');
+    //Student password change route
+    Route::post('/change/password','StudentController@changePassword')->name('change.password');
+    //Other information route
+    Route::post('update/otherInfo','StudentController@otherInfo')->name('update.otherInfo');
 
 
-//studentTeacherList
-Route::get('/teacher/list', 'StudentTeacherListController@index')->name('student.teacherList');
-Route::get('/teacher/list/show', 'StudentTeacherListController@show')->name('student.teacherList.show');
+    //studentTeacherList
+    Route::get('/teacher/list', 'StudentTeacherListController@index')->name('student.teacherList');
+    Route::get('/teacher/list/show', 'StudentTeacherListController@show')->name('student.teacherList.show');
 
-//student subject List
-Route::get('/subject/list', 'StudentSubjectListController@index')->name('student.subjectlist');
-// Route::get('/subject/show', 'StudentSubjectListController@show')->name('student.');
-
-
-//student class information
-Route::get('/class/classmates', 'StudentClassController@index')->name('student.classmates');
-Route::get('/class/classmates/show', 'StudentClassController@show')->name('student.classmates.show');
-
-//student dashBord card
-
-Route::get('/totalstudent', 'StudentController@totalStudent')->name('student.totalStudent');
-
-//student Attendance view
-Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
-Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
-Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
+    //student subject List
+    Route::get('/subject/list', 'StudentSubjectListController@index')->name('student.subjectlist');
+    // Route::get('/subject/show', 'StudentSubjectListController@show')->name('student.');
 
 
+    //student class information
+    Route::get('/class/classmates', 'StudentClassController@index')->name('student.classmates');
+    Route::get('/class/classmates/show', 'StudentClassController@show')->name('student.classmates.show');
+    // Route::get('/class/classmates/test', 'StudentClassController@test')->name('student.classmates.test');
+
+    //student dashBord card
+
+    Route::get('/totalstudent', 'StudentController@totalStudent')->name('student.totalStudent');
+
+    //student Attendance view
+    Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
+    Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
+    Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
 
 
-//Student school Corner
-Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
-Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
+
+
+    //Student school Corner
+    Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
+    Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
 });
 //endforstudent
 

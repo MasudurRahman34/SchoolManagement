@@ -8,7 +8,7 @@ use App\model\classes;
 use App\model\Subject;
 
 use Yajra\DataTables\DataTables;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SubjectController extends Controller
@@ -75,15 +75,13 @@ class SubjectController extends Controller
     {
         $subjects=Subject::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
         $data_table_render = DataTables::of($subjects)
-            ->addColumn('hash',function ($row){
-                
-                return '#';
-            })
+          
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editSubject('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteSubject('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
             })
-            ->rawColumns(['hash','action'])
+            ->rawColumns(['action'])
+            ->addIndexColumn()
             ->make(true);
         return $data_table_render;
     }

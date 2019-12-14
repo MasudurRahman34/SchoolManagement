@@ -20,7 +20,7 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th></th>
                             <th>Subject Name</th>
                             <th>Subject Code</th>
                             <th>Subject Type</th>
@@ -30,7 +30,7 @@
                     <tbody>
                       @foreach($subjectlists as $subject)
                     <tr>
-                    <td>#</td>
+                    <td></td>
                     <td>{{$subject->subjectName}}</td>
 
                     <td>{{$subject->subjectCode}}</td>

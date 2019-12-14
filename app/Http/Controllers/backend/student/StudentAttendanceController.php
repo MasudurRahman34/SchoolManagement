@@ -63,11 +63,7 @@ class StudentAttendanceController extends Controller
                         ->whereMonth('created_at', $month)
                         ->get();
         $data_table_render = DataTables::of($Attendance)
-        ->addColumn('hash',function ($row){
-            $i=0;
-            return ++$i;
-               
-        })
+        
         ->editColumn('created_at1', function($Attendance)
         {
            return $Attendance->created_at;
@@ -77,7 +73,7 @@ class StudentAttendanceController extends Controller
                return $Attendance->created_at->diffForHumans();
             }) 
        
-        ->rawColumns(['hash'])
+        ->addIndexColumn()
         ->make(true);
     return $data_table_render;
 

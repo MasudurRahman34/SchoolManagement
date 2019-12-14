@@ -10,9 +10,9 @@ use App\model\Section;
 use App\model\SessionYear;
 
 use Illuminate\Support\Facades\Auth;
-use DataTables;
-use DB;
-use Session;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class MyStudentConttroller extends Controller
 {
@@ -35,10 +35,7 @@ class MyStudentConttroller extends Controller
         // dd($student->Section->classes);
 
         $data_table_render = DataTables::of($student)
-            ->addColumn('hash',function ($row){
 
-                return '#';
-            })
             ->addColumn('action',function ($row){
                $edit_url = url('mystudent/show/studentProfile/'.$row['id']);
                 return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
@@ -51,11 +48,12 @@ class MyStudentConttroller extends Controller
                           {
                              return $student->Section->classes->className;
                           })
-            ->rawColumns(['hash','action'])
+            ->rawColumns(['action'])
+            ->addIndexColumn()
             ->make(true);
         return $data_table_render;
     }
-//class Wish student List 
+//class Wish student List
     public function classwise()
     {
         $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
@@ -64,15 +62,16 @@ class MyStudentConttroller extends Controller
 
     }
 
+    public function test(){
+        return "working";
+    }
+
     public function classwiseList($classId)
     {
             $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId'");
 
                 $data_table_render = DataTables::of($class)
-                        ->addColumn('hash',function ($class){
 
-                            return '#';
-                        })
                         ->editColumn('firstName', function($student)
                           {
                              return $student->firstName. " ".$student->lastName;
@@ -86,9 +85,10 @@ class MyStudentConttroller extends Controller
                                 $edit_url = url('mystudent/show/studentProfile/'.$cl);
                                 return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
                             }
-                            
+
                          })
-                        ->rawColumns(['hash','action'])
+                        ->rawColumns(['action'])
+                        ->addIndexColumn()
                         ->make(true);
             return $data_table_render;
     }
@@ -106,14 +106,11 @@ class MyStudentConttroller extends Controller
 
     public function sectionwiselist($classId, $sectionId)
     {
-       
+
             $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
 
                 $data_table_render = DataTables::of($class)
-                        ->addColumn('hash',function ($class){
 
-                            return '#';
-                        })
                         ->editColumn('firstName', function($student)
                           {
                              return $student->firstName. " ".$student->lastName;
@@ -123,9 +120,10 @@ class MyStudentConttroller extends Controller
                                 $edit_url = url('mystudent/show/studentProfile/'.$cl);
                                 return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
                             }
-                            
+
                          })
-                        ->rawColumns(['hash','action'])
+                        ->rawColumns(['action'])
+                        ->addIndexColumn()
                         ->make(true);
             return $data_table_render;
     }
@@ -257,7 +255,7 @@ class MyStudentConttroller extends Controller
     //showProfile method
     public function showProfile($id){
 
-        
+
 
 
         //return view('backend.pagesmystudent.myStudentProfile');

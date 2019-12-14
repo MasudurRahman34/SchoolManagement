@@ -5,7 +5,7 @@ namespace App\Http\Controllers\backend\student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class StudentClassController extends Controller
@@ -56,25 +56,21 @@ class StudentClassController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //student list with datatable 
+     //student list with datatable
     public function show()
     {
         $classId=Auth::guard('student')->user()->Section->classes->id;
         $studentlist=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId'");
 
         $data_table_render = DataTables::of($studentlist)
-        ->addColumn('hash',function ($row){
-            $i=0;
-           
-            return '#';
-            
-             })
+
              ->editColumn('firstName', function($student)
              {
                 return $student->firstName. " ".$student->lastName;
              })
-             
-        ->rawColumns(['hash'])
+
+        // ->rawColumns(['hash'])
+        ->addIndexColumn()
         ->make(true);
 
          return $data_table_render;
@@ -90,6 +86,10 @@ class StudentClassController extends Controller
     public function edit($id)
     {
         //
+    }
+    public function test()
+    {
+    return("working");
     }
 
     /**

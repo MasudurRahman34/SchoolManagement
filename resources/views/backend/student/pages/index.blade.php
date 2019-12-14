@@ -1,6 +1,6 @@
 
   @extends('backend.student.layouts.master')
-	@section('title', 'Student Page')
+	@section('title','student deshbord')
     @section('content')
     <style>
     .card {
@@ -33,6 +33,9 @@
         <div>
           <h1><i class="fa fa-dashboard"></i> Student Dashboard</h1>
           <p>Role: Not Assign</p>
+          <p id="name" hidden> asasd</p>
+          <h1 id="schoolname" hidden > school</h1>
+          <h1 id="mobile" hidden > school</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -42,47 +45,31 @@
       <!-- Will be applied progress bar -->
       <div class="row">
           <div class="col-md-12">
-          <div class="tile">
-          <div class="progress-bar" role="progressbar" style="width: 50%;" >25% Profile Progress</div>
-</div>
-          </div></div>
-
-
-        
+            <div class="tile">
+            <div class="progress-bar" role="progressbar" style="width: 50%;" >25% Profile Progress</div>
+            </div>
+          </div>
       </div>
-
       <div class="row mb-5">
-       <!--  <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card bg-success text-white h-100">
-                <div class="card-body bg-success">
-                    <div class="rotate">
-                        <i class="fa fa-user fa-4x"></i>
-                    </div>
-                    <h6 class="text-uppercase">Notifications</h6>
-                    <h1 class="display-4">12</h1>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card text-white bg-danger h-100">
-                <div class="card-body bg-danger">
-                    <div class="rotate">
-                        <i class="fa fa-list fa-4x"></i>
-                    </div>
-                    <h6 class="text-uppercase">Event</h6>
-                    <h1 class="display-4">10</h1>
-                </div>
-            </div>
-        </div> -->
-        
         <div class="col-xl-3 col-sm-6 py-2 mb-2">
             <div class="card text-white bg-info h-100">
                 <div class="card-body bg-info">
                     <div class="rotate">
                         <i class="fa fa-twitter fa-4x"></i>
                     </div>
-                    <h6 class="text-uppercase">My Attendance</h6>
+                    <h6 class="text-uppercase">My Attendance percentage</h6>
                     <p class="display-4" id="Attendance"> </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 py-2 mb-2">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body bg-warning">
+                    <div class="rotate">
+                        <i class="fa fa-twitter fa-4x"></i>
+                    </div>
+                    <h6 class="text-uppercase">My Absent percentage</h6>
+                    <p class="display-4" id="AttendanceAbsent"> </p>
                 </div>
             </div>
         </div>
@@ -97,41 +84,29 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card text-white bg-warning h-100">
+        <div class="col-xl-3 col-sm-6 py-2 mb-2">
+            <div class="card text-white bg-success h-100">
                 <div class="card-body">
                     <div class="rotate">
                         <i class="fa fa-share fa-4x"></i>
                     </div>
-                    <h6 class="text-uppercase">Due Fees</h6>
-                    <h1 class="display-4">100</h1>
+                    <h6 class="text-uppercase">Total Present This month</h6>
+                    <h1 class="display-4" id="present"></h1>DAY
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 py-2">
-            <div class="card text-white bg-warning h-100">
+        <div class="col-xl-3 col-sm-6 py-2 mb-2">
+            <div class="card text-white bg-danger h-100">
                 <div class="card-body">
                     <div class="rotate">
                         <i class="fa fa-share fa-4x"></i>
                     </div>
-                    <h6 class="text-uppercase">Expenses</h6>
-                    <h1 class="display-4">10000</h1>
+                    <h6 class="text-uppercase">Total Absent This month</h6>
+                    <h1 class="display-4" id="absent"></h1>DAY
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 py-2">
-                <div class="card text-white bg-danger h-100">
-                    <div class="card-body">
-                        <div class="rotate">
-                            <i class="fa fa-share fa-4x"></i>
-                        </div>
-                        <h6 class="text-uppercase">Leave</h6>
-                        <h1 class="display-4">2</h1>
-                    </div>
-                </div>
-            </div>-->
-     </div>  
-
+     </div>
         <div class="row">
             <div class="col-md-5">
                   <div class="tile">
@@ -149,7 +124,7 @@
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th></th>
                                         <th>StudentId</th>
                                         <th>attendance</th>
                                         <th>Date</th>
@@ -173,7 +148,7 @@
                             <a href="#" class="btn btn-primary" onclick=" subject()">Download</a>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="col-md-4 col-sm-4">
                 <div class="tile">
@@ -248,31 +223,92 @@
                             <a href="#" class="btn btn-primary" onclick=" subject()">Read More</a>
                         </div>
                 </div>
-            </div>    
+            </div>
         </div>
       @endsection
       @section('script')
-      @include('backend.student.partials.js.datatable'); 
-      <script src="{{ asset('admin/js/plugins/chart.js') }} "></script>
-       <script type="text/javascript">
-       
-      $(document).ready(function () {
-          
+      @include('backend.student.partials.js.datatable');
 
-        var d = new Date();  
+      <script src="{{ asset('admin/js/plugins/chart.js') }} "> </script>
+       <script type="text/javascript">
+
+      $(document).ready(function () {
+
+
+      var d = new Date();
       var month=d.getMonth()+1;
-      //document.getElementById("date").innerHTML = month;
-    //   $('table').attr('id',month);
+            //document.getElementById("date").innerHTML = month;
+           //   $('table').attr('id',month);
+
+    $.ajax({
+        type: "get",
+        url: "{{url('/api/search/present')}}"+"/"+month,
+        data: "data",
+        success: function (data) {
+         //var data1 =parseFloat(data.data).toFixed(2);
+        $('#present').html(data.data);
+
+
+           // document.getElementById("attendance").innerHTML= parseFloat(data).toFixed(2);
+        }
+    });
+    $.ajax({
+        type: "get",
+        url: "{{url('/api/search/absent')}}"+"/"+month,
+        data: "data",
+        success: function (data) {
+         //var data1 =parseFloat(data.data).toFixed(2);
+         $('#absent').html(data.data);
+
+        }
+    });
+    $.ajax({
+        type: "get",
+        url: "{{url('/api/search/studentname')}}",
+        data: "data",
+            success:function(data) {
+                console.log(data);
+                var firstname = data[0].firstName;
+                var lastname = data[0].lastName;
+                var mobile = data[0].mobile;
+
+                var fullname= firstname+' '+lastname;
+                console.log(data[0].firstName,data[0].lastName);
+                console.log(data[0].school_branch.nameOfTheInstitution);
+                var schoolname= data[0].school_branch.nameOfTheInstitution;
+               document.title = schoolname;
+                $('#name').html(fullname);
+                $('#schoolname').html(schoolname);
+                $('#mobile').html(mobile);
+
+
+
+                }
+
+    });
+
+
       var table=$('#sampleTable').DataTable({
             dom: 'lBfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'pdf',
+
+                {
+                    extend: 'print',
+                    messageTop: function () {
+                        return '<div class="text-center">' +'<h1>'+$('#schoolname').text()+'</h1>'+' '
+                            +'<br/> '+' Student Name: '+$('#name').text() +' '+'. Contact Number: '+$('#mobile').text()+' '
+                            +'<br/>'+'Total present this Month : '+' '+'<strong>'+ $('#present').text()+'</strong>'+' '+' Day. '
+                            +' Absent This month: '+'<strong>'+ $('#absent').text()+'</strong>'+' Day. '+'</div>' ;
+                    }
+
+                }
             ],
              processing:true,
              serverSide:true,
              ajax:"{{url('/student/attendance/show/')}}"+"/"+month,
              columns:[
-                 { data: 'hash', name: 'hash' },
+                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                  { data: 'studentId', name: 'studentId' },
                  { data: 'attendence', name: 'attendence' },
                  { data: 'created_at1', name: 'created_at1' },
@@ -285,12 +321,13 @@
             type: "get",
             url: "{{url('/student/attendance/attendancePercentage/')}}"+"/"+month,
             data: "data",
-           
+
             success: function (response) {
                 console.log(response);
                 document.getElementById("Attendance").innerHTML= parseFloat(response).toFixed(2);
                 var absent=100- response;
                 console.log(absent);
+                document.getElementById("AttendanceAbsent").innerHTML= parseFloat(absent).toFixed(2);
                 var pdata = [{
                   value: response,
                   color: "#46BFBD",
@@ -303,14 +340,11 @@
                   highlight: "#FF5A5E",
                   label: "Absent"
               }
-              
+
           ]
-  
-  
-  
           var ctxp = $("#pieChartDemo").get(0).getContext("2d");
           var pieChart = new Chart(ctxp).Pie(pdata);
-                
+
             }
         });
 
@@ -322,7 +356,7 @@
                $('#totalstudent').html(data.data);
             }
         });
-    
+
   });
 
   function subject(){
@@ -333,4 +367,4 @@
   </script>
       @endsection
 
-    <!-- Essential javascripts for application to work-->
+<!-- Essential javascripts for application to work-->

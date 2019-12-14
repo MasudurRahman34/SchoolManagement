@@ -21,7 +21,7 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>#</th>
+                      <th></th>
                       <th>Class Name</th>
                       <th>Subject Name</th>
                       <th>Subject Code</th>
@@ -123,7 +123,7 @@
              serverSide:true,
              ajax:"{{url('/subject/show')}}",
              columns:[
-                 { data: 'hash', name: 'hash' },
+                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                  { data: 'classes.className', name: 'classes.className' },
                  { data: 'subjectName', name: 'subjectName' },
                  { data: 'subjectCode', name: 'subjectCode' },
@@ -200,7 +200,6 @@
                 var url = "{{url('/subject/delete')}}";
                 deleteAttribute(url,id);
         }
-
 
 </script>
   @endsection

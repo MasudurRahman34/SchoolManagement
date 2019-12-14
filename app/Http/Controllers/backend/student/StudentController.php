@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -64,7 +64,7 @@ class StudentController extends Controller
         return view('backend.student.pages.profile.profile',['students' => $students]);
     }
 
-    //total student ina class 
+    //total student in a class
    public function totalStudent(){
     $classId=Auth::guard('student')->user()->Section->classes->id;
     $totalStudent=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId'");
@@ -80,7 +80,7 @@ class StudentController extends Controller
      */
     public function edit()
     {
-       
+
         $students=Student::with('schoolBranch','Section')
         ->where('bId', Auth::guard('student')->user()->bId)
         ->findOrFail(Auth::guard('student')->user()->id);
@@ -96,9 +96,9 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     
+
     public function update(Request $request)
-    {  
+    {
         // $this->validate($request,[
         //     'firstName'=>'string',
         //     'fatherName'=>'string',
@@ -179,7 +179,7 @@ class StudentController extends Controller
     //         'motherIncome'=>'',
     //         'address'=>'string',
     //         'mobile'=>'',
-    //     ]); 
+    //     ]);
     //     // 2. data update
     //     $stud = Student::find(Auth::guard('student')->user()->id);
     //     $stud->fatherOccupation = $request->fatherOccupation;
@@ -188,7 +188,7 @@ class StudentController extends Controller
     //     $stud->motherIncome = $request->motherIncome;
     //     $stud->address = $request->address;
     //     $stud->mobile = $request->mobile;
-       
+
     //     $stud->save();
     //     Session::flash('success','Successfully Student Information Updated');
     //     return redirect()->back();

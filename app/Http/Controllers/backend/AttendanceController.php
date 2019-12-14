@@ -9,7 +9,7 @@ use App\model\SessionYear;
 use App\model\classes;
 use App\model\Section;
 use App\model\Student;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Session;
@@ -50,8 +50,7 @@ class AttendanceController extends Controller
 //store Attendance information
 public function storeAttendence(Request $request){
 
-
-    // $validator= Validator::make($request->all(), Attendance::$rules);
+ // $validator= Validator::make($request->all(), Attendance::$rules);
     // if ($validator->fails()) {
     //     return $validator->errors();
     //     // Session::flash('','Succesfully Student Attendence Data Saved');
@@ -127,10 +126,10 @@ public function storeAttendence(Request $request){
 
             // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
-            return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/edit/$request->sectionId"]);
+            return response()->json(["redirectToEdit"=>"/student/attendance/edit/$request->sectionId"]);
         }else{
             $sectionId= $request->sectionId;
-            $students = Student::where('sectionId',$sectionId)->get();
+            $students = Student::where('sectionId',$sectionId)->orderBy('id','ASC')->get();
             return response()->json($students);
         }
 
@@ -159,7 +158,7 @@ public function storeAttendence(Request $request){
 
             // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
-           return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/datewishAttendance/$request->dateId/$request->sectionId"]);
+           return response()->json(["redirectToEdit"=>"/student/attendance/datewishAttendance/$request->dateId/$request->sectionId"]);
         }else{
             $sectionId= $request->sectionId;
             $students = Student::where('sectionId',$sectionId)->get();
@@ -211,13 +210,13 @@ public function storeAttendence(Request $request){
         return redirect()->back();
     }
 
+    //view
     public function classwish(){
 
         $class= classes::where('bId', Auth::guard('web')->user()->bId)->get();
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
         return view('backend.pages.attendance.studentAttendenceClassWish', compact("class","sessionYear"));
     }
-
 
     public function bydate(Request $request)
     {

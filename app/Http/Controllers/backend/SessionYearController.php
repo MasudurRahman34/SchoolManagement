@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\model\Section;
 use App\model\SessionYear;
 use Yajra\DataTables\DataTables;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SessionYearController extends Controller
@@ -65,16 +65,13 @@ class SessionYearController extends Controller
     {
         $sessionYear=SessionYear::where('bId', Auth::user()->bId)->get();
         $data_table_render = DataTables::of($sessionYear)
-            ->addColumn('hash',function ($row){
-                $i=0;
-                $i=$i++;
-                return $i;
-            })
+            
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editSession('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteSession('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
             })
-            ->rawColumns(['hash','action'])
+            ->rawColumns(['action'])
+            ->addIndexColumn()
             ->make(true);
         return $data_table_render;
     }

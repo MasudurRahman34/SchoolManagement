@@ -18,7 +18,7 @@
                     <input type="radio" name="month" id="month3" value="3" class="custom-control-input admission">
                     <label class="custom-control-label" for="month3">MARCH</label>
                 </div>
-              
+
               <div class="custom-control month-radio custom-control-inline">
                     <input type="radio" name="month" id="month4" value="4" class="custom-control-input admission">
                     <label class="custom-control-label"  for="month4">APRIL</label>
@@ -31,7 +31,7 @@
                     <input type="radio" name="month" id="month6" value="6" class="custom-control-input admission">
                     <label class="custom-control-label" for="month6">JUNE</label>
                 </div>
-              
+
               <div class="custom-control month-radio custom-control-inline">
                     <input type="radio" name="month" id="month7" value="7" class="custom-control-input admission">
                     <label class="custom-control-label"  for="month7">JULY</label>
@@ -44,7 +44,7 @@
                     <input type="radio" name="month" id="month9" value="9" class="custom-control-input admission">
                     <label class="custom-control-label" for="month9">SEPTEMBER</label>
                 </div>
-              
+
               <div class="custom-control month-radio custom-control-inline">
                     <input type="radio" name="month" id="month10" value="10" class="custom-control-input admission">
                     <label class="custom-control-label"  for="month10">OCTOBER</label>
@@ -61,9 +61,9 @@
         </div>
         </div>
 
-   
-            
-           
+
+
+
             <div class="col-md-8">
                 <div class="tile">
                 <h3 class=" row justify-content-md-center">Attendance Information </h3>
@@ -72,10 +72,10 @@
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>StudentId</th>
-                                        <th>attendance</th>
+                                        <th></th>
                                         <th>Date</th>
+                                        <th>attendance</th>
+
                                         <th>Last Attendance</th>
                                     </tr>
                                 </thead>
@@ -86,7 +86,7 @@
             </div>
             </div>
             <div class="row">
-              
+
               <div class="col-md-5">
                   <div class="tile">
                       <h3 class="tile-title">Attendance Information in Pie Chart</h3>
@@ -100,16 +100,16 @@
       <div class="clearix"></div>
     @endsection
     @section('script')
-       @include('backend.student.partials.js.datatable'); 
-       
+       @include('backend.student.partials.js.datatable');
+
        <script src="{{ asset('admin/js/plugins/chart.js') }} "></script>
        <script type="text/javascript">
-       
+
   $(function(){
   $('input[type="radio"]').click(function(){
     if ($(this).is(':checked'))
     {
-        
+
       var month=$(this).val();
     //   $('table').attr('id',month);
       var table=$('#sampleTable').DataTable({
@@ -123,10 +123,11 @@
              destroy : true,
              ajax:"{{url('/student/attendance/show/')}}"+"/"+month,
              columns:[
-                 { data: 'hash', name: 'hash' },
-                 { data: 'studentId', name: 'studentId' },
-                 { data: 'attendence', name: 'attendence' },
+                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                  { data: 'created_at1', name: 'created_at1' },
+
+                 { data: 'attendence', name: 'attendence' },
+
                  { data: 'created_at', name: 'created_at' },
              ]
          });
@@ -136,7 +137,7 @@
             type: "get",
             url: "{{url('/student/attendance/attendancePercentage/')}}"+"/"+month,
             data: "data",
-           
+
             success: function (response) {
                 console.log(response);
                 var absent=100- response;
@@ -153,14 +154,14 @@
                   highlight: "#FF5A5E",
                   label: "Absent"
               }
-              
+
           ]
-  
-  
-  
+
+
+
           var ctxp = $("#pieChartDemo").get(0).getContext("2d");
           var pieChart = new Chart(ctxp).Pie(pdata);
-                
+
             }
         });
     }

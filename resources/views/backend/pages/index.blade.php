@@ -41,7 +41,7 @@
                     </div>
             </div>
 
-            
+
             <div class="col-md-6 col-lg-3">
                     <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
                         <div class="info">
@@ -73,145 +73,127 @@
                   <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
                 </div>
               </div> -->
-            
+
           </div>
           <div class="row">
-          <div class="col-md-6">
-              <div class="tile">
-                <h3 class="tile-title"> Classwish Attendance</h3>
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered" id="sampleTable">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <!-- <th> Class Name</th> -->
-                                <th> Class Name</th>
-                                <th>Number of Student Present</th>
-                            </tr>
-                        </thead>
-                    </table>
-                  </div>
-              </div>
-            </div>
-          </div>
-          
+            <div class="col-md-6">
+                <div class="tile">
+                    <h3 class="tile-title"> Classwish Attendance Today</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    {{-- <th>#</th> --}}
+                                    <!-- <th> Class Name</th> -->
+                                    <th> Class Name</th>
+                                    <th>Number of Present Student </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tile">
+                        <div class="tile-body">
+                            <div class="row">
+                                <div class="form-group col-xs-2">
+                                    <label class="control-label mt-3">Shift</label><br>
+                                    <div class="custom-control shift-radio custom-control-inline">
+                                    <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
+                                    <label class="custom-control-label"  for="shift1">Morning</label>
+                                    </div>
+                                    <div class="custom-control shift-radio custom-control-inline">
+                                    <input type="radio" name="shift" id="shift2" value="Day" class="custom-control-input admission">
+                                    <label class="custom-control-label" for="shift2">Day</label>
+                                    </div>
+                                    <div class="custom-control shift-radio custom-control-inline">
+                                    <input type="radio" name="shift" id="shift3" value="Evening" class="custom-control-input admission">
+                                    <label class="custom-control-label" for="shift3">Evening</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <label for="exampleFormControlSelect1">Select Class</label>
+                                    <select class="form-control admission" id="classId" name="classId">
+                                    <option value="">--Please Select--</option>
+                                    @foreach ($class as $class)
+                                    <option value="{{$class->id}}">{{$class->className}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <label for="exampleFormControlSelect1"> Section</label>
+                                    <select class="form-control attnchange" id="sectionId">
+                                    <option value=""> --Please Select--  </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-2">
+                                        <label for="exampleFormControlSelect1">Date</label>
+                                        <div class="">
+                                          <input class="form-control attnchange" type="date" name="dateId" id="dateId" value="{{date('Y-m-d')}}" >
+                                        </div>
+                                      </div>
+                                <div class="form-group col-md-6" hidden>
+                                    <select class="form-control " id="sessionYear" >
+                                    <option value="">--Please Select--</option>
+                                    @foreach ($sessionYear as $year)
+                                    <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tile">
+                    <h3 class="tile-title"> Attendance Report</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable1">
+                                <thead>
+
+                                    <tr>
+                                        <th></th>
+                                        <th>Date</th>
+                                        <th>Attendace</th>
+                                        <th>roll</th>
+                                        <th>Name</th>
 
 
-<!-- 
-        @can('Admission')
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
-                <div class="info">
-                <h4 class="font-weight-bold">Admission</h4>
-                <p class="float-right"> Total <b>5</b></p>
-                </div>
-            </div>
-        </div>
-        @endcan
-        @can('Student')
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
-            <div class="info">
-              <h4 class="font-weight-bold">Student</h4>
-              <p class="float-right"> Total <b>5</b></p>
-            </div>
-          </div>
-        </div>
-        @endcan
-        @can('Teacher')
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
-            <div class="info">
-              <h4>Teachers</h4>
-              <p><b>25</b></p>
-            </div>
-          </div>
-        </div>
-        @endcan
-        @can('Staff')
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
-            <div class="info">
-              <h4>Employee</h4>
-              <p><b>10</b></p>
-            </div>
-          </div>
-        </div>
-        @endcan
-        @can('Library')
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
-            <div class="info">
-              <h4>Library</h4>
-              <p><b>500</b></p>
-            </div>
-          </div>
-        </div>
-        @endcan
-        @can('Notice')
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
-            <div class="info">
-              <h4>Notice</h4>
-              <p><b>500</b></p>
-            </div>
-          </div>
-        </div>
-        @endcan
-        @can('Event');
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
-            <div class="info">
-              <h4>Event</h4>
-              <p><b>500</b></p>
-            </div>
-          </div>
-        </div>
-        @endcan
-        @can('Attendence')
-        <div class="col-md-6 col-lg-3">
-                <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
-                  <div class="info">
-                    <h4>Attendence</h4>
-                    <p><b>500</b></p>
-                  </div>
-                </div>
-            </div>
-      @endcan
-      @can('Class')
-      <div class="col-md-6 col-lg-3">
-              <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
-                <div class="info">
-                  <h4>Class</h4>
-                  <p><b>500</b></p>
-                </div>
-              </div>
-          </div>
-    @endcan
-    </div> -->
 
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
       @endsection
       @section('script')
-       <!-- @include('backend.partials.js.map');  -->
-       @include('backend.student.partials.js.datatable'); 
-      <script type="text/javascript">
+       @include('backend.student.partials.js.datatable');
+       <script type="text/javascript" src="{{ asset('admin/js/plugins/bootstrap-datepicker.min.js') }}"></script>
+      <script type="text/javascript" >
+
        $(document).ready(function () {
-          
-       var d = new Date();  
+
+       var d = new Date();
+       var todate=d.getDate();
        var month=d.getMonth()+1;
 
-       //overall current monthly attendence for all student 
-      
+
+
+
+       //overall current monthly attendence for all student
+
          $.ajax({
              type: "get",
              url: "{{url('/api/search/StudentAttendancePercentage')}}"+"/"+month,
              data: "data",
              success: function (data) {
-              var data1 =parseFloat(data.data).toFixed(2); 
+              var data1 =parseFloat(data.data).toFixed(2);
               $('#attendance').html(data1);
           //        console.log(response);
-                // document.getElementById("attendance").innerHTML= parseFloat(data).toFixed(2);   
+                // document.getElementById("attendance").innerHTML= parseFloat(data).toFixed(2);
              }
          });
 
@@ -226,7 +208,7 @@
              }
          });
 
-         //total teacher of this school  
+         //total teacher of this school
          $.ajax({
              type: "GET",
              url: "{{url('/api/search/totalTeacher')}}",
@@ -257,21 +239,6 @@
          });
 
 
-        //  $.ajax({
-        //      type: "GET",
-        //      url: "{{url('/api/search/classwishAttentage')}}",
-        //      data: "data",
-        //      dataType: 'json',
-        //      success: function (data) {
-        //       var xl, i=" ";
-        //         // console.log(data.attn[0].sectionName);
-        //         for (x in data.attn) {
-        //           console.log(x);
-                
-        //      }console.log(xl);
-        //     }
-        //  });
-
          var table=$('#sampleTable').DataTable({
             dom: 'lBfrtip',
             buttons: [
@@ -281,44 +248,55 @@
              serverSide:true,
              ajax:"{{url('/api/search/classwishAttentage')}}",
              columns:[
-                 { data: 'hash', name: 'hash' },
+                //  { data: 'hash', name: 'hash' },
                 //  { data: 'ClassName', name: 'ClassName' },
                  { data: 'className', name: 'className' },
                  { data: 'present', name: 'present' },
              ]
          });
 
-      //    var data = {
-      // 	labels: ["January", "February", "March", "April", "May"],
-      // 	datasets: [
-      // 		{
-      // 			label: "My First dataset",
-      // 			fillColor: "rgba(220,220,220,0.2)",
-      // 			strokeColor: "rgba(220,220,220,1)",
-      // 			pointColor: "rgba(220,220,220,1)",
-      // 			pointStrokeColor: "#fff",
-      // 			pointHighlightFill: "#fff",
-      // 			pointHighlightStroke: "rgba(220,220,220,1)",
-      // 			data: [65, 59, 80, 81, 56]
-      // 		},
-      // 		{
-      // 			label: "My Second dataset",
-      // 			fillColor: "rgba(151,187,205,0.2)",
-      // 			strokeColor: "rgba(151,187,205,1)",
-      // 			pointColor: "rgba(151,187,205,1)",
-      // 			pointStrokeColor: "#fff",
-      // 			pointHighlightFill: "#fff",
-      // 			pointHighlightStroke: "rgba(151,187,205,1)",
-      // 			data: [100, 48, 40, 19, 86]
-      // 		}
-      // 	]
-      // };
+         //find section for attendance information
+         dynamicSectionSelection();
 
-      //    var ctxb = $("#barChartDemo").get(0).getContext("2d");
-      // var barChart = new Chart(ctxb).Bar(data);
-     
+         $('.attnchange').change(function (e) {
+            e.preventDefault();
+
+            var classId=$("#classId").val();
+            var sectionId=$("#sectionId").val();
+            var dateId=$("#dateId").val();
+            var d = new Date();
+            var month=d.getMonth()+1;
+
+            console.log(classId,sectionId, dateId);
+
+            var table= $('#sampleTable1').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                processing:true,
+                serverSide:true,
+                pagin:true,
+                destroy:true,
+                ajax:"{{url('api/search/sectionAttendance/')}}"+'/'+classId+'/'+sectionId+'/'+dateId,
+                columns:[
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'attendence', name: 'attendence' },
+
+                    { data: 'student.roll', name: 'student.roll' },
+                    { data: 'student.firstName', name: 'student.firstName' },
+
+
+
+                ],
+
+            });
+
+
+        });
+
+
    });
    </script>
-      @endsection
-
-    <!-- Essential javascripts for application to work-->
+   @endsection

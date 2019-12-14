@@ -36,7 +36,7 @@
               <div class="form-group col-md-3">
               <label class="control-label mt-3">Shift</label><br>
                 <div class="custom-control shift-radio custom-control-inline">
-                    <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission">
+                    <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
                     <label class="custom-control-label"  for="shift1">Morning</label>
                  </div>
                 <div class="custom-control shift-radio custom-control-inline">
@@ -131,7 +131,7 @@
         $("#dateId2").attr('value',dateId);
         $("#classId2").attr('value',classId);
         // var date=$("#dateId2").val();
-        // console.log(date);
+        console.log(classId2, dateId2);
 
         $.ajax({
           type: "post",
@@ -159,7 +159,7 @@
             tr +=
             "<tr>"+
                 "<td>"+
-                '<label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="present">present</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="" type="radio" name="attend['+value.id+']" value="late">late</label>'
+                  '<label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="present">Present</label><label class="radio"><input class="roll['+value.roll+']" type="radio"  name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="late">late</label>'
                 +"</td>"+
                 "<td>"+value.roll+"</td>"+
                 "<td>"+value.firstName+"</td>"+
@@ -174,6 +174,27 @@
         });
 
         })
+
+        $(document).ready(function () {
+          $("form").submit(function () {
+
+            var roll=true;
+            $(":radio").each(function () {
+              name=$(this).attr('class');
+
+              if(roll && !$(':radio[class="'+name+'"]:checked').length){
+                alert(' missing  '+ name);
+                console.log(name);
+                roll=false;
+              }
+
+            });
+            return roll;
+
+          });
+        });
+
+        //massing student
     </script>
 
 @endsection

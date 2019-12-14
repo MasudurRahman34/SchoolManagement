@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -78,18 +78,14 @@ class ClassesController extends Controller
         $Class=Classes::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->get();
 
         $data_table_render = DataTables::of($Class)
-            ->addColumn('hash',function ($row){
-                
-                    return '#';
-                
-                
-            })
+           
             ->addColumn('action',function ($row){
 
                 return '<button class="btn btn-info btn-sm" onClick="editClass('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteStudentCls('.$row['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></button>';
             })
-            ->rawColumns(['hash','action'])
+            ->rawColumns(['action'])
+            ->addIndexColumn()
             ->make(true);
         return $data_table_render;
     }

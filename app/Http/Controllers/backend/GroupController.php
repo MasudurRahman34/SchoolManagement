@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\model\classes;
 use App\model\Group;
 use Yajra\DataTables\DataTables;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -71,16 +71,13 @@ class GroupController extends Controller
     {
         $group=Group::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
         $data_table_render = DataTables::of($group)
-            ->addColumn('hash',function ($row){
-                $i=0;
-                $i=$i++;
-                return $i;
-            })
+            
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editGroup('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteGroup('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
             })
-            ->rawColumns(['hash','action'])
+            ->rawColumns(['action'])
+            ->addIndexColumn()
             ->make(true);
         return $data_table_render;
     }

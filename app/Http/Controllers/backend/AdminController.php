@@ -1,15 +1,19 @@
 <?php
 namespace App\Http\Controllers\backend;
 
-use App\model\classes;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
 use PHPUnit\Util\Json;
 use App\User;
+use App\model\classes;
 use App\model\Attendance;
+use App\model\Section;
+use App\model\SessionYear;
+
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 
 class AdminController extends Controller
@@ -44,7 +48,14 @@ class AdminController extends Controller
         if(is_null($data)){
             return 'not available';
         }else{
-            return view('backend.pages.index', array("data"=>$data));
+        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+
+            // return view('backend.pages.mystudent.sectionwiseStudent')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear);
+
+
+            return view('backend.pages.index', array("data"=>$data))->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear);
         }
 
 
@@ -57,7 +68,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return('working');
     }
 
     /**
@@ -78,8 +89,20 @@ class AdminController extends Controller
         return Response()->json(["success"=>'Counted', "data"=>$totalStudent,201]);
        }
 
+    public function sectionAttendance()
+    {
+        return('working');
+            $bId=Auth::guard('web')->user()->bId;
+            $attendance=DB::select("SELECT * FROM attendances WHERE attendances.classId='$classId' AND attendances.sectionId='$sectionId' AND attendances.bId='$bId'");
 
 
+    }
+
+
+
+
+
+    //attendance
 
     //attendance
 

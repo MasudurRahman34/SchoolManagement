@@ -14,7 +14,7 @@
     </div>
 <div class="row justify-content-md-center">
     <div class="clearix"></div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="tile">
                 <div class="tile-body">
                     <div class="row">
@@ -57,26 +57,29 @@
                         </select>
                     </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
     </div>
 <div class="clearix"></div>
 <div class="row justify-content-md-center">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th></th>
+                                <th>Student ID</th>
                                 <th>Name</th>
                                 <th>Roll</th>
                                 <th>Class</th>
                                 <th>Section</th>
                                 <th>Shift</th>
+                                <th>Father Name</th>
+                                <th>Mother Name</th>
                                 <th>Contact</th>
                                 <th>Action</th>
                             </tr>
@@ -96,38 +99,41 @@
     dynamicSectionSelection();
 
     $('#sectionId').change(function (e) {
-                e.preventDefault();
+        e.preventDefault();
 
-                var classId=$("#classId").val();
-                var sectionId=$("#sectionId").val();
+        var classId=$("#classId").val();
+        var sectionId=$("#sectionId").val();
 
-                console.log(classId, sectionId);
-  
-                var table= $('#sampleTable').DataTable({
-                dom: 'lBfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ],
-                processing:true,
-                serverSide:true,
-                pagin:true,
-                destroy:true,
-                ajax:"{{url('mystudent/sectionwiselist/')}}"+'/'+classId+'/'+sectionId,
-                columns:[
-                    { data: 'hash', name: 'hash' },
-                    { data: 'firstName', name: 'firstName' },
-                    { data: 'roll', name: 'roll' },
-                    { data: 'className', name: 'className' },
-                    { data: 'sectionName', name: 'sectionName'},
-                    { data: 'shift', name: 'shift'},
-                    { data: 'mobile', name: 'mobile'},
-                    { data: 'action', name: 'action' }
-                ]
-            });
-            //table.destroy();
+        console.log(classId, sectionId);
+
+        var table= $('#sampleTable').DataTable({
+        dom: 'lBfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        processing:true,
+        serverSide:true,
+        pagin:true,
+        destroy:true,
+        ajax:"{{url('mystudent/sectionwiselist/')}}"+'/'+classId+'/'+sectionId,
+        columns:[
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'studentId', name: 'studentId' },
+            { data: 'firstName', name: 'firstName' },
+            { data: 'roll', name: 'roll' },
+            { data: 'className', name: 'className' },
+            { data: 'sectionName', name: 'sectionName'},
+            { data: 'shift', name: 'shift'},
+            { data: 'fatherName', name: 'fatherName'},
+            { data: 'motherName', name: 'motherName'},
+            { data: 'mobile', name: 'mobile'},
+            { data: 'action', name: 'action' }
+        ]
+    });
+    //table.destroy();
 
     });
-   
+
 
 
 
