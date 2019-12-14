@@ -35,7 +35,11 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
         });
+        Schema::table('users', function ($table) {
+            $table->unsignedBigInteger('userId')->after('id'); //the after method is optional.
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -45,5 +49,8 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::table('users', function ($table) {
+            $table->dropColumn('userId');
+        });
     }
 }

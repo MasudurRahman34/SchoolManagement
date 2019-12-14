@@ -51,6 +51,7 @@
             <th>Year/Session</th>
             <td>{{$students->Section->sessionYear->sessionYear}}</td>
         </tr>
+
         <tr>
             <th>Schoolarship</th>
             <td>{{$students->schoolarshipStatus==0 ? "N/A" : "Yes"}}</td>

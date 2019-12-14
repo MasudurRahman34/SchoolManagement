@@ -83,7 +83,6 @@ class AdmissionController extends Controller
                     }
                 }
             }
-            
          //endoptinal subject
 
         $students=$Student::with('schoolBranch','Section')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
