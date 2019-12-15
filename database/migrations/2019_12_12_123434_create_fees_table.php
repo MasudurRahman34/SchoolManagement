@@ -20,7 +20,7 @@ class CreateFeesTable extends Migration
             $table->float('amount',8,2)->comment('amount');
             $table->unsignedBigInteger('bId')->comment('branch_table_id');
             $table->unsignedBigInteger('classId')->comment('class_table_id');
-            $table->Integer('status')->comment('disable, enable');
+            $table->Integer('status')->comment('disable 0, enable 1');
             $table->timestamps();
         });
     }

@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\backend;
 
+use App\model\feeHistory;
 use App\model\Fee;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
-class FeeController extends Controller
+class FeeHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +18,8 @@ class FeeController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('backend.pages.fee.feehistory');
     }
 
     /**
@@ -41,21 +46,34 @@ class FeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\model\Fee  $fee
+     * @param  \App\model\feeHistory  $feeHistory
      * @return \Illuminate\Http\Response
      */
-    public function show(Fee $fee)
+    public function show()
     {
-        //
+        $feehistory=feeHistory::orderBy('id','DESC')
+                    ->where('bId', Auth::guard('web')->user()->bId)
+                    ->with('Fee')
+                    ->get();
+
+         $data_table_render = DataTables::of($feehistory)
+
+         ->editColumn('created_at', function($feehistory)
+         {
+            return $feehistory->created_at->format('d-M-Y');
+         })
+             ->addIndexColumn()
+             ->make(true);
+         return $data_table_render;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\model\Fee  $fee
+     * @param  \App\model\feeHistory  $feeHistory
      * @return \Illuminate\Http\Response
      */
-    public function edit(Fee $fee)
+    public function edit(feeHistory $feeHistory)
     {
         //
     }
@@ -64,10 +82,10 @@ class FeeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\model\Fee  $fee
+     * @param  \App\model\feeHistory  $feeHistory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fee $fee)
+    public function update(Request $request, feeHistory $feeHistory)
     {
         //
     }
@@ -75,10 +93,10 @@ class FeeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\model\Fee  $fee
+     * @param  \App\model\feeHistory  $feeHistory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fee $fee)
+    public function destroy(feeHistory $feeHistory)
     {
         //
     }

@@ -35,12 +35,21 @@ Route::get('api/search/absent/{id}', 'backend\api\apiController@absent')->name('
 Route::get('/api/search/studentname', 'backend\api\apiController@studentname')->name('api.studentname');
 
 
+Route::post('/api/search/sectionbyclass', 'backend\api\apiController@sectionbyclass')->name('api.sectionbyclass');
+Route::post('/api/search/classsubject', 'backend\api\apiController@classsubject')->name('api.classsubject');
+
+//find fee list for class
+Route::get('/api/search/classfeelist', 'backend\api\apiController@classfeelist')->name('api.classfeelist');
+
+//find fee amount
+Route::get('/api/search/feeamount', 'backend\api\apiController@feeamount')->name('api.feeamount');
+
+
 
 Auth::routes();
 //api routes
 
-Route::post('api/search/sectionbyclass', 'backend\api\apiController@sectionbyclass')->name('api.sectionbyclass');
-Route::post('api/search/classsubject', 'backend\api\apiController@classsubject')->name('api.classsubject');
+
 
 Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
     Route::post('/search/section', 'apiController@section')->name('api.section');
@@ -181,6 +190,22 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::post('/class/update/{id}','backend\ClassesController@update')->name('class.update');
     Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
 });
+
+    //Fee Management for admin
+    Route::get('/fee','backend\FeeController@index')->name('fee.index');
+    Route::post('/fee/store','backend\FeeController@store')->name('fee.store');
+    Route::get('/fee/show','backend\FeeController@show')->name('fee.show');
+    Route::get('/fee/edit/{id}','backend\FeeController@edit')->name('fee.edt');
+    Route::post('/fee/update/{id}','backend\FeeController@update')->name('fee.update');
+    Route::get('/fee/delete/{id}','backend\FeeController@destroy')->name('fee.delete');
+
+    //feeHisory admin view
+    Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');
+    Route::get('/feehistory/show','backend\FeeHistoryController@show')->name('feehistory.show');
+
+    //feecollection management for admin
+    Route::get('/feecollection','backend\FeeCollectionController@index')->name('feecollection.index');
+
 
 //section Management
 Route::group(['middleware' => ['auth','role_or_permission:Section']], function () {

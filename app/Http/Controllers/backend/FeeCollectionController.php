@@ -1,9 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\backend;
 
 use App\model\feeCollection;
 use Illuminate\Http\Request;
+use App\model\Fee;
+use App\model\classes;
+use App\model\Student;
+use App\model\Section;
+use App\model\SessionYear;
+use App\model\feeHistory;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class FeeCollectionController extends Controller
 {
@@ -13,8 +24,13 @@ class FeeCollectionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        //
+        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $fees=Fee::where('bid', Auth::guard('web')->user()->bId)->get();
+        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.fee.feeCollection')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('fees',$fees);
     }
 
     /**
