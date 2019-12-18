@@ -16,15 +16,15 @@
     <div class="row justify-content-md-center">
         <div class="col-md-10">
             <div class="tile">
-            
+
                 <div class="tile-body">
                 <nav aria-label="breadcrumb">
                     <ol class="app-breadcrumb breadcrumb side">
-                    
+
                         @php
                         $i = 1;
                         @endphp
-                        
+
                         @foreach($attendences as $attendence)
                         @if ($i > 0)
                         <li class="breadcrumb-item"><a href="#">Class : {{$attendence->student->section->classes->className }}</a></li>
@@ -38,9 +38,9 @@
                         @endforeach
                         <a href="{{route('attendance.index') }}" class="btn btn-info float-right ml-auto mt-2"> <i class="fa fa-arrow-left"></i> Go Back</a>
                     </ol>
-                    
+
                 </nav>
-               
+
                 </div>
             </div>
         </div>
@@ -57,14 +57,18 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>Attendence</th>
                                 <th>Roll</th>
+                                <th>Attendence</th>
+
                                 <th>Name</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($attendences as $attendence)
-                            <tr> 
+                            <tr>
+                                <td>
+                                    {{$attendence->student->roll}}
+                                </td>
                                 <td>
                                     <div class="control">
                                         <label class="radio">
@@ -81,9 +85,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td>
-                                {{$attendence->student->roll}}
-                                </td>
+
                                 <td>
                                 {{$attendence->student->firstName}}
                                 </td>
@@ -91,7 +93,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        </div>        
+                        </div>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-plus-square" aria-hidden="true"></i> Update Attendence</button>
                     </form>
                 </div>
@@ -147,10 +149,10 @@
     //             data: data,
     //             success:function (result) {
     //             console.log(result);
-                
+
     //             }
     //             });
-            
+
     //     });
     </script>
 

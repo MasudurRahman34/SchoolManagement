@@ -19,6 +19,10 @@ class CreateFeeCollectionsTable extends Migration
             $table->unsignedBigInteger('studentId')->comment('student_table_id');
             $table->unsignedBigInteger('feeId')->comment('fee_table_id');
             $table->float('amount',8,2)->comment('amount');
+            $table->bigIncrements('transactionId')->comment('for payment information');
+            $table->string('type', 30)->comment();
+            $table->string('accountNumber', 30)->comment();
+            $table->string('paidMonth', 30)->comment();
             $table->string('month', 30)->comment();
             $table->string('year', 30)->comment('year');
             $table->unsignedBigInteger('bId')->comment('branch_table_id');

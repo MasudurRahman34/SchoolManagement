@@ -94,8 +94,9 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th>Attendence</th>
                                 <th>Student Roll</th>
+                                <th>Attendence</th>
+
                                 <th>Student Name</th>
                             </tr>
                             </thead>
@@ -158,10 +159,11 @@
             $.each (response, function (key, value) {
             tr +=
             "<tr>"+
+                "<td>"+value.roll+"</td>"+
                 "<td>"+
                   '<label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="present">Present</label><label class="radio"><input class="roll['+value.roll+']" type="radio"  name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="late">late</label>'
                 +"</td>"+
-                "<td>"+value.roll+"</td>"+
+
                 "<td>"+value.firstName+"</td>"+
 
            "</tr>";

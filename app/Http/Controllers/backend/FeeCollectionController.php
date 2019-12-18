@@ -55,6 +55,36 @@ class FeeCollectionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function student(Request $request)
+    {
+        // $attendences=Attendance::where('sectionId', $request->sectionId)
+        // ->whereDate('created_at',date('Y-m-d'))
+        // ->where('bId' , Auth::guard('web')->user()->bId)
+        // ->first();
+        // if($attendences!=null){
+            // $attendences=Attendance::where('sectionId', $request->sectionId)
+            // ->whereDate('created_at',date('Y-m-d'))
+            // ->where('bId' , Auth::guard('web')->user()->bId)
+            // ->get();
+
+            // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
+
+        //     return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/edit/$request->sectionId"]);
+        // }else{
+            $sectionId= $request->sectionId;
+            $students = Student::where('sectionId',$sectionId)->get();
+            return response()->json($students);
+        // }
+
+
+        // $sectionId= $request->sectionId;
+        // $students = Student::where('sectionId',$sectionId)->get();
+        // return response()->json($students);
+        // return response()->json($attendences);
+    }
+
+
+
     public function store(Request $request)
 
 

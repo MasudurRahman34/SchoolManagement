@@ -1,9 +1,9 @@
 @extends('backend.layouts.master')
-	@section('title', 'Admin|| Marks Distribution')
+	@section('title', 'Admin|| Fee Distribution')
     @section('content')
     <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i>Section Wish Student Marks Distribution </h1>
+          <h1><i class="fa fa-edit"></i>Section Wish Student Fee Collection </h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -122,6 +122,7 @@
                 <div class="tile-body" id="tblHidden" hidden>
                     <form action="{{route('store.feecollection')}}" method="post" id="attendence">
                         @csrf
+                       <input type="text" name="sectionId" id="sectionId2" hidden>
                        <input type="text" name="feeId2" id="feeId2" hidden>
                        <input type="text" name="amount2" id="amount2" hidden>
                        <input type="text" name="month2" id="month2" hidden>
@@ -265,12 +266,10 @@ $('#feeId').change(function (e) {
     $('#sectionId').change(function (e) {
                 e.preventDefault();
 
-                var classId=$("#classId").val();
-                $("#classId2").attr('value',classId);
+
                 var sectionId=$("#sectionId").val();
                 $("#sectionId2").attr('value',sectionId);
-                var subjectId=$("#subjectId").val();
-                $("#subjectId2").attr('value',subjectId);
+
 
 
                 var amount=$("#amount").val();
@@ -282,14 +281,13 @@ $('#feeId').change(function (e) {
                 var sessionYear=$("#sessionYear").val();
                 $("#sessionYear2").attr('value',sessionYear);
 
-                console.log(amount2,feeId2,month2,sessionYear2);
+                console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
 
             $.ajax({
           type: "post",
-          url: "{{ url('adminview/student/studentData')}}",
+          url: "{{ url('feecollection/student/Data')}}",
           data: {
             sectionId:sectionId,
-            subjectId:subjectId
           },
 
           success: function (response) {

@@ -1,10 +1,10 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
-{{--          @foreach($students->files as $fill)--}}
-{{--              @if($fill->type=="profile")--}}
-{{--          <img class="app-sidebar__user-avatar" src="{{asset('students/'.Auth::guard('student')->user()->image)}}" style="width: 20%; height: 20%;" alt="User Image">--}}
-{{--              @endif--}}
-{{--          @endforeach--}}
+        @foreach($user->file as $fill)
+        @if($fill->type=="profile")
+            <img class="rounded mx-auto d-block" src="{{asset('users/'.$fill->image)}}" style="width: 50%; height: 50%;">
+        @endif
+    @endforeach
         <div>
           <p class="app-sidebar__user-name">{{Auth::guard('student')->user()->firstName}}</p>
           <p class="app-sidebar__user-designation">{{Auth::guard('student')->user()->lastName}}</p>
@@ -56,7 +56,7 @@
               <li><a class="treeview-item" href="#"><i class="icon fa fa-angle-right"></i>Student</a></li>
             </ul>
           </li> -->
-      
+
         <!-- <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Expence</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('section.index') }}"><i class="icon fa fa-angle-right"></i>Section</a></li>
