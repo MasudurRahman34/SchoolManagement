@@ -1,8 +1,13 @@
 <aside class="app-sidebar">
-      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+      <div class="app-sidebar__user">
+{{--          @foreach($user->file as $fill)--}}
+{{--              @if($fill->type=="profile")--}}
+{{--          <img class="app-sidebar__user-avatar" src="{{asset('users/'.Auth::guard('student')->user()->image)}}" style="width: 20%; height: 20%;" alt="User Image">--}}
+{{--              @endif--}}
+{{--          @endforeach--}}
         <div>
           <p class="app-sidebar__user-name">{{Auth::guard('web')->user()->name}}</p>
-          <p class="app-sidebar__user-designation">{{Auth::guard('web')->user()->name}}</p>
+          <p class="app-sidebar__user-designation">{{Auth::guard('web')->user()->designation}}</p>
         </div>
       </div>
       <ul class="app-menu">

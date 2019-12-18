@@ -3,13 +3,21 @@
     @section('content')
             <div class="row user">
               <div class="col-md-3">
-                <div class="profile" style="display: contents;">
-                  <div class="info"><img class="user-img" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg">
-                    <h5>{{$students->firstName}}</h5>
-                    <h7>Class : {{$students->Section->classes->className}}</h7>
-                    <h4>{{$students->schoolBranch->nameOfTheInstitution}}</h4>
+                  <div class="card text-white bg-dark text-center" style="">
+                      <div class="card-content">
+                          <div class="card-body">
+                              @foreach($students->files as $file)
+                                  @if($file->type=="profile")
+                                      <img class="rounded mx-auto d-block" src="{{asset('students/'.$file->image)}}" style="width: 50%; height: 50%;">
+                                  @endif
+                              @endforeach
+                              <hr>
+                              <h5>{{$students->firstName}}</h5>
+                              <h7 class="text-info">Class : {{$students->Section->classes->className}}</h7>
+                              <p class="text-info">{{$students->schoolBranch->nameOfTheInstitution}}</p>
+                          </div>
+                      </div>
                   </div>
-                </div>
                 <div class="tile p-0">
                   <ul class="nav flex-column nav-tabs user-tabs">
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
@@ -18,8 +26,8 @@
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
-               
-               
+
+
               </div>
               <div class="col-md-9">
                 <div class="">
@@ -36,8 +44,16 @@
                               <p class="list-group justify-content-between align-items-center"> {{$students->firstName}} </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                              Age
-                              <p class="list-group justify-content-between align-items-center"> {{$students->age}}  </p>
+                              Father name
+                              <p class="list-group justify-content-between align-items-center">  {{$students->fatherName}} </p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                              Mother Name
+                              <p class="list-group justify-content-between align-items-center"> {{$students->motherName}} </p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Session Year
+                              <p class="list-group justify-content-between align-items-center"> {{$students->Section->SessionYear->sessionYear}} </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Location
@@ -71,10 +87,6 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Shift
                               <p class="list-group justify-content-between align-items-center"> {{$students->Section->shift}} </p>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                              Session year
-                              <p class="list-group justify-content-between align-items-center">  {{$students->Section->SessionYear->sessionYear}}  </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Group

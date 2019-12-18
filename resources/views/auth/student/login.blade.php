@@ -22,7 +22,7 @@
             <div class="col-md-6">
                 <form class="form-inline" style="margin: auto; width:70%"  method="POST" action="{{ route('student.login') }}">
                     @csrf
-                    <input type="text" class="form-control mb-2 mr-sm-2" name="email" id="inlineFormInputName2" placeholder="Enter Your Email Or Number">
+                    <input type="text" class="form-control mb-2 mr-sm-2" name="email" id="email" placeholder="Enter Your Email Or Number" value="{{ old('email') }}">
 
                     <div class="input-group mb-2 mr-sm-2">
                       <div class="input-group-prepend">

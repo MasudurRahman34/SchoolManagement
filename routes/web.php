@@ -260,4 +260,3 @@ Route::post('adminview/student/markstore','backend\MarksDistributionController@s
 
 
 //misuk14/11/19
-

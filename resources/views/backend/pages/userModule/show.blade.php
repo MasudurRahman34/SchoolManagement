@@ -2,21 +2,29 @@
 	@section('title', 'Show user profile')
     @section('content')
     <div class="row user">
-              <div class="col-md-3">
-                <div class="profile" style="display: contents;">
-                  <div class="info"><img class="user-img" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg">
-                    <h5>{{$users->name}}</h5>
-                    <h4>{{$users->designation}}</h4>
-                  </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-dark text-center" style="">
+                <div class="card-content">
+                    <div class="card-body">
+                        @foreach($users->file as $fill)
+                            @if($fill->type=="profile")
+                                <img class="rounded mx-auto d-block" src="{{asset('users/'.$fill->image)}}" style="width: 50%; height: 50%;">
+                            @endif
+                        @endforeach
+                        <hr>
+                        <h5 class="text-info">{{$users->name}}</h5>
+                        <h7 class="text-info">Designation : {{$users->designation}}</h7>
+                    </div>
                 </div>
+            </div>
                 <div class="tile p-0">
                   <ul class="nav flex-column nav-tabs user-tabs">
                     <li class="nav-item"><a class="nav-link" href="{{route('userEditProfile')}}"> Update Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
-               
-               
+
+
               </div>
               <div class="col-md-9">
                 <div class="">
@@ -50,7 +58,7 @@
                             </li>
                           </ul>
                         </div>
-                        
+
                         <div class="col">
                           <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -85,7 +93,7 @@
     <!--End Row-->
   </main>
 
-      <div class="clearix"></div>     
+      <div class="clearix"></div>
     @endsection
     @section('script')
       {{-- @include('backend.partials.js.datatable'); --}}
@@ -95,7 +103,7 @@
       //     $(this).tab('show');
       //   });
       // });
-       
+
       //   function readURL(input) {
       //       if (input.files && input.files[0]) {
       //           var reader = new FileReader();

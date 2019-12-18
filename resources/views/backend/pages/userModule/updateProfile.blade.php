@@ -2,34 +2,34 @@
 	@section('title', 'User profile')
     @section('content')
     <div class="row user">
-              <div class="col-md-3">
-                <div class="profile" style="display: contents;">
-                  <div class="info"><img class="user-img" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg">
-                    <h5>{{$user->name}}</h5>
-                    <h4>{{$user->designation}}</h4>
-                  </div>
+        <div class="col-md-3 col-sm-9">
+            <div class="card text-white bg-dark text-center" style="">
+                <div class="card-content">
+                    <div class="card-body">
+                        @foreach($user->file as $fill)
+                            @if($fill->type=="profile")
+                                <img class="rounded mx-auto d-block" src="{{asset('users/'.$fill->image)}}" style="width: 50%; height: 50%;">
+                            @endif
+                        @endforeach
+                        <hr>
+                        <h5 class="text-info">{{$user->name}}</h5>
+                        <h4>{{$user->designation}}</h4>
+                    </div>
                 </div>
-                <div class="tile p-0">
-                  <ul class="nav flex-column nav-tabs user-tabs">
-                    <li class="nav-item"><a class="nav-link" href="{{route('user.show')}}"> Show Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
-                  </ul>
-                </div>
-              </div>
-              
-    
+            </div>
+        </div>
     <div class="col-md-9">
       <div class="">
         <div class="tile">
           <div class="tile-body">
-            
+
               <h2>User Update Information</h2>
               @if(count($errors)>0)
                 <div class="alert alert-danger" role="alert">
                   <ul>
                      @foreach($errors->all() as $error)
                       <li>{{ $error }}</li>
-                     @endforeach 
+                     @endforeach
                   </ul>
                  </div>
               @endif
@@ -53,7 +53,7 @@
                   <a class="nav-link" href="#menu2">Change Password</a>
                 </li>
               </ul>
-            
+
               <!-- Tab panes -->
               <div class="tab-content">
                 <div id="home" class="container tab-pane active"><br>
@@ -78,7 +78,7 @@
                           <div class="form group col-md-3">
                             <label class="control-label">Designation</label>
                             <input class="form-control" type="text" name="designation" value="{{$user->designation}}">
-                          </div> 
+                          </div>
                           <div class="form-group col-md-3">
                             <label class=" control-label">JoinDate</label>
                             <div class="">
@@ -89,7 +89,7 @@
                             <label class="control-label">Address</label>
                             <input class="form-control" type="text" name="address" value="{{$user->address}}">
                           </div>
-                          
+
                           <div class="form group col-md-3">
                             <label class="control-label">Skill</label>
                             <input class="form-control" type="text" name="skill" value="{{$user->skill}}">
@@ -101,6 +101,14 @@
                           <div class="form group col-md-3">
                             <label class="control-label">Biography</label>
                             <input class="form-control" type="text" name="biography" value="{{$user->biography}}">
+                          </div>
+                          <div class="form-group col-md-3">
+                              <lable class="">Change Image</lable>
+                              <input type="file" name="image" class="form-control btn btn-light" id="file">
+                          </div>
+                          <div class="form-group col-md-3">
+                              <lable class="">Preview Image</lable>
+                              <img id="image_preview" src="" style="width: 180px;height: 180px">
                           </div>
                           <!-- <div class="form group col-md-3">
                             <label class="control-label">Resume</label>
@@ -115,7 +123,7 @@
                             <input class="form-control" type="text" name="bId" value="{{$user->bId}}" readonly>
                           </div>
                           <!--End primary dev section-->
-                            
+
                             <!-- <div class="form-group col-md-3">
                                 <lable class="">Change Image</lable>
                                 <input type="file" name="image" id="image" class="form-control btn btn-light">
@@ -150,7 +158,7 @@
                       </div>
                 </div>
                 </form>
-             </div>  
+             </div>
           </div>
         </div>
       </div>
@@ -170,5 +178,62 @@
           $(this).tab('show');
         });
       });
+      //image preview
+      $(document).ready(function(){
+          $(".nav-tabs a").click(function(){
+              $(this).tab('show');
+          });
+      });
+
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                  $('#image_preview').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+      $("#file").change(function() {
+          readURL(this);
+      });
+
+      //when image upload
+      $("#file").change(function () {
+          if(fileExtValidate(this)) { // file extension validation function
+              if(fileSizeValidate(this)) { // file size validation function
+                  showImg(this);
+              }
+          }
+      });
+      // function for  validate file extension
+      var validExt = ".png, .gif, .jpeg, .jpg";
+      function fileExtValidate(fdata) {
+          var filePath = fdata.value;
+          var getFileExt = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+          var pos = validExt.indexOf(getFileExt);
+          if(pos < 0) {
+              $('input[type=file]').val(null);
+              alert("This file is not allowed, please upload valid file.");
+              return false;
+
+          } else {
+              return true;
+          }
+      }
+      //function for validate file size
+      var maxSize = 100;
+      function fileSizeValidate(fdata) {
+          if (fdata.files && fdata.files[0]) {
+              var fsize = fdata.files[0].size/100;
+              if(fsize > maxSize) {
+                  $('input[type=file]').val(null);
+                  alert('Maximum file size exceed, This file size is: ' + fsize + "KB. You need 100 KB");
+                  return false;
+              } else {
+                  return true;
+              }
+          }
+      }
       </script>
 @endsection

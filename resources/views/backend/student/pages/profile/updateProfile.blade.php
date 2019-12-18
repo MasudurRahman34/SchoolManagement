@@ -2,35 +2,35 @@
 	@section('title', 'Student Update page')
     @section('content')
             <div class="row user">
-              <div class="col-md-3">
-                <div class="profile" style="display: contents;">
-                  <div class="info"><img class="user-img" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg">
-                    <h5>{{$students->firstName}}</h5>
-                    <h6>{{$students->studentId}}</h6>
-                    <h4>{{$students->schoolBranch->nameOfTheInstitution}}</h4>
-                  </div>
+                <div class="col-md-3 col-sm-9">
+                    <div class="card text-white bg-dark text-center" style="">
+                        <div class="card-content">
+                            <div class="card-body">
+                                @foreach($students->files as $file)
+                                    @if($file->type=="profile")
+                                        <img class="rounded mx-auto d-block" src="{{asset('students/'.$file->image)}}" style="width: 50%; height: 50%;">
+                                    @endif
+                                @endforeach
+                                    <hr>
+                                    <h5>{{$students->firstName}}</h5>
+                                    <h7 class="text-info">Class : {{$students->Section->classes->className}}</h7>
+                                    <p class="text-info">{{$students->schoolBranch->nameOfTheInstitution}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tile p-0">
-                  <ul class="nav flex-column nav-tabs user-tabs">
-                    <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
 
-                    <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
-                  </ul>
-                </div>
-              </div>
-    
     <div class="col-md-9">
       <div class="">
         <div class="tile">
           <div class="tile-body">
-            
               <h2>Student Information</h2>
               @if(count($errors)>0)
                 <div class="alert alert-danger" role="alert">
                   <ul>
                      @foreach($errors->all() as $error)
                       <li>{{ $error }}</li>
-                     @endforeach 
+                     @endforeach
                   </ul>
                  </div>
               @endif
@@ -57,7 +57,7 @@
                   <a class="nav-link" href="#menu3">Change Password</a>
                 </li>
               </ul>
-            
+
               <!-- Tab panes -->
               <div class="tab-content">
                 <div id="home" class="container tab-pane active"><br>
@@ -68,7 +68,7 @@
                       @csrf
                          <div class="form group col-md-3">
                             <label class="control-label">Id</label>
-                            <input class="form-control" type="text" name="studentId"
+                            <input class="form-control" type="text" name="studentId" readonly
                               id="studentname" value="{{$students->studentId}}">
                           </div>
                           <div class="form group col-md-3">
@@ -86,17 +86,22 @@
                             <input class="form-control" type="text" name="motherName"
                               id="studentname" value="{{$students->motherName}}">
                           </div>
-                          <div class="form-group col-md-3">
-                            <label class="control-label" name="gender">Gender</label>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="gender" value="male" {{ $students->gender=='male'?'checked':'' }}>Male
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input class="form-check-input" type="radio" name="gender" value="Female" {{ $students->gender=='female'?'checked':'' }}>FeMale
-                              </label>
-                            </div>
+                          <div class="form group col-md-3">
+                            <label class="control-label">Roll</label>
+                            <input class="form-control" type="text" name="roll"
+                              id="roll" value="{{$students->roll}}">
                           </div>
-                          
+                          <div class="form group col-md-3">
+                            <label class="control-label">Class</label>
+                            <input class="form-control" type="text" name="class"
+                              id="sectionName" value="{{$students->Section->Classes->className}}">
+                          </div>
+                          <div class="form group col-md-3">
+                            <label class="control-label">Section</label>
+                            <input class="form-control" type="text" name="sectionName"
+                              id="sectionName" value="{{$students->Section->sectionName}}">
+                          </div>
+
                           <div class="form-group col-md-3">
                             <label class=" control-label">Date of Birth*</label>
                             <div class="">
@@ -107,7 +112,7 @@
                             <label class="control-label">Religion</label>
                             <input class="form-control" type="text" name="religion" id="religion" value="{{$students->religion}}">
                           </div>
-                          
+
                           <div class="form group col-md-3">
                             <label class="control-label">Email</label>
                             <input class="form-control" type="email" id="email" name="email" value="{{$students->email}}">
@@ -124,7 +129,7 @@
                           <!-- single section-->
                           <div class="form-group col-md-3">
                             <label for="exampleFormControlSelect1">Blood Group</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="blood" id="bloodgroup">               
+                            <select class="form-control" id="exampleFormControlSelect1" name="blood" id="bloodgroup">
                                 <option value="0+" {{ $students->blood=='O+'?'selected':'' }}>O+</option>
                                 <option value="0-" {{ $students->blood=='0-'?'selected':'' }}>O-</option>
                                 <option value="A-" {{ $students->blood=='A-'?'selected':'' }}>A-</option>
@@ -135,16 +140,26 @@
                                 <option value="AB+" {{ $students->blood=='AB+'?'selected':'' }}>AB+</option>
                             </select>
                           </div>
+                          <div class="form-group col-md-3">
+                            <label class="control-label" name="gender">Gender</label>
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="gender" value="male" {{ $students->gender=='male'?'checked':'' }}>Male
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input class="form-check-input" type="radio" name="gender" value="Female" {{ $students->gender=='female'?'checked':'' }}>FeMale
+                              </label>
+                            </div>
+                          </div>
                           <!--End primary dev section-->
-                            
-                            <!-- <div class="form-group col-md-3">
+
+                            <div class="form-group col-md-3">
                                 <lable class="">Change Image</lable>
-                                <input type="file" name="image" id="image" class="form-control btn btn-light">
+                                <input type="file" name="image" class="form-control btn btn-light" id="file">
                             </div>
                             <div class="form-group col-md-3">
                                 <lable class="">Preview Image</lable>
                                 <img id="image_preview" src="" style="width: 180px;height: 180px">
-                            </div>    -->
+                            </div>
                       </div>
                       <div class="tile-footer">
                       <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Profile</button>
@@ -152,7 +167,7 @@
                 </div>
             <div id="menu2" class="container tab-pane fade"><br>
                   <div class="row">
-                     
+
                            <div class="form group col-md-3">
                               <label class="control-label">Father occupation</label>
                               <input class="form-control" type="int" min="0" name="fatherOccupation"
@@ -177,14 +192,14 @@
                             <label class="control-label">Village</label>
                             <input class="form-control" type="text" name="village" id="village" value="{{$students->address}}">
                           </div>
-                          
+
                           <div class="form group col-md-3">
                             <label class="control-label">Emergency Contact No</label>
                             <input class="form-control" type="text" name="mobileno"
                               id="mobileno" value="{{$students->mobile}}">
                           </div>
                           <!-- single section-->
-                          <!--End primary dev section-->  
+                          <!--End primary dev section-->
                       </div>
                         <div class="tile-footer">
                           <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Information</button>
@@ -212,8 +227,8 @@
                       </div>
                 </div>
                 </form>
-             </div> 
-                 
+             </div>
+
           </div>
         </div>
       </div>
@@ -233,7 +248,7 @@
           $(this).tab('show');
         });
       });
-       
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -243,8 +258,47 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        $("#image").change(function() {
+        $("#file").change(function() {
             readURL(this);
         });
+
+
+        $("#file").change(function () {
+	    if(fileExtValidate(this)) { // file extension validation function
+	    	 if(fileSizeValidate(this)) { // file size validation function
+	    	 	showImg(this);
+	    	 }
+	    }
+    });
+      // function for  validate file extension
+      var validExt = ".png, .gif, .jpeg, .jpg";
+      function fileExtValidate(fdata) {
+      var filePath = fdata.value;
+      var getFileExt = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+      var pos = validExt.indexOf(getFileExt);
+      if(pos < 0) {
+        $('input[type=file]').val(null);
+        alert("This file is not allowed, please upload valid file.");
+        return false;
+
+        } else {
+          return true;
+        }
+      }
+      //function for validate file size
+      var maxSize = 100;
+      function fileSizeValidate(fdata) {
+        if (fdata.files && fdata.files[0]) {
+              var fsize = fdata.files[0].size/100;
+            if(fsize > maxSize) {
+                $('input[type=file]').val(null);
+                alert('Maximum file size exceed, This file size is: ' + fsize + "KB. You need 100 KB");
+                return false;
+            } else {
+                return true;
+            }
+          }
+      }
+
     </script>
 @endsection

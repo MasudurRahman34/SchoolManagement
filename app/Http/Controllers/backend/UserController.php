@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\model\schoolBranch;
 use App\model\classes;
 use App\User;
+use App\model\File;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
@@ -361,7 +362,23 @@ class UserController extends Controller
         $userss->resume = $request->resume;
         $userss->certificate = $request->certificate;
         $userss->bId = $request->bId;
-
+        // file upload
+        if ($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().".".$image->getClientOriginalExtension();
+            $path = public_path ('users',$filename);
+            $image->move($path,$filename);
+            $previous_profile=File::where("userId", $userss->id)->first();
+            if ($previous_profile){
+                unlink(public_path("users/".$previous_profile->image));
+                $previous_profile->delete();
+            }
+            $file = new File;
+            $file->userId=$userss->id;
+            $file->image=$filename;
+            $file->type='profile';
+            $file->Save();
+        }
         $userss->save();
         Session::flash('success','Successfully User Information Updated');
         return redirect()->back();

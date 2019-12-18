@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend\student;
 use App\Http\Controllers\Controller;
 use App\model\Student;
 use App\User;
+use App\model\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -116,8 +117,11 @@ class StudentController extends Controller
         //     'motherIncome'=>'',
         //     'address'=>'string',
         //     'mobile'=>'',
+        // $this->validate($request, [
+        //     'image' => 'required|image|mimes:jpeg,png|max:180',
         // ]);
-        // 2. data update
+
+        
         $std = Student::find(Auth::guard('student')->user()->id);
         $std->firstName = $request->firstName;
         $std->fatherName = $request->fatherName;
@@ -139,10 +143,19 @@ class StudentController extends Controller
         if ($request->hasFile('image')){
             $image = $request->file('image');
             $filename = time().".".$image->getClientOriginalExtension();
-            $destination_path = public_path('images');
-            $image->move($destination_path,$filename);
-            $std->image = $filename;
-        }
+            $path = public_path ('students',$filename);
+            $image->move($path,$filename);
+            $previous_profile=File::where("studentId", $std->id)->first();
+            if ($previous_profile){
+                unlink(public_path("students/".$previous_profile->image));
+                $previous_profile->delete();
+            }
+            $file = new File;
+            $file->studentId=$std->id;
+            $file->image=$filename;
+            $file->type='profile';
+            $file->Save();
+            }
         $std->save();
         Session::flash('success','Successfully Student Profile Updated');
         return redirect()->back();
@@ -195,9 +208,9 @@ class StudentController extends Controller
     // }
 
     public function changePassword(Request $request){
-        // $this->validate($request,[
-        //     'password'=>'required|string|confirmed|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/'
-        // ]);
+         $this->validate($request,[
+             'password'=>'required|string|confirmed|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/'
+         ]);
         $student = Student::find(Auth::guard('student')->user()->id);
         $student->password = Hash::make($request->password);
         $student->save();

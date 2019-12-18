@@ -2,6 +2,7 @@
 
 namespace App;
 use App\model\schoolBranch;
+use\App\model\File;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -51,6 +52,10 @@ class User extends Authenticatable
 
     public function schoolBranch(){
         return $this->belongsTo(schoolBranch::class);
+    }
+
+    public function file(){
+        return $this->hasMany(File::class,'userId', 'id');
     }
 
 

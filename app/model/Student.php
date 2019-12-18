@@ -5,6 +5,7 @@ use App\model\schoolBranch;
 use App\model\Section;
 use App\model\studentHistory;
 use App\model\Attendance;
+use\App\model\File;
 use App\model\studentoptionalsubject;
 
 use Illuminate\Notifications\Notifiable;
@@ -53,6 +54,9 @@ class Student extends Authenticatable
         'address'=>'required', 'string',  'max:255',
 
     ];
+    public function files(){
+        return $this->hasMany(File::class,'studentId', 'id');
+    }
 
     public function schoolBranch(){
         return $this->belongsTo(schoolBranch::class,'bId');
