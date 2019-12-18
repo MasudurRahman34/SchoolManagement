@@ -45,25 +45,33 @@
                         </select>
                     </div>
                     <div class="form-group col-xs-2 pr-2">
+                        <label for="exampleFormControlSelect1"> Payment Type</label>
+
+                        <select class="form-control " id="paymentType">
+                            <option value="">Select Payment Type</option>
+                        <option value="adminssion">Adminssion</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-xs-2 pr-2" id="hidden" >
                             <label for="exampleFormControlSelect1"> Fee Name</label>
                             <select class="form-control " id="feeId">
                                     <option value="">--Select Fee--</option>
 
                             </select>
                     </div>
-                    <div class="form-group col-xs-2 pr-2">
+                    <div class="form-group col-xs-2 pr-2" id="hidden1" >
                         <label for="exampleFormControlSelect1"> Amount</label>
-                        <input class="form-control " type="number" id="amount" name="amount" required  disabled>
+                        <input class="form-control " type="number" id="amount" name="amount" required  readonly>
 
                     </div>
-                    <div class="form-group col-xs-2 pr-2">
-                        <label for="exampleFormControlSelect1"> Payment Type</label>
 
-                        <select class="form-control " id="paymenttype">
-                        <option value="adminssion">Adminssion</option>
-                        <option value="monthly">Monthly</option>
-                    </select>
+                    <div class="form-group col-xs-2 pr-2" >
+                        <label for="exampleFormControlSelect1"> Month</label>
+                        <input class="form-control " id="month" type="month" placeholder="Pick a month" value="{{date('Y-m')}}"/>
+
                     </div>
+
 
                     <div class="form-group col-xs-2">
                         <label for="exampleFormControlSelect1"> Section</label>
@@ -112,20 +120,22 @@
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>
-                    <form action="{{route('store.mark')}}" method="post" id="attendence">
+                    <form action="{{route('store.feecollection')}}" method="post" id="attendence">
                         @csrf
-                       <input type="text" name="sectionId" id="sectionId2" hidden>
-                       <input type="text" name="classId2" id="classId2" hidden>
-                       <input type="text" name="subjectId2" id="subjectId2" hidden>
-                       <input type="text" name="markType2" id="markType2" hidden>
+                       <input type="text" name="feeId2" id="feeId2" hidden>
+                       <input type="text" name="amount2" id="amount2" hidden>
+                       <input type="text" name="month2" id="month2" hidden>
+                       <input type="text" name="sessionYear2" id="sessionYear2" hidden>
+                       <input type="text" name="paymentType2" id="paymentType2" hidden>
                         <div class="table-responsive" >
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
+                                <th><input type="checkbox" id="allcb" /> Select All</th>
 
                                 <th>Student Roll</th>
                                 <th>Student Name</th>
-                                <th>Marks</th>
+
 
                             </tr>
                             </thead>
@@ -144,7 +154,7 @@
       <div class="clearix"></div>
     @endsection
     @section('script')
-      {{-- @include('backend.partials.js.datatable'); --}}
+      {{-- @include('backend.partials.js.script'); --}}
       <script>
           //fuction find subject name and section Name
         // $(document).ready( function () {
@@ -202,6 +212,22 @@
 
     });
 
+
+    //show hidden field for adminssion
+    $("#paymentType").change(function() {
+        //alert('working');
+        var val = $(this).val();
+        if(val === "") {
+            $('#hidden').attr('hidden',true);
+            $('#hidden1').attr('hidden',true);
+        }
+        else if(val === "") {
+            $('#hidden').attr('hidden',false);
+            $('#hidden1').attr('hidden',false);
+        }
+      });
+
+
 //on change fee id for find amount
 $('#feeId').change(function (e) {
     e.preventDefault();
@@ -226,6 +252,14 @@ $('#feeId').change(function (e) {
 
 });
 
+//datepicker
+//$("#datepicker").datepicker( {
+ //   format: "mm-yyyy",
+ //   startView: "months",
+ //   minViewMode: "months"
+//});
+//$("#myMonthPicker").Monthpicker();
+
 
 //on change section for find student
     $('#sectionId').change(function (e) {
@@ -237,10 +271,18 @@ $('#feeId').change(function (e) {
                 $("#sectionId2").attr('value',sectionId);
                 var subjectId=$("#subjectId").val();
                 $("#subjectId2").attr('value',subjectId);
-                var markType=$("#markType").val();
-                $("#markType2").attr('value',markType);
 
-                console.log(classId, sectionId,subjectId,markType);
+
+                var amount=$("#amount").val();
+                $("#amount2").attr('value',amount);
+                var feeId=$("#feeId").val();
+                $("#feeId2").attr('value',feeId);
+                var month=$("#month").val();
+                $("#month2").attr('value',month);
+                var sessionYear=$("#sessionYear").val();
+                $("#sessionYear2").attr('value',sessionYear);
+
+                console.log(amount2,feeId2,month2,sessionYear2);
 
             $.ajax({
           type: "post",
@@ -268,12 +310,12 @@ $('#feeId').change(function (e) {
             $.each (response, function (key, value) {
             tr +=
                 "<tr>"+
-
+                    "<td>"+
+                        '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="" id="fee">'
+                    +"</td>"+
                     "<td>"+value.roll+"</td>"+
                     "<td>"+value.firstName+"</td>"+
-                    "<td>"+
-                        '<input class="roll['+value.roll+']" type="number" min="0" max="100" name="attend['+value.id+']" value="" id="marks">'
-                    +"</td>"+
+
               "</tr>";
 
            });
@@ -283,6 +325,27 @@ $('#feeId').change(function (e) {
         // }
         });
 
+        $('#allcb').change(function () {
+            $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+        });
+
+        //$('#marks').click(function() {
+          //  var isChecked = $(this).prop("checked");
+         //   $('#tblData tr:has(td)').find('input[type="checkbox"]').prop('checked', isChecked);
+         // });
+         // $('#tblData tr:has(td)').find('input[type="checkbox"]').click(function() {
+          //  var isChecked = $(this).prop("checked");
+          //  var isHeaderChecked = $("#marks").prop("checked");
+           // if (isChecked == false && isHeaderChecked)
+           //   $("#marks").prop('checked', isChecked);
+           // else {
+           //   $('#tblData tr:has(td)').find('input[type="checkbox"]').each(function() {
+            //    if ($(this).prop("checked") == false)
+           //       isChecked = false;
+            //  });
+            //  $("#marks").prop('checked', isChecked);
+           // }
+       // });
 
     });
 

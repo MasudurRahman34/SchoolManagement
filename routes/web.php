@@ -64,7 +64,7 @@ Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
 
 //student login
 
-Route::group(['prefix' => 'student', 'namespace'=>'auth\student'], function () {
+Route::group(['prefix' => 'student', 'namespace'=>'Auth\student'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('student.login');
     Route::post('/login', 'LoginController@login')->name('student.login');
     Route::post('/logout', 'LoginController@logout')->name('student.logout');
@@ -205,6 +205,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
 
     //feecollection management for admin
     Route::get('/feecollection','backend\FeeCollectionController@index')->name('feecollection.index');
+    Route::post('/feecollection/store','backend\FeeCollectionController@store')->name('store.feecollection');
 
 
 //section Management

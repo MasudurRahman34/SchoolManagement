@@ -12,12 +12,18 @@ use App\model\SessionYear;
 use App\model\feeHistory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class FeeCollectionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,8 +56,29 @@ class FeeCollectionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
+
     {
-        //
+    //    dd($request);
+
+            $fee= $request->attend;
+            foreach ($fee as $id =>$value) {
+                $stfee = new feeCollection();
+                $stfee->feeGenerateId = mt_rand(100000,999999);
+                $stfee->feeId = $request->feeId2;
+                $stfee->amount  = $request->amount2;
+                $stfee->month = $request->month2;
+                $stfee->year = $request->sessionYear2;
+                $stfee->studentId = $id;
+
+                $stfee->bId= Auth::user()->bId;
+                $stfee->save();
+            }
+            Session::flash('success','Succesfully Data Saved');
+           // $marks=Mark::orderBy('id','ASC')->get();
+            return redirect()->route('feecollection.index');
+
+
     }
 
     /**
