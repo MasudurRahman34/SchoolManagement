@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\model\classes;
 use App\model\Section;
 use App\model\Attendance;
+use App\model\Fee;
 use App\model\schoolBranch;
 use App\model\Subject;
 use App\model\Student;
@@ -59,6 +60,24 @@ class apiController extends Controller
                         ->where('bId', Auth::guard('web')->user()->bId)
                         ->get();
         return Response()->json($section);
+    }
+
+    //fee list in a class
+    public function classfeelist(Request $request)
+    {
+        $feelist= Fee::where('classId', $request->classId)
+                        ->where('bId', Auth::guard('web')->user()->bId)
+                        ->get();
+        return Response()->json($feelist);
+    }
+
+    //fee amount
+    public function feeamount(Request $request)
+    {
+        $feeamount= Fee::where('id', $request->feeId)
+                        ->where('bId', Auth::guard('web')->user()->bId)
+                        ->pluck('amount');
+        return Response()->json($feeamount);
     }
 
 
@@ -200,7 +219,7 @@ class apiController extends Controller
          return Response()->json(["success"=>'Absent', "data"=>$absent,201]);
 
     }
-
+    //collect student information for student Attendab=nce pdf in student deshboard .
     public function studentname()
     {
 
@@ -213,6 +232,7 @@ class apiController extends Controller
 
     }
 
+    //total teacher in a school
     public function totalTeacher(){
 
     $totalteacher=User::where('bId',Auth::guard('web')->user()->bId)
