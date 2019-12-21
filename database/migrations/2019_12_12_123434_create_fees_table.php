@@ -22,6 +22,7 @@ class CreateFeesTable extends Migration
             $table->unsignedBigInteger('classId')->comment('class_table_id');
             $table->Integer('status')->comment('disable 0, enable 1');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

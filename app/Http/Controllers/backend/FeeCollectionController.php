@@ -94,12 +94,15 @@ class FeeCollectionController extends Controller
             $fee= $request->attend;
             foreach ($fee as $id =>$value) {
                 $stfee = new feeCollection();
-                $stfee->feeGenerateId = mt_rand(100000,999999);
                 $stfee->feeId = $request->feeId2;
-                $stfee->amount  = $request->amount2;
+
                 $stfee->month = $request->month2;
+                $stfee->paidMonth = $request->month2;
                 $stfee->year = $request->sessionYear2;
                 $stfee->studentId = $id;
+                $stfee->amount  = $request->amount2;
+                //change for total amount
+
 
                 $stfee->bId= Auth::user()->bId;
                 $stfee->save();
