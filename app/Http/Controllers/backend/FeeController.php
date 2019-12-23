@@ -54,6 +54,8 @@ class FeeController extends Controller
             $fee->bId = Auth::guard('web')->user()->bId;
             $fee->classId = $request->classId;
             $fee->status = $request->status;
+            $fee->interval = $request->interval;
+
             $fee->type = $request->type;
             $fee->save();
             return Response()->json(["success"=>'Stored', "data"=>$fee,201]);
@@ -73,6 +75,12 @@ class FeeController extends Controller
          $fee=Fee::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
 
          $data_table_render = DataTables::of($fee)
+
+
+            ->editColumn('status', function($fee)
+            {
+                return $fee->status == 1 ? 'Yes': 'No';
+            })
 
              ->addColumn('action',function ($row){
                  return '<button class="btn btn-info btn-sm" onClick="editfee('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
@@ -115,6 +123,7 @@ class FeeController extends Controller
             $fee->bId = Auth::guard('web')->user()->bId;
             $fee->classId = $request->classId;
             $fee->status = $request->status;
+            $fee->interval = $request->interval;
             $fee->type = $request->type;
             if($fee->amount != $fee->getOriginal('amount')){
                 $feehistory = new feeHistory();

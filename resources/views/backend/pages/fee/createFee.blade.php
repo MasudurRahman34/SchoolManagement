@@ -26,7 +26,8 @@
                       <th>type</th>
                       <th>Amount</th>
                       <th>className</th>
-                      <th>status</th>
+                      <th>Taken During Admission</th>
+                      <th>Taken Interval</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -60,26 +61,47 @@
                     @endforeach
                     </select>
                 </div>
-
                 <div class="form-group">
-                    <label for="exampleSelect1">fee status</label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="1" selected >Enable</option>
-                        <option value="0">Disable</option>
-                    </select>
+                    <label for="exampleSelect1"> Taken Interval</label>
+
+                    <select class="form-control" id="interval" name="interval">
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="halfYearly">Half Yearly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
                   </div>
 
-                <legend type="hidden">Fee type</legend>
-                <div class="form-check">
-                    <label class="radio">
-                        <input type="radio" id="type" name="type"  value="gov" checked>
-                        gov
-                    </label>
-                    &nbsp;
-                    <label class="radio">
-                        <input type="radio"  id="type" name="type"  value="nonGov">
-                        nonGov
-                    </label>
+                <div class="form-row">
+                    <label for="exampleSelect1">Is Taken During Admission</label>
+                    <div class="form-check">
+                        <label class="radio">
+                            <input type="radio" id="status" name="status"  value="1" checked>
+                            Yes
+                        </label>
+                        &nbsp;
+                        <label class="radio">
+                            <input type="radio"  id="status" name="status"  value="0">
+                            No
+                        </label>
+                    </div>
+                  </div>
+
+
+
+                <div class="form-row">
+                    <label for="exampleSelect1">Fee Type</label>
+                    <div class="form-check">
+                        <label class="radio">
+                            <input type="radio" id="type" name="type"  value="gov" checked>
+                            Gov
+                        </label>
+                        &nbsp;
+                        <label class="radio">
+                            <input type="radio"  id="type" name="type"  value="nonGov">
+                            non Gov
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="tile-footer">
@@ -115,6 +137,7 @@
              { data: 'amount', name: 'amount' },
              { data: 'classes.className', name: 'classes.className' },
              { data: 'status', name: 'status' },
+             { data: 'interval', name: 'interval' },
              { data: 'action', name: 'action' },
          ]
      });
@@ -141,7 +164,8 @@
                 name: $('#name').val(),
                 amount: $('#amount').val(),
                 classId: $('#classId option:selected').val(),
-                status: $('#status option:selected').val(),
+                interval: $('#interval option:selected').val(),
+                status: $('#status:checked').val(),
                 type: $('#type:checked').val(),
             },
             success: function(result){
@@ -172,9 +196,10 @@
                 $('#classId').val(data.classId);
                 $('#name').val(data.name);
                 $('#amount').val(data.amount);
-                $('#status').val(data.status);
+                $('#interval').val(data.interval);
                 console.log(data);
                 $("input[name='type'][value='"+data.type+"']").prop('checked', true);
+                $("input[name='status'][value='"+data.status+"']").prop('checked', true);
 
 
         }

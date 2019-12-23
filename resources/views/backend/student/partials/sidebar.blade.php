@@ -1,10 +1,10 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
-        @foreach($user->file as $fill)
+       {{--  @foreach($user->file as $fill)
         @if($fill->type=="profile")
             <img class="rounded mx-auto d-block" src="{{asset('users/'.$fill->image)}}" style="width: 50%; height: 50%;">
         @endif
-    @endforeach
+    @endforeach --}}
         <div>
           <p class="app-sidebar__user-name">{{Auth::guard('student')->user()->firstName}}</p>
           <p class="app-sidebar__user-designation">{{Auth::guard('student')->user()->lastName}}</p>

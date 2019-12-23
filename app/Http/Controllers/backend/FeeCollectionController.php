@@ -11,11 +11,13 @@ use App\model\Section;
 use App\model\SessionYear;
 use App\model\feeHistory;
 use App\Http\Controllers\Controller;
+use App\model\studentScholarship;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class FeeCollectionController extends Controller
 {
@@ -57,11 +59,21 @@ class FeeCollectionController extends Controller
      */
     public function student(Request $request)
     {
-        // $attendences=Attendance::where('sectionId', $request->sectionId)
-        // ->whereDate('created_at',date('Y-m-d'))
-        // ->where('bId' , Auth::guard('web')->user()->bId)
-        // ->first();
-        // if($attendences!=null){
+        $fee=feeCollection::where('sectionId', $request->sectionId)
+         ->where('feeId',$request->feeId)
+         ->where('month',$request->month)
+         ->where('bId' , Auth::guard('web')->user()->bId)
+         ->first();
+        //  return response()->json($fee);
+        if($fee!=null){
+            $bId=Auth::guard('web')->user()->bId;
+            $feeId=$request->feeId;
+            $month=$request->month;
+            $dueStudent=DB::select("select students.id,students.firstName,students.roll from students where  students.id NOT IN(select fee_collections.studentId from fee_collections where fee_collections.bId='$bId' and fee_collections.feeId='$feeId' and fee_collections.month='$month')");
+            return response()->json($dueStudent);
+
+            //select  students.id,students.firstName from students where  students.id NOT IN (select fee_collections.studentId from fee_collections where  fee_collections.bId=30 and fee_collections.feeId=7  and fee_collections.month="2019-12" );
+
             // $attendences=Attendance::where('sectionId', $request->sectionId)
             // ->whereDate('created_at',date('Y-m-d'))
             // ->where('bId' , Auth::guard('web')->user()->bId)
@@ -70,11 +82,11 @@ class FeeCollectionController extends Controller
             // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
         //     return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/edit/$request->sectionId"]);
-        // }else{
+        }else{
             $sectionId= $request->sectionId;
             $students = Student::where('sectionId',$sectionId)->get();
             return response()->json($students);
-        // }
+         }
 
 
         // $sectionId= $request->sectionId;
@@ -83,35 +95,39 @@ class FeeCollectionController extends Controller
         // return response()->json($attendences);
     }
 
-
-
     public function store(Request $request)
-
-
     {
-    //    dd($request);
 
             $fee= $request->attend;
             foreach ($fee as $id =>$value) {
                 $stfee = new feeCollection();
+                $fee= $request->amount2;
                 $stfee->feeId = $request->feeId2;
-
                 $stfee->month = $request->month2;
                 $stfee->paidMonth = $request->month2;
                 $stfee->year = $request->sessionYear2;
-                $stfee->studentId = $id;
-                $stfee->amount  = $request->amount2;
+                $stfee->sectionId = $request->sectionId;
+
+                $stfee->amount  = $fee;
                 //change for total amount
+                if($id!=null){
+                    $scholership= studentScholarship::where('studentId',$id)->where('feeId',$request->feeId2)->get();
+                    $discount=0;
+                    if($scholership){
+                        foreach ($scholership as $sc) {
+                            $discount= $sc->discount;
 
-
+                            }
+                            $totalAmount =  $fee-(($fee*$discount)/100);
+                            $stfee->totalAmount  = $totalAmount;
+                            $stfee->studentId = $id;
+                    }
+                }
                 $stfee->bId= Auth::user()->bId;
                 $stfee->save();
             }
             Session::flash('success','Succesfully Data Saved');
-           // $marks=Mark::orderBy('id','ASC')->get();
             return redirect()->route('feecollection.index');
-
-
     }
 
     /**

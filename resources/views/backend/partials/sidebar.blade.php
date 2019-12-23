@@ -131,7 +131,9 @@
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('fee.index') }}"><i class="icon fa fa-angle-right"></i>Manage Fee </a></li>
               <li><a class="treeview-item" href="{{route('feehistory.index') }}"><i class="icon fa fa-angle-right"></i>Fee Update History </a></li>
-              <li><a class="treeview-item" href="{{route('feecollection.index') }}"><i class="icon fa fa-angle-right"></i> Take Fee</a></li>
+              <li><a class="treeview-item" href="{{route('feecollection.index') }}"><i class="icon fa fa-angle-right"></i> Take Fee By Section</a></li>
+              <li><a class="treeview-item" href="{{route('feecollection.index') }}"><i class="icon fa fa-angle-right"></i> Take Fee Individual</a></li>
+
                {{-- <li><a class="treeview-item" href="{{route('fee.classwish') }}"><i class="icon fa fa-angle-right"></i>class wish</a></li>  --}}
               {{-- <li><a class="treeview-item" href="{{route('attendance.bydate') }}"><i class="icon fa fa-angle-right"></i>Datewish Attendance</a></li> --}}
             </ul>

@@ -25,6 +25,7 @@ class CreateFeeCollectionsTable extends Migration
             $table->string('paidMonth', 30)->comment();
             $table->string('month', 30)->comment();
             $table->string('year', 30)->comment('year');
+            $table->unsignedBigInteger('sectionId');
             $table->unsignedBigInteger('bId')->comment('branch_table_id');
             $table->timestamps();
             $table->softDeletes();
