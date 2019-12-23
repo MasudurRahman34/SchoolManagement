@@ -105,13 +105,15 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
     Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
     Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
-
-
-
+    
 
     //Student school Corner
     Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
     Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
+
+    //Student Fee details
+    Route::get('/student/fee/index','StudentFeeController@index')->name('student.fee.index');
+    Route::get('/fee/show/{id}', 'StudentFeeController@show')->name('student.fee.show');
 });
 //endforstudent
 

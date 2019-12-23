@@ -12,8 +12,8 @@
                                     <tr>
                                         <th></th>
                                         <th> Name</th>
-                                        <th>Email</th>
                                         <th>Mobile</th>
+                                        <th>Email</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -44,8 +44,8 @@
              columns:[
                  { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                  { data: 'name', name: 'name' },
-                 { data: 'email', name: 'email' },
                  { data: 'mobile', name: 'mobile' },
+                 { data: 'email', name: 'email' },
              ]
          });
         // table.destroy();
