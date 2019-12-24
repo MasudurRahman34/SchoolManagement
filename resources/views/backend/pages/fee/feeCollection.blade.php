@@ -9,7 +9,7 @@
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item"><a href="#">ClassWise Student</a></li>
+          <li class="breadcrumb-item"><a href="#">Student Fee Collection</a></li>
         </ul>
     </div>
     @include('backend.partials._message')
@@ -21,7 +21,6 @@
     }
     </style>
 <div class="row justify-content-md-center">
-
     <div class="clearix"></div>
         <div class="col-md-9">
             <div class="tile">
@@ -81,10 +80,7 @@
                             <option value="NOVEMBER">NOVEMBER</option>
                             <option value="DECEMBER">DECEMBER</option>
                     </select>
-
                     </div>
-
-
                     <div class="form-group col-xs-2">
                         <label for="exampleFormControlSelect1"> Section</label>
                         <select class="form-control " id="sectionId">
@@ -100,7 +96,6 @@
                         </select>
                     </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -132,7 +127,7 @@
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>
-                    <form action="{{route('store.feecollection')}}" method="post" id="attendence">
+                    <form action="{{route('store.feecollection')}}" method="post" id="myfeeform">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" hidden>
                        <input type="text" name="classId2" id="classId2" hidden>
@@ -155,12 +150,11 @@
                             </tbody>
                         </table>
                         </div>
-                        <button class="btn btn-primary " type="submit" id="btnAttendance" disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
+                        <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
                     </form>
                 </div>
             </div>
     </div>
-
     <div class="clearix"></div>
     @endsection
     @section('script')
@@ -172,9 +166,7 @@
         var sessionYearId=$('#sessionYear').val();
         var shift=$('input[name="shift"]:checked').val();
         console.log(classId);
-
         var url='/api/search/sectionbyclass';
-
         var data= {
             'classId' : classId,
             'sessionYearId' : sessionYearId,
@@ -194,9 +186,7 @@
                     console.log(data);
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
-
                         option+=("<option value='"+element.id+"'>"+element.sectionName+"</option>");
-
                     });
                     $('#sectionId').html(option);
                 }
@@ -209,19 +199,15 @@
                     console.log(data);
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
-
                         option+=("<option value='"+element.id+"'>"+element.name+"</option>");
-
                     });
                     $('#feeId').html(option);
                 }
             });
         }
-
     });
 
-
-    //show hidden field for adminssion
+//show hidden field for adminssion
     $("#paymentType").change(function() {
         //alert('working');
         var val = $(this).val();
@@ -235,14 +221,12 @@
         }
       });
 
-
 //on change fee id for find amount
     $('#feeId').change(function (e) {
         e.preventDefault();
         var feeId= $("#feeId").val();
         console.log(feeId);
         var url='/api/search/feeamount';
-
             var data= {
                 'feeId' : feeId,
             }
@@ -257,14 +241,11 @@
                     $('#amount').val(data);
                 }
             });
-
     });
 
 //on change section for find student
     $('#sectionId').change(function (e) {
         e.preventDefault();
-
-
         var sectionId=$("#sectionId").val();
         $("#sectionId2").attr('value',sectionId);
         var classId=$("#classId").val();
@@ -280,7 +261,6 @@
         $("#sessionYear2").attr('value',sessionYear);
 
         console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
-
         $.ajax({
           type: "post",
           url: "{{ url('feecollection/student/Data')}}",
@@ -289,68 +269,75 @@
             feeId:feeId,
             month:month,
           },
-
           success: function (response) {
-        //   console.log(response);
-        //   if(response.redirectToEdit){
-        //     var txt;
-        //       if (confirm("Attendance has been Taken At This Date, Do You Need update ?")) {
-        //         window.location.href = response.redirectToEdit;
-        //       } else {
-        //         document.getElementById("myform").reset();
-        //       }
+           if(response.dueStudent){
+            console.log('if');
+               if (confirm("Fee has been Taken At This Type for This month, Do You Want to see Who miss it?|| OK-> Show due student List|| Clear -> Show Paid Student List")) {
+                console.log('else');
+                    $('#tblHidden').attr('hidden',false);
+                    $('#btnFee').attr('disabled',false);
+                    var tr='';
+                    $.each (response.dueStudent, function (key, value) {
 
-        //   }else{
-            console.log(response);
+                    tr +=
+                        "<tr>"+
+                            "<td>"+
+                                '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="" id="fee">'
+                            +"</td>"+
+                            "<td>"+value.roll+"</td>"+
+                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                    "</tr>";
+                });
+                $('tbody').html(tr);
+               } else{
+
+                console.log('else');
+                $('#tblHidden').attr('hidden',false);
+                $('#btnFee').attr('disabled',false);
+                var tr='';
+                $.each (response.paidStudent, function (key, value) {
+
+                    $("input[id='fee'][value='"+value.id+"']").prop('checked', true);
+                tr +=
+                    "<tr>"+
+                        "<td>"+
+                            '<input class="roll['+value.roll+']" type="checkbox" name="attend[]" value="'+value.id+'" id="fee" checked>'
+                        +"</td>"+
+                        "<td>"+value.roll+"</td>"+
+                        "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                  "</tr>";
+                  $('#btnFee').html("Update Fee");
+                  $('#myfeeform').attr("action", "feecollection/update");
+               });
+                $('tbody').html(tr);
+               }
+           }
+           else{
+
+            console.log('else');
             $('#tblHidden').attr('hidden',false);
-            $('#btnAttendance').attr('disabled',false);
-
+            $('#btnFee').attr('disabled',false);
             var tr='';
             $.each (response, function (key, value) {
             tr +=
                 "<tr>"+
                     "<td>"+
-                        '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="" id="fee">'
+                        '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="attend['+value.id+']" id="fee">'
                     +"</td>"+
                     "<td>"+value.roll+"</td>"+
                     "<td>"+value.firstName+' '+value.lastName+"</td>"+
-
               "</tr>";
-
            });
-
             $('tbody').html(tr);
           }
-        // }
+         }
         });
-
         $('#allcb').change(function () {
             $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
         });
-
-        //$('#marks').click(function() {
-          //  var isChecked = $(this).prop("checked");
-         //   $('#tblData tr:has(td)').find('input[type="checkbox"]').prop('checked', isChecked);
-         // });
-         // $('#tblData tr:has(td)').find('input[type="checkbox"]').click(function() {
-          //  var isChecked = $(this).prop("checked");
-          //  var isHeaderChecked = $("#marks").prop("checked");
-           // if (isChecked == false && isHeaderChecked)
-           //   $("#marks").prop('checked', isChecked);
-           // else {
-           //   $('#tblData tr:has(td)').find('input[type="checkbox"]').each(function() {
-            //    if ($(this).prop("checked") == false)
-           //       isChecked = false;
-            //  });
-            //  $("#marks").prop('checked', isChecked);
-           // }
-       // });
-
     });
 
-    //print button in table
-
-
+//print button in table
     $('#doPrint').on("click", function () {
         $('#print_div').printThis({
             debug: false,               // show the iframe for debugging
@@ -388,6 +375,5 @@
       //a.close();
 
     </script>
-
     @endsection
 

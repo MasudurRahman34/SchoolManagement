@@ -207,6 +207,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/feecollection','backend\FeeCollectionController@index')->name('feecollection.index');
     Route::post('/feecollection/student/Data','backend\FeeCollectionController@student')->name('feecollection.studentdata');
     Route::post('/feecollection/store','backend\FeeCollectionController@store')->name('store.feecollection');
+    Route::post('/feecollection/update','backend\FeeCollectionController@update')->name('update.feecollection');
 
 
 //section Management

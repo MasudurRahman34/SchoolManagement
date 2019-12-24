@@ -64,20 +64,14 @@ class FeeCollectionController extends Controller
          ->where('month',$request->month)
          ->where('bId' , Auth::guard('web')->user()->bId)
          ->first();
-        //  return response()->json($fee);
         if($fee!=null){
             $bId=Auth::guard('web')->user()->bId;
             $feeId=$request->feeId;
             $month=$request->month;
             $dueStudent=DB::select("select students.id,students.firstName,students.roll from students where  students.id NOT IN(select fee_collections.studentId from fee_collections where fee_collections.bId='$bId' and fee_collections.feeId='$feeId' and fee_collections.month='$month')");
-            return response()->json($dueStudent);
+            $paidStudent=DB::select("select fee_collections.id,students.id,students.firstName,students.roll from students,fee_collections where fee_collections.studentId=students.id and fee_collections.sectionId='$request->sectionId' and fee_collections.bId='$bId' and fee_collections.month='$month'");
+            return response()->json(["dueStudent"=>$dueStudent, "paidStudent"=>$paidStudent]);
 
-            //select  students.id,students.firstName from students where  students.id NOT IN (select fee_collections.studentId from fee_collections where  fee_collections.bId=30 and fee_collections.feeId=7  and fee_collections.month="2019-12" );
-
-            // $attendences=Attendance::where('sectionId', $request->sectionId)
-            // ->whereDate('created_at',date('Y-m-d'))
-            // ->where('bId' , Auth::guard('web')->user()->bId)
-            // ->get();
 
             // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
@@ -161,7 +155,17 @@ class FeeCollectionController extends Controller
      */
     public function update(Request $request, feeCollection $feeCollection)
     {
-        //
+
+        $ids=$request->attend;
+
+
+                $deleteStudent= DB::table('fee_collections')->whereNotIn('studentId', $ids)->pluck('studentId');
+
+            if($deleteStudent){
+                DB::table('fee_collections')->whereIn('studentId', $deleteStudent)->delete();
+                Session::flash('success','Remove Student From Fee Collection');
+                return redirect()->route('feecollection.index');
+            }
     }
 
     /**
@@ -172,6 +176,9 @@ class FeeCollectionController extends Controller
      */
     public function destroy(feeCollection $feeCollection)
     {
-        //
+        // $sessionYearDelete = SessionYear::find($id);
+        //if($sessionYearDelete){
+          //  $sessionYearDelete->delete();
+            //return response()->json(["success"=>'Data successfully Deleted',201]);
     }
 }

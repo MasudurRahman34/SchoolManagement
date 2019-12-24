@@ -140,7 +140,7 @@
              { data: 'interval', name: 'interval' },
              { data: 'action', name: 'action' },
          ]
-     });
+     })
 
 
     //update and submit
@@ -180,7 +180,7 @@
                     getError(result.errors);
                 }
         }
-    });
+    })
 });
 
     //edit view

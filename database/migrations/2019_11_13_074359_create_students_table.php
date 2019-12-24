@@ -39,7 +39,7 @@ class CreateStudentsTable extends Migration
             $table->unsignedBigInteger('bId');
             $table->unsignedBigInteger('sectionId');
             $table->string('group', 30);
-            $table->boolean('schoolarshipStatus')->comment('0=no, 1 =yes');
+            $table->unsignedBigInteger('schoolarshipId')->default(0)->comment('default 0');
             $table->string('type', 30)->comment('regular, irregular');
             // $table->unsignedInteger('optionalSubjectId')->nullable();
             $table->rememberToken();
