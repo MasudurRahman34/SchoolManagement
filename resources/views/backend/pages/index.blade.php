@@ -204,7 +204,7 @@
              url: "{{url('/api/search/totalstudent')}}",
              data: "data",
              success: function (data) {
-                $('#totalstudent').html(data.data);
+                $('#totalstudent').html(data.data); 
              }
          });
 

@@ -77,43 +77,26 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     Route::get('/show/profile', 'StudentController@show')->name('student.show');
     Route::get('edit/profile','StudentController@edit')->name('student.edit.profile');
     Route::post('update/profile','StudentController@update')->name('student.update.profile');
-    //Student password change route
     Route::post('/change/password','StudentController@changePassword')->name('change.password');
-    //Other information route
     Route::post('update/otherInfo','StudentController@otherInfo')->name('update.otherInfo');
-
-
-    //studentTeacherList
     Route::get('/teacher/list', 'StudentTeacherListController@index')->name('student.teacherList');
     Route::get('/teacher/list/show', 'StudentTeacherListController@show')->name('student.teacherList.show');
-
-    //student subject List
     Route::get('/subject/list', 'StudentSubjectListController@index')->name('student.subjectlist');
-    // Route::get('/subject/show', 'StudentSubjectListController@show')->name('student.');
-
-
-    //student class information
     Route::get('/class/classmates', 'StudentClassController@index')->name('student.classmates');
     Route::get('/class/classmates/show', 'StudentClassController@show')->name('student.classmates.show');
-    // Route::get('/class/classmates/test', 'StudentClassController@test')->name('student.classmates.test');
-
-    //student dashBord card
-
     Route::get('/totalstudent', 'StudentController@totalStudent')->name('student.totalStudent');
-
-    //student Attendance view
     Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
     Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
     Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
 
-
     //Student school Corner
     Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
     Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
-
-    //Student Fee details
     Route::get('/student/fee/index','StudentFeeController@index')->name('student.fee.index');
     Route::get('/fee/show/{id}', 'StudentFeeController@show')->name('student.fee.show');
+    Route::get('/due/fee/show', 'StudentFeeController@dueFee')->name('student.due.fee');
+    Route::get('/due2/fee/show/{id}', 'StudentFeeController@dueFee2')->name('student.due.fee2');
+
 });
 //endforstudent
 
@@ -162,13 +145,9 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
-    //show user profile
     Route::get('/show/Userprofile', 'UserController@show')->name('user.show');
-    //edit
     Route::get('user/edit/profile','UserController@edit')->name('userEditProfile');
-    //update
     Route::post('user/update/profile','UserController@update')->name('userUpdate.profile');
-     //Student password change route
     Route::post('/user/change/password','UserController@changePassword')->name('userChange.password');
 });
 Route::group(['middleware' => ['api']], function () {

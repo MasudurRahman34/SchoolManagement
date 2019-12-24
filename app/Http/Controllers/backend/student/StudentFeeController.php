@@ -4,9 +4,11 @@ namespace App\Http\Controllers\backend\student;
 use App\Http\Controllers\Controller;
 use App\model\Fee;
 use App\model\feeCollection;
+use App\model\month;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentFeeController extends Controller
 {
@@ -74,6 +76,44 @@ class StudentFeeController extends Controller
         }
         return Response()->json(["totalAmountPay"=>$totalAmountPay, "tableOutPut"=>$tableOutPut]);
   
+    }
+
+    //student due fee
+    public function dueFee(){
+        return view('backend.student.pages.fee.studentDueFees');
+    }
+    public function dueFee2($month){
+       
+
+        $stid=Auth::guard('student')->user()->id;
+        $feeid=DB::table('fee_collections')->select('feeId')->where('studentId', Auth::guard('student')->user()->id)->where('month', $month)->pluck('feeId');
+        $NotGivenMonth=DB::table('fees')->select('*')
+        ->whereNotIn('id', $feeid)
+        ->get();
+        $totalNotGiven=Fee::whereNotIn('id', $feeid)
+        ->sum('amount');
+        $tableOut="";
+        foreach ($NotGivenMonth as $notGive) {
+            $tableOut.='<tr>'.
+            '<td>'.$notGive->name.'</td>'.
+            '<td>'.$notGive->amount.'</td>'.
+            '</tr>'; 
+        }
+        return Response()->json(["tableOut"=>$tableOut, 'totalNotGiven'=>$totalNotGiven]);
+        // // dd($feeid);
+        // $monthList=month::get()->pluck('month');
+        
+        // // $NotGivenMonth=DB::table('months')->select('month')
+        // // ->whereNotIn('month', function($month){
+        // //     $month->select('month')->from('fee_collections')->where('id', Auth::guard('student')->user()->id);
+        // // })->get()->pluck('month');
+        // $givenMonth=month::with('feeCollections')->get();
+        // // foreach($givenMonth as $gv){
+        // //     foreach($gv->feeCollections as $cl){
+        // //         echo($cl->feeId)."<br/>";
+        // //     };
+        // // };
+        // return view('backend.student.pages.fee.studentDueFees', compact('givenMonth'));
     }
 
     //
