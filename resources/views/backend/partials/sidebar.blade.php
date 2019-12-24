@@ -1,11 +1,12 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
-{{--          @foreach($user->file as $fill)--}}
-{{--              @if($fill->type=="profile")--}}
-{{--          <img class="app-sidebar__user-avatar" src="{{asset('users/'.Auth::guard('student')->user()->image)}}" style="width: 20%; height: 20%;" alt="User Image">--}}
-{{--              @endif--}}
-{{--          @endforeach--}}
+      @foreach(App\model\File::where('userId', Auth::guard()->user()->id)->get() as $fill)
+        @if($fill)
+            <img class="app-sidebar__user-avatar" src="{{asset('users/'.$fill->image)}}" style="width: 25%; height: 25%;" alt="User Image">
+             @endif
+          @endforeach
         <div>
+          <span class="text-info">Welcome,</span>
           <p class="app-sidebar__user-name">{{Auth::guard('web')->user()->name}}</p>
           <p class="app-sidebar__user-designation">{{Auth::guard('web')->user()->designation}}</p>
         </div>

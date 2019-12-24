@@ -1,13 +1,14 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
-       {{--  @foreach($user->file as $fill)
-        @if($fill->type=="profile")
-            <img class="rounded mx-auto d-block" src="{{asset('users/'.$fill->image)}}" style="width: 50%; height: 50%;">
-        @endif
-    @endforeach --}}
+      @foreach(App\model\File::where('studentId', Auth::guard()->user()->id)->get() as $fill)
+        @if($fill)
+            <img class="app-sidebar__user-avatar" src="{{asset('students/'.$fill->image)}}" style="width: 25%; height: 25%;">
+            @endif
+          @endforeach
         <div>
-          <p class="app-sidebar__user-name">{{Auth::guard('student')->user()->firstName}}</p>
-          <p class="app-sidebar__user-designation">{{Auth::guard('student')->user()->lastName}}</p>
+          <span class="text-info">Welcome,</span>
+          <p style="font-size:16px;" class="app-sidebar__user-name">{{Auth::guard('student')->user()->firstName}}</p>
+          <p style="font-size:16px;" class="app-sidebar__user-designation">{{Auth::guard('student')->user()->lastName}}</p>
         </div>
       </div>
       <ul class="app-menu">
@@ -42,6 +43,12 @@
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('student.teacherList') }}"><i class="icon fa fa-angle-right"></i>Teacher List</a></li>
 
+            </ul>
+          </li>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Fee Details</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('student.fee.index')}}"><i class="icon fa fa-angle-right"></i>Monthly Fees</a></li>
+              <li><a class="treeview-item" href="#"><i class="icon fa fa-angle-right"></i>Due Fees</a></li>
             </ul>
           </li>
           <!-- <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Exam</span><i class="treeview-indicator fa fa-angle-right"></i></a>

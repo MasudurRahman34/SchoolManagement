@@ -11,14 +11,13 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Student ID</th>
                                         <th>Roll</th>
+                                        <th>Student ID</th>
                                         <th>Name</th>
-                                        <th>Class</th>
+                                        <th>Mobile</th>
+                                        <th>Email</th>
                                         <th>Father Name</th>
                                         <th>Mother Name</th>
-                                        <th>Mobile</th>
-                                        
 
                                     </tr>
                                 </thead>
@@ -48,14 +47,13 @@
              ajax:"{{url('student/class/classmates/show')}}",
              columns:[
                  { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                 { data: 'studentId', name: 'studentId' },
                  { data: 'roll', name: 'roll' },
+                 { data: 'studentId', name: 'studentId' },
                  { data: 'firstName', name: 'firstName' },
-                 { data: 'className', name: 'className' },
-                 { data: 'fatherName', name: 'fatherName'},
-                 { data: 'motherName', name: 'motherName'},
                  { data: 'mobile', name: 'mobile' },
-                 
+                 { data: 'email', name: 'email' },
+                 { data: 'fatherName', name: 'fatherName'},
+                 { data: 'motherName', name: 'motherName'},   
              ]
          });
     
