@@ -16,7 +16,7 @@ class CreateStudentScholarshipsTable extends Migration
         Schema::create('student_scholarships', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('studentId')->comment('student_table_id');
-            $table->string('scholershipType', 30)->comment('type');
+            $table->unsignedBigInteger('scholershipId', 30)->nullable()->comment('schlarship table id');
             $table->unsignedBigInteger('feeId')->comment('fee_table_id');
             $table->float('discount',8,2)->comment('Discount %');
             $table->timestamps();
