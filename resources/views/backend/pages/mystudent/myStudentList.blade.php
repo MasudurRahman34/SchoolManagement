@@ -27,8 +27,8 @@
                                 <th>Class</th>
                                 <th>Section</th>
                                 <th>Shift</th>
-                                <th>Father Name</th>
-                                <th>Mother Name</th>
+                                <th>Father</th>
+                                <th>Mother</th>
                                 <th>Contact</th>
                                 <th>Action</th>
                             </tr>
@@ -53,7 +53,7 @@
                 ],
                 processing:true,
                 serverSide:true,
-                
+
                 // fixedColumns: true,
                 ajax:"{{url('mystudent/list')}}",
                 columns:[
@@ -70,7 +70,6 @@
                     { data: 'action', name: 'action' }
                 ]
             });
-           
 
     </script>
 

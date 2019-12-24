@@ -72,14 +72,14 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Student ID</th>
+                                <th>St ID</th>
                                 <th>Name</th>
                                 <th>Roll</th>
                                 <th>Class</th>
                                 <th>Section</th>
                                 <th>Shift</th>
-                                <th>Father Name</th>
-                                <th>Mother Name</th>
+                                <th>Father</th>
+                                <th>Mother</th>
                                 <th>Contact</th>
                                 <th>Action</th>
                             </tr>
