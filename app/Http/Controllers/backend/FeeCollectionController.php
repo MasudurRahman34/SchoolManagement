@@ -60,10 +60,82 @@ class FeeCollectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function individualStudent(Request $request)
     {
-        //
+        $sectionId= $request->sectionId;
+            $students = Student::where('sectionId',$sectionId)
+            ->where('bId', Auth::guard('web')->user()->bId)
+            ->get();
+            return response()->json($students);
     }
+
+    public function individualStudent2(Request $request)
+    {
+        $sectionId= $request->sectionId;
+        $studentId= $request->studentId;
+            $student = Student::where('sectionId',$sectionId)->where('id',$studentId)
+            ->where('bId', Auth::guard('web')->user()->bId)
+            ->get();
+            return response()->json($student);
+    }
+
+    public function individualStudentfind(Request $request)
+    {
+
+        $feeCollection=feeCollection::where('sectionId', $request->sectionId)
+        ->where('feeId',$request->feeId)
+        ->where('month',$request->month)
+        ->where('studentId',$request->studentId)
+        ->where('bId' , Auth::guard('web')->user()->bId)
+        ->count();
+
+
+        if($feeCollection>0){
+
+            $Stfees=feeCollection::where('sectionId', $request->sectionId)
+            ->where('feeId',$request->feeId)
+            ->where('month',$request->month)
+            ->where('studentId',$request->studentId)
+            ->where('bId' , Auth::guard('web')->user()->bId)
+            ->with('Fee')
+            ->get();
+
+            $output="";
+            foreach ($Stfees as $Stfee) {
+                $output.='<tr>'.
+                '<td>'.$Stfee->Fee->name.'</td>'.
+                '<td>'.$Stfee->Fee->type.'</td>'.
+                '<td>'.$Stfee->amount.'</td>'.
+                '<td>'.$Stfee->totalAmount.'</td>'.
+                '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
+                '</tr>';
+            }
+            return Response()->json(["outPut"=>$output, $feeCollection]);
+
+        }else{
+
+
+
+            $TakeStfees=Fee::where('id', $request->feeId)
+            ->where('classId',$request->classId)
+            ->where('bId' , Auth::guard('web')->user()->bId)
+            ->get();
+
+            $feeoutput="";
+            foreach ($TakeStfees as $Stfee) {
+                $feeoutput.='<tr>'.
+                '<td>'.$Stfee->name.'</td>'.
+                '<td>'.$Stfee->type.'</td>'.
+                '<td>'.$Stfee->amount.'</td>'.
+                '<td>'.'<input type="number" name="totalAmount" min="0">'.'</td>'.
+                '<td>'.'<input type="number" name="due" value="0" min="0">'.'</td>'.
+                '</tr>';
+            }
+            return Response()->json(["Fee"=>$feeoutput]);
+
+        }
+    }
+
 
     /**
      * Store a newly created resource in storage.

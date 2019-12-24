@@ -192,6 +192,8 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
 
     //individual fee Collection Management for admin
     Route::get('/feecollection/individual','backend\FeeCollectionController@individualCollection')->name('individualFee.individualCollection');
+    Route::get('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
+    Route::get('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
 
 
 

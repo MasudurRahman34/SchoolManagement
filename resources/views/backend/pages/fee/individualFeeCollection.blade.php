@@ -87,6 +87,12 @@
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleFormControlSelect1"> Student Name</label>
+                        <select class="form-control " id="studentId">
+                            <option value=""> --Please Select--  </option>
+                        </select>
+                    </div>
                     <div class="form-group col" hidden>
                         <select class="form-control " id="sessionYear" >
                             <option value="">--Please Select--</option>
@@ -116,19 +122,22 @@
                        <input type="text" name="month2" id="month2" hidden>
                        <input type="text" name="sessionYear2" id="sessionYear2" hidden>
                        <input type="text" name="paymentType2" id="paymentType2" hidden>
+                       <input type="text" name="studentId2" id="studentId2" hidden>
                        <input type='button'  value='Print' id='doPrint'>
                         <div class="table-responsive"  id="print_div">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="allcb" /> Select All</th>
-                                <th>Student Roll</th>
-                                <th>Student Name</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Fee Name</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>Paid</th>
+                                        <th>Taken Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                         <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
                     </form>
@@ -138,7 +147,7 @@
     <div class="clearix"></div>
     @endsection
     @section('script')
-    <script src="{{ asset('admin/js/printThis.js') }} "></script>
+    {{-- <script src="{{ asset('admin/js/printThis.js') }} "></script> --}}
     <script>
     $('.admission').change(function (e) {
         e.preventDefault();
@@ -187,20 +196,6 @@
         }
     });
 
-//show hidden field for adminssion
-    $("#paymentType").change(function() {
-        //alert('working');
-        var val = $(this).val();
-        if(val === "") {
-            $('#hidden').attr('hidden',true);
-            $('#hidden1').attr('hidden',true);
-        }
-        else if(val === "") {
-            $('#hidden').attr('hidden',false);
-            $('#hidden1').attr('hidden',false);
-        }
-      });
-
 //on change fee id for find amount
     $('#feeId').change(function (e) {
         e.preventDefault();
@@ -231,92 +226,97 @@
         var classId=$("#classId").val();
         $("#classId2").attr('value',classId);
 
-        var amount=$("#amount").val();
-        $("#amount2").attr('value',amount);
-        var feeId=$("#feeId").val();
-        $("#feeId2").attr('value',feeId);
-        var month=$("#month").val();
-        $("#month2").attr('value',month);
-        var sessionYear=$("#sessionYear").val();
-        $("#sessionYear2").attr('value',sessionYear);
 
-        console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
+    var amount=$("#amount").val();
+    $("#amount2").attr('value',amount);
+    var feeId=$("#feeId").val();
+    $("#feeId2").attr('value',feeId);
+    var month=$("#month").val();
+    $("#month2").attr('value',month);
+    var sessionYear=$("#sessionYear").val();
+    $("#sessionYear2").attr('value',sessionYear);
+
+
+        console.log(sectionId2,classId2);
         $.ajax({
-          type: "post",
-          url: "{{ url('feecollection/student/Data')}}",
+          type: "get",
+          url: "{{ url('feecollection/individualStudent')}}",
           data: {
             sectionId:sectionId,
             feeId:feeId,
             month:month,
           },
-          success: function (response) {
-        //change start from here
-           if(response.dueStudent){
-            console.log('if');
-               if (confirm("Fee has been Taken At This Type for This month, Do You Want to see Who miss it?|| OK-> Show due student List|| Clear -> Show Paid Student List")) {
-                console.log('else');
-                    $('#tblHidden').attr('hidden',false);
-                    $('#btnFee').attr('disabled',false);
-                    var tr='';
-                    $.each (response.dueStudent, function (key, value) {
-
-                    tr +=
-                        "<tr>"+
-                            "<td>"+
-                                '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="" id="fee">'
-                            +"</td>"+
-                            "<td>"+value.roll+"</td>"+
-                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                    "</tr>";
+          success: function (data) {
+            //change start from here
+            console.log(data);
+            var option="<option>--Please Select--</option>";
+            data.forEach(element => {
+                option+=("<option value='"+element.id+"'>"+element.firstName+' '+element.lastName+"</option>");
                 });
-                $('tbody').html(tr);
-               } else{
-
-                console.log('else');
-                $('#tblHidden').attr('hidden',false);
-                $('#btnFee').attr('disabled',false);
-                var tr='';
-                $.each (response.paidStudent, function (key, value) {
-
-                    $("input[id='fee'][value='"+value.id+"']").prop('checked', true);
-                tr +=
-                    "<tr>"+
-                        "<td>"+
-                            '<input class="roll['+value.roll+']" type="checkbox" name="attend[]" value="'+value.id+'" id="fee" checked>'
-                        +"</td>"+
-                        "<td>"+value.roll+"</td>"+
-                        "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                  "</tr>";
-                  $('#btnFee').html("Update Fee");
-                  $('#myfeeform').attr("action", "feecollection/update");
-               });
-                $('tbody').html(tr);
-               }
-           }
-           else{
-
-            console.log('else');
-            $('#tblHidden').attr('hidden',false);
-            $('#btnFee').attr('disabled',false);
-            var tr='';
-            $.each (response, function (key, value) {
-            tr +=
-                "<tr>"+
-                    "<td>"+
-                        '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="attend['+value.id+']" id="fee">'
-                    +"</td>"+
-                    "<td>"+value.roll+"</td>"+
-                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
-              "</tr>";
-           });
-            $('tbody').html(tr);
-          }
-         }
-        });
-        $('#allcb').change(function () {
-            $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+                $('#studentId').html(option);
+                }
         });
     });
+
+
+//on change section for find student
+$('#studentId').change(function (e) {
+    e.preventDefault();
+    var sectionId=$("#sectionId").val();
+    $("#sectionId2").attr('value',sectionId);
+    var classId=$("#classId").val();
+    $("#classId2").attr('value',classId);
+
+    var amount=$("#amount").val();
+    $("#amount2").attr('value',amount);
+    var feeId=$("#feeId").val();
+    $("#feeId2").attr('value',feeId);
+    var month=$("#month").val();
+    $("#month2").attr('value',month);
+    var sessionYear=$("#sessionYear").val();
+    $("#sessionYear2").attr('value',sessionYear);
+    var studentId=$("#studentId").val();
+    $("#studentId2").attr('value',studentId);
+
+    console.log(sectionId2,amount2,feeId2,month2,sessionYear2,studentId2);
+
+        $.ajax({
+        type: "get",
+        url: "{{ url('feecollection/individualStudentfind')}}",
+        data: {
+            sectionId:sectionId,
+            feeId:feeId,
+            month:month,
+            studentId:studentId,
+            classId:classId,
+        },
+        success: function (data) {
+            console.log(data.Fee);
+            if(data.outPut){
+
+                console.log('if')
+                $('#tblHidden').attr('hidden',false);
+                $('#btnFee').attr('disabled',true);
+
+                $('tbody').html(data.outPut);
+
+                }else{
+                    $('#tblHidden').attr('hidden',false);
+                    $('#btnFee').attr('disabled',false);
+
+                    $('tbody').html(data.Fee);
+
+                };
+        }
+
+        });
+
+});
+
+
+
+
+
 
 //print button in table
     $('#doPrint').on("click", function () {
@@ -343,18 +343,6 @@
             afterPrint: null            // function called before iframe is removed
         });
       });
-
-     // var divContents = document.getElementById("btn").innerHTML;
-      //var a = window.open('', '', 'height=500, width=500');
-      //a.document.write('<html>');
-      //a.document.write('<body > <h1>Div contents are <br>');
-      //a.document.write(divContents);
-      //a.document.write('</body></html>');
-      //a.document.close();
-      //a.focus();
-      //a.print();
-      //a.close();
-
     </script>
     @endsection
 
