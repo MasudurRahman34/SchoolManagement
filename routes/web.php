@@ -105,7 +105,7 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
     Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
     Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
-    
+
 
     //Student school Corner
     Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
@@ -210,6 +210,11 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::post('/feecollection/student/Data','backend\FeeCollectionController@student')->name('feecollection.studentdata');
     Route::post('/feecollection/store','backend\FeeCollectionController@store')->name('store.feecollection');
     Route::post('/feecollection/update','backend\FeeCollectionController@update')->name('update.feecollection');
+
+    //individual fee Collection Management for admin
+    Route::get('/feecollection/individual','backend\FeeCollectionController@individualCollection')->name('individualFee.individualCollection');
+
+
 
 
 //section Management

@@ -41,6 +41,20 @@ class FeeCollectionController extends Controller
         return view('backend.pages.fee.feeCollection')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('fees',$fees);
     }
 
+    public function individualCollection()
+
+    {
+        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $fees=Fee::where('bid', Auth::guard('web')->user()->bId)->get();
+        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.fee.individualFeeCollection')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('fees',$fees);
+    }
+
+
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -71,22 +85,11 @@ class FeeCollectionController extends Controller
             $dueStudent=DB::select("select students.id,students.firstName,students.roll from students where  students.id NOT IN(select fee_collections.studentId from fee_collections where fee_collections.bId='$bId' and fee_collections.feeId='$feeId' and fee_collections.month='$month')");
             $paidStudent=DB::select("select fee_collections.id,students.id,students.firstName,students.roll from students,fee_collections where fee_collections.studentId=students.id and fee_collections.sectionId='$request->sectionId' and fee_collections.bId='$bId' and fee_collections.month='$month'");
             return response()->json(["dueStudent"=>$dueStudent, "paidStudent"=>$paidStudent]);
-
-
-            // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
-
-        //     return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/edit/$request->sectionId"]);
         }else{
             $sectionId= $request->sectionId;
             $students = Student::where('sectionId',$sectionId)->get();
             return response()->json($students);
          }
-
-
-        // $sectionId= $request->sectionId;
-        // $students = Student::where('sectionId',$sectionId)->get();
-        // return response()->json($students);
-        // return response()->json($attendences);
     }
 
     public function store(Request $request)
@@ -103,6 +106,7 @@ class FeeCollectionController extends Controller
                 $stfee->sectionId = $request->sectionId;
 
                 $stfee->amount  = $fee;
+
                 //change for total amount
                 if($id!=null){
                     $scholership= studentScholarship::where('studentId',$id)->where('feeId',$request->feeId2)->get();
@@ -158,7 +162,6 @@ class FeeCollectionController extends Controller
 
         $ids=$request->attend;
 
-
                 $deleteStudent= DB::table('fee_collections')->whereNotIn('studentId', $ids)->pluck('studentId');
 
             if($deleteStudent){
@@ -181,4 +184,5 @@ class FeeCollectionController extends Controller
           //  $sessionYearDelete->delete();
             //return response()->json(["success"=>'Data successfully Deleted',201]);
     }
+
 }
