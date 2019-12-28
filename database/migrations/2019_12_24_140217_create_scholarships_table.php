@@ -18,6 +18,7 @@ class CreateScholarshipsTable extends Migration
             $table->string('name');
             $table->float('discount',8,2)->nullable()->comment('Discount %');
             $table->unsignedBigInteger('bId')->nullable()->comment('branch_table_id');
+
             $table->timestamps();
             $table->softDeletes();
         });

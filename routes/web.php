@@ -184,6 +184,8 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');
     Route::get('/feehistory/show','backend\FeeHistoryController@show')->name('feehistory.show');
 
+
+
     //feecollection management for admin
     Route::get('/feecollection','backend\FeeCollectionController@index')->name('feecollection.index');
     Route::post('/feecollection/student/Data','backend\FeeCollectionController@student')->name('feecollection.studentdata');
@@ -194,6 +196,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/feecollection/individual','backend\FeeCollectionController@individualCollection')->name('individualFee.individualCollection');
     Route::get('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
     Route::get('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
+    Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
 
 
 

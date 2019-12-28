@@ -93,6 +93,11 @@
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
+                    <div class="form-group col-md-4 pr-2" id="hidden1" >
+                        <label for="exampleFormControlSelect1"> minimum Paid Amount</label>
+                        <input class="form-control " type="number" id="scholarshipAmount" name="amount"  readonly>
+
+                    </div>
                     <div class="form-group col" hidden>
                         <select class="form-control " id="sessionYear" >
                             <option value="">--Please Select--</option>
@@ -131,7 +136,10 @@
                                         <th>Fee Name</th>
                                         <th>Type</th>
                                         <th>Amount</th>
-                                        <th>Paid</th>
+                                        <th>Due</th>
+                                        <th>Total Paid</th>
+
+
                                         <th>Taken Date</th>
                                     </tr>
                                 </thead>
@@ -248,10 +256,10 @@
           },
           success: function (data) {
             //change start from here
-            console.log(data);
+            //console.log(data);
             var option="<option>--Please Select--</option>";
             data.forEach(element => {
-                option+=("<option value='"+element.id+"'>"+element.firstName+' '+element.lastName+"</option>");
+                option+=("<option value='"+element.id+"'>"+element.firstName+' '+element.lastName+'('+element.studentId+')'+"</option>");
                 });
                 $('#studentId').html(option);
                 }
@@ -279,6 +287,25 @@ $('#studentId').change(function (e) {
     $("#studentId2").attr('value',studentId);
 
     console.log(sectionId2,amount2,feeId2,month2,sessionYear2,studentId2);
+    // scholarship amount check for due calculation
+    $.ajax({
+        type: "get",
+        url:"{{ url('feecollection/scholarshipAmount')}}",
+        data: {
+            sectionId:sectionId,
+            feeId:feeId,
+            month:month,
+            studentId:studentId,
+            classId:classId,
+            amount:amount,
+        },
+        success: function (data) {
+            console.log(data);
+        //var amount = data;
+            //$('#amount').text();
+            $('#scholarshipAmount').val(data);
+        }
+    });
 
         $.ajax({
         type: "get",
@@ -291,22 +318,36 @@ $('#studentId').change(function (e) {
             classId:classId,
         },
         success: function (data) {
-            console.log(data.Fee);
+
             if(data.outPut){
-
+                //check for due condition
+                //console.log(data.Stfees[0]['due']);
                 console.log('if')
-                $('#tblHidden').attr('hidden',false);
-                $('#btnFee').attr('disabled',true);
-
-                $('tbody').html(data.outPut);
-
-                }else{
+                var data1 =parseFloat(data.Stfees[0]['due']).toFixed(2);
+                //checking for due amount in fee collection
+                if(data1>0){
+                    console.log("due founr",data1)
                     $('#tblHidden').attr('hidden',false);
                     $('#btnFee').attr('disabled',false);
+                    $('#btnFee').html("Update Due Fee");
+                    $('#myfeeform').attr("action", "individualFeecollection/update");
 
-                    $('tbody').html(data.Fee);
 
-                };
+                    $('tbody').html(data.outPut);
+                }else{
+                    $('#tblHidden').attr('hidden',false);
+                    $('#btnFee').attr('disabled',true);
+
+
+                    $('tbody').html(data.outPut);
+                }
+            }else{
+                $('#tblHidden').attr('hidden',false);
+                $('#btnFee').attr('disabled',false);
+
+                $('tbody').html(data.Fee);
+
+            };
         }
 
         });

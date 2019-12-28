@@ -79,6 +79,7 @@ class FeeCollectionController extends Controller
             return response()->json($student);
     }
 
+    //for individual student page
     public function individualStudentfind(Request $request)
     {
 
@@ -106,11 +107,12 @@ class FeeCollectionController extends Controller
                 '<td>'.$Stfee->Fee->name.'</td>'.
                 '<td>'.$Stfee->Fee->type.'</td>'.
                 '<td>'.$Stfee->amount.'</td>'.
-                '<td>'.$Stfee->totalAmount.'</td>'.
+                '<td>'.$Stfee->due.'</td>'.
+                '<td>'.$Stfee->totalAmount.'+'.'<input type="number" name="totalAmount" value="0" min="0">'.'</td>'.
                 '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
                 '</tr>';
             }
-            return Response()->json(["outPut"=>$output, $feeCollection]);
+            return Response()->json(["outPut"=>$output, "Stfees"=>$Stfees]);
 
         }else{
 
@@ -198,6 +200,19 @@ class FeeCollectionController extends Controller
             }
             Session::flash('success','Succesfully Data Saved');
             return redirect()->route('feecollection.index');
+    }
+
+    public function scholarshipAmount(Request $request)
+    {
+        $scholership= studentScholarship::where('studentId',$request->studentId)->where('feeId',$request->feeId2)->count();
+        $discount=0;
+        if($scholership>0){
+            $scholership= studentScholarship::where('studentId',$request->studentId)->where('feeId',$request->feeId2)->get();
+            $discount=$scholership->discount;
+            $paidAmount=$request->amount -(($request->amount*$discount)/100);
+            return response()->json($paidAmount);
+        }
+
     }
 
     /**
