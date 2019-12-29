@@ -108,7 +108,7 @@ class FeeCollectionController extends Controller
                 '<td>'.$Stfee->Fee->type.'</td>'.
                 '<td>'.$Stfee->amount.'</td>'.
                 '<td>'.$Stfee->due.'</td>'.
-                '<td>'.$Stfee->totalAmount.'+'.'<input type="number" name="totalAmount" value="0" min="0">'.'</td>'.
+                '<td>'.$Stfee->totalAmount.'+'.'<input type="number" name="totalAmount" value="0" min="0" max="'.$Stfee->due.'">'.'</td>'.
                 '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
                 '</tr>';
             }
@@ -129,8 +129,9 @@ class FeeCollectionController extends Controller
                 '<td>'.$Stfee->name.'</td>'.
                 '<td>'.$Stfee->type.'</td>'.
                 '<td>'.$Stfee->amount.'</td>'.
-                '<td>'.'<input type="number" name="totalAmount" min="0">'.'</td>'.
-                '<td>'.'<input type="number" name="due" value="0" min="0">'.'</td>'.
+                '<td>'.'<input type="number" name="due" value="0" min="0"  readonly >'.'</td>'.
+                '<td>'.'<input type="number" name="totalAmount" min="0" id="totalAmount" max="0">'.'</td>'.
+
                 '</tr>';
             }
             return Response()->json(["Fee"=>$feeoutput]);
@@ -166,6 +167,8 @@ class FeeCollectionController extends Controller
          }
     }
 
+
+    // store data in group
     public function store(Request $request)
     {
 
@@ -202,15 +205,53 @@ class FeeCollectionController extends Controller
             return redirect()->route('feecollection.index');
     }
 
+    public function storeIndividualy(Request $request)
+    {
+        $stindifee = new feeCollection();
+        $fee= $request->amount2;
+                $stindifee->feeId = $request->feeId2;
+                $stindifee->amount = $fee;
+                $stindifee->month = $request->month2;
+                $stindifee->paidMonth = $request->month2;
+                $stindifee->year = $request->sessionYear2;
+                $stindifee->sectionId = $request->sectionId;
+                $stindifee->studentId = $request->studentId2;
+                $stindifee->totalAmount = $request->totalAmount;
+
+
+                //find due Amount
+                    $due= ($fee-$request->totalAmount)-($request->discount2);
+                   // return($due);
+                    // dd($stindifee);
+                    $stindifee->due = $due;
+                    $stindifee->bId= Auth::user()->bId;
+                    //dd($stindifee);
+
+
+    }
+
+
+    //scholership and discount amount for individual student
     public function scholarshipAmount(Request $request)
     {
-        $scholership= studentScholarship::where('studentId',$request->studentId)->where('feeId',$request->feeId2)->count();
+        $feeId=$request->feeId;
+        $studentId=$request->studentId;
+        $amount=$request->amount;
+        //return($amount);
+         $scholership= studentScholarship::where('studentId',$studentId)->where('feeId',$feeId)->get();
+        // //return($scholership);
+
         $discount=0;
-        if($scholership>0){
-            $scholership= studentScholarship::where('studentId',$request->studentId)->where('feeId',$request->feeId2)->get();
-            $discount=$scholership->discount;
-            $paidAmount=$request->amount -(($request->amount*$discount)/100);
-            return response()->json($paidAmount);
+        if($scholership){
+            foreach ($scholership as $sc) {
+                $discount= $sc->discount;
+                }
+                $paidAmount =  $amount-(($amount*$discount)/100);
+                $discountAmount= ($amount*$discount)/100;
+                //return($discountAmount);
+
+            return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount]);
+
         }
 
     }

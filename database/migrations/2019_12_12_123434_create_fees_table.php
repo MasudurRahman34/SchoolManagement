@@ -21,7 +21,8 @@ class CreateFeesTable extends Migration
             $table->unsignedBigInteger('bId')->comment('branch_table_id');
             $table->unsignedBigInteger('classId')->comment('class_table_id');
             $table->Integer('status')->comment('disable 0, enable 1');
-            $table->string('interval',30)->comment('monthly,quarterly,half Yearly,Yearly');
+            $table->string('interval',30)->comment('monthly,Yearly');
+            $table->string('year', 30)->comment('year');
             $table->timestamps();
             $table->softDeletes();
         });

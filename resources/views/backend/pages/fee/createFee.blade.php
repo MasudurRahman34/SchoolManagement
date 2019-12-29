@@ -66,8 +66,7 @@
 
                     <select class="form-control" id="interval" name="interval">
                             <option value="monthly">Monthly</option>
-                            <option value="quarterly">Quarterly</option>
-                            <option value="halfYearly">Half Yearly</option>
+
                             <option value="yearly">Yearly</option>
                         </select>
                   </div>

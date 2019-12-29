@@ -56,7 +56,7 @@
                                     <option value="">--Select Fee--</option>
                             </select>
                     </div>
-                    <div class="form-group col-md-4 pr-2" id="hidden1" >
+                    <div class="form-group col-md-4 pr-2" id="hidden1" hidden>
                         <label for="exampleFormControlSelect1"> Amount</label>
                         <input class="form-control " type="number" id="amount" name="amount" required  readonly>
 
@@ -93,11 +93,22 @@
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-4 pr-2" id="hidden1" >
-                        <label for="exampleFormControlSelect1"> minimum Paid Amount</label>
-                        <input class="form-control " type="number" id="scholarshipAmount" name="amount"  readonly>
+                    <div class="form-group col-md-4 pr-2" id="btnamount" hidden>
+                        <label for="exampleFormControlSelect1"> Amount</label>
+                        <input class="form-control " type="number" id="amount1" name="amount1" required  readonly>
 
                     </div>
+                    <div class="form-group col-md-4" id="btndiscount" hidden>
+                        <label for="exampleFormControlSelect1">Discount</label>
+                        <input class="form-control" type="number" id="discount" name="discount" value="" readonly>
+                    </div>
+                    <div class="form-group col-md-4" id="stamount" hidden>
+                        <label for="exampleFormControlSelect1"> Total charge</label>
+                        <input class="form-control " type="number" id="scholarshipAmount" name="amount" value="" readonly hidden>
+
+                    </div>
+
+
                     <div class="form-group col" hidden>
                         <select class="form-control " id="sessionYear" >
                             <option value="">--Please Select--</option>
@@ -118,7 +129,7 @@
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>
-                    <form action="{{route('store.feecollection')}}" method="post" id="myfeeform">
+                    <form action="{{route('store.individualFeecollection')}}" method="post" id="myfeeform">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" hidden>
                        <input type="text" name="classId2" id="classId2" hidden>
@@ -128,6 +139,7 @@
                        <input type="text" name="sessionYear2" id="sessionYear2" hidden>
                        <input type="text" name="paymentType2" id="paymentType2" hidden>
                        <input type="text" name="studentId2" id="studentId2" hidden>
+                       <input type="text" name="discount2" id="discount2" hidden>
                        <input type='button'  value='Print' id='doPrint'>
                         <div class="table-responsive"  id="print_div">
                             <table class="table table-hover table-bordered" id="sampleTable">
@@ -138,8 +150,6 @@
                                         <th>Amount</th>
                                         <th>Due</th>
                                         <th>Total Paid</th>
-
-
                                         <th>Taken Date</th>
                                     </tr>
                                 </thead>
@@ -222,6 +232,7 @@
                 //var amount = data;
                     //$('#amount').text();
                     $('#amount').val(data);
+                    $('#amount1').val(data);
                 }
             });
     });
@@ -243,7 +254,6 @@
     $("#month2").attr('value',month);
     var sessionYear=$("#sessionYear").val();
     $("#sessionYear2").attr('value',sessionYear);
-
 
         console.log(sectionId2,classId2);
         $.ajax({
@@ -286,7 +296,12 @@ $('#studentId').change(function (e) {
     var studentId=$("#studentId").val();
     $("#studentId2").attr('value',studentId);
 
-    console.log(sectionId2,amount2,feeId2,month2,sessionYear2,studentId2);
+    //var discount=$("#discount").val();
+    //$("#discount2").attr('value', discount);
+
+    console.log(discount2);
+
+    console.log(sectionId2,amount2,feeId2,month2,sessionYear2,studentId2,discount2);
     // scholarship amount check for due calculation
     $.ajax({
         type: "get",
@@ -301,9 +316,21 @@ $('#studentId').change(function (e) {
         },
         success: function (data) {
             console.log(data);
+            console.log(data.paidAmount);
+            var max= (data.paidAmount);
+            console.log(max);
+            console.log(data.discountAmount);
         //var amount = data;
             //$('#amount').text();
-            $('#scholarshipAmount').val(data);
+            $('#btnamount').attr('hidden',false);
+            $('#stamount').attr('hidden',false);
+            $('#scholarshipAmount').attr('hidden',false);
+            $('#scholarshipAmount').attr('value', data.paidAmount);
+            $('#btndiscount').attr('hidden',false);
+            $('#discount').attr('value', data.discountAmount);
+
+            var discount=$("#discount").val();
+            $("#discount2").attr('value', discount);
         }
     });
 
@@ -316,6 +343,7 @@ $('#studentId').change(function (e) {
             month:month,
             studentId:studentId,
             classId:classId,
+            amount:amount,
         },
         success: function (data) {
 
@@ -332,20 +360,26 @@ $('#studentId').change(function (e) {
                     $('#btnFee').html("Update Due Fee");
                     $('#myfeeform').attr("action", "individualFeecollection/update");
 
-
                     $('tbody').html(data.outPut);
                 }else{
                     $('#tblHidden').attr('hidden',false);
                     $('#btnFee').attr('disabled',true);
 
-
+                    $('#btnFee').html("Take Fee");
                     $('tbody').html(data.outPut);
                 }
             }else{
+
+                console.log("else");
+
                 $('#tblHidden').attr('hidden',false);
                 $('#btnFee').attr('disabled',false);
 
+                $('#btnFee').html("Take Fee");
+
                 $('tbody').html(data.Fee);
+                var max=$('#scholarshipAmount').val();
+                $('#totalAmount').attr('max', max);
 
             };
         }
