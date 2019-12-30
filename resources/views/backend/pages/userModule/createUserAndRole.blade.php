@@ -93,15 +93,56 @@
                             </div>
                         </div>
 
-                        <div class="form-group row" hidden id="class">
-                                <label class="control-label col-md-3 col-sm-12 pl-4">Class Teacher To</label>
+                        <div class="form-group row bg-light" hidden id="class">
+                            <div class="col-md-12 col-sm-12 text-center mb-2 text-danger">
+                                    Make Class Teacher To
+                            </div>
+                            <label class="control-label col-md-3 col-sm-12 pl-4">Shift</label>
                                 <div class="col-md-9 col-sm-12">
-                                        <select id="classId" name="role" class="form-control col-md-10">
+                                    <div class="form-check">
+                                        <label class="radio">
+                                          <input type="radio" id="shift" name="shift" value="Morning" checked="" class="admission">
+                                            Morning
+                                        </label>
+                                          &nbsp;
+                                          <label class="radio">
+                                            <input type="radio" id="shift" name="shift" value="Day" class="admission">
+                                              Day
+                                          </label>
+                                          <label class="radio">
+                                              <input type="radio" id="shift" name="shift" value="Evening" class="admission">
+                                                Evening
+                                            </label>
+
+
+                                        </div>
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-12 pl-4">Session</label>
+                                <div class="col-md-9 col-sm-12">
+                                        <select id="sessionYear" name="sessionYear" class="form-control col-md-10 admission">
+                                        <option>Select Session</option>
+                                            @foreach (App\model\SessionYear::where('bId', Auth::guard('web')->user()->bId)->get() as $Session)
+                                                <option value="{{$Session->id}}">{{$Session->sessionYear}}</option>
+                                            @endforeach
+
+                                        </select>
+                                </div>
+                                <label class="control-label col-md-3 col-sm-12 pl-4">Class</label>
+                                <div class="col-md-9 col-sm-12">
+                                        <select id="classId" name="classId" class="form-control col-md-10 admission">
                                         <option>Select Class</option>
                                             @foreach ($classes as $class)
                                             <option value="{{$class->id}}">{{$class->className}}</option>
 
                                             @endforeach
+
+                                        </select>
+                                </div>
+                                <label class="control-label col-md-3 col-sm-12 pl-4">Section</label>
+                                <div class="col-md-9 col-sm-12">
+                                        <select id="sectionId" name="sectionId" class="form-control col-md-10 ">
+
 
                                         </select>
                                 </div>
@@ -150,7 +191,7 @@
             autoclose: true,
             todayHighlight: true
         });
-
+        dynamicSectionSelection();
         // function checkRoleHasClassTeacher(){
 
         // }
@@ -211,7 +252,10 @@
                     email: $('#email').val(),
                     designation: $('#designation option:selected').val(),
                     role: $('#role option:selected').val(),
+                    shift: $('#shift:checked').val(),
+                    sessionYearId: $('#sessionYear option:selected').val(),
                     classId: $('#classId option:selected').val(),
+                    sectionId: $('#sectionId option:selected').val(),
                     joinDate: $('#demoDate').val(),
                     address: $('#address').val(),
                     },

@@ -21,6 +21,11 @@
         <div class="tile-body">
           <form class="row" method="post" action="{{route('admission.store')}}" enctype='multipart/form-data'>
             @csrf
+            <div class="col-md-12">
+                    <div class="alert alert-warning text-center" role="alert">
+                        Personal Information
+                    </div>
+            </div>
             <div class="form group col-md-6">
               <label class="control-label">First Name</label>
               <input class="form-control" name="firstName" id="firstName" type="text" required>
@@ -31,9 +36,9 @@
             </div>
             <div class="form group col-md-6">
                     <label class="control-label mt-3">Gender</label><br>
-                    <label class="radio-inline"><input type="radio" name="gender" checked>Male</label>
-                    <label class="radio-inline"><input type="radio" name="gender">Female</label>
-                    <label class="radio-inline"><input type="radio" name="gender">Other</label>
+                    <label class="radio-inline"><input type="radio" name="gender" checked value="Male">Male</label>
+                    <label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
+                    <label class="radio-inline"><input type="radio" name="gender" value="Other">Other</label>
             </div>
             <div class="form group col-md-6">
               <label class="control-label">Mobile No</label>
@@ -59,13 +64,18 @@
                   <option value="AB+">AB+</option>
                 </select>
               </div>
+              <div class="col-md-12">
+                <div class="alert alert-warning text-center" role="alert">
+                    Educational Information
+                </div>
+            </div>
 
             <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Session Year</label>
                 <select class="form-control admission" id="sessionYear" name="sessionYear" required>
                   <option value="">--Please Select--</option>
                     @foreach ($SessionYear as $SYear)
-                <option value="{{$SYear->id}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>
+                <option value="{{$SYear->id}}" data-sessionYear="{{$SYear->sessionYear}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>
                     @endforeach
                 </select>
               </div>
@@ -158,28 +168,58 @@
                     <label class="custom-control-label" for="typeir">Irregular</label>
                 </div>
             </div>
-            <div class="form-group col-md-4">
-                <label class="control-label mt-3"><h5>Schoolarship</h5></label><br>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="schoolarshipStatus" id="schoolarshipStatus" value="0" class="custom-control-input" checked>
-                    <label class="custom-control-label" for="schoolarshipStatus">No</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="schoolarshipStatus" id="schoolarshipStatus1" value="1" class="custom-control-input">
-                    <label class="custom-control-label" for="schoolarshipStatus1">Yes</label>
+            <div class="col-md-12">
+                <div class="alert alert-warning text-center" role="alert">
+                    Tuition and Fees
                 </div>
             </div>
             <div class="form-group col-md-4">
-                <label class="control-label mt-3"><h5>Payment Clearance</h5></label><br>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="checkbox" name="payment" id="Payment" value="0" class="custom-control-input" checked>
-                    <label class="custom-control-label" for="Payment">Yes</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" name="payment" id="Payment2" value="1" class="custom-control-input">
-                    <label class="custom-control-label" for="Payment2">No</label>
-                </div>
+                <label class="control-label">Total Cost (TK)&nbsp;&nbsp;&nbsp;<span class="btn btn-light" id="btnToggle">Show Details </span></label>
+                <input class="form-control" name="total" id="totalFee" type="number" required readonly>
+
             </div>
+            <div class="form-group col-md-4">
+                <label for="exampleFormControlSelect1">Schoolarship</label>
+                <select class="form-control" name="schoolarshipId" id="schoolarshipId" required>
+                        <option value="0" selected>No</option>
+                        @foreach (App\model\scholarship::where('bId', Auth::guard()->user()->bId)->get() as $scholarship)
+                        <option value="{{$scholarship->id}}" data-discount="{{$scholarship->discount}}">{{$scholarship->name}} ({{$scholarship->discount}}%)</option>
+
+                    @endforeach
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-4" id="schfee">
+                <label for="exampleFormControlSelect1"><span class="p-5"><i class="fa fa-arrows-h" style="font-size:20px;" aria-hidden="true"></i></span>ON</label>
+                <select class="form-control" name="forScholarshipFeeId" id="forScholarshipFeeId">
+
+
+                </select>
+            </div>
+
+                <div class="col-md-12" id="feeList" style="display:none;">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Fee</th>
+                                  <th scope="col">type</th>
+                                  <th scope="col">Amount</th>
+                                </tr>
+                              </thead>
+                              <tbody id="feeHtml">
+
+                              </tbody>
+                        </table>
+                      </div>
+            </div>
+             <!--hidden field -->
+            <input type="number" name="setDiscount" id="setDiscount" step="any" hidden>discount
+            <input type="number" name="feeAmountAfterDiscount" id="feeAmountAfterDiscount" step="any" hidden>AmountAfterDiscount
+            <input type="number" name="nokolTotalAmount" id="nokolTotalAmount" step="any" hidden>Total Amount
+            <input type="text" name="sessionYear2" id="sessionYear2" hidden>SessionYear2
 
 
             <!-- {{-- <div class="form-group col-md-6">
@@ -209,10 +249,8 @@
           </div> --}}
         </div>
         <div class="tile-footer">
-          <a class="btn btn-secondary" href="#"><i
-              class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>&nbsp;&nbsp;&nbsp;<button href="listOfStudent.html"
-            class="btn btn-primary float-right" type="submit"><i
-              class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
+          <a class="btn btn-secondary" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-primary float-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
         </div>
         </form>
       </div>
@@ -221,13 +259,23 @@
 @endsection
 @section('script')
 <script>
-
+$('#schfee').hide();
 dynamicSectionSelection();
 checkClassTenOrNine();
+getFeesByClass()
 $("#sectionId").change(function () {
 var sectionId=$(this).val();
     lastRollFind(sectionId);
 });
+$("#sessionYear").change(function () {
+var sessionYear=$("#sessionYear option:selected").attr("data-sessionYear");
+$("#sessionYear2").val(sessionYear);
+console.log(sessionYear);
+});
+var sessionYear=$("#sessionYear option:selected").attr("data-sessionYear");
+$("#sessionYear2").val(sessionYear);
+
+
 //last role Find
 function lastRollFind(sectionId){
     $.ajax({
@@ -238,6 +286,8 @@ function lastRollFind(sectionId){
         }
     });
 }
+
+
 
 function checkClassTenOrNine(){
     $('.opsub').change(function (e) {
@@ -267,6 +317,116 @@ function checkClassTenOrNine(){
 
     });
 }
+
+
+
+function getFeesByClass(){
+$('#classId').change(function (e) {
+    e.preventDefault();
+    var classId = $(this).val();
+    $.ajax({
+        type: "get",
+        url: "/getAllFeesByClass"+"/"+classId,
+
+        success: function (response) {
+            console.log(response);
+
+            feeList="";
+            $.each (response, function (key, value) {
+                feeList +=
+                "<tr>"+
+                    "<td>"+
+                        '<input class="fee" type="checkbox" name="fee['+value.id+']" value="'+value.amount+'" id="fee['+value.id+']" '+((value.status==1)? 'checked' : '')+'>'
+                    +"</td>"+
+                    "<td>"+value.name+"</td>"+
+                    "<td>"+value.type+"</td>"+
+                    "<td>"+value.amount+"</td>"+
+              "</tr>"
+
+              });
+                    console.log(feeList);
+
+            $('#feeHtml').html(feeList); //load to table
+                var total = 0;
+                $(".fee:checked").each(function() {
+                    total += parseInt($(this).val());
+                });//each end
+                $("#totalFee").val(total);//load to total cost
+                $("#nokolTotalAmount").val(total);
+                $(".fee").click(function (e) {
+
+                    var total = 0;
+                    $(".fee:checked").each(function() {
+                    total += parseInt($(this).val());
+                });//each end
+                $("#totalFee").val(total); //load to total coast after click
+                $("#nokolTotalAmount").val(total); //load to total coast after click
+
+                });//clck end
+
+                //schoolarship fee load after change scholarship
+                $("#schoolarshipId").change(function (e) {
+                    e.preventDefault();
+                    var schoolarshipId=$(this).val();
+                    var discount=$("#schoolarshipId option:selected").attr("data-discount");
+
+                    if(schoolarshipId=="0"){
+                        $('#setDiscount').val('');
+                        // $('.fee').attr('disabled', false);
+                        $('.fee').css('pointer-events', 'auto');
+                        $('#schfee').hide();
+                        $('#forScholarshipFeeId').html("");
+                            //back to previous calculation
+                             var total = 0;
+                            $(".fee:checked").each(function() {
+                                total += parseInt($(this).val());
+                            });//each end
+                            $("#totalFee").val(total);//load to total cost
+                            $("#nokolTotalAmount").val(total);
+                            //
+
+                    }else{
+                        $('#setDiscount').val(discount);
+                        $('#schfee').show();
+                        // $('.fee').attr('disabled', "true");
+                        $('.fee').css('pointer-events', 'none');
+                        var option="<option value="+'no'+">--Please Select--</option>";
+                        response.forEach(element => {
+                        option+=("<option value='"+element.id+"' data-amount='"+element.amount+"'>"+element.name+"</option>");
+                    });
+                    $('#forScholarshipFeeId').html(option);
+                    }//end if else
+                    //inside schoolarshipId
+                    var nokolTotalAmount=$("#nokolTotalAmount").val();
+                    $("#forScholarshipFeeId").change(function (e) {
+                        e.preventDefault();
+                        $("#totalFee").val(nokolTotalAmount);
+                        var amount=$("#forScholarshipFeeId option:selected").attr("data-amount");
+                        var totalFee=$("#totalFee").val();
+                        $('#feeAmountAfterDiscount').val(((amount-(amount*discount)/100)));
+                        totalFee=totalFee-amount;
+                        totalFee=totalFee+(amount-(amount*discount)/100);
+                        $("#totalFee").val(totalFee);
+                        console.log(discount, totalFee, amount);
+                    });
+
+
+
+                });
+            }//succeess end
+
+
+    });
+
+
+
+});
+}
+
+$("#btnToggle" ).click(function() {
+  $( "#feeList" ).toggle();
+});
+
 //optional subject
 
 //end optional subject

@@ -15,8 +15,11 @@ class CreateClassTeachersTable extends Migration
     {
         Schema::create('class_teachers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('userId');
-            $table->unsignedInteger('classId')->comment('classId');
+            $table->unsignedBigInteger('userId')->comment('user table');;
+            $table->unsignedInteger('classId')->comment('class table');
+            $table->unsignedInteger('sectionId')->comment('Section table');
+            $table->string('shift');
+            $table->unsignedInteger('sessionYearId')->comment('sessionYear table');
             $table->unsignedInteger('bId');
             $table->timestamps();
         });

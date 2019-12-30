@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\backend;
 use App\model\scholarship;
+use App\model\Fee;
+Use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ScholarshipController extends Controller
@@ -14,7 +15,12 @@ class ScholarshipController extends Controller
      */
     public function index()
     {
-        //
+
+    }
+    public function getAllScholarshipById($Id)
+    {
+        $Scholarship=Fee::where(Auth::guard('web')->user()->bId)->where('classId', $Id)->get();
+        return Response()->json($Scholarship);
     }
 
     /**

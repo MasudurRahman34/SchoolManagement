@@ -10,6 +10,8 @@ use App\model\Student;
 use App\model\schoolBranch;
 use App\model\studentoptionalsubject;
 use App\model\Section;
+use App\model\feeCollection;
+use App\model\studentScholarship;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 Use Illuminate\Support\Facades\DB;
@@ -49,6 +51,7 @@ class AdmissionController extends Controller
      */
     public function store(Request $request)
 {
+
         $password=mt_rand(100000,999999);
         $Student= new Student();
         $Student->studentId=mt_rand(100000,999999);
@@ -67,7 +70,7 @@ class AdmissionController extends Controller
         $Student->roll=$request->roll;
         $Student->group=$request->group;
         $Student->type=$request->type;
-        $Student->schoolarshipStatus=$request->schoolarshipStatus;
+        $Student->schoolarshipId=$request->schoolarshipId;
         $Student->save();
         //if optinal subject
             if($request->has('optionalSubjectId')){
@@ -83,7 +86,47 @@ class AdmissionController extends Controller
                     }
                 }
             }
-         //endoptinal subject
+
+         //student scholarship
+         if($request->has('forScholarshipFeeId')){
+            $scholarship = new studentScholarship;
+            $scholarship->studentId=$Student->id;
+            $scholarship->scholershipId =$request->schoolarshipId;
+            $scholarship->feeId =$request->forScholarshipFeeId;
+            $scholarship->discount =$request->setDiscount;
+            $scholarship->sessionYear =$request->sessionYear2;
+            $scholarship->save();
+         }
+         //fee collection data
+         $fees=$request->fee;
+         foreach ($fees as $feeid => $amount) {
+            $feeCollection = new feeCollection();
+            $feeCollection->studentId= $Student->id;
+            $feeCollection->feeId = $feeid;
+            $feeCollection->amount = $amount;
+            $feeCollection->due  = 0;
+            if($request->has('forScholarshipFeeId')){
+                if($request->forScholarshipFeeId == $feeid){
+                    $feeCollection->totalAmount = $request->feeAmountAfterDiscount;
+                }else{
+                    $feeCollection->totalAmount = $amount;
+                }
+            }else{
+                $feeCollection->totalAmount = $amount;
+            }
+
+            $feeCollection->paidMonth =strtoupper(date('F'));
+            $feeCollection->month  = strtoupper(date('F'));
+            $feeCollection->year   = $request->sessionYear2;
+            $feeCollection->sectionId   = $request->sectionId;;
+            $feeCollection->bId    = Auth::guard('web')->user()->bId;
+
+            $feeCollection->save();
+
+         }//
+
+
+
 
         $students=$Student::with('schoolBranch','Section')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
         // dd($students);
@@ -94,7 +137,7 @@ class AdmissionController extends Controller
         $pdf = PDF::loadView('backend.pages.pdf.admissionPdf', ['students' => $students])->setPaper('a4','portrait');
         // return $pdf->stream($Student->firstName.$Student->roll.$Student->mobile.'.pdf');
 
-        $pdf->download('student.pdf');
+        //return $pdf->download('student.pdf');
         return $pdf->stream('student.pdf');
 
         // return $pdf->download($Student->firstName.$Student->roll.$Student->mobile.'.pdf');

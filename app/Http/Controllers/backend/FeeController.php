@@ -25,6 +25,13 @@ class FeeController extends Controller
         return view('backend.pages.fee.createFee', compact("class"));
     }
 
+    public function getAllFeesByClass($classId)
+    {
+        $cur_year=date('Y');
+        $fees=Fee::where('bId',Auth::guard('web')->user()->bId)->where('classId', $classId)->where('year', $cur_year)->get();
+        return Response()->json($fees);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

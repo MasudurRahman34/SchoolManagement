@@ -115,9 +115,11 @@ class UserController extends Controller
             return response()->json(["errors"=>$validator->errors(), 400]);
         }else{
             $password=mt_rand(100000,999999);
+            $userId=mt_rand(100000,999999);
 
             $user=new User;
             $user->email=$request->email;
+            $user->userId=$userId;
             $user->name=$request->name;
             $user->mobile=$request->mobile;
             $user->designation=$request->designation;
@@ -130,9 +132,12 @@ class UserController extends Controller
 
             $user->save();
             $user->assignRole($request->role);
-            if($request->classId >0){
+            if($request->sectionId >0){
                 $ClassTeacher= new ClassTeacher();
                 $ClassTeacher->classId=$request->classId;
+                $ClassTeacher->sectionId=$request->sectionId;
+                $ClassTeacher->shift=$request->shift;
+                $ClassTeacher->sessionYearId=$request->sessionYearId;
                 $ClassTeacher->userId=$user->id;
                 $ClassTeacher->bId=$user->bId;
                 $ClassTeacher->save();

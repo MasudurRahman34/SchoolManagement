@@ -75,6 +75,7 @@ function deleteAttribute(url, id){
             'sessionYearId' : sessionYearId,
             'shift' : shift,
         }
+        console.log(data);
         if(classId>0){
             $.ajaxSetup({
                         headers: {
@@ -89,10 +90,10 @@ function deleteAttribute(url, id){
                     console.log(data);
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
-                       
+
                         option+=("<option value='"+element.id+"'>"+element.sectionName+"</option>");
-        
-                    });             
+
+                    });
                     $('#sectionId').html(option);
                 }
             });

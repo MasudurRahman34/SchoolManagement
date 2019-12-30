@@ -179,6 +179,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/fee/edit/{id}','backend\FeeController@edit')->name('fee.edt');
     Route::post('/fee/update/{id}','backend\FeeController@update')->name('fee.update');
     Route::get('/fee/delete/{id}','backend\FeeController@destroy')->name('fee.delete');
+    Route::get('/getAllFeesByClass/{classId}','backend\FeeController@getAllFeesByClass')->name('getAllFeesByClass');
 
     //feeHisory admin view
     Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');
@@ -283,6 +284,14 @@ Route::get('adminview/student/marksdistribution','backend\MarksDistributionContr
 Route::get('adminview/student/sectionwiselist/{classId}/{sectionId}', 'backend\MarksDistributionController@sectionwiselist')->name('mystudent.sectionwiselist');
 Route::post('adminview/student/studentData','backend\MarksDistributionController@studentData')->name('studentData.mark');
 Route::post('adminview/student/markstore','backend\MarksDistributionController@storemark')->name('store.mark');
+
+//schoolarship Management
+// Route::group(['middleware' => ['auth','role_or_permission:Scholarship'], 'namespace'=>'backend'], function () {
+
+// });
+//
+
+
 //permission and role
 
 
