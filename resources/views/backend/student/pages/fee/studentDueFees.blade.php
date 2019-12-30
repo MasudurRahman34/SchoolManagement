@@ -61,9 +61,10 @@
 	</p>
         </div>
         </div>
-            <div class="col-md-9">
+            <div class="col-md-9" id="print_div">
                 <div class="tile">
-                <h3 class=" row justify-content-md-center">Student Fee Due Informations</h3>
+                <input class="bg-warning text-dark" type='button'  value='Click To Print' id='doPrint'>
+                <h3 id="unPaidDate" class=" row justify-content-md-center">Monthly Un-paid Fees</h3>
                     <div class="tile-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered" id="sampleTable">
@@ -74,20 +75,92 @@
                                     </tr>
                                    
                                 </thead>
-                                <tbody>
+                                <tbody id="unpaid">
 
                                 </tbody>
                             </table>
                             <div class=" form-inline float-right">
-                             <lebel for="Total">Total = </lebel><input type="text" class="form-control" id="Total" readonly/>
-                        </div>
+                              <lebel class="text-success" for="Total">Total = </lebel><input type="text" class="form-control" id="Totalunpaid" readonly/>
+                            </div>
                         </div>
                     </div>
+                    <br>
+                    <h3 class=" row justify-content-md-center">Monthly Due Fees</h3>
+                    <br>
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Fee</th>
+                                        <th>Amount</th>
+                                        <th>Total Amount</th>
+                                        <th>Due</th>
+                                    </tr>
+                                   
+                                </thead>
+                                <tbody id="due">
+
+                                </tbody>
+                            </table>
+                            <div class=" form-inline float-right">
+                              <lebel class="text-success" for="Total">Total = </lebel><input type="text" class="form-control" id="Totaldue" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <h3 class=" row justify-content-md-center">Yearly Un-paid Fees</h3>
+                    <br>
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Fee</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                   
+                                </thead>
+                                <tbody id="yearly_Un_paid">
+
+                                </tbody>
+                            </table>
+                            <div class=" form-inline float-right">
+                              <lebel class="text-success" for="Total">Total = </lebel><input type="text" class="form-control" id="totalyearlyUnPaidFees" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <h3 class=" row justify-content-md-center">Yearly Due Fees</h3>
+                    <br>
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Fee</th>
+                                        <th>Amount</th>
+                                        <th>Total Amount</th>
+                                         <th>Due</th>
+                                    </tr>
+                                   
+                                </thead>
+                                <tbody id="yearly_du_fees">
+
+                                </tbody>
+                            </table>
+                            <div class=" form-inline float-right">
+                              <lebel class="text-success" for="Total">Total = </lebel><input type="text" class="form-control" id="totalyearlyDuFees" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
       <div class="clearix"></div>
     @endsection
     @section('script')
+     <script src="{{ asset('admin/js/printThis.js') }} "></script>
        @include('backend.student.partials.js.datatable'); 
        
     <script src="{{ asset('admin/js/plugins/chart.js') }} "></script>
@@ -104,9 +177,14 @@ $(function(){
           url: "{{url('student/due2/fee/show')}}"+"/"+month,
           success: function (response) {
               console.log(response);
-              $('tbody').html(response.tableOut);
-              $('#Total').val(response.totalNotGiven);
-             
+              $('#unpaid').html(response.tableOut);
+              $('#Totalunpaid').val(response.totalNotGiven);
+              $('#due').html(response.dueFeeByMonth);
+              $('#Totaldue').val(response.totalDueByMonth);
+              $('#yearly_Un_paid').html(response.yearlyUnPaidHTML);
+              $('#totalyearlyUnPaidFees').val(response.totalyearlyUnPaidFees);
+              $('#yearly_du_fees').html(response.yearlyDueFees);
+              $('#totalyearlyDuFees').val(response.totalDueByYear);
             
           }
       });
@@ -114,6 +192,34 @@ $(function(){
     }
     
   });
+
+  //print button in table
+    $('#doPrint').on("click", function () {
+        $('#print_div').printThis({
+            debug: false,               // show the iframe for debugging
+            importCSS: true,            // import parent page css
+            importStyle: true,         // import style tags
+            printContainer: true,       // print outer container/$.selector
+            loadCSS: "",                // path to additional css file - use an array [] for multiple
+            pageTitle: "",              // add title to print page
+            removeInline: false,        // remove inline styles from print elements
+            removeInlineSelector: "*",  // custom selectors to filter inline styles. removeInline must be true
+            printDelay: 533,            // variable print delay
+            header: null,               // prefix to html
+            footer: null,               // postfix to html
+            base: false,                // preserve the BASE tag or accept a string for the URL
+            formValues: true,           // preserve input/form values
+            canvas: false,              // copy canvas content
+            doctypeString: '...',       // enter a different doctype for older markup
+            removeScripts: false,       // remove script tags from print content
+            copyTagClasses: false,      // copy classes from the html & body tag
+            beforePrintEvent: null,     // function for printEvent in iframe
+            beforePrint: null,          // function called before iframe is filled
+            afterPrint: null            // function called before iframe is removed
+        });
+      });
+
+
 });
   </script>
 

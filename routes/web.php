@@ -199,6 +199,14 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
     Route::post('/feecollection/individual/store','backend\FeeCollectionController@storeIndividualy')->name('store.individualFeecollection');
 
+    //Student Fee Details
+    Route::get('/feecollection/student/feeDetails','backend\FeeCollectionController@studentFeeDetails')->name('student.feeDetails');
+    Route::get('/feecollection/individualStudentDetails','backend\FeeCollectionController@individualFeeDetails')->name('individualStudent.feeDtails');
+    Route::get('/feecollection/details/show/{month}/{studentId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
+    //Route::get('/feecollection/studentMonthly/paiedFee/{month}/{studentId}','backend\FeeCollectionController@studentMonthlyPaiedFee')->name('student.monthlyPaiedFee');
+
+
+
 
 
 

@@ -41,6 +41,131 @@ class FeeCollectionController extends Controller
         return view('backend.pages.fee.feeCollection')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('fees',$fees);
     }
 
+    //studentFeeDetails
+    public function studentFeeDetails(){
+        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $fees=Fee::where('bid', Auth::guard('web')->user()->bId)->get();
+        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.fee.studentFeeDetails')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('fees',$fees);
+    }
+    //Check individual fee collection
+    public function individualFeeDetails(Request $request)
+    {
+        $sectionId= $request->sectionId;
+            $students = Student::where('sectionId',$sectionId)
+            ->where('bId', Auth::guard('web')->user()->bId)
+            ->get();
+            return response()->json($students);
+    }
+    //Students Individual due fees are show
+    public function dueDetailsFee($month,$studentId){
+        //Monthly paied
+        $cur_year=date('Y');
+        //feeCollection query by studentId & month
+        $feeCollection=feeCollection::orderBy('id','DESC')
+        ->where('studentId', $studentId)
+        ->where('year', $cur_year)
+        ->where('month',$month)
+        ->with('Fee')->get();
+        //feeCollection query by studentId & check their month & total fee paied
+        $totalAmountPay=feeCollection::where('studentId', Auth::guard('student')->user()->id)
+         ->where('year', $cur_year)
+        ->where('month',$month)
+        ->sum('totalAmount');
+        $tableOutPut="";
+        foreach ($feeCollection as $fcollection) {
+            $tableOutPut.='<tr>'.
+            '<td>'.$fcollection->DT_RowIndex."#".'</td>'.
+            '<td>'.$fcollection->created_at->format('d-M-Y').'</td>'.
+            '<td>'.$fcollection->Fee->name.'</td>'.
+            '<td>'.$fcollection->Fee->type.'</td>'.
+            '<td>'.$fcollection->totalAmount.'</td>'.
+            '</tr>'; 
+        }
+
+        //$stid=Auth::guard('student')->user()->id;
+        $feeid=DB::table('fee_collections')->select('feeId')->where('studentId', $studentId)->where('year', $cur_year)->where('month', $month)->pluck('feeId');
+        $NotGivenMonth=DB::table('fees')->select('*')
+        ->whereNotIn('id', $feeid)
+        ->where('interval', 'monthly')
+        ->get(); 
+        //Check which month, this student do not pay their fee==(Monthly Un-paid Fees)
+        $totalNotGiven=Fee::whereNotIn('id', $feeid)
+        ->where('interval', 'monthly')
+        ->sum('amount');
+        $tableOut="";
+        foreach ($NotGivenMonth as $notGive) {
+            $tableOut.='<tr>'.
+            '<td>'.$notGive->name.'</td>'.
+            '<td>'.$notGive->amount.'</td>'.
+            '</tr>'; 
+        }
+
+        //feeCollection query and check which month this specific student do not fee their pay
+        $monthlyFeeid=DB::table('fees')->select('id')->where('year', $cur_year)->where('interval', 'monthly')->pluck('id');
+        $dueFeeByMonth=feeCollection::where('due','>',0)->where('studentId', $studentId)
+        ->where('month',$month)
+        ->whereIn('feeId', $monthlyFeeid)
+        ->get();
+        //Total due check of feeCollection table
+        $totalDueByMonth=feeCollection::where('due','>',0)->where('studentId',$studentId)
+        ->where('month',$month)
+        ->whereIn('feeId', $monthlyFeeid)
+        ->sum('due');
+        $HTMLdueFeeByMonth="";
+        foreach ($dueFeeByMonth as $dueFee) {
+            $HTMLdueFeeByMonth.='<tr>'.
+            '<td>'.$dueFee->Fee->name.'</td>'.
+            '<td>'.$dueFee->amount.'</td>'.
+            '<td>'.$dueFee->totalAmount.'</td>'.
+            '<td>'.$dueFee->due.'</td>'.
+            '</tr>'; 
+        }
+
+        //From the fee_collections table's studentId
+        $yearlyfeeid=DB::table('fee_collections')->select('feeId')->where('studentId',$studentId)->where('year', $cur_year)->pluck('feeId');
+   
+        //Yearly unpaid fess
+        $yearlyUnPaidFees=DB::table('fees')->select('*')
+        ->whereNotIn('id', $yearlyfeeid)
+        ->where('interval', 'yearly')
+        ->get();
+        $totalyearlyUnPaidFees=Fee::whereNotIn('id', $yearlyfeeid)
+        ->where('interval', 'yearly')
+        ->sum('amount');
+        $yearlyUnPaidHTML="";
+        foreach ($yearlyUnPaidFees as $yearlyUnPaidFee) {
+            $yearlyUnPaidHTML.='<tr>'.
+            '<td>'.$yearlyUnPaidFee->name.'</td>'.
+            '<td>'.$yearlyUnPaidFee->amount.'</td>'.
+            '</tr>'; 
+        }
+
+        //yearly student's due fees
+        $yearlyFeeid=DB::table('fees')->select('id')->where('year', $cur_year)->where('interval', 'yearly')->pluck('id');
+        $yearlyDueFees=feeCollection::where('due','>',0)->where('studentId',$studentId)
+        ->where('year', $cur_year)
+        ->whereIn('feeId', $yearlyFeeid)
+        ->get();
+        //Total yearly due check of feeCollection table
+        $totalDueByYear=feeCollection::where('due','>',0)->where('studentId',$studentId)
+        ->where('year', $cur_year)
+        ->whereIn('feeId', $yearlyFeeid)
+        ->sum('due');
+        $yearlyDuFeeHTML="";
+        foreach ($yearlyDueFees as $yearlyDueFee) {
+            $yearlyDuFeeHTML.='<tr>'.
+            '<td>'.$yearlyDueFee->Fee->name.'</td>'.
+            '<td>'.$yearlyDueFee->amount.'</td>'.
+            '<td>'.$yearlyDueFee->totalAmount.'</td>'.
+            '<td>'.$yearlyDueFee->due.'</td>'.
+            '</tr>'; 
+        }
+        return Response()->json(["totalAmountPay"=>$totalAmountPay, "tableOutPut"=>$tableOutPut,"tableOut"=>$tableOut, 'totalNotGiven'=>$totalNotGiven,'dueFeeByMonth'=>$HTMLdueFeeByMonth, "totalDueByMonth"=>$totalDueByMonth, "yearlyUnPaidHTML"=>$yearlyUnPaidHTML, "totalyearlyUnPaidFees"=>$totalyearlyUnPaidFees, "yearlyDueFees"=>$yearlyDuFeeHTML,"totalDueByYear"=>$totalDueByYear]);
+    }
+
+
     public function individualCollection()
 
     {
