@@ -47,6 +47,12 @@ class AttendanceController extends Controller
     // }
 }
 
+public function myclassattendance(){
+
+
+
+}
+
 //store Attendance information
 public function storeAttendence(Request $request){
 

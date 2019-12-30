@@ -199,6 +199,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
     Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
     Route::post('/feecollection/individual/store','backend\FeeCollectionController@storeIndividualy')->name('store.individualFeecollection');
+    Route::post('/feecollection/individual/update','backend\FeeCollectionController@updateIndividualStudent')->name('update.individualFeecollection');
 
     //Student Fee Details
     Route::get('/feecollection/student/feeDetails','backend\FeeCollectionController@studentFeeDetails')->name('student.feeDetails');
@@ -267,6 +268,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Subject']], function (
 //Attendance Management
 Route::group(['middleware' => ['auth','role_or_permission:Attendance']], function () {
     Route::get('/student/attendance','backend\AttendanceController@index')->name('attendance.index');
+
     Route::post('/student/attendance/store','backend\AttendanceController@storeAttendence')->name('store.attendence');
     Route::post('/student/attendance/update','backend\AttendanceController@update')->name('update.attendence');
     Route::get('/student/attendance/edit/{sectionId}','backend\AttendanceController@edit')->name('attendance.edit');
@@ -277,6 +279,10 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance']], functio
     Route::post('/student/attendance/studentData','backend\AttendanceController@studentData')->name('studentData.attendence');
     Route::post('/student/attendance/studentDatabydate','backend\AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
     Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','backend\AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
+
+    //my class option
+    Route::get('/myclass/attendance','backend\AttendanceController@myclassattendance')->name('myclass.attendance');
+
 });
 
 //Marks Distribution

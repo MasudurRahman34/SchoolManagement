@@ -22,10 +22,19 @@
     </style>
 <div class="row justify-content-md-center">
     <div class="clearix"></div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="tile">
                 <div class="tile-body">
                 <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="exampleFormControlSelect1">Session Year</label>
+                        <select class="form-control " id="sessionYear" >
+                            <option value="">--Please Select--</option>
+                            @foreach ($sessionYear as $year)
+                                <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group col-md-4">
                         <label class="control-label mt-3">Shift</label><br>
                             <div class="custom-control shift-radio custom-control-inline">
@@ -41,6 +50,7 @@
                                 <label class="custom-control-label" for="shift3">Evening</label>
                             </div>
                     </div>
+
                      <div class="form-group col-md-4">
                         <label for="exampleFormControlSelect1">Select Class</label>
                         <select class="form-control admission" id="classId" name="classId">
@@ -50,19 +60,19 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-md-4 pr-2" id="hidden" >
+                    <div class="form-group col-md-3" id="hidden" >
                             <label for="exampleFormControlSelect1"> Fee Name</label>
                             <select class="form-control " id="feeId">
                                     <option value="">--Select Fee--</option>
                             </select>
                     </div>
-                    <div class="form-group col-md-4 pr-2" id="hidden1" hidden>
+                    <div class="form-group col-md-3 pr-2" id="hidden1" hidden>
                         <label for="exampleFormControlSelect1"> Amount</label>
                         <input class="form-control " type="number" id="amount" name="amount" required  readonly>
 
                     </div>
 
-                    <div class="form-group col-md-4 pr-2" >
+                    <div class="form-group col-md-3 pr-2" >
                         <label for="exampleFormControlSelect1"> Month</label>
                         {{-- <input class="form-control " id="month" type="month" placeholder="Pick a month" value="{{date('Y-m')}}"/> --}}
                         <select class="form-control " id="month">
@@ -81,13 +91,13 @@
                             <option value="DECEMBER">DECEMBER</option>
                     </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="exampleFormControlSelect1"> Section</label>
                         <select class="form-control " id="sectionId">
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="exampleFormControlSelect1"> Student Name</label>
                         <select class="form-control " id="studentId">
                             <option value=""> --Please Select--  </option>
@@ -99,7 +109,7 @@
 
                     </div>
                     <div class="form-group col-md-4" id="btndiscount" hidden>
-                        <label for="exampleFormControlSelect1">Discount</label>
+                        <label for="exampleFormControlSelect1">Discount  (<em id="percentage" style="color:red"></em> %)</label>
                         <input class="form-control" type="number" id="discount" name="discount" value="" readonly>
                     </div>
                     <div class="form-group col-md-4" id="stamount" hidden>
@@ -109,14 +119,7 @@
                     </div>
 
 
-                    <div class="form-group col" hidden>
-                        <select class="form-control " id="sessionYear" >
-                            <option value="">--Please Select--</option>
-                            @foreach ($sessionYear as $year)
-                                <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+
                     </div>
                 </div>
             </div>
@@ -125,7 +128,7 @@
 <div class="clearix"></div>
 
 <div class="row justify-content-md-center">
-    <div class="col-md-9 ">
+    <div class="col-md-8 ">
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>
@@ -294,7 +297,7 @@ $('#studentId').change(function (e) {
     var sessionYear=$("#sessionYear").val();
     $("#sessionYear2").attr('value',sessionYear);
     var studentId=$("#studentId").val();
-    $("#studentId2").attr('value',studentId);
+    var st= $("#studentId2").attr('value',studentId);
 
     //var discount=$("#discount").val();
     //$("#discount2").attr('value', discount);
@@ -317,9 +320,8 @@ $('#studentId').change(function (e) {
         success: function (data) {
             console.log(data);
             console.log(data.paidAmount);
-            var max= (data.paidAmount);
-            console.log(max);
             console.log(data.discountAmount);
+            console.log(data.percentage);
         //var amount = data;
             //$('#amount').text();
             $('#btnamount').attr('hidden',false);
@@ -328,6 +330,7 @@ $('#studentId').change(function (e) {
             $('#scholarshipAmount').attr('value', data.paidAmount);
             $('#btndiscount').attr('hidden',false);
             $('#discount').attr('value', data.discountAmount);
+            $('#percentage').html(data.percentage);
 
             var discount=$("#discount").val();
             $("#discount2").attr('value', discount);
@@ -358,9 +361,15 @@ $('#studentId').change(function (e) {
                     $('#tblHidden').attr('hidden',false);
                     $('#btnFee').attr('disabled',false);
                     $('#btnFee').html("Update Due Fee");
-                    $('#myfeeform').attr("action", "individualFeecollection/update");
+                    $('#myfeeform').attr("action", "../feecollection/individual/update");
 
                     $('tbody').html(data.outPut);
+                    $('#inputAmount').keypress(function(e){
+                        console.log('change');
+                        var inputAmount=$('#inputAmount').val();
+                        var newDue=$("#newDue").val();
+                    });
+
                 }else{
                     $('#tblHidden').attr('hidden',false);
                     $('#btnFee').attr('disabled',true);

@@ -9,6 +9,7 @@ use App\model\SessionYear;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class SessionYearController extends Controller
 {
@@ -39,7 +40,7 @@ class SessionYearController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
 
         $validator= Validator::make($request->all(), SessionYear::$rules);
         if ($validator->fails()) {
@@ -47,6 +48,21 @@ class SessionYearController extends Controller
         }else{
             $sessionYear= new SessionYear();
             $sessionYear->sessionYear= $request->sessionYear;
+            if($request->has('status')){
+                $sessionYear->status= $request->status;
+
+                DB::table('session_years')
+                ->where('status',1)
+                ->update(['status' => 0]);
+
+
+
+
+
+            }else{
+                $sessionYear->status=0;
+            }
+
             $sessionYear->bId= Auth::user()->bId;
             $sessionYear->save();
             return response()->json(["success"=>"saved", "data"=>$sessionYear, 201]);
@@ -65,7 +81,7 @@ class SessionYearController extends Controller
     {
         $sessionYear=SessionYear::where('bId', Auth::user()->bId)->get();
         $data_table_render = DataTables::of($sessionYear)
-            
+
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editSession('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteSession('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
@@ -103,6 +119,16 @@ class SessionYearController extends Controller
         }else{
             $sessionYear = SessionYear::find($id);
             $sessionYear->sessionYear= $request->sessionYear;
+            if($request->has('status')){
+                $sessionYear->status= $request->status;
+
+                DB::table('session_years')
+                ->where('status',1)
+                ->update(['status' => 0]);
+
+            }else{
+                $sessionYear->status=0;
+            }
             $sessionYear->bId= Auth::user()->bId;
             $sessionYear->save();
             return response()->json(["success"=>'updated', "data"=>$sessionYear, 201]);
@@ -121,20 +147,20 @@ class SessionYearController extends Controller
         // $section=Section::all();
         // foreach($section->sessionYear() as $s){
         // dd($s);
-    
+
 
         // foreach($SessionYear->section() as $section){
         //     return response()->json($section);
         // }
-        
+
 
          $sessionyearId = Section::where('sessionYearId', $id)->get();
-      
+
          if(count($sessionyearId)>=1){
-             
+
              return response()->json(["error"=>'Sorry! Session Contain section .CanNot be Deleted']);
              }else{
-        
+
              $sessionYearDelete = SessionYear::find($id);
                 if($sessionYearDelete){
                  $sessionYearDelete->delete();
@@ -143,6 +169,6 @@ class SessionYearController extends Controller
              return response()->json(["error"=>'error',422]);
          }
 
-        
+
     }
 }

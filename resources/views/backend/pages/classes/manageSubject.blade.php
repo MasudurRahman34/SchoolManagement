@@ -81,18 +81,19 @@
                             <input class="form-check-input"type="radio"  value="Commerce" id="group" name="group" >Commerce
                         </label>
                         &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-                       
+
                         </div>
                     </fieldset>
                   </div>
-                  <div class="form-group">
-                  <div class="animated-checkbox">
-              <label>
-                <input type="checkbox" value="1" id="optionalstatus" name="optionalstatus"><span class="label-text">optional</span>
-              </label>
-            </div>
+
+                <div class="form-group">
+                    <div class="animated-checkbox">
+                        <label>
+                            <input type="checkbox" value="1" id="optionalstatus" name="optionalstatus"><span class="label-text">optional</span>
+                        </label>
+                    </div>
                 </div>
-                  
+
 
             </div>
             <div class="tile-footer">
@@ -188,7 +189,16 @@
                     $('#subjectCode').val(data.subjectCode);
                     console.log(data);
                     $("input[name='group'][value='"+data.group+"']").prop('checked', true);
-                    $("input[name='optionalstatus'][value='"+data.optionalstatus+"']").prop('checked', true);
+                    //$("input[name='optionalstatus'][value='"+data.optionalstatus+"']").prop('checked', true);
+
+                    //for check and uncheck checkBox
+                    if(data.optionalstatus==0){
+                        console.log(data.optionalstatus);
+                        $("input[name='optionalstatus']").prop("checked", false);
+                    }else{
+                        console.log(data.status);
+                        $("input[name='optionalstatus']").prop("checked", true);
+                    }
 
             }
             });

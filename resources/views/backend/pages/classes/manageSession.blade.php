@@ -23,6 +23,7 @@
                             <tr>
                                 <th></th>
                                 <th>Session Year</th>
+                                <th>Status</th>
                                 <th>Created Date</th>
                                 <th>Action</th>
                             </tr>
@@ -44,6 +45,13 @@
                             <label class="control-label col-md-3 pl-4"> Session Year</label>
                             <div class="col-md-9">
                                 <input class="form-control col-md-10" type="text" id="sessionYear" value="" name="sessionYear">
+                            </div>
+                        </div>
+                        <div class="form-group pl-2">
+                            <div class="animated-checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" id="status" name="status"><span class="label-text">Current Session</span>
+                                </label>
                             </div>
                         </div>
                 </div>
@@ -78,6 +86,7 @@
                 columns:[
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'sessionYear', name: 'sessionYear' },
+                    { data: 'status', name: 'status' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'action', name: 'action' }
                 ]
@@ -103,6 +112,7 @@
                     url: url,
                     data: {
                     sessionYear: $('#sessionYear').val(),
+                    status: $('#status:checked').val(),
                     },
                     success: function (result) {
                         if (result.success) {
@@ -129,9 +139,18 @@
                     type:'GET',
                     url:url+"/"+id,
                     success:function(data) {
+console.log(data);
 
                         $('#sessionYear').val(data.sessionYear);
-                        console.log(data);
+
+                            //for check and uncheck checkBox
+                            if(data.status==0){
+                                console.log(data.status);
+                                $("input[name='status']").prop("checked", false);
+                            }else{
+                                console.log(data.status);
+                                $("input[name='status']").prop("checked", true);
+                            }
 
                         }
                     });

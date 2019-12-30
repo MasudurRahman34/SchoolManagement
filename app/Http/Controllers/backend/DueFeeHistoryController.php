@@ -2,31 +2,20 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\model\feeHistory;
-use App\model\Fee;
+use App\model\dueFeeHistory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\DataTables;
 
-class FeeHistoryController extends Controller
+class DueFeeHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-
     public function index()
     {
-
-        return view('backend.pages.fee.feehistory');
+        //
     }
 
     /**
@@ -53,34 +42,21 @@ class FeeHistoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\model\feeHistory  $feeHistory
+     * @param  \App\model\dueFeeHistory  $dueFeeHistory
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(dueFeeHistory $dueFeeHistory)
     {
-        $feehistory=feeHistory::orderBy('id','DESC')
-                    ->where('bId', Auth::guard('web')->user()->bId)
-                    ->with('Fee')
-                    ->get();
-
-         $data_table_render = DataTables::of($feehistory)
-
-         ->editColumn('created_at', function($feehistory)
-         {
-            return $feehistory->created_at->format('d-M-Y');
-         })
-             ->addIndexColumn()
-             ->make(true);
-         return $data_table_render;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\model\feeHistory  $feeHistory
+     * @param  \App\model\dueFeeHistory  $dueFeeHistory
      * @return \Illuminate\Http\Response
      */
-    public function edit(feeHistory $feeHistory)
+    public function edit(dueFeeHistory $dueFeeHistory)
     {
         //
     }
@@ -89,10 +65,10 @@ class FeeHistoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\model\feeHistory  $feeHistory
+     * @param  \App\model\dueFeeHistory  $dueFeeHistory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, feeHistory $feeHistory)
+    public function update(Request $request, dueFeeHistory $dueFeeHistory)
     {
         //
     }
@@ -100,10 +76,10 @@ class FeeHistoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\model\feeHistory  $feeHistory
+     * @param  \App\model\dueFeeHistory  $dueFeeHistory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(feeHistory $feeHistory)
+    public function destroy(dueFeeHistory $dueFeeHistory)
     {
         //
     }

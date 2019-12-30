@@ -11,6 +11,7 @@ use App\model\Section;
 use App\model\SessionYear;
 use App\model\feeHistory;
 use App\Http\Controllers\Controller;
+use App\model\dueFeeHistory;
 use App\model\studentScholarship;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -201,7 +202,8 @@ class FeeCollectionController extends Controller
             $student = Student::where('sectionId',$sectionId)->where('id',$studentId)
             ->where('bId', Auth::guard('web')->user()->bId)
             ->get();
-            return response()->json($student);
+
+        return response()->json($student);
     }
 
     //for individual student page
@@ -214,7 +216,6 @@ class FeeCollectionController extends Controller
         ->where('studentId',$request->studentId)
         ->where('bId' , Auth::guard('web')->user()->bId)
         ->count();
-
 
         if($feeCollection>0){
 
@@ -229,19 +230,18 @@ class FeeCollectionController extends Controller
             $output="";
             foreach ($Stfees as $Stfee) {
                 $output.='<tr>'.
-                '<td>'.$Stfee->Fee->name.'</td>'.
-                '<td>'.$Stfee->Fee->type.'</td>'.
-                '<td>'.$Stfee->amount.'</td>'.
-                '<td>'.$Stfee->due.'</td>'.
-                '<td>'.$Stfee->totalAmount.'+'.'<input type="number" name="totalAmount" value="0" min="0" max="'.$Stfee->due.'">'.'</td>'.
-                '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
-                '</tr>';
+
+                    '<td>'.$Stfee->Fee->name.'</td>'.
+                    '<td>'.$Stfee->Fee->type.'</td>'.
+                    '<td>'.$Stfee->amount.'</td>'.
+                    '<td>'.'<input type="number" id="newDue" name="newDue" value="'.$Stfee->due.'" readonly>'.'</td>'.
+                    '<td>'.'<input type="number" name="originalTotalAmount" value="'.$Stfee->totalAmount.'" readonly>'.'+'.'<input type="number" name="inputAmount" id="inputAmount" value="0" min="0" max="'.$Stfee->due.'" required >'.'</td>'.
+                    '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
+                    '</tr>';
             }
             return Response()->json(["outPut"=>$output, "Stfees"=>$Stfees]);
 
         }else{
-
-
 
             $TakeStfees=Fee::where('id', $request->feeId)
             ->where('classId',$request->classId)
@@ -249,6 +249,7 @@ class FeeCollectionController extends Controller
             ->get();
 
             $feeoutput="";
+
             foreach ($TakeStfees as $Stfee) {
                 $feeoutput.='<tr>'.
                 '<td>'.$Stfee->name.'</td>'.
@@ -263,8 +264,6 @@ class FeeCollectionController extends Controller
 
         }
     }
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -297,7 +296,7 @@ class FeeCollectionController extends Controller
     public function store(Request $request)
     {
 
-            $fee= $request->attend;
+            $fee= $request->feeCollection ;
             foreach ($fee as $id =>$value) {
                 $stfee = new feeCollection();
                 $fee= $request->amount2;
@@ -319,6 +318,7 @@ class FeeCollectionController extends Controller
 
                             }
                             $totalAmount =  $fee-(($fee*$discount)/100);
+
                             $stfee->totalAmount  = $totalAmount;
                             $stfee->studentId = $id;
                     }
@@ -351,6 +351,10 @@ class FeeCollectionController extends Controller
                     $stindifee->due = $due;
                     $stindifee->bId= Auth::user()->bId;
                     //dd($stindifee);
+                    $stindifee->save();
+
+                    Session::flash('success','Succesfully Saved Student Fee Data');
+                    return redirect()->route('individualFee.individualCollection');
 
 
     }
@@ -365,7 +369,6 @@ class FeeCollectionController extends Controller
         //return($amount);
          $scholership= studentScholarship::where('studentId',$studentId)->where('feeId',$feeId)->get();
         // //return($scholership);
-
         $discount=0;
         if($scholership){
             foreach ($scholership as $sc) {
@@ -373,9 +376,10 @@ class FeeCollectionController extends Controller
                 }
                 $paidAmount =  $amount-(($amount*$discount)/100);
                 $discountAmount= ($amount*$discount)/100;
+                $discountPercentAge=$discount;
                 //return($discountAmount);
 
-            return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount]);
+            return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
 
         }
 
@@ -413,7 +417,7 @@ class FeeCollectionController extends Controller
     public function update(Request $request, feeCollection $feeCollection)
     {
 
-        $ids=$request->attend;
+        $ids=$request->feeCollection ;
 
                 $deleteStudent= DB::table('fee_collections')->whereNotIn('studentId', $ids)->pluck('studentId');
 
@@ -422,6 +426,67 @@ class FeeCollectionController extends Controller
                 Session::flash('success','Remove Student From Fee Collection');
                 return redirect()->route('feecollection.index');
             }
+    }
+    //for invididual update in fee Collection
+    public function updateIndividualStudent(Request $request)
+    {
+        //return($request);
+
+        $individualFeeStudent = feeCollection::where('studentId',$request->studentId2)
+                                                ->where('feeId',$request->feeId2)
+                                                ->where('month',$request->month2)
+                                                ->where('year',$request->sessionYear2)
+                                                ->where('sectionId',$request->sectionId)
+                                                ->where('bId',Auth::user()->bId)
+                                                ->firstOrFail();
+
+        //return($individualFeeStudent);
+        //return($individualFeeStudent->id);
+
+        if( $individualFeeStudent ){
+            //return('working');
+            $feeCollectionId = $individualFeeStudent->id;
+
+            $individualFeeStudent->amount = $request->amount2;
+            $individualFeeStudent->paidMonth = strtoupper(date('F'));
+
+            $due= ($request->newDue-$request->inputAmount);
+            $totalAmount=($request->originalTotalAmount+$request->inputAmount);
+
+            if($request->inputAmount>0){
+                //return('active due fee history');
+                $dueFeeHistory= new dueFeeHistory();
+
+                $dueFeeHistory->feeCollectionId =  $feeCollectionId;
+                $dueFeeHistory->due =$request->newDue;
+                $dueFeeHistory->PreviousPaidAmount =$request->originalTotalAmount;
+                $dueFeeHistory->paidAmount =$request->inputAmount;
+                $dueFeeHistory->paidMonth =strtoupper(date('F'));
+                $dueFeeHistory->bId= Auth::user()->bId;
+                $dueFeeHistory->save();
+                //return("fee history saved");
+
+
+            }
+
+            $individualFeeStudent->due =$due;
+
+            $individualFeeStudent->totalAmount =$totalAmount;
+            $individualFeeStudent->save();
+
+            Session::flash('success','Student Fee Date Succesfully Updated with Due history');
+            return redirect()->route('individualFee.individualCollection');
+
+
+
+
+
+
+        }
+
+
+
+
     }
 
     /**

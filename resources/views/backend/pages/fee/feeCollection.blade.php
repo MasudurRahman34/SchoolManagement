@@ -151,7 +151,7 @@
                             </tbody>
                         </table>
                         </div>
-                        <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
+                        <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true" onclick="valthisform()"><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
                     </form>
                 </div>
             </div>
@@ -283,7 +283,7 @@
                     tr +=
                         "<tr>"+
                             "<td>"+
-                                '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="" id="fee">'
+                                '<input class="roll['+value.roll+']" type="checkbox" name="feeCollection['+value.id+']" value="" id="fee">'
                             +"</td>"+
                             "<td>"+value.roll+"</td>"+
                             "<td>"+value.firstName+' '+value.lastName+"</td>"+
@@ -302,7 +302,7 @@
                 tr +=
                     "<tr>"+
                         "<td>"+
-                            '<input class="roll['+value.roll+']" type="checkbox" name="attend[]" value="'+value.id+'" id="fee" checked>'
+                            '<input class="roll['+value.roll+']" type="checkbox" name="feeCollection[]" value="'+value.id+'" id="fee" checked>'
                         +"</td>"+
                         "<td>"+value.roll+"</td>"+
                         "<td>"+value.firstName+' '+value.lastName+"</td>"+
@@ -323,7 +323,7 @@
             tr +=
                 "<tr>"+
                     "<td>"+
-                        '<input class="roll['+value.roll+']" type="checkbox" name="attend['+value.id+']" value="attend['+value.id+']" id="fee">'
+                        '<input class="roll['+value.roll+']" type="checkbox" name="feeCollection['+value.id+']" value="feeCollection['+value.id+']" id="fee">'
                     +"</td>"+
                     "<td>"+value.roll+"</td>"+
                     "<td>"+value.firstName+' '+value.lastName+"</td>"+
@@ -337,6 +337,24 @@
             $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
         });
     });
+
+    function valthisform()
+    {
+        var checkboxs=document.getElementsByName("feeCollection");
+        var okay=false;
+        for(var i=0,l=checkboxs.length;i<l;i++)
+        {
+            if(checkboxs[i].checked)
+            {
+                okay=true;
+                break;
+            }
+        }
+        if(okay)alert("Thank you for checking a checkbox");
+        else alert("Please check a checkbox");
+    }
+
+
 
 //print button in table
     $('#doPrint').on("click", function () {
