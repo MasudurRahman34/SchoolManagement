@@ -52,6 +52,7 @@ class AdmissionController extends Controller
     public function store(Request $request)
 {
 
+
         $password=mt_rand(100000,999999);
         $Student= new Student();
         $Student->studentId=mt_rand(100000,999999);
@@ -94,7 +95,7 @@ class AdmissionController extends Controller
             $scholarship->scholershipId =$request->schoolarshipId;
             $scholarship->feeId =$request->forScholarshipFeeId;
             $scholarship->discount =$request->setDiscount;
-            $scholarship->sessionYear =$request->sessionYear2;
+            $scholarship->sessionYear =$request->sessionYear;
             $scholarship->save();
          }
          //fee collection data
@@ -117,7 +118,7 @@ class AdmissionController extends Controller
 
             $feeCollection->paidMonth =strtoupper(date('F'));
             $feeCollection->month  = strtoupper(date('F'));
-            $feeCollection->year   = $request->sessionYear2;
+            $feeCollection->year   = $request->sessionYear;
             $feeCollection->sectionId   = $request->sectionId;;
             $feeCollection->bId    = Auth::guard('web')->user()->bId;
 

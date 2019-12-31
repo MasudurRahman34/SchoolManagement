@@ -216,10 +216,10 @@
                       </div>
             </div>
              <!--hidden field -->
-            <input type="number" name="setDiscount" id="setDiscount" step="any" hidden>discount
-            <input type="number" name="feeAmountAfterDiscount" id="feeAmountAfterDiscount" step="any" hidden>AmountAfterDiscount
-            <input type="number" name="nokolTotalAmount" id="nokolTotalAmount" step="any" hidden>Total Amount
-            <input type="text" name="sessionYear2" id="sessionYear2" hidden>SessionYear2
+            <input type="number" name="setDiscount" id="setDiscount" step="any" hidden>
+            <input type="number" name="feeAmountAfterDiscount" id="feeAmountAfterDiscount" step="any" hidden>
+            <input type="number" name="nokolTotalAmount" id="nokolTotalAmount" step="any" hidden>
+
 
 
             <!-- {{-- <div class="form-group col-md-6">
@@ -267,11 +267,7 @@ $("#sectionId").change(function () {
 var sectionId=$(this).val();
     lastRollFind(sectionId);
 });
-$("#sessionYear").change(function () {
-var sessionYear=$("#sessionYear option:selected").attr("data-sessionYear");
-$("#sessionYear2").val(sessionYear);
-console.log(sessionYear);
-});
+
 var sessionYear=$("#sessionYear option:selected").attr("data-sessionYear");
 $("#sessionYear2").val(sessionYear);
 

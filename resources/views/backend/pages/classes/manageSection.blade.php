@@ -36,68 +36,63 @@
         </div>
 
         <div class="col-md-5">
-        <form id="myform" action="javascript:void(0)">
-        @csrf
-          <div class="tile">
-              <h3 class="tile-title border-bottom p-2" id="title"> Add Study Section</h3>
-            <div class="tile-body">
+            <form id="myform" action="javascript:void(0)">
+            @csrf
+            <div class="tile">
+                <h3 class="tile-title border-bottom p-2" id="title"> Add Study Section</h3>
+                <div class="tile-body">
 
-                <div class="form-group">
-                  <label for="exampleSelect1">Select Class</label>
-                  <select class="form-control" id="classId" name="classId">
-                   @foreach ($class as $class)
-                  <option value="{{$class->id}}">{{$class->className}}</option>
-                   @endforeach
-
-                  </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleSelect1">Session Year</label>
-                    <select class="form-control" id="sessionYearId" name="sessionYearId">
-                     @foreach ($sessionYear as $year)
-                    <option value="{{$year->id}}"{{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
-                     @endforeach
+                    <div class="form-group">
+                    <label for="exampleSelect1">Select Class</label>
+                    <select class="form-control" id="classId" name="classId">
+                    @foreach ($class as $class)
+                    <option value="{{$class->id}}">{{$class->className}}</option>
+                    @endforeach
 
                     </select>
-                  </div>
-                <div class="form-group">
-                  <label for="exampleSelect1">Section Name</label>
-                    <input class="form-control"  type="text" id="sectionName" name="sectionName" placeholder="Enter Section Name">
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleSelect1">Session Year</label>
 
-                      <legend type="hidden">Study Shift</legend>
-                      <div class="form-check">
-                      <label class="radio">
-                        <input type="radio" id="shift" name="shift"  value="Morning" checked>
-                          Morning
-                      </label>
-                        &nbsp;
+                        <select class="form-control" id="sessionYearId" name="sessionYearId">
+                            @foreach ($sessionYear as $year)
+                            <option value="{{$year->id}}"{{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleSelect1">Section Name</label>
+                            <input class="form-control"  type="text" id="sectionName" name="sectionName" placeholder="Enter Section Name">
+                    </div>
+
+                    <legend type="hidden">Study Shift</legend>
+                    <div class="form-check">
                         <label class="radio">
-                          <input type="radio"  id="shift" name="shift"  value="Day">
-                            Day
+                            <input type="radio" id="shift" name="shift"  value="Morning" checked> Morning
+                        </label> &nbsp;
+                        <label class="radio">
+                            <input type="radio"  id="shift" name="shift"  value="Day"> Day
                         </label>
                         <label class="radio">
-                            <input type="radio"  id="shift" name="shift"  value="Evening">
-                              Evening
-                          </label>
-
-
-                      </div>
-
-            </div>
-            <div class="tile-footer">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <button class="btn btn-primary" type="submit" id="submit" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button></a>
-                      {{-- <input class="btn btn-primary" type="reset" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Reset</button></a> --}}
+                            <input type="radio"  id="shift" name="shift"  value="Evening"> Evening
+                        </label>
                     </div>
-                  </div>
-              </div>
-            </div>
-          </form>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                        <button class="btn btn-primary" type="submit" id="submit" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button></a>
+                        {{-- <input class="btn btn-primary" type="reset" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Reset</button></a> --}}
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </form>
         </div>
     </div>
     </div>
+
     <div class="clearix"></div>
     @endsection
     @section('script')
