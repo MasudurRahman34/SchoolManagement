@@ -148,7 +148,7 @@
                                 </div>
                             </div>
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                                 <label class="control-label col-md-3 col-sm-12 pl-4">Joining Date</label>
                                 <div class="col-md-9 col-sm-12">
                                     <input class="form-control col-md-10 col-sm-12" type="text" id="demoDate" name="joinDate">
@@ -160,7 +160,7 @@
                         <div class="col-md-9 col-sm-12">
                           <textarea class="form-control col-md-10 col-sm-12" rows="4" id="address" name="address"></textarea>
                         </div>
-                      </div>
+                      </div> --}}
 
 
                   </div>

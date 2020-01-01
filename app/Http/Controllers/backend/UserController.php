@@ -22,11 +22,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function index()
     {
 
@@ -90,8 +87,8 @@ class UserController extends Controller
         })
 
             ->addColumn('action',function ($row){
-                $edit_url = url('show/'.$row['id']);
-                return '<a href="'.$edit_url.'" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>'.
+                $show_url = url('show/Userprofile/'.$row['id']);
+                return '<a href="'.$show_url.'" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>'.
                     '<button  onClick="btnDecline('.$row['id'].')" class="btn btn-dark btn-sm delete_class"><i class="fa fa-trash-o"></i></button>';
             })
             ->editColumn('role', function($Users)
@@ -308,15 +305,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(){
-        $user=User::FindOrFail(Auth::guard('web')->user()->id);
-        return view('backend.pages.userModule.show',['users' => $user]);
+
+    public function show($id){
+        $user=User::FindOrFail($id);
+        return view('backend.pages.userModule.show',['users' => $user, 'editId'=>$id]);
     }
 
-    public function profile()
+    public function profile($id)
     {
-        $users=User::FindOrFail(Auth::guard('web')->user()->id);
-        return view('backend.pages.userModule.show',['users' => $users]);
+        $users=User::FindOrFail($id);
+        return view('backend.pages.userModule.show',['users' => $users, 'editId'=>$id]);
     }
 
     /**
@@ -325,10 +323,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        $user=User::FindOrFail(Auth::guard('web')->user()->id);
-        return view('backend.pages.userModule.updateProfile',['user' => $user]);
+        $user=User::FindOrFail($id);
+        return view('backend.pages.userModule.updateProfile',['user' => $user, 'editId'=>$id]);
     }
 
     /**
@@ -338,7 +336,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         // $this->validate($request,[
         //         'name'=>'required',
         //         'email'=>'',
@@ -354,7 +352,7 @@ class UserController extends Controller
         //         'bId'=>'',
         //         ]);
         // 2. data update
-        $userss = User::find(Auth::guard('web')->user()->id);
+        $userss = User::find($id);
         $userss->name = $request->name;
         $userss->email = $request->email;
         $userss->mobile = $request->mobile;
@@ -390,11 +388,11 @@ class UserController extends Controller
     }
 
     //Change password
-    public function changePassword(Request $request){
+    public function changePassword(Request $request, $id){
         $this->validate($request,[
-            'password'=>'required|string|confirmed|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/'
+            'password'=>'required|confirmed|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/'
         ]);
-        $users = User::find(Auth::guard('web')->user()->id);
+        $users = User::find($id);
         $users->password = Hash::make($request->password);
         $users->save();
         Session::flash('success','You Have Successfully Changed The Password');
@@ -410,5 +408,13 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function updateRole(Request $request, $id)
+    {
+        $user=User::findorFail($id);
+        $user->roles()->detach();
+        $user->assignRole($request->role);
+        Session::flash('success','Role Has Been Changed');
+        return redirect()->back();
     }
 }

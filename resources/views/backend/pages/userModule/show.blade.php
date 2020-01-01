@@ -19,7 +19,7 @@
             </div>
                 <div class="tile p-0">
                   <ul class="nav flex-column nav-tabs user-tabs">
-                    <li class="nav-item"><a class="nav-link" href="{{route('userEditProfile')}}"> Update Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('userEditProfile', [$editId])}}"> Update Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>

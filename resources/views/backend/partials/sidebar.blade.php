@@ -31,7 +31,7 @@
 
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-cog fa-spin fa-fw"></i><span class="app-menu__label">Settings</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="{{route('user.show')}}"><i class="icon fa fa-angle-right"></i>My Profile</a></li>
+                <li><a class="treeview-item" href="{{route('user.show',[Auth::guard('web')->user()->id])}}"><i class="icon fa fa-angle-right"></i>My Profile</a></li>
 
             </ul>
           </li>

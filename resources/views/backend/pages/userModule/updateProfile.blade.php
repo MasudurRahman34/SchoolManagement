@@ -52,7 +52,15 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#menu2">Change Password</a>
                 </li>
-              </ul>
+                @can('User Management')
+                @if(Auth::guard('web')->user()->id!=$editId)
+                <li class="nav-item">
+                    <a class="nav-link" href="#role">Change Role</a>
+                  </li>
+
+              @endif
+              @endcan
+            </ul>
 
               <!-- Tab panes -->
               <div class="tab-content">
@@ -60,7 +68,7 @@
                   <h4>Update User Information</h4>
                   <hr>
                   <div class="row">
-                      <form class="row" action="{{route('userUpdate.profile')}}" method="post" enctype="multipart/form-data">
+                      <form class="row" action="{{route('userUpdate.profile', [$editId])}}" method="post" enctype="multipart/form-data">
                       @csrf
                          <div class="form group col-md-3">
                             <label class="control-label">Name</label>
@@ -122,16 +130,7 @@
                             <label class="control-label">bId</label>
                             <input class="form-control" type="text" name="bId" value="{{$user->bId}}" readonly>
                           </div>
-                          <!--End primary dev section-->
 
-                            <!-- <div class="form-group col-md-3">
-                                <lable class="">Change Image</lable>
-                                <input type="file" name="image" id="image" class="form-control btn btn-light">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <lable class="">Preview Image</lable>
-                                <img id="image_preview" src="" style="width: 180px;height: 180px">
-                            </div>    -->
                       </div>
                       <div class="tile-footer">
                       <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Profile</button>
@@ -139,8 +138,8 @@
                 </div>
                  </form>
                  <!-- change Password -->
-             <div id="menu2" class="container tab-pane fade"><br>
-             <form action="{{route('userChange.password')}}" method="post">
+            <div id="menu2" class="container tab-pane fade"><br>
+             <form action="{{route('userChange.password',  [$editId])}}" method="post">
                @csrf
                 <div class="row">
                     <div class="form group col-md-3">
@@ -151,19 +150,93 @@
                       <label class="control-label">Confirm Password</label>
                       <input type="password" class="form-control" name="password_confirmation">
                     </div>
-                    </div>
-                        <div class="tile-footer">
-                          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Password</button>
-                        </div>
-                      </div>
                 </div>
-                </form>
-             </div>
-          </div>
+                <div class="tile-footer">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Password</button>
+                </div>
+            </form>
+            </div>
+            @can('User Management')
+            @if(Auth::guard('web')->user()->id!=$editId)
+            <div id="role" class="container tab-pane fade"><br>
+                <form action="{{route('updateRole', [$editId])}}" method="post">
+                  @csrf
+                   <div class="row">
+                       <div class="form group col-md-3">
+                         <label class="control-label">New Password</label>
+                       </div>
+                       <div class="form group col-md-5">
+                         <label class="control-label">Change Role</label>
+                         <select class="form-control" name="role" id="role" required>
+                            <option value="0">--Please Select--</option>
+
+                            @foreach (Spatie\Permission\Models\Role::where('bId', Auth::guard()->user()->bId)->get() as $Role)
+                            <option value="{{$Role->id}}"> {{$Role->name}}</option>
+                        @endforeach
+                        </select>
+                       </div>
+                       <div class="form-group row bg-light" hidden id="class">
+                        <div class="col-md-12 col-sm-12 text-center mb-2 text-danger">
+                                Make Class Teacher To
+                        </div>
+                        <div class="form-group col-md-3">
+                        <label class="control-label">Shift</label>
+                            <div class="form-check">
+                                <label class="radio">
+                                    <input type="radio" id="shift" name="shift" value="Morning" checked="" class="admission">
+                                    Morning
+                                </label>
+                                    &nbsp;
+                                    <label class="radio">
+                                    <input type="radio" id="shift" name="shift" value="Day" class="admission">
+                                        Day
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" id="shift" name="shift" value="Evening" class="admission">
+                                        Evening
+                                </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Session</label>
+                                    <select id="sessionYear" name="sessionYear" class="form-control admission">
+                                    <option>Select Session</option>
+                                        @foreach (App\model\SessionYear::where('bId', Auth::guard('web')->user()->bId)->get() as $Session)
+                                            <option value="{{$Session->id}}">{{$Session->sessionYear}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Class</label>
+                                    <select id="classId" name="classId" class="form-control col-md-10 admission">
+                                        <option>Select Class</option>
+                                            @foreach (App\model\classes::where('bId', Auth::guard('web')->user()->bId)->get() as $class)
+                                            <option value="{{$class->id}}">{{$class->className}}</option>
+                                            @endforeach
+                                    </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Section</label>
+                                <select id="sectionId" name="sectionId" class="form-control col-md-10 ">
+                                </select>
+                            </div>
+                   </div>
+                   </div>
+                   <div class="tile-footer">
+                       <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Role</button>
+                   </div>
+               </form>
+               </div>
+               @endif
+               @endcan
+            </div>
+
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+    </div>
+</div>
+</div>
 </div>
     <!--End Row-->
   </main>
@@ -235,5 +308,25 @@
               }
           }
       }
+      dynamicSectionSelection();
+      //check role has class teacher
+      $('#role').change(function (e) {
+            e.preventDefault();
+            var role=$('#role option:selected').val();
+            console.log(role);
+            $.ajax({
+                type: "get",
+                url: "{{url('/api/roleHasClassTeacher')}}"+'/'+role,
+                data: role,
+                success: function (response) {
+                    if(response>0){
+                        $('#class').attr('hidden', false);
+                    }else{
+                        $('#class').attr('hidden', true);
+                    }
+                }
+            });
+
+        });
       </script>
 @endsection

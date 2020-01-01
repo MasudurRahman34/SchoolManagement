@@ -147,10 +147,11 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
-    Route::get('/show/Userprofile', 'UserController@show')->name('user.show');
-    Route::get('user/edit/profile','UserController@edit')->name('userEditProfile');
-    Route::post('user/update/profile','UserController@update')->name('userUpdate.profile');
-    Route::post('/user/change/password','UserController@changePassword')->name('userChange.password');
+    Route::get('/show/Userprofile/{id?}', 'UserController@show')->name('user.show');
+    Route::get('user/edit/profile/{id?}','UserController@edit')->name('userEditProfile');
+    Route::post('user/update/profile/{id?}','UserController@update')->name('userUpdate.profile');
+    Route::post('/user/change/password/{id?}','UserController@changePassword')->name('userChange.password');
+    Route::post('/user/updateRole//{id?}','UserController@updateRole')->name('updateRole');
 });
 Route::group(['middleware' => ['api']], function () {
     Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
