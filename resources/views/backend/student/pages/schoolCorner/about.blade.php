@@ -18,8 +18,8 @@
                      
                     </ul> -->
                 <ul class=" nav navbar-nav ml-auto">
-                  <li class="nav-item active {{Request::is('school/corner') ? 'active' : ''}}">
-                    <a class="nav-link" href="/school/corner">Home <span class="sr-only">(current)</span></a>
+                  <li class="nav-item {{Request::is('school/corner') ? 'active' : ''}}">
+                    <a class="nav-link" href="/student/school/corner">Home <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Academic</a>
@@ -58,59 +58,41 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
-            <div class="tile-body">
-              <div class="bd-example">
-          <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-              <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                
-                <img src="{{asset('student/images/cover2017-05-16-07-50-04_591af57c759be.jpg')}}" class="d-block" alt="img">
-      
-                <div class="carousel-caption d-none d-md-block">
-                  <strong class="first">Welcome to ignight school</strong><br>
-                  <strong style="color: #33CC33;" class="second">You can learn something new everyday, if you listen</strong>
+             <div class="row">
+               <div class="col-md-6">
+                <div class="tile">
+                   <h1 class="jumbotron-heading text-center">Our School Map</h1><hr>
+                  <!--Google map-->
+                    <div id="map-container-google-3" class="z-depth-1-half map-container-3">
+                      <iframe src="https://maps.google.com/maps?q=warsaw&t=k&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                        style="border:0" allowfullscreen></iframe>
+                     </div>
                 </div>
-              </div>
-              <div class="carousel-item">
-                <img src="{{asset('student/images/photo2019-05-03-10-42-41_5ccc617161ede.jpg')}}" class="d-block" alt="img" >
-                <div class="carousel-caption d-none d-md-block">
-                  <strong class="first">Welcome back to your school</strong><br>
-                  <strong style="color: #33CC33;" class="second">First day of school wises & message</strong>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="{{asset('student/images/School-Area.jpg')}}" class="d-block" alt="img">
-                <div class="carousel-caption d-none d-md-block">
-                  <strong class="first">Hey students what's up</strong><br>
-                  <strong style="color: #33CC33;" class="second">A day in the life in a first grade classroom</strong>
-                </div>
-              </div>
+               </div>
+        <div class="col-md-6">
+          <div class="tile">
+            <div class="container">
+              <h1 class="jumbotron-heading text-center">About Us</h1>
+              <hr>
+              <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely. Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p><br>
+              <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely. Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p><br>
+              <p class="lead text-muted">below—its contents, the creator, etc. Make it short and sweet, but not too short </p><br>
+              <p style="color:green !important;" class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet. below—its contents, the creator, etc. Make it short and sweet</p>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
           </div>
         </div>
-            </div>
+             </div>
           </div> 
       </div>
     </div>
 
+   
     <div class="tile">
-      <h2 class="text-primary text-center">Our Professional Teachers</h2><br>
+      <h2 class="text-primary text-center">Let's Go To See More About</h2><br>
        <div class="row">
           <div class="col-xs-12 col-sm-6 col-md-4">
               <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
@@ -118,8 +100,8 @@
                     <div class="frontside">
                         <div class="card">
                             <div class="card-body text-center">
-                                <p><img class=" img-fluid" src="{{asset('student/images/pic3.jpg')}}" alt="card image"></p>
-                                <h4 class="card-title">Shuvo Ahmed </h4>
+                                <p><img class=" img-fluid" src="{{asset('student/images/about1.jpg')}}" alt="card image"></p>
+                                <h4 class="card-title">Mission & Vission </h4>
                                 <p class="card-text">A good teacher can inspire hope, ignite the imagination, and instill a love of learning.</p>
                                 <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                             </div>
@@ -128,7 +110,7 @@
                       <div class="backside">
                         <div class="card">
                           <div class="card-body text-center mt-4">
-                            <h4 class="card-title">Shuvo Ahmed</h4>
+                            <h4 class="card-title">Our Mission & Vission</h4>
                             <p class="card-text">I think that life is difficult. People have challenges. Family members get sick, people get older, you don't always get the job or the promotion that you want. You have conflicts in your life. And really, life is about your resilience and your ability to go through your life and all of the ups and downs with a positive attitude.</p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
@@ -165,8 +147,8 @@
                   <div class="frontside">
                       <div class="card">
                           <div class="card-body text-center">
-                              <p><img class=" img-fluid" src="{{asset('student/images/pic1.jpg')}}" alt="card image"></p>
-                              <h4 class="card-title">Mishuk Rahman</h4>
+                              <p><img class=" img-fluid" src="{{asset('student/images/upevent2.jpg')}}" alt="card image"></p>
+                              <h4 class="card-title">Our Principle</h4>
                               <p class="card-text">Any good teacher knows how important it is to connect with students and understand our culture.</p>
                               <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                           </div>
@@ -175,7 +157,7 @@
                   <div class="backside">
                     <div class="card">
                       <div class="card-body text-center mt-4">
-                        <h4 class="card-title">Mishuk Rahman</h4>
+                        <h4 class="card-title">Importatnt talk</h4>
                         <p class="card-text">Stay positive and happy. Work hard and don't give up hope. Be open to criticism and keep learning. Surround yourself with happy, warm and genuine people.</p>
                         <ul class="list-inline">
                             <li class="list-inline-item">
@@ -212,8 +194,8 @@
                   <div class="frontside">
                       <div class="card">
                           <div class="card-body text-center">
-                              <p><img class=" img-fluid" src="{{asset('student/images/pic2.jpg')}}" alt="card image"></p>
-                              <h4 class="card-title">Shubir Ahmed</h4>
+                              <p><img class=" img-fluid" src="{{asset('student/images/about2.jpg')}}" alt="card image"></p>
+                              <h4 class="card-title">Goverming Body</h4>
                               <p class="card-text">My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some</p>
                               <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                           </div>
@@ -222,7 +204,7 @@
                   <div class="backside">
                     <div class="card">
                       <div class="card-body text-center mt-4">
-                        <h4 class="card-title">Shubir Ahmed</h4>
+                        <h4 class="card-title">Important Meeting</h4>
                         <p class="card-text">You have to enjoy life. Always be surrounded by people that you like, people who have a nice conversation. There are so many positive things to think about.</p>
                         <ul class="list-inline">
                             <li class="list-inline-item">
@@ -254,49 +236,6 @@
             </div>
       </div>
     </div>
-    <!-- Event article -->
-   <div class="bg-light">
-    <!-- Teacher Section -->
-    <div class="container space-2 space-md-3">
-      <!-- Title -->
-      <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-9"><br>
-        <h2 class="text-primary">Our Upcomig Events</h2><br>
-      </div>
-      <!-- End Title -->
-        <div class="row"> 
-          <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-              <img src="{{asset('student/images/event3.jpg')}}" class="card-img-top" alt="img">
-                <div class="card-body">
-                  <h5 class="card-title text-center">school Alumni</h5>
-                  <p class="card-text">A man who has never gone to school may steal from a freight car; but if he has a university education,man who has never gone to s  he may steal the whole railroad.</p>
-                  <a href="{{route('event.details')}}" class="btn btn-primary text-center">Go Details>></a>
-                </div>
-            </div>
-             </div>
-              <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-              <img src="{{asset('student/images/event2.png')}}" class="card-img-top" alt="img">
-                <div class="card-body">
-                  <h5 class="card-title text-center">Alumni Association Membership</h5>
-                  <p class="card-text">A man who has never gone to school may steal from a freight car; but if he has a university education, he may steal the whole railroad.</p>
-                  <a href="{{route('event.details')}}" class="btn btn-primary text-center">Go Details>></a>
-                </div>
-            </div>
-          </div>
-           <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-              <img src="{{asset('student/images/event1.png')}}" class="card-img-top" alt="img">
-                <div class="card-body">
-                  <h5 class="card-title text-center">School Firewall</h5>
-                  <p class="card-text">A man who has never gone to school may steal from a freight car; but if he has a university education, he may steal the whole railroad.</p>
-                  <a href="{{route('event.details')}}" class="btn btn-primary text-center">Go Details>></a>
-                </div>
-            </div> 
-            </div>              
-        </div>
-    </div>
-  </div>
 <br>
 <!-- start fotter -->
 <div class="mt-5 badge-dark">

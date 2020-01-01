@@ -14,6 +14,7 @@ use App\model\feeCollection;
 use App\model\studentScholarship;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 Use Illuminate\Support\Facades\DB;
 Use PDF;
 
@@ -51,7 +52,20 @@ class AdmissionController extends Controller
      */
     public function store(Request $request)
 {
-
+        $this->validate($request,[
+            'firstName'=>'required|min:3', 'string', 'max:255',
+            'lastName'=>'required|min:3', 'string', 'max:255',
+            'gender'=>'required',
+            'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
+            'mobile'=>'required', 'string', 'max:255','unique:users',
+            'birthDate'=>'required',
+            'blood'=>'required',
+            'sectionId'=>'required',
+            'roll'=>'required',
+            'group'=>'required',
+            'type'=>'required',
+            'schoolarshipId'=>'required',
+        ]);
 
         $password=mt_rand(100000,999999);
         $Student= new Student();
@@ -73,6 +87,9 @@ class AdmissionController extends Controller
         $Student->type=$request->type;
         $Student->schoolarshipId=$request->schoolarshipId;
         $Student->save();
+
+          Session::flash('success','You Have Successfully Admitted!');
+          return redirect()->back();
         //if optinal subject
             if($request->has('optionalSubjectId')){
                 $optionalSubjectId= $request->optionalSubjectId;

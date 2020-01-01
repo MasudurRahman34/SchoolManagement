@@ -182,6 +182,15 @@ class StudentController extends Controller
     public function eventDetails(){
         return view('backend.student.pages.schoolCorner.eventDetails');
     }
+    //School gallery
+    public function gellary(){
+        return view('backend.student.pages.schoolCorner.gallery');
+    }
+    //School about
+    //School gallery
+    public function about(){
+        return view('backend.student.pages.schoolCorner.about');
+    }
 
     //Student's other information updated method
     // public function otherInfo(Request $request){

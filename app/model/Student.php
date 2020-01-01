@@ -54,6 +54,26 @@ class Student extends Authenticatable
         'address'=>'required', 'string',  'max:255',
 
     ];
+    // //student admission rules
+    // public static $admissionRules = [
+    //     'firstName'=>'required|min:3', 'string', 'max:255',
+    //     'lastName'=>'required|min:3', 'string', 'max:255',
+    //     'gender'=>'required',
+    //     'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
+    //     'mobile'=>'required', 'string', 'max:255','unique:users',
+    //     'birthDate'=>'required',
+    //     'blood'=>'string',
+    //     'address'=>'required', 'string',  'max:255',
+    //     'password'=>'required', 'string', 'min:6', 'confirmed',
+    //     'readablePassword'=>'required',
+    //     'bId'=>'required',
+    //     'sectionId'=>'required',
+    //     'roll'=>'required',
+    //     'group'=>'required',
+    //     'type'=>'required',
+    //     'schoolarshipId'=>'required',
+        
+    // ];
     public function files(){
         return $this->hasMany(File::class,'studentId', 'id');
     }

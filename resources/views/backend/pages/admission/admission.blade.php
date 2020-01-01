@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-	@section('title', 'Home Page')
+	@section('title', 'Student Admission Page')
     @section('content')
 <div class="app-title">
     <div>
@@ -26,32 +26,53 @@
                         Personal Information
                     </div>
             </div>
-            <div class="form group col-md-6">
-              <label class="control-label">First Name</label>
-              <input class="form-control" name="firstName" id="firstName" type="text" required>
+            <div class="form group col-md-6 {{$errors->has('firstName') ? 'has-error' : ''}}">
+              <label class="control-label">First Name<span style="color: red;">*</span></label>
+              <input class="form-control" name="firstName" id="firstName" type="text" value="{{old('firstName')}}">
+              @if($errors->has('firstName'))
+                <span class="help-block text-danger">
+                  {{$errors->first('firstName')}}
+                </span>
+              @endif
+            </div>
+           
+            <div class="form group col-md-6 {{$errors->has('lastName') ? 'has-error' : ''}}">
+                <label class="control-label">Last Name<span style="color: red;">*</span></label>
+                <input class="form-control" name="lastName" id="lastName" type="text" value="{{old('lastName')}}">
+                @if($errors->has('lastName'))
+                  <span class="help-block text-danger">
+                    {{$errors->first('lastName')}}
+                  </span>
+                @endif
             </div>
             <div class="form group col-md-6">
-                <label class="control-label">Last Name</label>
-                <input class="form-control" name="lastName" id="lastName" type="text" required>
-            </div>
-            <div class="form group col-md-6">
-                    <label class="control-label mt-3">Gender</label><br>
+                    <label class="control-label mt-3">Gender<span style="color: red;">*</span></label><br>
                     <label class="radio-inline"><input type="radio" name="gender" checked value="Male">Male</label>
                     <label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
                     <label class="radio-inline"><input type="radio" name="gender" value="Other">Other</label>
             </div>
-            <div class="form group col-md-6">
-              <label class="control-label">Mobile No</label>
-              <input class="form-control" id="mobile" name="mobile" type="text" required>
+            <div class="form group col-md-6 {{$errors->has('mobile') ? 'has-error' : ''}}">
+              <label class="control-label">Mobile No<span style="color: red;">*</span></label>
+              <input class="form-control" id="mobile" name="mobile" type="text" value="{{old('mobile')}}">
+              @if($errors->has('mobile'))
+                  <span class="help-block text-danger">
+                    {{$errors->first('mobile')}}
+                  </span>
+                @endif
             </div>
-            <div class="form-group col-md-6">
-                <label class=" control-label">Date of Birth*</label>
+            <div class="form-group col-md-6 {{$errors->has('birthDate') ? 'has-error' : ''}}">
+                <label class=" control-label">Date of Birth<span style="color: red;">*</span></label>
                 <div class="">
-                  <input class="form-control" type="date" name="birthDate" id="birthDate" required>
+                  <input class="form-control" type="date" name="birthDate" id="birthDate" value="{{old('birthDate')}}">
+                  @if($errors->has('birthDate'))
+                  <span class="help-block text-danger">
+                    {{$errors->first('birthDate')}}
+                  </span>
+                @endif
                 </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="exampleFormControlSelect1">Student BLood Group</label>
+              <div class="form-group col-md-6 {{$errors->has('blood') ? 'has-error' : ''}}">
+                <label for="exampleFormControlSelect1">Student BLood Group<span style="color: red;">*</span></label>
                 <select class="form-control" id="blood" name="blood">
                 <option value="">--Please Select--</option>
                   <option value="0+">O+</option>
@@ -63,6 +84,11 @@
                   <option value="AB-">AB-</option>
                   <option value="AB+">AB+</option>
                 </select>
+                @if($errors->has('blood'))
+                  <span class="help-block text-danger">
+                    {{$errors->first('blood')}}
+                  </span>
+                @endif
               </div>
               <div class="col-md-12">
                 <div class="alert alert-warning text-center" role="alert">
@@ -71,8 +97,8 @@
             </div>
 
             <div class="form-group col-md-6">
-                <label for="exampleFormControlSelect1">Session Year</label>
-                <select class="form-control admission" id="sessionYear" name="sessionYear" required>
+                <label for="exampleFormControlSelect1">Session Year<span style="color: red;">*</span></label>
+                <select class="form-control admission" id="sessionYear" name="sessionYear">
                   <option value="">--Please Select--</option>
                     @foreach ($SessionYear as $SYear)
                 <option value="{{$SYear->id}}" data-sessionYear="{{$SYear->sessionYear}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>
@@ -80,7 +106,7 @@
                 </select>
               </div>
               <div class="form-group col-md-6">
-                    <label class="control-label mt-3">Shift</label><br>
+                    <label class="control-label mt-3">Shift<span style="color: red;">*</span></label><br>
                 <div class="custom-control shift-radio custom-control-inline">
                     <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
                     <label class="custom-control-label"  for="shift1">Morning</label>
@@ -95,8 +121,8 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="exampleFormControlSelect1">Select Class</label>
-                <select class="form-control admission opsub" id="classId" required>
+                <label for="exampleFormControlSelect1">Select Class<span style="color: red;">*</span></label>
+                <select class="form-control admission opsub" id="classId">
                         <option value="">--Please Select--</option>
                     @foreach ($classes as $class)
                         <option value="{{$class->id}}">{{$class->className}}</option>
@@ -105,36 +131,36 @@
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <label for="exampleFormControlSelect1"> Section</label>
+                <label for="exampleFormControlSelect1"> Section<span style="color: red;">*</span></label>
 
-                <select class="form-control" id="sectionId" name="sectionId" required>
+                <select class="form-control" id="sectionId" name="sectionId">
                     <option value="">--Please Select--</option>
                 </select>
               </div>
               <div class="form group col-md-6">
-                <label class="control-label">Roll Number <sub id="lastRoll" class="text-danger"></sub></label>
-                <input class="form-control" id="roll" name="roll" type="number" required>
+                <label class="control-label">Roll Number<span style="color: red;">*</span><sub id="lastRoll" class="text-danger"></sub></label>
+                <input class="form-control" id="roll" name="roll" type="number" value="{{old('roll')}}">
               </div>
               <div class="form-group col-md-12">
-                    <label class="control-label mt-3 bg-secondary text-light"><h5>Group</h5></label><br>
+                    <label class="control-label mt-3 bg-secondary text-light"><h5>Group<span style="color: red;">*</span></h5></label><br>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input opsub" required checked>
+                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input opsub" checked>
                         <label class="custom-control-label" for="group1">General (1 to 8)</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group2" value="Science"  class="custom-control-input opsub" required>
+                        <input type="radio" name="group" id="group2" value="Science"  class="custom-control-input opsub">
                         <label class="custom-control-label" for="group2">Science</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group3" value="Arts"  class="custom-control-input opsub" required>
+                        <input type="radio" name="group" id="group3" value="Arts"  class="custom-control-input opsub">
                         <label class="custom-control-label" for="group3">Arts</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="group" id="group4" value="Commerce"  class="custom-control-input opsub" required>
+                            <input type="radio" name="group" id="group4" value="Commerce"  class="custom-control-input opsub">
                             <label class="custom-control-label" for="group4">Commerce</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" name="group" id="group5" value="Vocational" class="custom-control-input opsub" required>
+                            <input type="radio" name="group" id="group5" value="Vocational" class="custom-control-input opsub">
                             <label class="custom-control-label" for="group5">Vocational</label>
                     </div>
                 </div>
@@ -158,7 +184,7 @@
 
 
               <div class="form-group col-md-4">
-                <label class="control-label mt-3"><h5>Student Status</h5></label><br>
+                <label class="control-label mt-3"><h5>Student Status<span style="color: red;">*</span></h5></label><br>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" name="type" id="type" value="regular" class="custom-control-input" checked>
                     <label class="custom-control-label" for="type">Regular</label>
@@ -175,12 +201,12 @@
             </div>
             <div class="form-group col-md-4">
                 <label class="control-label">Total Cost (TK)&nbsp;&nbsp;&nbsp;<span class="btn btn-light" id="btnToggle">Show Details </span></label>
-                <input class="form-control" name="total" id="totalFee" type="number" required readonly>
+                <input class="form-control" name="total" id="totalFee" type="number" readonly>
 
             </div>
             <div class="form-group col-md-4">
                 <label for="exampleFormControlSelect1">Schoolarship</label>
-                <select class="form-control" name="schoolarshipId" id="schoolarshipId" required>
+                <select class="form-control" name="schoolarshipId" id="schoolarshipId">
                         <option value="0" selected>No</option>
                         @foreach (App\model\scholarship::where('bId', Auth::guard()->user()->bId)->get() as $scholarship)
                         <option value="{{$scholarship->id}}" data-discount="{{$scholarship->discount}}">{{$scholarship->name}} ({{$scholarship->discount}}%)</option>
@@ -422,6 +448,8 @@ $('#classId').change(function (e) {
 $("#btnToggle" ).click(function() {
   $( "#feeList" ).toggle();
 });
+
+
 
 //optional subject
 

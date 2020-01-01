@@ -22,7 +22,7 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>hash</th>
+                      <th>#</th>
                       <th>Name</th>
                       <th>Mobile</th>
                       <th>Email</th>

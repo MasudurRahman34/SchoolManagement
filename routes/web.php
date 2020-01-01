@@ -92,6 +92,8 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     //Student school Corner
     Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
     Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
+    Route::get('/school/gallery', 'StudentController@gellary')->name('school.gallery');
+    Route::get('/school/about', 'StudentController@about')->name('school.about');
     Route::get('/student/fee/index','StudentFeeController@index')->name('student.fee.index');
     Route::get('/fee/show/{id}', 'StudentFeeController@show')->name('student.fee.show');
     Route::get('/due/fee/show', 'StudentFeeController@dueFee')->name('student.due.fee');
@@ -291,7 +293,17 @@ Route::get('adminview/student/sectionwiselist/{classId}/{sectionId}', 'backend\M
 Route::post('adminview/student/studentData','backend\MarksDistributionController@studentData')->name('studentData.mark');
 Route::post('adminview/student/markstore','backend\MarksDistributionController@storemark')->name('store.mark');
 
-//schoolarship Management
+//schoolarship Management for admin 
+Route::get('/schoolarship/Management','backend\ScholarshipController@index')->name('scholarship.management');
+Route::post('/schoolarship/store','backend\ScholarshipController@store')->name('scholarship.store');
+Route::get('/schoolarship/show','backend\ScholarshipController@show')->name('scholarship.show');
+Route::get('/schoolarship/edit/{id}','backend\ScholarshipController@edit')->name('scholarship.edt');
+Route::post('/schoolarship/update/{id}','backend\ScholarshipController@update')->name('scholarship.update');
+Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')->name('scholarship.delete');
+
+    // Route::get('/class/edit/{id}','backend\ClassesController@edit')->name('class.edt');
+    // Route::post('/class/update/{id}','backend\ClassesController@update')->name('class.update');
+    // Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
 // Route::group(['middleware' => ['auth','role_or_permission:Scholarship'], 'namespace'=>'backend'], function () {
 
 // });
