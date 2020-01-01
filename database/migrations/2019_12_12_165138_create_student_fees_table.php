@@ -25,6 +25,7 @@ class CreateStudentFeesTable extends Migration
             $table->integer('status');
             $table->unsignedBigInteger('bId')->comment('branch_table_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

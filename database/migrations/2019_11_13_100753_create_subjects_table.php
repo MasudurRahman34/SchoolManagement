@@ -22,6 +22,7 @@ class CreateSubjectsTable extends Migration
             $table->unsignedInteger('bId');
             $table->boolean('optionalstatus')->default(false)->comment('1=true, 0= false');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

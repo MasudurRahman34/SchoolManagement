@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2019 at 06:08 PM
+-- Generation Time: Jan 01, 2020 at 04:05 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -66,7 +66,46 @@ INSERT INTO `attendances` (`id`, `studentId`, `attendence`, `bId`, `sectionId`, 
 (756, 18, 'present', 30, 25, 15, '2019-12-18 07:51:31', '2019-12-18 07:51:31'),
 (757, 19, 'present', 30, 25, 15, '2019-12-18 07:51:31', '2019-12-18 07:51:31'),
 (758, 20, 'present', 30, 25, 15, '2019-12-18 07:51:31', '2019-12-18 07:51:31'),
-(759, 21, 'present', 30, 25, 15, '2019-12-18 07:51:31', '2019-12-18 07:51:31');
+(760, 1, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(761, 2, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(762, 3, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(763, 4, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(764, 5, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(765, 6, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(766, 7, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(767, 8, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(768, 9, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(769, 10, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(770, 11, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(771, 12, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(772, 13, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(773, 14, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(774, 15, 'present', 30, 25, 15, '2019-12-29 12:18:03', '2019-12-29 12:18:03'),
+(775, 16, 'present', 30, 25, 15, '2019-12-29 12:18:04', '2019-12-29 12:18:04'),
+(776, 17, 'present', 30, 25, 15, '2019-12-29 12:18:04', '2019-12-29 12:18:04'),
+(777, 18, 'present', 30, 25, 15, '2019-12-29 12:18:04', '2019-12-29 12:18:04'),
+(778, 19, 'present', 30, 25, 15, '2019-12-29 12:18:04', '2019-12-29 12:18:04'),
+(779, 20, 'present', 30, 25, 15, '2019-12-29 12:18:04', '2019-12-29 12:18:04'),
+(780, 1, 'absent', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:46'),
+(781, 2, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(782, 3, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(783, 4, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(784, 5, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(785, 6, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(786, 7, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(787, 8, 'absent', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(788, 9, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(789, 10, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(790, 11, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(791, 12, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(792, 13, 'absent', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(793, 14, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(794, 15, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(795, 16, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(796, 17, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(797, 18, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(798, 19, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24'),
+(799, 20, 'present', 30, 25, 15, '2019-12-31 07:26:24', '2019-12-31 07:26:24');
 
 -- --------------------------------------------------------
 
@@ -110,12 +149,48 @@ INSERT INTO `classes` (`id`, `className`, `duration`, `seat`, `bId`, `created_at
 
 CREATE TABLE `class_teachers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `userId` bigint(20) UNSIGNED NOT NULL,
-  `classId` int(10) UNSIGNED NOT NULL COMMENT 'classId',
+  `userId` bigint(20) UNSIGNED NOT NULL COMMENT 'user table',
+  `classId` int(10) UNSIGNED NOT NULL COMMENT 'class table',
+  `sectionId` int(10) UNSIGNED NOT NULL COMMENT 'Section table',
+  `shift` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sessionYearId` int(10) UNSIGNED NOT NULL COMMENT 'sessionYear table',
   `bId` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `class_teachers`
+--
+
+INSERT INTO `class_teachers` (`id`, `userId`, `classId`, `sectionId`, `shift`, `sessionYearId`, `bId`, `created_at`, `updated_at`) VALUES
+(1, 86, 15, 25, 'Morning', 22, 30, '2019-12-31 07:11:43', '2019-12-31 07:11:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `due_fee_histories`
+--
+
+CREATE TABLE `due_fee_histories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `feeCollectionId` bigint(20) UNSIGNED NOT NULL COMMENT 'feeCection_table_id',
+  `due` double(8,2) NOT NULL DEFAULT 0.00 COMMENT 'due',
+  `PreviousPaidAmount` double(8,2) NOT NULL COMMENT 'feeCollection_table TotalAMount',
+  `paidAmount` double(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Fee Collection InputAmount',
+  `paidMonth` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '1',
+  `bId` bigint(20) UNSIGNED NOT NULL COMMENT 'branch_table_id',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `due_fee_histories`
+--
+
+INSERT INTO `due_fee_histories` (`id`, `feeCollectionId`, `due`, `PreviousPaidAmount`, `paidAmount`, `paidMonth`, `bId`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(5, 46, 200.00, 300.00, 200.00, 'DECEMBER', 30, '2019-12-31 12:09:14', '2019-12-31 12:09:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -131,7 +206,8 @@ CREATE TABLE `fees` (
   `bId` bigint(20) UNSIGNED NOT NULL COMMENT 'branch_table_id',
   `classId` bigint(20) UNSIGNED NOT NULL COMMENT 'class_table_id',
   `status` int(11) NOT NULL COMMENT 'disable 0, enable 1',
-  `interval` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'monthly,quarterly,half Y',
+  `interval` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'monthly,Yearly',
+  `sessionYearId` bigint(20) UNSIGNED NOT NULL COMMENT 'sessionYear_table Id',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -141,9 +217,10 @@ CREATE TABLE `fees` (
 -- Dumping data for table `fees`
 --
 
-INSERT INTO `fees` (`id`, `type`, `name`, `amount`, `bId`, `classId`, `status`, `interval`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'gov', 'Test management', 300.00, 30, 15, 0, 'quarterly', '2019-12-21 13:44:06', '2019-12-21 14:04:06', NULL),
-(2, 'nonGov', 'tiffin', 300.00, 30, 15, 1, 'monthly', '2019-12-21 14:03:19', '2019-12-21 14:03:19', NULL);
+INSERT INTO `fees` (`id`, `type`, `name`, `amount`, `bId`, `classId`, `status`, `interval`, `sessionYearId`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'gov', 'Tuition', 500.00, 30, 15, 1, 'monthly', 22, '2019-12-31 09:19:59', '2019-12-31 10:21:36', NULL),
+(2, 'gov', 'Admission', 3000.00, 30, 15, 1, 'yearly', 22, '2019-12-31 09:20:34', '2019-12-31 11:39:16', NULL),
+(3, 'nonGov', 'Tiffin', 100.00, 30, 15, 1, 'monthly', 22, '2019-12-31 11:40:29', '2019-12-31 11:40:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -156,14 +233,14 @@ CREATE TABLE `fee_collections` (
   `studentId` bigint(20) UNSIGNED NOT NULL COMMENT 'student_table_id',
   `feeId` bigint(20) UNSIGNED NOT NULL COMMENT 'fee_table_id',
   `amount` double(8,2) NOT NULL COMMENT 'amount',
-  `due` float(8,2) NOT NULL DEFAULT 0.00,
+  `due` double(8,2) NOT NULL DEFAULT 0.00 COMMENT 'due',
   `totalAmount` double(8,2) NOT NULL COMMENT 'total Amount',
   `transactionId` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT 'for payment information',
   `type` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT 'transaction type',
   `accountNumber` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '1',
   `paidMonth` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '1',
   `month` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '1',
-  `year` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'year',
+  `sessionYearId` bigint(20) UNSIGNED NOT NULL COMMENT 'sessionYear_table Id',
   `sectionId` bigint(20) UNSIGNED NOT NULL,
   `bId` bigint(20) UNSIGNED NOT NULL COMMENT 'branch_table_id',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -175,10 +252,91 @@ CREATE TABLE `fee_collections` (
 -- Dumping data for table `fee_collections`
 --
 
-INSERT INTO `fee_collections` (`id`, `studentId`, `feeId`, `amount`, `due`, `totalAmount`, `transactionId`, `type`, `accountNumber`, `paidMonth`, `month`, `year`, `sectionId`, `bId`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(57, 2, 2, 300.00, 0.00, 300.00, '0', '0', '0', 'DECEMBER', 'DECEMBER', '22', 25, 30, '2019-12-23 09:31:03', '2019-12-23 09:31:03', NULL),
-(62, 21, 2, 300.00, 0.00, 300.00, '0', '0', '0', 'DECEMBER', 'DECEMBER', '22', 25, 30, '2019-12-24 07:12:00', '2019-12-24 07:12:00', NULL),
-(63, 1, 2, 300.00, 0.00, 150.00, '0', '0', '0', 'DECEMBER', 'DECEMBER', '22', 25, 30, '2019-12-24 07:14:03', '2019-12-24 07:14:03', NULL);
+INSERT INTO `fee_collections` (`id`, `studentId`, `feeId`, `amount`, `due`, `totalAmount`, `transactionId`, `type`, `accountNumber`, `paidMonth`, `month`, `sessionYearId`, `sectionId`, `bId`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(187, 1, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:36', '2020-01-01 14:44:36', NULL),
+(188, 2, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:36', '2020-01-01 14:44:36', NULL),
+(189, 3, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:36', '2020-01-01 14:44:36', NULL),
+(190, 4, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(191, 5, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(192, 6, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(193, 7, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(194, 8, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(195, 9, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(196, 10, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(197, 11, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(198, 12, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(199, 13, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(200, 14, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(201, 15, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(202, 16, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(203, 17, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(204, 18, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(205, 19, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(206, 20, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(207, 24, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(208, 25, 1, 500.00, 0.00, 0.00, '0', '0', '0', 'JANUARY', 'JANUARY', 22, 25, 30, '2020-01-01 14:44:37', '2020-01-01 14:44:37', NULL),
+(209, 1, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(210, 2, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(211, 3, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(212, 4, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(213, 5, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(214, 6, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(215, 7, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(216, 8, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(217, 9, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(218, 10, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(219, 11, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(220, 12, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(221, 13, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(222, 14, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(223, 15, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(224, 16, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(225, 17, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(226, 18, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(227, 19, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(228, 20, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(229, 24, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(230, 25, 1, 500.00, 0.00, 0.00, '0', '0', '0', 'JANUARY', 'FEBRUARY', 22, 25, 30, '2020-01-01 14:44:51', '2020-01-01 14:44:51', NULL),
+(233, 1, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(234, 2, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(235, 3, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(236, 4, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(237, 5, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(238, 6, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(239, 7, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(240, 8, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(241, 9, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(242, 10, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(243, 11, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(244, 12, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(245, 13, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(246, 14, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(247, 15, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(248, 16, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(249, 17, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(250, 18, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(251, 19, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(252, 20, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:30', '2020-01-01 14:47:30', NULL),
+(253, 24, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:54', '2020-01-01 14:47:54', NULL),
+(254, 25, 1, 500.00, 0.00, 0.00, '0', '0', '0', 'JANUARY', 'MARCH', 22, 25, 30, '2020-01-01 14:47:54', '2020-01-01 14:47:54', NULL),
+(255, 1, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'APRIL', 22, 25, 30, '2020-01-01 14:48:35', '2020-01-01 14:48:35', NULL),
+(256, 2, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'APRIL', 22, 25, 30, '2020-01-01 14:48:35', '2020-01-01 14:48:35', NULL),
+(257, 3, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'APRIL', 22, 25, 30, '2020-01-01 14:48:35', '2020-01-01 14:48:35', NULL),
+(258, 4, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'APRIL', 22, 25, 30, '2020-01-01 14:48:35', '2020-01-01 14:48:35', NULL),
+(259, 1, 2, 3000.00, 0.00, 3000.00, '0', '0', '0', 'JANUARY', 'APRIL', 22, 25, 30, '2020-01-01 14:49:00', '2020-01-01 14:49:00', NULL),
+(260, 2, 2, 3000.00, 0.00, 3000.00, '0', '0', '0', 'JANUARY', 'APRIL', 22, 25, 30, '2020-01-01 14:49:00', '2020-01-01 14:49:00', NULL),
+(261, 3, 2, 3000.00, 0.00, 3000.00, '0', '0', '0', 'JANUARY', 'APRIL', 22, 25, 30, '2020-01-01 14:49:00', '2020-01-01 14:49:00', NULL),
+(262, 1, 3, 100.00, 0.00, 100.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:24', '2020-01-01 14:59:24', NULL),
+(263, 2, 3, 100.00, 0.00, 100.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:24', '2020-01-01 14:59:24', NULL),
+(264, 3, 3, 100.00, 0.00, 100.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:24', '2020-01-01 14:59:24', NULL),
+(265, 4, 3, 100.00, 0.00, 100.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:24', '2020-01-01 14:59:24', NULL),
+(266, 5, 3, 100.00, 0.00, 100.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:24', '2020-01-01 14:59:24', NULL),
+(267, 6, 3, 100.00, 0.00, 100.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:24', '2020-01-01 14:59:24', NULL),
+(268, 1, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:43', '2020-01-01 14:59:43', NULL),
+(269, 2, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:43', '2020-01-01 14:59:43', NULL),
+(270, 3, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:43', '2020-01-01 14:59:43', NULL),
+(271, 4, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:43', '2020-01-01 14:59:43', NULL),
+(272, 5, 1, 500.00, 0.00, 500.00, '0', '0', '0', 'JANUARY', 'MAY', 22, 25, 30, '2020-01-01 14:59:43', '2020-01-01 14:59:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -190,21 +348,19 @@ CREATE TABLE `fee_histories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `feeId` bigint(20) UNSIGNED NOT NULL COMMENT 'fee_table_id',
   `amount` double(8,2) NOT NULL COMMENT 'amount',
+  `sessionYearId` bigint(20) UNSIGNED NOT NULL COMMENT 'sessionYear_table Id',
   `bId` bigint(20) UNSIGNED NOT NULL COMMENT 'branch_table_id',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `fee_histories`
 --
 
-INSERT INTO `fee_histories` (`id`, `feeId`, `amount`, `bId`, `created_at`, `updated_at`) VALUES
-(5, 7, 3000.00, 30, '2019-12-15 09:12:09', '2019-12-15 09:12:09'),
-(6, 7, 30000.00, 30, '2019-12-15 09:13:14', '2019-12-15 09:13:14'),
-(7, 7, 300.00, 30, '2019-12-15 09:43:08', '2019-12-15 09:43:08'),
-(8, 8, 4000.00, 30, '2019-12-15 09:43:37', '2019-12-15 09:43:37'),
-(9, 8, 40000.00, 30, '2019-12-15 10:52:57', '2019-12-15 10:52:57');
+INSERT INTO `fee_histories` (`id`, `feeId`, `amount`, `sessionYearId`, `bId`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 500.00, 22, 30, '2019-12-31 09:20:46', '2019-12-31 09:20:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -314,18 +470,19 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (29, '2019_11_30_195808_create_marks_table', 13),
 (33, '2014_10_12_000000_create_users_table', 14),
 (34, '2019_10_20_102030_create_school_branches_table', 14),
-(36, '2019_12_03_153030_create_class_teachers_table', 14),
 (40, '2019_12_03_193222_create_studentoptionalsubjects_table', 17),
 (41, '2019_12_10_140443_create_student_histories_table', 17),
 (44, '2019_12_12_165138_create_student_fees_table', 17),
-(45, '2019_12_12_171013_create_fee_histories_table', 17),
 (47, '2019_12_09_153641_create_files_table', 19),
-(49, '2019_12_21_144745_create_student_scholarships_table', 20),
 (50, '2019_12_21_185057_create_months_table', 21),
-(51, '2019_12_12_123434_create_fees_table', 22),
-(52, '2019_12_12_123501_create_fee_collections_table', 23),
 (53, '2019_12_24_140217_create_scholarships_table', 24),
-(55, '2019_11_13_074359_create_students_table', 25);
+(55, '2019_11_13_074359_create_students_table', 25),
+(57, '2019_12_30_135600_create_due_fee_histories_table', 26),
+(58, '2019_12_03_153030_create_class_teachers_table', 27),
+(59, '2019_12_21_144745_create_student_scholarships_table', 28),
+(62, '2019_12_12_123434_create_fees_table', 29),
+(63, '2019_12_12_171013_create_fee_histories_table', 29),
+(64, '2019_12_12_123501_create_fee_collections_table', 30);
 
 -- --------------------------------------------------------
 
@@ -364,7 +521,9 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (8, 'App\\User', 81),
 (9, 'App\\User', 82),
 (9, 'App\\User', 83),
-(10, 'App\\User', 84);
+(10, 'App\\User', 84),
+(11, 'App\\User', 85),
+(11, 'App\\User', 86);
 
 -- --------------------------------------------------------
 
@@ -437,7 +596,9 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `status`, `created_at`, `
 (101, 'Class', 'web', 0, '2019-11-16 04:44:59', '2019-11-16 04:44:59'),
 (102, 'Section', 'web', 0, '2019-11-16 04:45:51', '2019-11-16 04:45:51'),
 (103, 'SessionYear', 'web', 0, '2019-11-16 04:46:08', '2019-11-16 04:46:08'),
-(105, 'Subject', 'web', 0, '2019-11-16 04:46:31', '2019-11-16 04:46:31');
+(105, 'Subject', 'web', 0, '2019-11-16 04:46:31', '2019-11-16 04:46:31'),
+(106, 'Class Teacher', 'web', 0, '2019-11-16 04:46:31', '2019-11-16 04:46:31'),
+(107, 'Fee Management', 'web', 0, '2020-01-01 04:46:31', '2020-01-01 04:46:31');
 
 -- --------------------------------------------------------
 
@@ -513,7 +674,10 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (105, 8),
 (105, 9),
 (105, 10),
-(105, 11);
+(105, 11),
+(106, 11),
+(107, 3),
+(107, 8);
 
 -- --------------------------------------------------------
 
@@ -530,6 +694,13 @@ CREATE TABLE `scholarships` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `scholarships`
+--
+
+INSERT INTO `scholarships` (`id`, `name`, `discount`, `bId`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'talentpull', 100.00, 30, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -588,7 +759,7 @@ INSERT INTO `sections` (`id`, `bId`, `classId`, `sessionYearId`, `sectionName`, 
 (19, 0, 14, 20, 'Section A', 'Morning', NULL, '2019-11-17 07:27:26', '2019-11-17 07:27:26'),
 (20, 0, 13, 20, 'Section B', 'Morning', NULL, '2019-11-17 07:27:45', '2019-11-17 07:27:45'),
 (21, 0, 13, 20, 'Section A', 'Morning', NULL, '2019-11-18 09:02:34', '2019-11-18 09:02:34'),
-(25, 30, 15, 22, 'Section A', 'Morning', NULL, '2019-11-24 07:37:11', '2019-11-25 09:52:04'),
+(25, 30, 15, 22, 'Section A', 'Morning', NULL, '2019-11-24 07:37:11', '2019-12-30 14:48:06'),
 (26, 30, 15, 22, 'Section B', 'Morning', NULL, '2019-11-25 08:36:31', '2019-11-25 08:36:31'),
 (28, 30, 16, 22, 'Section A', 'Morning', NULL, '2019-12-09 08:21:41', '2019-12-09 08:21:41');
 
@@ -614,8 +785,8 @@ CREATE TABLE `session_years` (
 INSERT INTO `session_years` (`id`, `sessionYear`, `status`, `bId`, `created_at`, `updated_at`) VALUES
 (20, '2019-2020', 0, 0, '2019-11-17 07:14:48', '2019-11-17 07:14:48'),
 (21, '2020-2021', 0, 0, '2019-11-17 07:15:04', '2019-11-17 07:15:04'),
-(22, '2019-2020', 1, 30, '2019-11-24 07:35:19', '2019-11-25 12:16:44'),
-(23, '2020-2021', 0, 30, '2019-11-25 12:17:01', '2019-11-25 12:17:01');
+(22, '2019-2020', 1, 30, '2019-11-24 07:35:19', '2019-12-30 14:46:14'),
+(30, '2020', 0, 30, '2019-12-31 13:10:19', '2019-12-31 13:10:19');
 
 -- --------------------------------------------------------
 
@@ -632,6 +803,20 @@ CREATE TABLE `studentoptionalsubjects` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `studentoptionalsubjects`
+--
+
+INSERT INTO `studentoptionalsubjects` (`id`, `studentId`, `subjectId`, `optional`, `bId`, `created_at`, `updated_at`) VALUES
+(1, 21, 3, 0, 30, '2019-12-31 07:36:21', '2019-12-31 07:36:21'),
+(2, 21, 3, 1, 30, '2019-12-31 07:36:21', '2019-12-31 07:36:21'),
+(3, 23, 3, 0, 30, '2019-12-31 07:39:09', '2019-12-31 07:39:09'),
+(4, 23, 3, 1, 30, '2019-12-31 07:39:09', '2019-12-31 07:39:09'),
+(5, 24, 3, 0, 30, '2019-12-31 07:41:45', '2019-12-31 07:41:45'),
+(6, 24, 3, 1, 30, '2019-12-31 07:41:45', '2019-12-31 07:41:45'),
+(7, 25, 3, 0, 30, '2019-12-31 08:27:03', '2019-12-31 08:27:03'),
+(8, 25, 3, 1, 30, '2019-12-31 08:27:03', '2019-12-31 08:27:03');
 
 -- --------------------------------------------------------
 
@@ -677,7 +862,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `studentId`, `firstName`, `lastName`, `email`, `email_verified_at`, `mobile`, `birthDate`, `blood`, `address`, `password`, `readablePassword`, `fatherName`, `motherName`, `fatherOccupation`, `MotherOccupation`, `fatherIncome`, `motherIncome`, `age`, `roll`, `gender`, `religion`, `bId`, `sectionId`, `group`, `schoolarshipId`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 1396692668, 'Talia', 'Stoltenberg', 'elarkin@example.net', '2019-12-24 08:30:07', '+1691381026071', '1970-01-01', 'AB+', '261 Walker Freeway\nSouth Muhammad, AZ 87399-1808', '$2y$10$Y7fOWXNQ4iLlHhE9Dr6OpOsm3C8AepxzlLtQQ/pExXhMDcQmaxtIi', 12345678, 'Brett Zboncak', 'Mr. Jerome Beier III', 'BVqFp', '7O7W7', 64974, 64589, 17, 302376961, 'Male', 'Islam', 30, 25, 'Arts', 0, 'regular', 'xkUpJOQkdc', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
+(1, 1396692668, 'Talia', 'Stoltenberg', 'elarkin@example.net', '2019-12-24 08:30:07', '+1691381026071', '1970-01-01', 'AB+', '261 Walker FreewaySouth Muhammad, AZ 87399-1808', '$2y$10$Y7fOWXNQ4iLlHhE9Dr6OpOsm3C8AepxzlLtQQ/pExXhMDcQmaxtIi', 12345678, 'Brett Zboncak', 'Mr. Jerome Beier III', 'BVqFp', '7O7W7', 64974, 64589, 17, 302376961, NULL, 'Islam', 30, 25, 'Arts', 0, 'regular', 'rVjTSmLaZyuNRakvdzsXMxJdGhaYeKfNZB9DLE8PC64QwXbnbxOztIEktVwb', '2019-12-24 08:30:08', '2019-12-31 07:01:24'),
 (2, 2113287062, 'Jakayla', 'Blick', 'judd.mcglynn@example.com', '2019-12-24 08:30:07', '+9683434227013', '1970-01-01', 'A-', '3820 Swaniawski Drive\nEast Kris, LA 11571', '$2y$10$COwiHzsVsE60JLI2BOxjXezH3YoKNjRgS5wDpkJcM.rtZTIShCu.C', 12345678, 'Mrs. Crystel Kshlerin', 'Etha Rippin PhD', 'z0c1U', 'mq92f', 24656, 96550, 14, 1771284654, 'Female', 'Hinduism', 30, 25, 'Commerce', 0, 'regular', 'ckk1ROhmYG', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
 (3, 71888388, 'Darlene', 'Rau', 'anikolaus@example.org', '2019-12-24 08:30:07', '+5972129381861', '1970-01-01', 'B+', '263 Jenifer Turnpike Suite 075\nLowemouth, ID 23671-2735', '$2y$10$elg72O3SYL8szcBKCu9xjODn1maibYSxD9WY64tqM//G2gBqIo.Ii', 12345678, 'Kevon Smitham IV', 'Chris Windler', 'eiARW', '90BEY', 17345, 12971, 5, 164399793, 'Male', 'Atheism', 30, 25, 'Commerce', 0, 'regular', 'uwmNChA32W', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
 (4, 1481081208, 'Matilde', 'Moore', 'mollie78@example.com', '2019-12-24 08:30:07', '+3895884494138', '1970-01-01', 'O+', '85768 Cierra Pines Apt. 467\nNorth Clairehaven, RI 19532-8134', '$2y$10$HR1vSkpuGxmbPpezrMssD.cFFcFuNRldTKQM8jDNNvVWbMLAiZTbm', 12345678, 'Mr. Floy Considine DVM', 'Urban Kessler', 'rJscy', 'yv2Ds', 57678, 81355, 16, 1144352187, 'Female', 'Hinduism', 30, 25, 'Science', 0, 'regular', 'ZdpNLL6s1L', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
@@ -696,7 +881,9 @@ INSERT INTO `students` (`id`, `studentId`, `firstName`, `lastName`, `email`, `em
 (17, 1240760875, 'Kenneth', 'Harber', 'hane.oran@example.net', '2019-12-24 08:30:07', '+6199069398731', '1970-01-01', 'A-', '54593 Franco Forge\nLake Kelleyhaven, AZ 14372-7658', '$2y$10$NA8m8MFtUhrHKaysd0j3Leb54ZsOGEh9JzDu0NehcZkwV4Kx5wc/m', 12345678, 'Ernestina Purdy I', 'Prof. Jillian Schneider II', 'EUpKd', '3xTEe', 87548, 86226, 15, 356675256, 'Male', 'Islam', 30, 25, 'Commerce', 0, 'regular', 'z3tBO2GFDD', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
 (18, 887510807, 'Jaylon', 'O\'Kon', 'hoppe.kelley@example.net', '2019-12-24 08:30:08', '+3653699348344', '1970-01-01', 'B+', '5026 Stehr Forge\nTremblaytown, MT 31235-3413', '$2y$10$BSNVXVSN9PLXcs.auJKT4uRkVBfBSBMxscgCHE0wchVzYfxhTZAUm', 12345678, 'Micheal Parisian', 'Scotty Hahn', 'ZAUsl', '5yQlZ', 45258, 96967, 15, 790039752, 'Male', 'Atheism', 30, 25, 'Arts', 0, 'regular', 'B17ZZxbBPM', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
 (19, 1949155633, 'Americo', 'McClure', 'jeramy.goldner@example.org', '2019-12-24 08:30:08', '+5390433990032', '1970-01-01', 'O-', '8143 Hansen Field\nKoeppview, CA 72220-5907', '$2y$10$EUyeiAwcPuKnXF.WMtXq3.yPGR1dnyK6akK4Q5m3hbnFxz/zFp6yK', 12345678, 'Myriam Halvorson', 'Dr. Timmy Anderson', 'i1vak', 'zy1NL', 75564, 88559, 17, 1488328105, 'Male', 'Atheism', 30, 25, 'Commerce', 0, 'regular', 'dJJOwcGnwX', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
-(20, 1166743860, 'Maribel', 'Schimmel', 'okon.alia@example.com', '2019-12-24 08:30:08', '+4685872709211', '1970-01-01', 'O-', '39417 Feil Plains\nSherwoodfurt, AZ 75643-4393', '$2y$10$XKawi0VZzo9FJoXDjGBFrO0Nc5CWuAjCs2NyQSYUL8yeE6IN/F1Zy', 12345678, 'Amos Schroeder', 'Parker Mraz', 'MXWBV', 'ecgey', 5140, 65933, 16, 1460339048, 'Male', 'Hinduism', 30, 25, 'General', 0, 'regular', 'NEZPhJcUXQ', '2019-12-24 08:30:08', '2019-12-24 08:30:08');
+(20, 1166743860, 'Maribel', 'Schimmel', 'okon.alia@example.com', '2019-12-24 08:30:08', '+4685872709211', '1970-01-01', 'O-', '39417 Feil Plains\nSherwoodfurt, AZ 75643-4393', '$2y$10$XKawi0VZzo9FJoXDjGBFrO0Nc5CWuAjCs2NyQSYUL8yeE6IN/F1Zy', 12345678, 'Amos Schroeder', 'Parker Mraz', 'MXWBV', 'ecgey', 5140, 65933, 16, 1460339048, 'Male', 'Hinduism', 30, 25, 'General', 0, 'regular', 'NEZPhJcUXQ', '2019-12-24 08:30:08', '2019-12-24 08:30:08'),
+(24, 372271, 'arifa', 'hassan', NULL, NULL, '01234567801', '2019-12-10', '0+', NULL, '$2y$10$vJRrumr8K5BZ1oxqpMPey.ODhLDDgAQmhmvymliuVDWpbF8I0x6yS', 342963, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 302376962, 'Female', NULL, 30, 25, 'Science', 1, 'regular', NULL, '2019-12-31 07:41:45', '2019-12-31 07:41:45'),
+(25, 252941, 'Misuk', '534', NULL, NULL, '0123444456789', '2019-12-10', '0+', NULL, '$2y$10$1kIbUzyvqfD6/HcHH966j.VaMEFy7RKq/W5.eIb0aA20UtQ0Bdhkq', 385320, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2342, 'Male', NULL, 30, 25, 'Science', 1, 'regular', NULL, '2019-12-31 08:27:03', '2019-12-31 08:27:03');
 
 -- --------------------------------------------------------
 
@@ -747,9 +934,10 @@ CREATE TABLE `student_histories` (
 CREATE TABLE `student_scholarships` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `studentId` bigint(20) UNSIGNED NOT NULL COMMENT 'student_table_id',
-  `scholershipType` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'type',
+  `scholershipId` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'schlarship table id',
   `feeId` bigint(20) UNSIGNED NOT NULL COMMENT 'fee_table_id',
   `discount` double(8,2) NOT NULL COMMENT 'Discount %',
+  `sessionYear` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'year of scholarship',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -759,8 +947,9 @@ CREATE TABLE `student_scholarships` (
 -- Dumping data for table `student_scholarships`
 --
 
-INSERT INTO `student_scholarships` (`id`, `studentId`, `scholershipType`, `feeId`, `discount`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'talentpull', 2, 50.00, NULL, NULL, NULL);
+INSERT INTO `student_scholarships` (`id`, `studentId`, `scholershipId`, `feeId`, `discount`, `sessionYear`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(2, 24, 1, 2, 100.00, '2019-2020', '2019-12-31 07:41:45', '2019-12-31 07:41:45', NULL),
+(3, 25, 1, 1, 100.00, '22', '2019-12-31 08:27:03', '2019-12-31 08:27:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -841,10 +1030,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `userId`, `name`, `email`, `email_verified_at`, `mobile`, `designation`, `joinDate`, `address`, `skill`, `educattion`, `biography`, `resume`, `certificate`, `bId`, `password`, `readablePassword`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Shuvo', 'mohammadshuvo205@gmail.com', NULL, '01750658791', 'Super Admin', '25-9-2019', 'khulna', NULL, NULL, NULL, NULL, NULL, 0, '$2y$12$OxRrHZc6x/eIqB5.uxS1R.PJzlQevj5bgnsj6/uSKncZYnLgxOnHm', '12345678', NULL, NULL, NULL),
-(81, 2, 'Shubir Sir', NULL, NULL, '01632736808', 'School Admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$OdizTCtKpVMjEcy4sBKJCu4jCYTf94Gi26NtZOwiU1m/t6KR..mXu', '833696', NULL, '2019-11-23 06:09:32', '2019-12-18 07:55:05'),
+(81, 2, 'Shubir Sir', 'subir@gmail.com', NULL, '01632736808', 'School Admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$OdizTCtKpVMjEcy4sBKJCu4jCYTf94Gi26NtZOwiU1m/t6KR..mXu', '833696', NULL, '2019-11-23 06:09:32', '2019-12-31 06:57:12'),
 (82, 3, 'Hassan Molla', 'hassan@gmail.com', NULL, '01981807374', 'Teacher', '24/11/2019', 'Address as it is !', NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$QixJusf0bLTvUSCx4Gpp4OVs31i.zqORvcMf3MKEox.iTmOzM2T4C', '351475', NULL, '2019-11-24 02:08:33', '2019-11-24 02:08:33'),
 (83, 4, 'rumana Khnom', 'rumana@gmail.com', NULL, '018917892939', 'Accountant', '24/11/2019', 'Address as it is!', NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$bimKK4YmXTVH7.uTYO4R0.Mdxbh28qnfqlPmB1PMfBd2SsZKmn1Ie', '496667', NULL, '2019-11-24 02:10:05', '2019-11-24 02:10:05'),
-(84, 5, 'Misuk', 'Misuk1@gmail.com', NULL, '0026969988', 'Teacher', '21/11/2019', 'mirpur', NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$6Rljy5pPKpmayfMeUh20UOXDLU0zk7BXyzpOw8tvDfWDmQlTod/Qm', '854962', NULL, '2019-11-25 06:58:53', '2019-11-25 06:58:53');
+(84, 5, 'Misuk', 'Misuk1@gmail.com', NULL, '0026969988', 'Teacher', '21/11/2019', 'mirpur', NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$6Rljy5pPKpmayfMeUh20UOXDLU0zk7BXyzpOw8tvDfWDmQlTod/Qm', '854962', NULL, '2019-11-25 06:58:53', '2019-11-25 06:58:53'),
+(85, 259051, 'arif', 'gmail1@gmail.com', NULL, '01234567867', 'Teacher', '11/12/2019', 'asdsda', NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$SAMyvARLec/WXMeZx64BOe5VwoO1K4/EuQsiNImV4kosES.TX978e', '864522', NULL, '2019-12-31 07:04:47', '2019-12-31 07:04:47'),
+(86, 796693, 'arif', 'gmail2@gmail.com', NULL, '0123456784', 'Teacher', '10/12/2019', 'asdas', NULL, NULL, NULL, NULL, NULL, 30, '$2y$10$KTrvMHFjKAzbD/ZekY8QveZCBHSChjSJDLriwXM/nQF044M5BREaC', '954949', NULL, '2019-12-31 07:11:43', '2019-12-31 07:11:43');
 
 --
 -- Indexes for dumped tables
@@ -868,6 +1059,12 @@ ALTER TABLE `classes`
 -- Indexes for table `class_teachers`
 --
 ALTER TABLE `class_teachers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `due_fee_histories`
+--
+ALTER TABLE `due_fee_histories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1044,7 +1241,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=760;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=800;
 
 --
 -- AUTO_INCREMENT for table `classes`
@@ -1056,25 +1253,31 @@ ALTER TABLE `classes`
 -- AUTO_INCREMENT for table `class_teachers`
 --
 ALTER TABLE `class_teachers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `due_fee_histories`
+--
+ALTER TABLE `due_fee_histories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `fees`
 --
 ALTER TABLE `fees`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `fee_collections`
 --
 ALTER TABLE `fee_collections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=273;
 
 --
 -- AUTO_INCREMENT for table `fee_histories`
 --
 ALTER TABLE `fee_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -1098,7 +1301,7 @@ ALTER TABLE `marks`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `months`
@@ -1110,7 +1313,7 @@ ALTER TABLE `months`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1122,7 +1325,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `scholarships`
 --
 ALTER TABLE `scholarships`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `school_branches`
@@ -1140,19 +1343,19 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT for table `session_years`
 --
 ALTER TABLE `session_years`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `studentoptionalsubjects`
 --
 ALTER TABLE `studentoptionalsubjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `student_fees`
@@ -1170,7 +1373,7 @@ ALTER TABLE `student_histories`
 -- AUTO_INCREMENT for table `student_scholarships`
 --
 ALTER TABLE `student_scholarships`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `subjects`
@@ -1182,7 +1385,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- Constraints for dumped tables

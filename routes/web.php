@@ -89,15 +89,17 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
     Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
 
-    //Student school Corner
+    //School Corner
     Route::get('/school/corner', 'StudentController@schoolCorner')->name('school.corner');
     Route::get('/event/details', 'StudentController@eventDetails')->name('event.details');
     Route::get('/school/gallery', 'StudentController@gellary')->name('school.gallery');
     Route::get('/school/about', 'StudentController@about')->name('school.about');
+
+    //Fee module
     Route::get('/student/fee/index','StudentFeeController@index')->name('student.fee.index');
-    Route::get('/fee/show/{id}', 'StudentFeeController@show')->name('student.fee.show');
+    Route::get('/fee/show/{id}/{sessionYearId}', 'StudentFeeController@show')->name('student.fee.show');
     Route::get('/due/fee/show', 'StudentFeeController@dueFee')->name('student.due.fee');
-    Route::get('/due2/fee/show/{id}', 'StudentFeeController@dueFee2')->name('student.due.fee2');
+    Route::get('/due2/fee/show/{id}/{sessionYearId}', 'StudentFeeController@dueFee2')->name('student.due.fee2');
 
 });
 //endforstudent
@@ -175,6 +177,9 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
 });
 
+
+
+Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], function () {
     //Fee Management for admin
     Route::get('/fee','backend\FeeController@index')->name('fee.index');
     Route::post('/fee/store','backend\FeeController@store')->name('fee.store');
@@ -207,9 +212,9 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     //Student Fee Details
     Route::get('/feecollection/student/feeDetails','backend\FeeCollectionController@studentFeeDetails')->name('student.feeDetails');
     Route::get('/feecollection/individualStudentDetails','backend\FeeCollectionController@individualFeeDetails')->name('individualStudent.feeDtails');
-    Route::get('/feecollection/details/show/{month}/{studentId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
+    Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
     //Route::get('/feecollection/studentMonthly/paiedFee/{month}/{studentId}','backend\FeeCollectionController@studentMonthlyPaiedFee')->name('student.monthlyPaiedFee');
-
+});
 
 
 
@@ -294,7 +299,7 @@ Route::get('adminview/student/sectionwiselist/{classId}/{sectionId}', 'backend\M
 Route::post('adminview/student/studentData','backend\MarksDistributionController@studentData')->name('studentData.mark');
 Route::post('adminview/student/markstore','backend\MarksDistributionController@storemark')->name('store.mark');
 
-//schoolarship Management for admin 
+//schoolarship Management for admin
 Route::get('/schoolarship/Management','backend\ScholarshipController@index')->name('scholarship.management');
 Route::post('/schoolarship/store','backend\ScholarshipController@store')->name('scholarship.store');
 Route::get('/schoolarship/show','backend\ScholarshipController@show')->name('scholarship.show');

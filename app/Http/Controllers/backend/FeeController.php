@@ -9,7 +9,7 @@ use App\model\feeHistory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use App\model\SessionYear;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 class FeeController extends Controller
@@ -29,7 +29,8 @@ class FeeController extends Controller
     public function index()
     {
         $class= classes::where('bId', Auth::guard('web')->user()->bId)->get();
-        return view('backend.pages.fee.createFee', compact("class"));
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.fee.createFee', compact("class","sessionYear"));
     }
 
     public function getAllFeesByClass($classId)
@@ -61,7 +62,6 @@ class FeeController extends Controller
         if ($validator->fails()) {
             return response()->json(["errors"=>$validator->errors(), 400]);
         }else{
-
             $fee = new Fee();
             $fee->name = $request->name;
             $fee->amount = $request->amount;
@@ -69,7 +69,7 @@ class FeeController extends Controller
             $fee->classId = $request->classId;
             $fee->status = $request->status;
             $fee->interval = $request->interval;
-
+            $fee->sessionYearId = $request->sessionYearId;
             $fee->type = $request->type;
             $fee->save();
             return Response()->json(["success"=>'Stored', "data"=>$fee,201]);
@@ -90,19 +90,25 @@ class FeeController extends Controller
 
          $data_table_render = DataTables::of($fee)
 
-
             ->editColumn('status', function($fee)
             {
                 return $fee->status == 1 ? 'Yes': 'No';
             })
 
-             ->addColumn('action',function ($row){
-                 return '<button class="btn btn-info btn-sm" onClick="editfee('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
-                     '<button  onClick="deletefee('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
-             })
-             ->rawColumns(['action'])
-             ->addIndexColumn()
-             ->make(true);
+            ->editColumn('sessionYearId', function($fee)
+            {
+                return $fee->SessionYear->sessionYear;
+            })
+
+            ->addColumn('action',function ($row){
+                return '<button class="btn btn-info btn-sm" onClick="editfee('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
+                            '<button  onClick="deletefee('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
+            })
+
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+
          return $data_table_render;
     }
 
@@ -138,11 +144,13 @@ class FeeController extends Controller
             $fee->classId = $request->classId;
             $fee->status = $request->status;
             $fee->interval = $request->interval;
+            $fee->sessionYearId = $request->sessionYearId;
             $fee->type = $request->type;
             if($fee->amount != $fee->getOriginal('amount')){
                 $feehistory = new feeHistory();
                 $feehistory->feeId = $id;
                 $feehistory->amount = $request->amount;
+                $feehistory->sessionYearId = $request->sessionYearId;
                 $feehistory->bId = Auth::guard('web')->user()->bId;
                 $feehistory->save();
             }

@@ -17,6 +17,7 @@ class CreateMonthsTable extends Migration
             $table->bigIncrements('id');
             $table->string('month');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

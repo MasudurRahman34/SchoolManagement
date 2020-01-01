@@ -20,6 +20,7 @@ class CreateClassesTable extends Migration
             $table->unsignedBigInteger('seat');
             $table->unsignedBigInteger('bid')->comment('branch_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

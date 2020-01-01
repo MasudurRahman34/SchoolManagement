@@ -25,7 +25,6 @@
                       <th>Fee Name</th>
                       <th>Amount</th>
                       <th>change Date</th>
-
                     </tr>
                   </thead>
                 </table>

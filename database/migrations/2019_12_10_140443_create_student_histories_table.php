@@ -23,6 +23,7 @@ class CreateStudentHistoriesTable extends Migration
             $table->boolean('schoolarshipStatus')->comment('0=no, 1 =yes');
             $table->string('type', 30)->comment('regular, irregular');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

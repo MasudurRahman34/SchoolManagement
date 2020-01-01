@@ -17,6 +17,7 @@ class CreateFeeHistoriesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('feeId')->comment('fee_table_id');
             $table->float('amount',8,2)->comment('amount');
+            $table->unsignedBigInteger('sessionYearId')->comment('sessionYear_table Id');
             $table->unsignedBigInteger('bId')->comment('branch_table_id');
             $table->timestamps();
             $table->softDeletes();

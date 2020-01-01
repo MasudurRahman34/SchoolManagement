@@ -22,7 +22,7 @@ class CreateFeesTable extends Migration
             $table->unsignedBigInteger('classId')->comment('class_table_id');
             $table->Integer('status')->comment('disable 0, enable 1');
             $table->string('interval',30)->comment('monthly,Yearly');
-            $table->string('year', 30)->comment('year');
+            $table->unsignedBigInteger('sessionYearId')->comment('sessionYear_table Id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -20,6 +20,7 @@ class CreateStudentoptionalsubjectsTable extends Migration
             $table->boolean('optional')->comment('0 = optional, 1 = subjective');
             $table->unsignedBigInteger('bId');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

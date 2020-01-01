@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->unsignedBigInteger('userId')->nullable();
             $table->unsignedBigInteger('studentId')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('studentId')->references('id')->on('students')
                 ->onDelete('cascade');
             $table->foreign('userId')->references('id')->on('users')

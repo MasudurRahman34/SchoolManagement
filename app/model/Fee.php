@@ -18,6 +18,10 @@ class Fee extends Model
     public function feeCollection(){
         return $this->hasMany(feeCollection::class,'feeId','id');
     }
+
+    public function SessionYear(){
+        return $this->belongsTo(SessionYear::class,'sessionYearId');
+    }
     public static $rules = [
         'name'=>'required', 'string', 'max:255',
         'amount'=>'required','min:10',

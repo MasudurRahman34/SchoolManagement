@@ -69,8 +69,15 @@ class FeeHistoryController extends Controller
          {
             return $feehistory->created_at->format('d-M-Y');
          })
-             ->addIndexColumn()
-             ->make(true);
+
+         ->editColumn('feeId', function($feehistory)
+         {
+             return $feehistory->Fee->name;
+         })
+
+        ->addIndexColumn()
+        ->make(true);
+
          return $data_table_render;
     }
 

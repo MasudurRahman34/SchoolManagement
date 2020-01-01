@@ -4,17 +4,17 @@
     {{-- //main content --}}
     <div class="app-title">
         <div class="hmmm">
-          <h1><i class="fa fa-edit"></i> Manage Section</h1>
+          <h1><i class="fa fa-edit"></i> Manage Fee List</h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item"><a href="#">Manage Section</a></li>
+          <li class="breadcrumb-item">Home / Admin</li>
+          <li class="breadcrumb-item"><a href="#">Manage Fee</a></li>
         </ul>
     </div>
     <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-8">
             <div class="tile">
               <div class="tile-body">
                 <div class="table-responsive">
@@ -25,9 +25,10 @@
                       <th>Fee Name</th>
                       <th>type</th>
                       <th>Amount</th>
-                      <th>className</th>
-                      <th>Taken During Admission</th>
+                      <th>Class</th>
+                      <th>Taken In Admission</th>
                       <th>Taken Interval</th>
+                      <th>Year</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -37,10 +38,10 @@
           </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-4">
         <form id="myform" action="javascript:void(0)">
         @csrf
-          <div class="tile">
+            <div class="tile">
               <h3 class="tile-title border-bottom p-2" id="title"> Add Fee</h3>
             <div class="tile-body">
 
@@ -63,13 +64,21 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleSelect1"> Taken Interval</label>
-
-                    <select class="form-control" id="interval" name="interval">
+                        <select class="form-control" id="interval" name="interval">
                             <option value="monthly">Monthly</option>
-
                             <option value="yearly">Yearly</option>
                         </select>
-                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelect1">Session Year</label>
+
+                    <select class="form-control" id="sessionYearId" name="sessionYearId">
+                        @foreach ($sessionYear as $year)
+                        <option value="{{$year->id}}"{{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
 
                 <div class="form-row">
                     <label for="exampleSelect1">Is Taken During Admission</label>
@@ -84,9 +93,7 @@
                             No
                         </label>
                     </div>
-                  </div>
-
-
+                </div>
 
                 <div class="form-row">
                     <label for="exampleSelect1">Fee Type</label>
@@ -104,22 +111,25 @@
                 </div>
             </div>
             <div class="tile-footer">
-                  <div class="row">
+                <div class="row">
                     <div class="col-md-12">
-                      <button class="btn btn-primary" type="submit" id="submit" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button></a>
-                      {{-- <input class="btn btn-primary" type="reset" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Reset</button></a> --}}
+                        <button class="btn btn-primary" type="submit" id="submit" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button></a>
+                        {{-- <input class="btn btn-primary" type="reset" style="float: right;"><i class="fa fa-fw fa-lg fa-check-circle"></i>Reset</button></a> --}}
                     </div>
-                  </div>
-              </div>
+                </div>
             </div>
-          </form>
+            </div>
+        </form>
         </div>
     </div>
-    </div>
-    <div class="clearix"></div>
+</div>
+
+<div class="clearix"></div>
     @endsection
     @section('script')
       @include('backend.partials.js.datatable');
+
+      //script section
       <script>
         var table= $('#sampleTable').DataTable({
             dom: 'lBfrtip',
@@ -137,12 +147,13 @@
              { data: 'classes.className', name: 'classes.className' },
              { data: 'status', name: 'status' },
              { data: 'interval', name: 'interval' },
+             { data: 'sessionYearId', name: 'sessionYearId' },
              { data: 'action', name: 'action' },
          ]
      })
 
 
-    //update and submit
+    //update and submit option
     $('#submit').click(function (e) {
         e.preventDefault();
         var id=$('#submit').val();
@@ -164,6 +175,7 @@
                 amount: $('#amount').val(),
                 classId: $('#classId option:selected').val(),
                 interval: $('#interval option:selected').val(),
+                sessionYearId: $('#sessionYearId option:selected').val(),
                 status: $('#status:checked').val(),
                 type: $('#type:checked').val(),
             },
@@ -182,7 +194,7 @@
     })
 });
 
-    //edit view
+    //edit view option
     function editfee(id) {
 
         setUpdateProperty(id, "fee");
@@ -196,6 +208,7 @@
                 $('#name').val(data.name);
                 $('#amount').val(data.amount);
                 $('#interval').val(data.interval);
+                $('#sessionYearId').val(data.sessionYearId);
                 console.log(data);
                 $("input[name='type'][value='"+data.type+"']").prop('checked', true);
                 $("input[name='status'][value='"+data.status+"']").prop('checked', true);
@@ -206,14 +219,11 @@
 
     }
 
-
-    //delete
+    //delete option
      function deletefee(id) {
         var url = "{{url('/fee/delete')}}";
         deleteAttribute(url,id);
-
     }
 
     </script>
-
     @endsection

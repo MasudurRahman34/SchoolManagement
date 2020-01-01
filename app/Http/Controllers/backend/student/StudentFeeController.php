@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\model\Fee;
 use App\model\feeCollection;
 use App\model\month;
+use App\model\SessionYear;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class StudentFeeController extends Controller
      */
     public function index()
     {
-        return view('backend.student.pages.fee.studentFeeView');
+        $sessionYear= SessionYear::where('bId', Auth::guard('student')->user()->bId)->get();
+        return view('backend.student.pages.fee.studentFeeView', compact("sessionYear"));
     }
 
     /**
@@ -54,20 +56,25 @@ class StudentFeeController extends Controller
      * @param  \App\model\studentFee  $studentFee
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$sessionYearId)
     {
-        $cur_year=date('Y');
+       // $cur_year=22;
+        //$cur_year= Auth::guard('student')->user()->Section->sessionYear->id;
+        $cur_year= $sessionYearId;
+        //return($id);
         //feeCollection query by studentId & month
         $feeCollection=feeCollection::orderBy('id','DESC')
         ->where('studentId', Auth::guard('student')->user()->id)
-        ->where('year', $cur_year)
-        ->whereMonth('created_at', $id)
+        ->where('sessionYearId', $cur_year)
+        ->where('month', $id)
         ->with('Fee')->get();
+        //return($feeCollection);
         //feeCollection query by studentId & check their month & total fee paied
         $totalAmountPay=feeCollection::where('studentId', Auth::guard('student')->user()->id)
-         ->where('year', $cur_year)
-        ->whereMonth('created_at', $id)
+         ->where('sessionYearId', $cur_year)
+        ->where('month', $id)
         ->sum('totalAmount');
+
         $tableOutPut="";
         foreach ($feeCollection as $fcollection) {
             $tableOutPut.='<tr>'.
@@ -76,25 +83,26 @@ class StudentFeeController extends Controller
             '<td>'.$fcollection->Fee->name.'</td>'.
             '<td>'.$fcollection->Fee->type.'</td>'.
             '<td>'.$fcollection->totalAmount.'</td>'.
-            '</tr>'; 
+            '</tr>';
         }
         return Response()->json(["totalAmountPay"=>$totalAmountPay, "tableOutPut"=>$tableOutPut]);
-  
+
     }
 
     //student due fee page
     public function dueFee(){
-        return view('backend.student.pages.fee.studentDueFees');
+        $sessionYear= SessionYear::where('bId', Auth::guard('student')->user()->bId)->get();
+        return view('backend.student.pages.fee.studentDueFees',compact("sessionYear"));
     }
     //Bringing to fee_collections data where to check "interval" monthly due fees this specific student
-    public function dueFee2($month){
-        $cur_year=date('Y');
+    public function dueFee2($month,$sessionYearId){
+        $cur_year= $sessionYearId;
         $stid=Auth::guard('student')->user()->id;
-        $feeid=DB::table('fee_collections')->select('feeId')->where('studentId', Auth::guard('student')->user()->id)->where('year', $cur_year)->where('month', $month)->pluck('feeId');
+        $feeid=DB::table('fee_collections')->select('feeId')->where('studentId', Auth::guard('student')->user()->id)->where('sessionYearId', $cur_year)->where('month', $month)->pluck('feeId');
         $NotGivenMonth=DB::table('fees')->select('*')
         ->whereNotIn('id', $feeid)
         ->where('interval', 'monthly')
-        ->get(); 
+        ->get();
         //Check which month, this student do not pay their fee==(Monthly Un-paid Fees)
         $totalNotGiven=Fee::whereNotIn('id', $feeid)
         ->where('interval', 'monthly')
@@ -104,10 +112,10 @@ class StudentFeeController extends Controller
             $tableOut.='<tr>'.
             '<td>'.$notGive->name.'</td>'.
             '<td>'.$notGive->amount.'</td>'.
-            '</tr>'; 
+            '</tr>';
         }
         //feeCollection query and check which month this specific student do not fee pay
-        $monthlyFeeid=DB::table('fees')->select('id')->where('year', $cur_year)->where('interval', 'monthly')->pluck('id');
+        $monthlyFeeid=DB::table('fees')->select('id')->where('sessionYearId', $cur_year)->where('interval', 'monthly')->pluck('id');
         $dueFeeByMonth=feeCollection::where('due','>',0)->where('studentId', Auth::guard('student')->user()->id)
         ->where('month',$month)
         ->whereIn('feeId', $monthlyFeeid)
@@ -124,11 +132,11 @@ class StudentFeeController extends Controller
             '<td>'.$dueFee->amount.'</td>'.
             '<td>'.$dueFee->totalAmount.'</td>'.
             '<td>'.$dueFee->due.'</td>'.
-            '</tr>'; 
+            '</tr>';
         }
         //From the fee_collections table's studentId
-        $yearlyfeeid=DB::table('fee_collections')->select('feeId')->where('studentId', Auth::guard('student')->user()->id)->where('year', $cur_year)->pluck('feeId');
-   
+        $yearlyfeeid=DB::table('fee_collections')->select('feeId')->where('studentId', Auth::guard('student')->user()->id)->where('sessionYearId', $cur_year)->pluck('feeId');
+
         //Yearly unpaid fess
         $yearlyUnPaidFees=DB::table('fees')->select('*')
         ->whereNotIn('id', $yearlyfeeid)
@@ -142,17 +150,17 @@ class StudentFeeController extends Controller
             $yearlyUnPaidHTML.='<tr>'.
             '<td>'.$yearlyUnPaidFee->name.'</td>'.
             '<td>'.$yearlyUnPaidFee->amount.'</td>'.
-            '</tr>'; 
+            '</tr>';
         }
         //yearly student's due fees
-        $yearlyFeeid=DB::table('fees')->select('id')->where('year', $cur_year)->where('interval', 'yearly')->pluck('id');
+        $yearlyFeeid=DB::table('fees')->select('id')->where('sessionYearId', $cur_year)->where('interval', 'yearly')->pluck('id');
         $yearlyDueFees=feeCollection::where('due','>',0)->where('studentId', Auth::guard('student')->user()->id)
-        ->where('year', $cur_year)
+        ->where('sessionYearId', $cur_year)
         ->whereIn('feeId', $yearlyFeeid)
         ->get();
         //Total yearly due check of feeCollection table
         $totalDueByYear=feeCollection::where('due','>',0)->where('studentId', Auth::guard('student')->user()->id)
-        ->where('year', $cur_year)
+        ->where('sessionYearId', $cur_year)
         ->whereIn('feeId', $yearlyFeeid)
         ->sum('due');
         $yearlyDuFeeHTML="";
@@ -162,7 +170,7 @@ class StudentFeeController extends Controller
             '<td>'.$yearlyDueFee->amount.'</td>'.
             '<td>'.$yearlyDueFee->totalAmount.'</td>'.
             '<td>'.$yearlyDueFee->due.'</td>'.
-            '</tr>'; 
+            '</tr>';
         }
 
         // $totalDueByMonth=feeCollection::where('due','>',0)->where('studentId', Auth::guard('student')->user()->id)
@@ -171,7 +179,7 @@ class StudentFeeController extends Controller
         return Response()->json(["tableOut"=>$tableOut, 'totalNotGiven'=>$totalNotGiven,'dueFeeByMonth'=>$HTMLdueFeeByMonth, "totalDueByMonth"=>$totalDueByMonth, "yearlyUnPaidHTML"=>$yearlyUnPaidHTML, "totalyearlyUnPaidFees"=>$totalyearlyUnPaidFees, "yearlyDueFees"=>$yearlyDuFeeHTML,"totalDueByYear"=>$totalDueByYear]);
         // // dd($feeid);
         // $monthList=month::get()->pluck('month');
-        
+
         // // $NotGivenMonth=DB::table('months')->select('month')
         // // ->whereNotIn('month', function($month){
         // //     $month->select('month')->from('fee_collections')->where('id', Auth::guard('student')->user()->id);

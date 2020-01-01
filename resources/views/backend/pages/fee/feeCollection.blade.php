@@ -26,6 +26,15 @@
             <div class="tile">
                 <div class="tile-body">
                 <div class="row">
+                    <div class="form-group col-xs-2 pr-2">
+                        <label for="exampleFormControlSelect1">Session Year</label>
+                        <select class="form-control admission" id="sessionYear" >
+                            <option value="">--Please Select--</option>
+                            @foreach ($sessionYear as $year)
+                                <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group col-xs-2">
                         <label class="control-label mt-3">Shift</label><br>
                             <div class="custom-control shift-radio custom-control-inline">
@@ -52,20 +61,20 @@
                     </div>
                     <div class="form-group col-xs-2 pr-2" id="hidden" >
                             <label for="exampleFormControlSelect1"> Fee Name</label>
-                            <select class="form-control " id="feeId">
+                            <select class="form-control feeChange" id="feeId">
                                     <option value="">--Select Fee--</option>
                             </select>
                     </div>
                     <div class="form-group col-xs-2 pr-2" id="hidden1" >
                         <label for="exampleFormControlSelect1"> Amount</label>
-                        <input class="form-control " type="number" id="amount" name="amount" required  readonly>
+                        <input class="form-control feeChange" type="number" id="amount" name="amount" required  readonly>
 
                     </div>
 
                     <div class="form-group col-xs-2 pr-2" >
                         <label for="exampleFormControlSelect1"> Month</label>
                         {{-- <input class="form-control " id="month" type="month" placeholder="Pick a month" value="{{date('Y-m')}}"/> --}}
-                        <select class="form-control " id="month">
+                        <select class="form-control feeChange" id="month">
                             <option value="">--Select Fee--</option>
                             <option value="JANUARY">JANUARY</option>
                             <option value="FEBRUARY">FEBRUARY</option>
@@ -83,18 +92,11 @@
                     </div>
                     <div class="form-group col-xs-2">
                         <label for="exampleFormControlSelect1"> Section</label>
-                        <select class="form-control " id="sectionId">
+                        <select class="form-control feeChange" id="sectionId">
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
-                    <div class="form-group col" hidden>
-                        <select class="form-control " id="sessionYear" >
-                            <option value="">--Please Select--</option>
-                            @foreach ($sessionYear as $year)
-                                <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+
                     </div>
                 </div>
             </div>
@@ -104,31 +106,10 @@
 
 <div class="row justify-content-md-center">
     <div class="col-md-9 ">
-        {{-- <div class="tile">
-                <div class="tile-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Roll</th>
-                                <th>Class</th>
-                                <th>Section</th>
-                                <th>Shift</th>
-                                <th>Contact</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>
-                    <form action="{{route('store.feecollection')}}" method="post" id="myfeeform">
+                    <form action="{{route('store.feecollection')}}" method="post"   id="myfeeform">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" hidden>
                        <input type="text" name="classId2" id="classId2" hidden>
@@ -151,16 +132,62 @@
                             </tbody>
                         </table>
                         </div>
-                        <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true" onclick="valthisform()"><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
+                        <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true"  ><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
                     </form>
                 </div>
             </div>
     </div>
     <div class="clearix"></div>
+
+  <!-- The Modal -->
+  <div class="modal" id="newModal" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            Fee has been Taken At This Type for This month, Do You Want to Update it!
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="unpaid" data-dismiss="modal">Update Un-Paid List</button>
+          <button type="button" class="btn btn-primary" id="paid" data-dismiss="modal">Update Paid List</button>
+          <button type="button" class="btn btn-danger" id="cancel" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
     @endsection
     @section('script')
     <script src="{{ asset('admin/js/printThis.js') }} "></script>
     <script>
+
+        function checkedAtlestOne(){
+
+            $("#myfeeform").submit(function () {
+                var idChecked= new Array;
+                var roll=true;
+                $("#myfeeform input[type=checkbox]:checked").each(function(){
+                    idChecked.push(this.value);
+                });
+                if(idChecked.length>0){
+                    return roll=true;
+                }else{
+                    alert('missiion');
+                    roll= false;
+                }return roll;
+
+              });
+
+        }
     $('.admission').change(function (e) {
         e.preventDefault();
         var classId= $("#classId").val();
@@ -208,44 +235,145 @@
         }
     });
 
-//show hidden field for adminssion
-    $("#paymentType").change(function() {
-        //alert('working');
-        var val = $(this).val();
-        if(val === "") {
-            $('#hidden').attr('hidden',true);
-            $('#hidden1').attr('hidden',true);
-        }
-        else if(val === "") {
-            $('#hidden').attr('hidden',false);
-            $('#hidden1').attr('hidden',false);
-        }
-      });
 
 //on change fee id for find amount
-    $('#feeId').change(function (e) {
+    $('.feeChange').change(function (e) {
         e.preventDefault();
         var feeId= $("#feeId").val();
         console.log(feeId);
         var url='/api/search/feeamount';
-            var data= {
+        var data= {
                 'feeId' : feeId,
             }
+
+        $.ajax({
+            type: "get",
+            url:url,
+            data: data,
+            success: function (data) {
+                console.log(data);
+            //var amount = data;
+                //$('#amount').text();
+                $('#amount').val(data);
+            }
+        });
+        var sectionId=$("#sectionId").val();
+        $("#sectionId2").attr('value',sectionId);
+        var classId=$("#classId").val();
+        $("#classId2").attr('value',classId);
+
+        var amount=$("#amount").val();
+        $("#amount2").attr('value',amount);
+        var feeId=$("#feeId").val();
+        $("#feeId2").attr('value',feeId);
+        var month=$("#month").val();
+        $("#month2").attr('value',month);
+        var sessionYear=$("#sessionYear").val();
+        $("#sessionYear2").attr('value',sessionYear);
+
+        console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
+
+        if(sectionId>0){
+
             $.ajax({
-                type: "get",
-                url:url,
-                data: data,
-                success: function (data) {
-                    console.log(data);
-                //var amount = data;
-                    //$('#amount').text();
-                    $('#amount').val(data);
+              type: "post",
+              url: "{{ url('feecollection/student/Data')}}",
+              data: {
+                sectionId:sectionId,
+                feeId:feeId,
+                month:month,
+              },
+              success: function (response) {
+
+              if(response.dueStudent){
+                    console.log('if');
+
+
+                        //Un-Paid Student
+                        $("#newModal").modal("show");
+                        $("#unpaid").click(function(e){
+                            $('#tblHidden').attr('hidden',false);
+                            $('#btnFee').attr('disabled',false);
+
+
+
+                            var tr='';
+                            $.each (response.dueStudent, function (key, value) {
+
+                            tr +=
+                                "<tr>"+
+                                    "<td>"+
+                                        '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="">'
+                                    +"</td>"+
+                                    "<td>"+value.roll+"</td>"+
+                                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                            "</tr>";
+                        });
+
+                        $('tbody').html(tr);
+                        checkedAtlestOne();
+
+                        });
+
+                        $("#paid").click(function(e){
+
+                            //for lode paid student list
+                            console.log('else');
+                            $('#tblHidden').attr('hidden',false);
+                            $('#btnFee').attr('disabled',false);
+                            var tr='';
+                            $.each (response.paidStudent, function (key, value) {
+
+                                $("input[id='fee'][value='"+value.id+"']").prop('checked', true);
+                            tr +=
+                                "<tr>"+
+                                    "<td>"+
+                                        '<input class="roll" type="checkbox" name="studentId['+value.id+']" value=""  checked>'
+                                    +"</td>"+
+                                    "<td>"+value.roll+"</td>"+
+                                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                            "</tr>";
+                            $('#btnFee').html("Update Fee");
+                            $('#myfeeform').attr("action", "feecollection/update");
+                        });
+                        $('tbody').html(tr);
+
+                    });
+                }else{
+
+                    console.log('else');
+                    //newly add  fee data
+                    $('#tblHidden').attr('hidden',false);
+                    $('#btnFee').attr('disabled',false);
+                    var tr='';
+                    $.each (response, function (key, value) {
+                    tr +=
+                        "<tr>"+
+                            "<td>"+
+                                '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" >'
+                            +"</td>"+
+                            "<td>"+value.roll+"</td>"+
+                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                        "</tr>";
+                    });
+                    $('tbody').html(tr);
+                    checkedAtlestOne();
+
+                    }
                 }
             });
+        }
+
+        //select checked box All
+        $('#allcb').change(function () {
+            $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+        });
+
     });
 
+
 //on change section for find student
-    $('#sectionId').change(function (e) {
+   /* $('.admission').change(function (e) {
         e.preventDefault();
         var sectionId=$("#sectionId").val();
         $("#sectionId2").attr('value',sectionId);
@@ -292,6 +420,7 @@
                 $('tbody').html(tr);
                } else{
 
+                //for lode paid student list
                 console.log('else');
                 $('#tblHidden').attr('hidden',false);
                 $('#btnFee').attr('disabled',false);
@@ -336,23 +465,26 @@
         $('#allcb').change(function () {
             $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
         });
-    });
+    });*/
 
-    function valthisform()
-    {
-        var checkboxs=document.getElementsByName("feeCollection");
-        var okay=false;
-        for(var i=0,l=checkboxs.length;i<l;i++)
-        {
-            if(checkboxs[i].checked)
+    /* function checkCheckBoxes(form){
+
+        if (
+            form.fee.checked == false &&
+            form.CHECKBOX_2.checked == false &&
+            form.CHECKBOX_3.checked == false)
             {
-                okay=true;
-                break;
+                alert ('You didn\'t choose any of the checkboxes!');
+                return false;
+            } else {
+                return true;
             }
-        }
-        if(okay)alert("Thank you for checking a checkbox");
-        else alert("Please check a checkbox");
-    }
+    } */
+
+
+
+
+
 
 
 

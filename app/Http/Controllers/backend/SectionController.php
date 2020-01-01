@@ -69,7 +69,7 @@ class SectionController extends Controller
         $sections=Section::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->with('sessionYear')->get();
 
         $data_table_render = DataTables::of($sections)
-            
+
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editSection('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteSection('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';

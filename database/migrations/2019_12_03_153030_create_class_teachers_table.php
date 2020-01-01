@@ -22,6 +22,7 @@ class CreateClassTeachersTable extends Migration
             $table->unsignedInteger('sessionYearId')->comment('sessionYear table');
             $table->unsignedInteger('bId');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

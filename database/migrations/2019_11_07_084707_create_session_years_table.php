@@ -19,6 +19,7 @@ class CreateSessionYearsTable extends Migration
             $table->boolean('status')->default(0);
             $table->unsignedBigInteger('bId');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

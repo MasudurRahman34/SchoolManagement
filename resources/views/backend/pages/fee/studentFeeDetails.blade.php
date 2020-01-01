@@ -112,7 +112,7 @@
                             <th>Fee</th>
                             <th>Type</th>
                             <th>Total Amount</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -131,7 +131,7 @@
                             <th>Fee</th>
                             <th>Amount</th>
                         </tr>
-                        
+
                     </thead>
                     <tbody id="unpaid">
                     </tbody>
@@ -151,7 +151,7 @@
                             <th>Total Amount</th>
                             <th>Due</th>
                         </tr>
-                        
+
                     </thead>
                     <tbody id="due">
 
@@ -170,7 +170,7 @@
                             <th>Fee</th>
                             <th>Amount</th>
                         </tr>
-                        
+
                     </thead>
                     <tbody id="yearly_Un_paid">
 
@@ -191,7 +191,7 @@
                             <th>Total Amount</th>
                                 <th>Due</th>
                         </tr>
-                        
+
                     </thead>
                     <tbody id="yearly_du_fees">
 
@@ -271,12 +271,13 @@ $('#studentId').change(function (e) {
     e.preventDefault();
     var month=$("#month").val();
     var studentId=$(this).val();
+    var sessionYearId=$('#sessionYear').val();
     // show fee details information
-    console.log(month);
+    console.log(month,sessionYearId);
     $.ajax({
         type: "get",
-        url: "{{url('feecollection/details/show')}}"+"/"+month+"/"+studentId,
-        data: "data",
+        url: "{{url('feecollection/details/show')}}"+"/"+month+"/"+studentId+"/"+sessionYearId,
+
         success: function (response) {
               console.log(response);
               $('tbody').html(response.tableOutPut);
@@ -289,7 +290,7 @@ $('#studentId').change(function (e) {
               $('#totalyearlyUnPaidFees').val(response.totalyearlyUnPaidFees+ "/=");
               $('#yearly_du_fees').html(response.yearlyDueFees);
               $('#totalyearlyDuFees').val(response.totalDueByYear+ "/=");
-            
+
           }
 
         });

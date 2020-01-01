@@ -44,6 +44,7 @@ class CreateStudentsTable extends Migration
             // $table->unsignedInteger('optionalSubjectId')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('bId')
             ->references('id')->on('school_branches')
             ->onDelete('cascade');

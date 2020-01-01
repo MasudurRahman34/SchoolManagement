@@ -20,6 +20,7 @@ class CreateAttendancesTable extends Migration
             $table->unsignedInteger('bId');
             $table->unsignedBigInteger('sectionId');
             $table->unsignedBigInteger('classId');
+            $table->softDeletes();
             $table->foreign('sectionId')
                     ->references('id')->on('sections')
                     ->onDelete('cascade');

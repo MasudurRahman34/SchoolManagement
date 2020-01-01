@@ -4,6 +4,15 @@
     <div class="row ">
         <div class="col-md-3">
         <div class="tile p-0">
+            <div class="form-group col pr-2" >
+                <label for="exampleFormControlSelect1">Session Year</label>
+                <select class="form-control admission" id="sessionYear">
+                  <option value="">--Please Select--</option>
+                  @foreach ($sessionYear as $year)
+                    <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                  @endforeach
+                </select>
+              </div>
         <div class="form-group col-md-3" id="tblFruits">
               <label class="control-label mt-3">Month</label><br>
                 <div class="custom-control month-radio custom-control-inline">
@@ -73,7 +82,7 @@
                                         <th>Fee</th>
                                         <th>Amount</th>
                                     </tr>
-                                   
+
                                 </thead>
                                 <tbody id="unpaid">
 
@@ -97,7 +106,7 @@
                                         <th>Total Amount</th>
                                         <th>Due</th>
                                     </tr>
-                                   
+
                                 </thead>
                                 <tbody id="due">
 
@@ -119,7 +128,7 @@
                                         <th>Fee</th>
                                         <th>Amount</th>
                                     </tr>
-                                   
+
                                 </thead>
                                 <tbody id="yearly_Un_paid">
 
@@ -143,7 +152,7 @@
                                         <th>Total Amount</th>
                                          <th>Due</th>
                                     </tr>
-                                   
+
                                 </thead>
                                 <tbody id="yearly_du_fees">
 
@@ -154,27 +163,27 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
       <div class="clearix"></div>
     @endsection
     @section('script')
      <script src="{{ asset('admin/js/printThis.js') }} "></script>
-       @include('backend.student.partials.js.datatable'); 
-       
+       @include('backend.student.partials.js.datatable');
+
     <script src="{{ asset('admin/js/plugins/chart.js') }} "></script>
     <script type="text/javascript">
-    
+
 $(function(){
-    $('input[type="radio"]').click(function(){
-    if ($(this).is(':checked'))
-    {
-      var month=$(this).val();
+    $('.admission').change(function(){
+
+      var month =$('input[type="radio"]:checked').val();
+      var sessionYearId= $("#sessionYear option:selected").val()
       console.log(month);
       $.ajax({
           type: "get",
-          url: "{{url('student/due2/fee/show')}}"+"/"+month,
+          url: "{{url('student/due2/fee/show')}}"+"/"+month+"/"+sessionYearId,
           success: function (response) {
               console.log(response);
               $('#unpaid').html(response.tableOut);
@@ -185,12 +194,11 @@ $(function(){
               $('#totalyearlyUnPaidFees').val(response.totalyearlyUnPaidFees);
               $('#yearly_du_fees').html(response.yearlyDueFees);
               $('#totalyearlyDuFees').val(response.totalDueByYear);
-            
           }
       });
-        
-    }
-    
+
+
+
   });
 
   //print button in table

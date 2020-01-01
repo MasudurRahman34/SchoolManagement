@@ -23,6 +23,7 @@ class CreateMarksTable extends Migration
             $table->unsignedBigInteger('sectionId');
             $table->unsignedBigInteger('classId');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

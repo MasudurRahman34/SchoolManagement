@@ -27,6 +27,7 @@ class CreateSchoolBranchesTable extends Migration
             $table->text('address');
             $table->boolean('activeStatus')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
