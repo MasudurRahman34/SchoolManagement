@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\model\schoolBranch;
 use App\model\classes;
+use App\model\SessionYear;
 use App\User;
 use App\model\File;
 use Spatie\Permission\Models\Role;
@@ -412,8 +413,25 @@ class UserController extends Controller
     public function updateRole(Request $request, $id)
     {
         $user=User::findorFail($id);
-        $user->roles()->detach();
-        $user->assignRole($request->role);
+        // get request role name
+        $role=Role::findOrFail($request->role);
+        if($role->name=='Class Teacher'){
+
+            DB::table('class_teachers')
+            ->updateOrInsert(
+                ['userId' => $id],
+                ['classId' => $request->classId, 'sectionId' => $request->sectionId, 'shift' => $request->shift, 'sessionYearId' => $request->sessionYear, 'bid'=>Auth::guard('web')->user()->bId ]
+            );
+            $user->roles()->detach();
+            $user->assignRole($request->role);
+        }else{
+            $current_session=SessionYear::where('bId', Auth::guard('web')->user()->bId)->where('status', 1)->firstOrFail();
+            DB::table('class_teachers')->where('sessionYearId', $current_session->id)->where('userId', $id)->delete();
+            $user->roles()->detach();
+            $user->assignRole($request->role);
+
+        }
+
         Session::flash('success','Role Has Been Changed');
         return redirect()->back();
     }
