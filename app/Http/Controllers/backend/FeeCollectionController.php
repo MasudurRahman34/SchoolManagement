@@ -77,7 +77,7 @@ class FeeCollectionController extends Controller
         ->where('month',$month)
         ->with('Fee')->get();
         //feeCollection query by studentId & check their month & total fee paied
-        $totalAmountPay=feeCollection::where('studentId', Auth::guard('student')->user()->id)
+        $totalAmountPay=feeCollection::where('studentId', $studentId)
          ->where('sessionYearId', $cur_year)
         ->where('month',$month)
         ->sum('totalAmount');

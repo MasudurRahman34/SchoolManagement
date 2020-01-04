@@ -187,7 +187,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     Route::get('/fee/edit/{id}','backend\FeeController@edit')->name('fee.edt');
     Route::post('/fee/update/{id}','backend\FeeController@update')->name('fee.update');
     Route::get('/fee/delete/{id}','backend\FeeController@destroy')->name('fee.delete');
-    Route::get('/getAllFeesByClass/{classId}','backend\FeeController@getAllFeesByClass')->name('getAllFeesByClass');
+    Route::get('/getAllFeesByClass/{classId}/{sessionYearId}','backend\FeeController@getAllFeesByClass')->name('getAllFeesByClass');
 
     //feeHisory admin view
     Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');

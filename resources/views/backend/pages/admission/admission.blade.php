@@ -35,7 +35,7 @@
                 </span>
               @endif
             </div>
-           
+
             <div class="form group col-md-6 {{$errors->has('lastName') ? 'has-error' : ''}}">
                 <label class="control-label">Last Name<span style="color: red;">*</span></label>
                 <input class="form-control" name="lastName" id="lastName" type="text" value="{{old('lastName')}}">
@@ -346,9 +346,10 @@ function getFeesByClass(){
 $('#classId').change(function (e) {
     e.preventDefault();
     var classId = $(this).val();
+    var sessionYearId=$("#sessionYear").val();
     $.ajax({
         type: "get",
-        url: "/getAllFeesByClass"+"/"+classId,
+        url: "/getAllFeesByClass"+"/"+classId+"/"+sessionYearId,
 
         success: function (response) {
             console.log(response);
