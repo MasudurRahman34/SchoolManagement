@@ -47,7 +47,7 @@
             </ul>
           </li>
           @endcan
-          @can('Attendance')
+          @can('Class Teacher')
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fas fa-cog fa-spin"></i><span class="app-menu__label">My Class</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               {{-- <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-angle-right"></i>My User & Password</a></li> --}}
@@ -135,7 +135,7 @@
               {{-- <li><a class="treeview-item" href="{{route('attendance.bydate') }}"><i class="icon fa fa-angle-right"></i>Datewish Attendance</a></li> --}}
             </ul>
           </li>
-
+          @can('Fee Management')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Fee Mnagement</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('fee.index') }}"><i class="icon fa fa-angle-right"></i>Manage Fee </a></li>
@@ -144,10 +144,10 @@
               <li><a class="treeview-item" href="{{route('individualFee.individualCollection') }}"><i class="icon fa fa-angle-right"></i> Take Fee Individual</a></li>
               <li><a class="treeview-item" href="{{route('student.feeDetails') }}"><i class="icon fa fa-angle-right"></i> Student Fee Details</a></li>
 
-               {{-- <li><a class="treeview-item" href="{{route('fee.classwish') }}"><i class="icon fa fa-angle-right"></i>class wish</a></li>  --}}
-              {{-- <li><a class="treeview-item" href="{{route('attendance.bydate') }}"><i class="icon fa fa-angle-right"></i>Datewish Attendance</a></li> --}}
             </ul>
           </li>
+          @endcan
+
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Scholarship Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('scholarship.management')}}"><i class="icon fa fa-angle-right"></i>Schoolarship</a></li>

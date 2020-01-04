@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\backend\Attendance;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\model\Attendance;
 use App\model\SessionYear;
 use App\model\classes;
+use App\model\ClassTeacher;
 use App\model\Section;
 use App\model\Student;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
-
+use PhpParser\Node\Stmt\Foreach_;
 
 class AttendanceController extends Controller
 {
@@ -47,11 +48,7 @@ class AttendanceController extends Controller
     // }
 }
 
-public function myclassattendance(){
 
-
-
-}
 
 //store Attendance information
 public function storeAttendence(Request $request){
@@ -118,33 +115,7 @@ public function storeAttendence(Request $request){
         return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
     }
 
-    public function studentData(Request $request)
-    {
-        $attendences=Attendance::where('sectionId', $request->sectionId)
-        ->whereDate('created_at',date('Y-m-d'))
-        ->where('bId' , Auth::guard('web')->user()->bId)
-        ->first();
-        if($attendences!=null){
-            // $attendences=Attendance::where('sectionId', $request->sectionId)
-            // ->whereDate('created_at',date('Y-m-d'))
-            // ->where('bId' , Auth::guard('web')->user()->bId)
-            // ->get();
 
-            // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
-
-            return response()->json(["redirectToEdit"=>"/student/attendance/edit/$request->sectionId"]);
-        }else{
-            $sectionId= $request->sectionId;
-            $students = Student::where('sectionId',$sectionId)->orderBy('id','ASC')->get();
-            return response()->json($students);
-        }
-
-
-        // $sectionId= $request->sectionId;
-        // $students = Student::where('sectionId',$sectionId)->get();
-        // return response()->json($students);
-        // return response()->json($attendences);
-    }
 
     //student attandance date wish search
     public function studentDatabydate(Request $request)

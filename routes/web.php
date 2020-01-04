@@ -60,7 +60,13 @@ Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
 
 
 //end api routes
+//New Admin APi Section
+Route::group(['namespace'=>'backend'], function () {
+    Route::post('/student/attendance/studentData','Attendance\ApiAttendanceController@studentData')->name('studentData.attendence');
 
+});
+
+//End Admin APi Section
 
 //student login
 
@@ -274,23 +280,30 @@ Route::group(['middleware' => ['auth','role_or_permission:Subject']], function (
 //
 
 //Attendance Management
-Route::group(['middleware' => ['auth','role_or_permission:Attendance']], function () {
-    Route::get('/student/attendance','backend\AttendanceController@index')->name('attendance.index');
+Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespace'=>'backend\Attendance'], function () {
+    Route::get('/student/attendance','AttendanceController@index')->name('attendance.index');
+    Route::post('/student/attendance/store','AttendanceController@storeAttendence')->name('store.attendence');
+    Route::get('/student/attendance/edit/{sectionId}','AttendanceController@edit')->name('attendance.edit');
+    Route::post('/student/attendance/update','AttendanceController@update')->name('update.attendence');
+    Route::get('/student/attendance/classwish','AttendanceController@classwish')->name('attendance.classwish');
 
-    Route::post('/student/attendance/store','backend\AttendanceController@storeAttendence')->name('store.attendence');
-    Route::post('/student/attendance/update','backend\AttendanceController@update')->name('update.attendence');
-    Route::get('/student/attendance/edit/{sectionId}','backend\AttendanceController@edit')->name('attendance.edit');
+    Route::get('/student/attendance/bydate','AttendanceController@bydate')->name('attendance.bydate');
 
-    Route::get('/student/attendance/classwish','backend\AttendanceController@classwish')->name('attendance.classwish');
+    Route::post('/student/attendance/studentDatabydate','AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
+    Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
 
-    Route::get('/student/attendance/bydate','backend\AttendanceController@bydate')->name('attendance.bydate');
-    Route::post('/student/attendance/studentData','backend\AttendanceController@studentData')->name('studentData.attendence');
-    Route::post('/student/attendance/studentDatabydate','backend\AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
-    Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','backend\AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
 
-    //my class option
-    Route::get('/myclass/attendance','backend\AttendanceController@myclassattendance')->name('myclass.attendance');
 
+});
+
+
+ //Class Teacher option
+ Route::group(['middleware' => ['auth','role_or_permission:Class Teacher']], function () {
+
+    Route::get('/myclass/attendance','backend\ClassTeacherController@myclassattendance')->name('myclass.attendance');
+    Route::post('/myclass/attendance/store','backend\ClassTeacherController@storeAttendence')->name('myclass.store');
+    Route::get('/student/attendance/edit/{sectionId}','backend\ClassTeacherController@edit')->name('myclass.edit');
+    Route::post('/myclass/attendance/update','backend\ClassTeacherController@update')->name('myclass.update');
 });
 
 //Marks Distribution
@@ -320,4 +333,4 @@ Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')-
 
 
 
-//misuk14/11/19
+//misuk 04/01/2020

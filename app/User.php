@@ -45,8 +45,6 @@ class User extends Authenticatable
         'name'=>'required', 'string', 'max:255',
         'mobile'=>'required', 'string', 'max:255','unique:users',
         'designation'=>'string', 'max:255',
-        'joinDate'=>'string',  'max:255',
-        'address'=>'required', 'string',  'max:255',
 
     ];
 

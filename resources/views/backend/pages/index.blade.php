@@ -95,6 +95,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="tile">
+                        <h3 class="tile-title"> Attendance Report DateWish</h3>
                         <div class="tile-body">
                             <div class="row">
                                 <div class="form-group col-xs-2">
@@ -204,7 +205,7 @@
              url: "{{url('/api/search/totalstudent')}}",
              data: "data",
              success: function (data) {
-                $('#totalstudent').html(data.data); 
+                $('#totalstudent').html(data.data);
              }
          });
 
