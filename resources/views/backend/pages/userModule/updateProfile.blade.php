@@ -163,10 +163,11 @@
                   @csrf
                    <div class="row">
                        <div class="form group col-md-3">
-                         <label class="control-label">New Password</label>
+                         <label class="control-label">Current Role</label>
+                         <input type="text" name="currentRole" value="{{$user->getRoleNames()}}" checked="" class="admission" readonly>
                        </div>
                        <div class="form group col-md-5">
-                         <label class="control-label">Change Role</label>
+                         <label class="control-label">Change To</label>
                          <select class="form-control" name="role" id="role" required>
                             <option value="0">--Please Select--</option>
 

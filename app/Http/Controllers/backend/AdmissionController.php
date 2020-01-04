@@ -58,12 +58,12 @@ class AdmissionController extends Controller
         //     'gender'=>'required',
         //     'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
         //     'mobile'=>'required', 'string', 'max:255','unique:users',
-        //     'birthDate'=>'required',
-        //     'blood'=>'required',
-        //     'sectionId'=>'required',
-        //     'roll'=>'required',
-        //     'group'=>'required',
-        //     'type'=>'required',
+        //     //'birthDate'=>'required',
+        //     //'blood'=>'required',
+        //     // 'sectionId'=>'required',
+        //     // 'roll'=>'required',
+        //     // 'group'=>'required',
+        //     // 'type'=>'required',
         // ]);
 
         $password=mt_rand(100000,999999);
@@ -145,8 +145,8 @@ class AdmissionController extends Controller
 
 
 
-        $students=Student::with('Section', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
-        dd($students);
+        $students=Student::with('Section', 'schoolBranch', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
+
         // dd($students);
         // $StdbId=$Student->bId;
         // // dd($Student->Section->classes);
