@@ -346,7 +346,7 @@ function getFeesByClass(){
 $('#classId').change(function (e) {
     e.preventDefault();
     var classId = $(this).val();
-    var sessionYearId=$("#sessionYear").val();
+    var sessionYearId=$("#sessionYear option:selected").val();
     $.ajax({
         type: "get",
         url: "/getAllFeesByClass"+"/"+classId+"/"+sessionYearId,

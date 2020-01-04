@@ -5,8 +5,10 @@ use App\model\schoolBranch;
 use App\model\Section;
 use App\model\studentHistory;
 use App\model\Attendance;
-use\App\model\File;
+use App\model\File;
 use App\model\studentoptionalsubject;
+use App\model\studentScholarship;
+use App\model\feeCollection;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -72,7 +74,7 @@ class Student extends Authenticatable
     //     'group'=>'required',
     //     'type'=>'required',
     //     'schoolarshipId'=>'required',
-        
+
     // ];
     public function files(){
         return $this->hasMany(File::class,'studentId', 'id');
@@ -92,6 +94,12 @@ class Student extends Authenticatable
     }
     public function studentHistory(){
         return $this->hasMany(studentHistory::class,'studentId', 'id');
+    }
+    public function feeCollection(){
+        return $this->hasMany(feeCollection::class,'studentId', 'id');
+    }
+    public function studentScholarship(){
+        return $this->hasMany(studentScholarship::class,'studentId', 'id');
     }
 
 

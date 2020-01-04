@@ -52,20 +52,19 @@ class AdmissionController extends Controller
      */
     public function store(Request $request)
 {
-        $this->validate($request,[
-            'firstName'=>'required|min:3', 'string', 'max:255',
-            'lastName'=>'required|min:3', 'string', 'max:255',
-            'gender'=>'required',
-            'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
-            'mobile'=>'required', 'string', 'max:255','unique:users',
-            'birthDate'=>'required',
-            'blood'=>'required',
-            'sectionId'=>'required',
-            'roll'=>'required',
-            'group'=>'required',
-            'type'=>'required',
-            'schoolarshipId'=>'required',
-        ]);
+        // $this->validate($request,[
+        //     'firstName'=>'required|min:3', 'string', 'max:255',
+        //     'lastName'=>'required|min:3', 'string', 'max:255',
+        //     'gender'=>'required',
+        //     'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
+        //     'mobile'=>'required', 'string', 'max:255','unique:users',
+        //     'birthDate'=>'required',
+        //     'blood'=>'required',
+        //     'sectionId'=>'required',
+        //     'roll'=>'required',
+        //     'group'=>'required',
+        //     'type'=>'required',
+        // ]);
 
         $password=mt_rand(100000,999999);
         $Student= new Student();
@@ -88,8 +87,8 @@ class AdmissionController extends Controller
         $Student->schoolarshipId=$request->schoolarshipId;
         $Student->save();
 
-          Session::flash('success','You Have Successfully Admitted!');
-          return redirect()->back();
+        //   Session::flash('success','You Have Successfully Admitted!');
+        //   return redirect()->back();
         //if optinal subject
             if($request->has('optionalSubjectId')){
                 $optionalSubjectId= $request->optionalSubjectId;
@@ -135,7 +134,7 @@ class AdmissionController extends Controller
 
             $feeCollection->paidMonth =strtoupper(date('F'));
             $feeCollection->month  = strtoupper(date('F'));
-            $feeCollection->year   = $request->sessionYear;
+            $feeCollection->sessionYearId   = $request->sessionYear;
             $feeCollection->sectionId   = $request->sectionId;;
             $feeCollection->bId    = Auth::guard('web')->user()->bId;
 
@@ -146,8 +145,8 @@ class AdmissionController extends Controller
 
 
 
-        $students=$Student::with('schoolBranch','Section')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
-        // dd($students);
+        $students=Student::with('Section', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
+        dd($students);
         // dd($students);
         // $StdbId=$Student->bId;
         // // dd($Student->Section->classes);

@@ -32,8 +32,7 @@ class FeeController extends Controller
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
         return view('backend.pages.fee.createFee', compact("class","sessionYear"));
     }
-
-    public function getAllFeesByClass($classId,$sessionYearId)
+    public function getAllFeesByClass($classId, $sessionYearId)
     {
         $cur_year=date('Y');
         $fees=Fee::where('bId',Auth::guard('web')->user()->bId)->where('classId', $classId)->where('sessionYearId', $sessionYearId)->get();

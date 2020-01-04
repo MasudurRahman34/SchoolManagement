@@ -4,6 +4,7 @@ namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class scholarship extends Model
 {
     // public function student(){
@@ -14,4 +15,5 @@ class scholarship extends Model
         'name'=>'required',
         'discount'=>'required',
     ];
+
 }
