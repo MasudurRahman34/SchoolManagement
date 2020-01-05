@@ -23,12 +23,14 @@ class MyStudentConttroller extends Controller
      */
     public function index()
     {
+       // $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
         return view('backend.pages.mystudent.myStudentList');
     }
     public function allstudentlist()
     {
 
         $student=Student::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->with('Section')->get();
+        //$student=DB::select("select * from students, sections WHERE students.sectionId=sections.id And sections.sessionYearId='$sessionYearId'");
         // foreach ($student as $value) {
         //     dd($value->Section->classes);
         // }
@@ -57,8 +59,9 @@ class MyStudentConttroller extends Controller
     public function classwise()
     {
         $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
 
-            return view('backend.pages.mystudent.classwiseStudent')->with('class', $class);
+            return view('backend.pages.mystudent.classwiseStudent')->with('class', $class)->with('sessionYear',$sessionYear);
 
     }
 
@@ -66,9 +69,11 @@ class MyStudentConttroller extends Controller
         return "working";
     }
 
-    public function classwiseList($classId)
+    public function classwiseList($classId, $sessionYearId)
+
     {
-            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId'");
+        $bId=Auth::guard('web')->user()->bId;
+            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' AND sections.sessionYearId='$sessionYearId'  AND students.bId='$bId'");
 
                 $data_table_render = DataTables::of($class)
 
@@ -104,10 +109,10 @@ class MyStudentConttroller extends Controller
 
     }
 
-    public function sectionwiselist($classId, $sectionId)
+    public function sectionwiselist($classId, $sectionId, $sessionYearId)
     {
-
-            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
+        $bId=Auth::guard('web')->user()->bId;
+            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId' AND sections.sessionYearId='$sessionYearId' AND students.bId='$bId'");
 
                 $data_table_render = DataTables::of($class)
 

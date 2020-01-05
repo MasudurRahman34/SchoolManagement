@@ -16,6 +16,17 @@
     <div class="col-md-9">
         <div class="tile">
                 <div class="tile-body">
+                    {{--  <form class="row" id="myform" action="javascript:void(0)">
+                        <div class="form-group col" >
+                            <label for="exampleFormControlSelect1">Session Year</label>
+                            <select class="form-control admission" id="sessionYear">
+                              <option value="">--Please Select--</option>
+                              @foreach ($sessionYear as $year)
+                                <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                    </form>  --}}
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
@@ -46,6 +57,12 @@
       @include('backend.partials.js.datatable');
       <script>
         // $(document).ready( function () {
+
+        //$('#sessionYear').click(function (e) {
+           // e.preventDefault();
+
+       // var sessionYearId=$("#sessionYear").val();
+           // console.log(sessionYearId);
            var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
@@ -70,6 +87,7 @@
                     { data: 'action', name: 'action' }
                 ]
             });
+       // });
 
     </script>
 

@@ -16,16 +16,27 @@
         <div class="col-md-9">
             <div class="tile">
                     <div class="tile-body">
-                        <div class="form-group">
-                            <label for="exampleSelect1">Select Class</label>
-                            <select class="form-control" id="classId" name="classId">
-                                <option value="">--Please Select--</option>
-                             @foreach ($class as $class)
-                            <option value="{{$class->id}}">{{$class->className}}</option>
-                             @endforeach
-
+                        <form class="row" id="myform" action="javascript:void(0)">
+                        <div class="form-group col-md-3" >
+                            <label for="exampleFormControlSelect1">Session Year</label>
+                            <select class="form-control admission" id="sessionYear">
+                              <option value="">--Please Select--</option>
+                              @foreach ($sessionYear as $year)
+                                <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                              @endforeach
                             </select>
                           </div>
+                          <!-- single section-->
+                          <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1">Select Class</label>
+                            <select class="form-control admission" id="classId">
+                              <option value="">--Please Select-- </option>
+                              @foreach ($class as $class)
+                              <option value="{{$class->id}}">{{$class->className}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -69,7 +80,8 @@
             $('#classId').change(function (e) {
                 e.preventDefault();
                 var classId=$(this).val();
-                console.log(classId);
+                var sessionYearId=$('#sessionYear').val();
+                console.log(classId,sessionYearId);
                 var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
@@ -79,7 +91,7 @@
                 serverSide:true,
                 pagin:true,
                 destroy:true,
-                ajax:"{{url('mystudent/classwiseList/')}}"+'/'+classId,
+                ajax:"{{url('mystudent/classwiseList/')}}"+'/'+classId+'/'+sessionYearId,
                 columns:[
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'studentId', name: 'studentId' },

@@ -78,8 +78,6 @@
                         @endforeach
                     </select>
                 </div>
-
-
                 <div class="form-row">
                     <label for="exampleSelect1">Is Taken During Admission</label>
                     <div class="form-check">
@@ -157,6 +155,7 @@
     $('#submit').click(function (e) {
         e.preventDefault();
         var id=$('#submit').val();
+        console.log(id);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')

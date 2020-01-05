@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\backend\Fee;
 
 use App\model\Fee;
 use App\model\classes;
@@ -32,12 +32,12 @@ class FeeController extends Controller
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
         return view('backend.pages.fee.createFee', compact("class","sessionYear"));
     }
-    public function getAllFeesByClass($classId, $sessionYearId)
-    {
-        $cur_year=date('Y');
-        $fees=Fee::where('bId',Auth::guard('web')->user()->bId)->where('classId', $classId)->where('sessionYearId', $sessionYearId)->get();
-        return Response()->json($fees);
-    }
+    // public function getAllFeesByClass($classId, $sessionYearId)
+    // {
+    //     $cur_year=date('Y');
+    //     $fees=Fee::where('bId',Auth::guard('web')->user()->bId)->where('classId', $classId)->where('sessionYearId', $sessionYearId)->get();
+    //     return Response()->json($fees);
+    // }
 
     /**
      * Show the form for creating a new resource.

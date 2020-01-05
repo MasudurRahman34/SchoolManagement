@@ -49,8 +49,6 @@ Route::get('/api/search/feeamount', 'backend\api\apiController@feeamount')->name
 Auth::routes();
 //api routes
 
-
-
 Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
     Route::post('/search/section', 'apiController@section')->name('api.section');
     Route::get('/roleHasClassTeacher/{id}', 'apiController@roleHasClassTeacher')->name('api.roleHasClassTeacher');
@@ -63,6 +61,7 @@ Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
 //New Admin APi Section
 Route::group(['namespace'=>'backend'], function () {
     Route::post('/student/attendance/studentData','Attendance\ApiAttendanceController@studentData')->name('studentData.attendence');
+    Route::get('/getAllFeesByClass/{classId}/{sessionYearId}','Fee\ApiFeeController@getAllFeesByClass')->name('getAllFeesByClass');
 
 });
 
@@ -75,7 +74,6 @@ Route::group(['prefix' => 'student', 'namespace'=>'Auth\student'], function () {
     Route::post('/login', 'LoginController@login')->name('student.login');
     Route::post('/logout', 'LoginController@logout')->name('student.logout');
 });
-
 
 //student pages
 Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function () {
@@ -115,11 +113,13 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
     Route::get('/list/index', 'MyStudentConttroller@index')->name('mystudent.index');
     Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
     Route::get('/classwise', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
-    Route::get('/classwiseList/{id}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
+    Route::get('/classwiseList/{id}/{sessionYearId}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
 
 
     Route::get('/sectionwise', 'MyStudentConttroller@Sectionwise')->name('mystudent.sectionwise');
-    Route::get('/sectionwiselist/{classId}/{sectionId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
+    Route::get('/sectionwiselist/{classId}/{sectionId}/{sessionYearId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
+
+    //profile
     Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
     Route::get('edit/studentProfile/{id}','MyStudentConttroller@edit')->name('mystudent.editProfile');
     Route::post('update/studentProfile/{id}','MyStudentConttroller@update')->name('mystudent.update');
@@ -155,12 +155,15 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
+
+    //user profile
     Route::get('/show/Userprofile/{id?}', 'UserController@show')->name('user.show');
     Route::get('user/edit/profile/{id?}','UserController@edit')->name('userEditProfile');
     Route::post('user/update/profile/{id?}','UserController@update')->name('userUpdate.profile');
     Route::post('/user/change/password/{id?}','UserController@changePassword')->name('userChange.password');
     Route::post('/user/updateRole//{id?}','UserController@updateRole')->name('updateRole');
 });
+
 Route::group(['middleware' => ['api']], function () {
     Route::post('/add/userAndRole', 'backend\UserController@addUserAndRole')->name('addUserAndRole');
 });
@@ -174,6 +177,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Admission'],'prefix'=>
 
 
 });
+
 //class Management
 Route::group(['middleware' => ['auth','role_or_permission:Class']], function () {
 
@@ -186,22 +190,19 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
 });
 
 
-
+//Fee management
 Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], function () {
     //Fee Management for admin
-    Route::get('/fee','backend\FeeController@index')->name('fee.index');
-    Route::post('/fee/store','backend\FeeController@store')->name('fee.store');
-    Route::get('/fee/show','backend\FeeController@show')->name('fee.show');
-    Route::get('/fee/edit/{id}','backend\FeeController@edit')->name('fee.edt');
-    Route::post('/fee/update/{id}','backend\FeeController@update')->name('fee.update');
-    Route::get('/fee/delete/{id}','backend\FeeController@destroy')->name('fee.delete');
-    Route::get('/getAllFeesByClass/{classId}/{sessionYearId}','backend\FeeController@getAllFeesByClass')->name('getAllFeesByClass');
+    Route::get('/fee','backend\Fee\FeeController@index')->name('fee.index');
+    Route::post('/fee/store','backend\Fee\FeeController@store')->name('fee.store');
+    Route::get('/fee/show','backend\Fee\FeeController@show')->name('fee.show');
+    Route::get('/fee/edit/{id}','backend\Fee\FeeController@edit')->name('fee.edt');
+    Route::post('/fee/update/{id}','backend\Fee\FeeController@update')->name('fee.update');
+    Route::get('/fee/delete/{id}','backend\Fee\FeeController@destroy')->name('fee.delete');
 
     //feeHisory admin view
     Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');
     Route::get('/feehistory/show','backend\FeeHistoryController@show')->name('feehistory.show');
-
-
 
     //feecollection management for admin
     Route::get('/feecollection','backend\FeeCollectionController@index')->name('feecollection.index');
