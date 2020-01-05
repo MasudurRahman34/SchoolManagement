@@ -7,81 +7,92 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title></title>
+    <style>
+        .content-wrapper{
+            background: #FFF;
+        }
+        .invoice-header{
+            background: #f7f7f7;
+            padding: 10px 20px 10px 20px;
+            border-bottom: 1px solid gray;
+        }
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            }
+
+            #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+            #customers tr:nth-child(even){background-color: #f2f2f2;}
+            #customers tr:hover {background-color: #ddd;}
+            #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+            }
+    </style>
 
 </head>
 <body>
-    <div class="row">
-        <div class="col-md-12">
-            <!-- {{-- @foreach ($students as $student) --}} -->
-
-            <div class="float-right">
-            <a class="" href="{{route('admissison.index')}}">New Admission</a>
-            </div>
-            <div class="float-left">
-               <p>{{$students->created_at }}</p>
+       <div class="content-wrapper">
+        <div class="row">
+                <div class="col-md-12">
+                    <!-- {{-- @foreach ($students as $student) --}} -->
+                    <div class="float-left">
+                    <h5 class="text-left">Date: 1-05-2020</h5>
+                    </div>
+                    <div class="float-right">
+                      <a class="" href="{{route('admissison.index')}}">New Admission</a>
+                    </div>
+                    <div class="text-center m-5">
+                        <h1 class="text-warning">{{$students->schoolBranch->nameOfTheInstitution}}</h1>
+                    </div>
                 </div>
-            <div class="text-center m-5">
-                <h1 class="text-warning">{{$students->schoolBranch->nameOfTheInstitution}}</h1>
-                <hr>
             </div>
+           <div class="invoice-header">
+                <div class="float-left site-left">Form
+                    <p>{{Auth::guard('web')->user()->name}}</p>
+                    <p>{{Auth::guard('web')->user()->designation}}</p>
+                    <p>Address: {{Auth::guard('web')->user()->address}}</p>
+                    <p>Email: {{Auth::guard('web')->user()->email}}</p>
+                </div>
+                <div class="float-right site-right">To
+                    <p>{{$students->firstName }} {{$students->lastName}}</p>
+                    <p>{{$students->Section->classes->className}},{{$students->group}}</p>
+                    <p>Section: {{$students->Section->sectionName}}</p>
+                    <p>{{$students->Section->sessionYear->sessionYear}},{{$students->blood}}</p>
+                    <p>{{$students->birthDate}},{{$students->type}}</p>
+                    <p>{{$students->mobile}}</p>
+                    <p>{{$students->email}}</p>
+                </div>
+           </div>
+        <div class=clearfix></div>
         </div>
-    </div>
-        <table class="table table-striped" id="">
-        <tr>
-            <th>Students Name:</th>
-        <td>{{$students->firstName }} {{$students->lastName}}</td>
-        </tr>
-        <tr>
-            <th>Roll</th>
-            <td>{{$students->roll}}</td>
-        </tr>
-        <tr>
-            <th>Class</th>
-            <td>{{$students->Section->classes->className}}</td>
-        </tr>
-        <tr>
-            <th>Section</th>
-            <td>{{$students->Section->sectionName}}</td>
-        </tr>
-        <tr>
-            <th>shift</th>
-            <td>{{$students->Section->shift}}</td>
-        </tr>
-        <tr>
-            <th>Year/Session</th>
-            <td>{{$students->Section->sessionYear->sessionYear}}</td>
-        </tr>
-
-        <tr>
-            <th>Schoolarship</th>
-            <td>{{$students->schoolarshipStatus==0 ? "N/A" : "Yes"}}</td>
-        </tr>
-        <tr>
-            <th>Blood Group</th>
-            <td>{{$students->blood}}</td>
-        </tr>
-        <tr>
-            <th>Date Of Birth</th>
-            <td>{{$students->birthDate}}</td>
-        </tr>
-        <tr>
-            <th>Group</th>
-            <td>{{$students->group}}</td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td>{{$students->type}}</td>
-        </tr>
-        <tr>
-            <th>Mobile Number</th>
-            <td>{{$students->mobile}}</td>
-        </tr>
-
-        <tr>
-            <th>Password</th>
-            <td>{{$students->readablePassword}}</td>
-        </tr>
-    </table>
+    <br>
+    <table id="customers">
+  <tr>
+    <th>Fee Name</th>
+    <th>Paid Month</th>
+    <th>Amount</th>
+    <th>Due</th>
+    <th>Total Amount</th>
+  </tr>
+  @foreach($students->feeCollection as $feeCollection)
+    <tr>
+        <td>{{$feeCollection->Fee->name}}</td>
+        <td>{{$feeCollection->paidMonth}}</td>
+        <td>{{$feeCollection->amount}}</td>
+        <td>{{$feeCollection->due}}</td>
+        <td>{{$feeCollection->totalAmount}}</td>
+    </tr>
+  @endforeach
+  
+</table>
     <!-- {{-- @endforeach --}} -->
     <h6 class="text-center m-5 text-success">Thanks You For Your Admission !! <br></h6>
     <a class="float-right" href="http://www.sms.quadinfoltd.com/">http://www.sms.quadinfoltd.com/</a>

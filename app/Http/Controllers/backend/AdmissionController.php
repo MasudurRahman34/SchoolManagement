@@ -10,6 +10,7 @@ use App\model\Student;
 use App\model\schoolBranch;
 use App\model\studentoptionalsubject;
 use App\model\Section;
+use App\User;
 use App\model\feeCollection;
 use App\model\studentScholarship;
 use Illuminate\Support\Facades\Auth;
@@ -52,19 +53,17 @@ class AdmissionController extends Controller
      */
     public function store(Request $request)
 {
-        // $this->validate($request,[
-        //     'firstName'=>'required|min:3', 'string', 'max:255',
-        //     'lastName'=>'required|min:3', 'string', 'max:255',
-        //     'gender'=>'required',
-        //     'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
-        //     'mobile'=>'required', 'string', 'max:255','unique:users',
-        //     //'birthDate'=>'required',
-        //     //'blood'=>'required',
-        //     // 'sectionId'=>'required',
-        //     // 'roll'=>'required',
-        //     // 'group'=>'required',
-        //     // 'type'=>'required',
-        // ]);
+        $this->validate($request,[
+            'firstName'=>'required|min:3', 'string', 'max:255',
+            'lastName'=>'required|min:3', 'string', 'max:255',
+            'gender'=>'required',
+            'mobile'=>'required', 'string', 'max:255','unique:users',
+            'birthDate'=>'required',
+            'blood'=>'required',
+            'group'=>'required',
+            'roll'=>'required',
+            
+        ]);
 
         $password=mt_rand(100000,999999);
         $Student= new Student();
@@ -145,13 +144,10 @@ class AdmissionController extends Controller
 
 
 
-        $students=Student::with('Section', 'schoolBranch', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
-
-        // dd($students);
-        // $StdbId=$Student->bId;
-        // // dd($Student->Section->classes);
-        // $students=DB::select("select * from students, school_branches where students.bId = school_branches.id and students.bId= '$StdbId'");
-        $pdf = PDF::loadView('backend.pages.pdf.admissionPdf', ['students' => $students])->setPaper('a4','portrait');
+         $students=Student::with('Section', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
+         //dd($students);
+         //return view('backend.pages.pdf.admissionPdf',compact('students'));
+        $pdf = PDF::loadView('backend.pages.pdf.admissionPdf',compact('students'))->setPaper('a4','portrait');
         // return $pdf->stream($Student->firstName.$Student->roll.$Student->mobile.'.pdf');
 
         //return $pdf->download('student.pdf');
@@ -162,6 +158,7 @@ class AdmissionController extends Controller
         // return redirect()->route('admissison.index');
 
     }
+
 
     /**
      * Display the specified resource.
