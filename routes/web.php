@@ -170,6 +170,8 @@ Route::group(['middleware' => ['auth','role_or_permission:Admission'],'prefix'=>
 
     Route::get('/','AdmissionController@index')->name('admissison.index');
     Route::post('/store','AdmissionController@store')->name('admission.store');
+    //Route::get('/invoice','AdmissionController@createInvoice')->name('create.invoice');
+
 
 });
 //class Management

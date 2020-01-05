@@ -102,7 +102,7 @@
                   <option value="">--Please Select--</option>
                     @foreach ($SessionYear as $SYear)
                 <option value="{{$SYear->id}}" data-sessionYear="{{$SYear->sessionYear}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>
-                    @endforeach
+                    @endforeach 
                 </select>
               </div>
               <div class="form-group col-md-6">
@@ -126,20 +126,23 @@
                         <option value="">--Please Select--</option>
                     @foreach ($classes as $class)
                         <option value="{{$class->id}}">{{$class->className}}</option>
-
                     @endforeach
                 </select>
               </div>
               <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1"> Section<span style="color: red;">*</span></label>
-
                 <select class="form-control" id="sectionId" name="sectionId">
                     <option value="">--Please Select--</option>
                 </select>
               </div>
-              <div class="form group col-md-6">
+              <div class="form group col-md-6 {{$errors->has('roll') ? 'has-error' : ''}}">
                 <label class="control-label">Roll Number<span style="color: red;">*</span><sub id="lastRoll" class="text-danger"></sub></label>
                 <input class="form-control" id="roll" name="roll" type="number" value="{{old('roll')}}">
+                @if($errors->has('roll'))
+                  <span class="help-block text-danger">
+                    {{$errors->first('roll')}}
+                  </span>
+                @endif
               </div>
               <div class="form-group col-md-12">
                     <label class="control-label mt-3 bg-secondary text-light"><h5>Group<span style="color: red;">*</span></h5></label><br>
@@ -164,7 +167,6 @@
                             <label class="custom-control-label" for="group5">Vocational</label>
                     </div>
                 </div>
-
 
                   <div class="form-group col-md-6 opmainsubject" hidden>
                     <label for="exampleFormControlSelect1"> 4th subject</label>
