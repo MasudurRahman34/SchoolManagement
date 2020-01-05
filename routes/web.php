@@ -56,7 +56,6 @@ Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
     Route::get('/checkClassHasOptionalSubject/{classId}/{group}', 'apiController@checkClassHasOptionalSubject')->name('api.checkClassHasOptionalSubject');
 });
 
-
 //end api routes
 //New Admin APi Section
 Route::group(['namespace'=>'backend'], function () {
@@ -173,8 +172,6 @@ Route::group(['middleware' => ['auth','role_or_permission:Admission'],'prefix'=>
 
     Route::get('/','AdmissionController@index')->name('admissison.index');
     Route::post('/store','AdmissionController@store')->name('admission.store');
-    //Route::get('/invoice','AdmissionController@createInvoice')->name('create.invoice');
-
 
 });
 
@@ -224,8 +221,6 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
     //Route::get('/feecollection/studentMonthly/paiedFee/{month}/{studentId}','backend\FeeCollectionController@studentMonthlyPaiedFee')->name('student.monthlyPaiedFee');
 });
-
-
 
 
 
