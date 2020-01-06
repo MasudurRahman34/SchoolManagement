@@ -148,6 +148,15 @@ Route::post('/addPermission', 'backend\UserController@addPermission')->name('add
 
 
 //userManagement
+ //user profile Open
+ Route::group(['namespace'=>'backend'], function () {
+    Route::get('/show/Userprofile/{id?}', 'UserController@show')->name('user.show');
+    Route::get('user/edit/profile/{id?}','UserController@edit')->name('userEditProfile');
+    Route::post('user/update/profile/{id?}','UserController@update')->name('userUpdate.profile');
+    Route::post('/user/change/password/{id?}','UserController@changePassword')->name('userChange.password');
+    Route::post('/user/updateRole//{id?}','UserController@updateRole')->name('updateRole');
+});
+
 Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'namespace'=>'backend'], function () {
     Route::get('/create/userAndRole', 'UserController@createUserAndRole')->name('createUserAndRole');
     Route::get('/userAndRole/list', 'UserController@UserAndRoleList')->name('UserAndRole.list');
@@ -155,12 +164,7 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
 
-    //user profile
-    Route::get('/show/Userprofile/{id?}', 'UserController@show')->name('user.show');
-    Route::get('user/edit/profile/{id?}','UserController@edit')->name('userEditProfile');
-    Route::post('user/update/profile/{id?}','UserController@update')->name('userUpdate.profile');
-    Route::post('/user/change/password/{id?}','UserController@changePassword')->name('userChange.password');
-    Route::post('/user/updateRole//{id?}','UserController@updateRole')->name('updateRole');
+   
 });
 
 Route::group(['middleware' => ['api']], function () {

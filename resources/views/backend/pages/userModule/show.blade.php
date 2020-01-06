@@ -19,7 +19,9 @@
             </div>
                 <div class="tile p-0">
                   <ul class="nav flex-column nav-tabs user-tabs">
+                  @if(Auth::guard('web')->user()->id=$editId)
                     <li class="nav-item"><a class="nav-link" href="{{route('userEditProfile', [$editId])}}"> Update Profile</a></li>
+                  @endif
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>

@@ -1,10 +1,12 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
       @foreach(App\model\File::where('userId', Auth::guard()->user()->id)->get() as $fill)
-        @if($fill)
+        @if($fill->image)
             <img class="app-sidebar__user-avatar" src="{{asset('users/'.$fill->image)}}" style="width: 25%; height: 25%;" alt="User Image">
-             @endif
-          @endforeach
+            @else
+            <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" style="width: 25%; height: 25%;" alt="User Image">
+          @endif
+      @endforeach
         <div>
           <span class="text-info">Welcome,</span>
           <p class="app-sidebar__user-name">{{Auth::guard('web')->user()->name}}</p>
@@ -127,7 +129,7 @@
           </li> --}}
 
 
-
+          @can('mark')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i><span class="app-menu__label">Marks Distribution (underdevlopment)</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('marks.index') }}"><i class="icon fa fa-angle-right"></i>Provied Marks </a></li>
@@ -135,6 +137,7 @@
               {{-- <li><a class="treeview-item" href="{{route('attendance.bydate') }}"><i class="icon fa fa-angle-right"></i>Datewish Attendance</a></li> --}}
             </ul>
           </li>
+          @endcan
           @can('Fee Management')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Fee Mnagement</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
