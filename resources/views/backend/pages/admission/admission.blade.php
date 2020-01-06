@@ -19,7 +19,7 @@
       <div class="tile">
         <h3 class="tile-title border-bottom p-2">Student Admission Form</h3>
         <div class="tile-body">
-          <form class="row" method="post" action="{{route('admission.store')}}" enctype='multipart/form-data'>
+          <form name="form" class="row" method="post" action="{{route('admission.store')}}" enctype='multipart/form-data' onSubmit="return validate()">
             @csrf
             <div class="col-md-12">
                     <div class="alert alert-warning text-center" role="alert">
@@ -122,7 +122,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Select Class<span style="color: red;">*</span></label>
-                <select class="form-control admission opsub" id="classId">
+                <select class="form-control admission opsub" id="classId" name="classId">
                         <option value="">--Please Select--</option>
                     @foreach ($classes as $class)
                         <option value="{{$class->id}}">{{$class->className}}</option>
@@ -452,7 +452,45 @@ $("#btnToggle" ).click(function() {
   $( "#feeList" ).toggle();
 });
 
-
+// function validateThisFrom(thisForm) {
+//         // if (thisForm.sessionYear.value == "") {
+//         //     alert("Please Select Session Year");
+//         //     thisForm.sessionYear.focus();
+//         //     return false;
+//         // }
+//         if (thisForm.classId.value == "") {
+//             alert("Please Select Class");
+//             thisForm.classId.focus();
+//             return;
+//         }
+//         if (thisForm.sectionId.value == "") {
+//             alert("Please Select Section");
+//             thisForm.sectionId.focus();
+//             return;
+//         }
+//     }
+function validate(){
+    if(document.form.classId.selectedIndex==""){
+    alert ( "Please Select class !");
+    return false;
+    }
+    if(document.form.sectionId.selectedIndex==""){
+    alert ( "Please Select section !");
+    return false;
+    }
+    if(document.form.optionalSubjectId[0].selectedIndex==""){
+    alert ( "Please Select optional SubjectId !");
+    return false;
+    }
+    if(document.form.optionalSubjectId[1].selectedIndex==""){
+    alert ( "Please Select Main Subject !");
+    return false;
+    }
+    if(document.form.forScholarshipFeeId.selectedIndex==""){
+      alert ( "Please Select Schoolarship Fee Type !");
+      return false;
+    }
+}
 
 //optional subject
 

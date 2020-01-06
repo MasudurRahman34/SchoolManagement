@@ -62,6 +62,7 @@ class AdmissionController extends Controller
             'blood'=>'required',
             'group'=>'required',
             'roll'=>'required',
+            'total'=>'required'
             
         ]);
 
@@ -86,8 +87,6 @@ class AdmissionController extends Controller
         $Student->schoolarshipId=$request->schoolarshipId;
         $Student->save();
 
-        //   Session::flash('success','You Have Successfully Admitted!');
-        //   return redirect()->back();
         //if optinal subject
             if($request->has('optionalSubjectId')){
                 $optionalSubjectId= $request->optionalSubjectId;
@@ -115,6 +114,7 @@ class AdmissionController extends Controller
          }
          //fee collection data
          $fees=$request->fee;
+         if($fees>0){
          foreach ($fees as $feeid => $amount) {
             $feeCollection = new feeCollection();
             $feeCollection->studentId= $Student->id;
@@ -139,6 +139,7 @@ class AdmissionController extends Controller
 
             $feeCollection->save();
 
+         }
          }//
 
 
