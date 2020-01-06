@@ -224,6 +224,11 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     Route::get('/feecollection/individualStudentDetails','backend\FeeCollectionController@individualFeeDetails')->name('individualStudent.feeDtails');
     Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
     //Route::get('/feecollection/studentMonthly/paiedFee/{month}/{studentId}','backend\FeeCollectionController@studentMonthlyPaiedFee')->name('student.monthlyPaiedFee');
+
+    //Admin Report
+    Route::get('/feemanagement/report/sectionwise','backend\FeeManagementReportController@index')->name('feemanagementreport.index');
+    Route::get('/feemanagement/report/sectionwise/show/{month}/{sessionYearId}','backend\FeeManagementReportController@show')->name('detail.show');
+
 });
 
 
@@ -335,4 +340,4 @@ Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')-
 
 
 
-//misuk 04/01/2020
+//misuk 06/01/2020

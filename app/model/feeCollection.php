@@ -19,4 +19,7 @@ class feeCollection extends Model
     public function month(){
         return $this->belongsTo(month::class,'month');
     }
+    public function Section(){
+        return $this->belongsTo(Section::class,'sectionId');
+    }
 }
