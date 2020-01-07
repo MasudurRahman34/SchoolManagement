@@ -118,7 +118,7 @@
                        <input type="text" name="month2" id="month2" hidden>
                        <input type="text" name="sessionYear2" id="sessionYear2" hidden>
                        <input type="text" name="paymentType2" id="paymentType2" hidden>
-                       <input type='button'  value='Print' id='doPrint'>
+                       <input type='button' class="bg-warning text-dark float-right"  value=' Print ' id='doPrint'>
                         <div class="table-responsive"  id="print_div">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>

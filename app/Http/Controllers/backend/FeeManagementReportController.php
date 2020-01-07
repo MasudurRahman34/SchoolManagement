@@ -25,7 +25,7 @@ class FeeManagementReportController extends Controller
     public function index()
     {
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
-         return view('backend.pages.fee.report.sectionWiseReport')->with('sessionYear',$sessionYear);
+         return view('backend.pages.fee.report.monthWiseReport')->with('sessionYear',$sessionYear);
     }
 
     /**
@@ -72,7 +72,7 @@ class FeeManagementReportController extends Controller
     //     ->where('fee_collections.bId',$bId)
     //     ->groupBy('fee_collections.sectionId')->get();
 
-    $sectionCalculation=DB::select("select fee_collections.sectionId, sections.sectionName, classes.className, COALESCE(sum(case when fees.type='gov' then fee_collections.totalAmount end), 0) as govtpayment, COALESCE(sum(case when fees.type='nonGov' then fee_collections.totalAmount end), 0) as Nongovtpayment, COALESCE(sum(fee_collections.totalAmount), 0) as total FROM fee_collections, fees, sections, classes WHERE fee_collections.feeId=fees.id AND fee_collections.sectionId=sections.id AND sections.classId=classes.id AND fee_collections.sessionYearId='$sessionYearId' AND fee_collections.month='$month' AND fee_collections.bId='$bId' GROUP BY fee_collections.sectionId");
+    $sectionCalculation=DB::select("select fee_collections.sectionId, sections.sectionName,  sections.shift, classes.className, COALESCE(sum(case when fees.type='gov' then fee_collections.totalAmount end), 0) as govtpayment, COALESCE(sum(case when fees.type='nonGov' then fee_collections.totalAmount end), 0) as Nongovtpayment, COALESCE(sum(fee_collections.totalAmount), 0) as total FROM fee_collections, fees, sections, classes WHERE fee_collections.feeId=fees.id AND fee_collections.sectionId=sections.id AND sections.classId=classes.id AND fee_collections.sessionYearId='$sessionYearId' AND fee_collections.month='$month' AND fee_collections.bId='$bId' GROUP BY fee_collections.sectionId");
 
         $sectionTotalTableOutput="";
         $i=1;
@@ -83,14 +83,94 @@ class FeeManagementReportController extends Controller
             '<td>'.$i++.'</td>'.
             '<td>'.$sectionTotal->className.'</td>'.
             '<td>'.$sectionTotal->sectionName.'</td>'.
+            '<td>'.$sectionTotal->shift.'</td>'.
                 '<td>'.$sectionTotal->govtpayment.'</td>'.
                 '<td>'.$sectionTotal->Nongovtpayment.'</td>'.
                 '<td>'.$sectionTotal->total.'</td>'.
-                '<td>'.'link'.'</td>'.
+                // '<td>'.'link'.'</td>'.
                 '</tr>';
         }
 
-        return Response()->json($sectionTotalTableOutput);
+
+        // $groupByFeeTotal=DB::select("SELECT sections.sectionName, fees.name, classes.className, SUM(fee_collections.totalAmount) as total
+        // FROM fee_collections, fees, sections,classes
+        // WHERE fee_collections.feeId=fees.id
+        // AND fee_collections.sectionId=sections.id
+        // AND sections.classId=classes.id
+        // AND fee_collections.sessionYearId='$sessionYearId'
+        // AND fee_collections.month='$month'
+        // AND fee_collections.bId='$bId'
+        // AND fees.type='gov'
+        // GROUP BY fee_collections.feeId");
+
+
+        //Government Fee Type Report
+        $governmentFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, fees.name, SUM(fee_collections.totalAmount) as total, COUNT(fee_collections.sectionId) as totalStudent
+                                FROM fee_collections, fees, sections, classes
+                                WHERE fee_collections.feeId=fees.id
+                                AND fees.classid=classes.id
+
+                                AND fee_collections.sectionId=sections.id
+
+                                AND fee_collections.sessionYearId='$sessionYearId'
+                                AND fee_collections.month='$month'
+                                AND fee_collections.bId='$bId'
+                                AND fees.type='gov'
+                                GROUP BY feeId, fee_collections.sectionId
+                                ORDER BY fee_collections.sectionId");
+
+        $governmentFeeTableOutput="";
+        $i=1;
+
+        foreach ($governmentFeeTotal as $feeTotal) {
+
+
+            $governmentFeeTableOutput.='<tr>'.
+            '<td>'.$i++.'</td>'.
+            '<td>'.$feeTotal->className.'</td>'.
+            '<td>'.$feeTotal->sectionName.'</td>'.
+            '<td>'.$feeTotal->name.'</td>'.
+            '<td>'.$feeTotal->total.'</td>'.
+            '<td>'.$feeTotal->totalStudent.'</td>'.
+
+            '</tr>';
+        }
+
+
+        //Non-Government Fee Type Report
+        $nonGovtFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, fees.name, SUM(fee_collections.totalAmount) as total, COUNT(fee_collections.sectionId) as totalStudent
+        FROM fee_collections, fees, sections, classes
+        WHERE fee_collections.feeId=fees.id
+        AND fees.classid=classes.id
+
+        AND fee_collections.sectionId=sections.id
+
+        AND fee_collections.sessionYearId='$sessionYearId'
+        AND fee_collections.month='$month'
+        AND fee_collections.bId='$bId'
+        AND fees.type='nonGov'
+        GROUP BY feeId, fee_collections.sectionId
+        ORDER BY fee_collections.sectionId");
+
+            $nonGovtFeeTableOutput="";
+            $i=1;
+
+            foreach ($nonGovtFeeTotal as $nongovtfee) {
+
+
+            $nonGovtFeeTableOutput.='<tr>'.
+            '<td>'.$i++.'</td>'.
+            '<td>'.$nongovtfee->className.'</td>'.
+            '<td>'.$nongovtfee->sectionName.'</td>'.
+            '<td>'.$nongovtfee->name.'</td>'.
+            '<td>'.$nongovtfee->total.'</td>'.
+            '<td>'.$nongovtfee->totalStudent.'</td>'.
+
+            '</tr>';
+            }
+
+
+            return Response()->json(["sectionTotalTableOutput"=>$sectionTotalTableOutput,"governmentFeeTableOutput"=>$governmentFeeTableOutput,"nonGovtFeeTableOutput"=>$nonGovtFeeTableOutput]);
 
     }
 

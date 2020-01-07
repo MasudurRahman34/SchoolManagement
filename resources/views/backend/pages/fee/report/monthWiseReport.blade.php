@@ -19,15 +19,15 @@
                     <div class="tile">
                         <div class="tile-body">
                         <div class="row">
-                        <div class="form-group col">
-                            <label for="exampleFormControlSelect1"> Session Year</label>
-                                <select class="form-control " id="sessionYear" >
-                                    <option value="">--Please Select--</option>
-                                    @foreach ($sessionYear as $year)
-                                        <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <div class="form-group col">
+                                <label for="exampleFormControlSelect1"> Session Year</label>
+                                    <select class="form-control " id="sessionYear" >
+                                        <option value="">--Please Select--</option>
+                                        @foreach ($sessionYear as $year)
+                                            <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             <div class="form-group col-md-4 pr-2" >
                                 <label for="exampleFormControlSelect1"> Month</label>
                                 {{-- <input class="form-control " id="month" type="month" placeholder="Pick a month" value="{{date('Y-m')}}"/> --}}
@@ -57,8 +57,9 @@
                     <div class="tile">
                     <div class="tile-body">
                         <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
+                        <input id="myInput" type="text" placeholder="Search..">
                         <div id="print_div">
-                            <h3 class="tile-title">Section Wise Report </h3>
+                            <h3 class="tile-title">Section Wise Monthly Report </h3>
                                 <div class="table-responsive">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
@@ -66,13 +67,14 @@
                                     <th>Sl</th>
                                     <th>Class</th>
                                     <th>Section</th>
+                                    <th>Shift</th>
                                     <th>Government Fees Total</th>
                                     <th>Non-Government Fees Total</th>
                                     <th>Total Fee</th>
-                                    <th>Detail</th>
+
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="sectionTotal" id="sectionwisereport">
                                 </tbody>
                                 </table>
                             </div>
@@ -80,6 +82,78 @@
                     </div>
                 </div>
                 </div>
+                <div class="clearix"></div>
+
+                <div class="col-md-8">
+                    <div class="tile">
+                    <div class="tile-body">
+                        <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
+                        {{--  <input id="myInput" type="text" placeholder="Search..">  --}}
+                        <div id="print_div">
+                            <h3 class="tile-title"> Government Fee Type Report </h3>
+                                <div class="table-responsive">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl</th>
+                                            <th>Class</th>
+                                            {{--  <th style="width:2%;height:1%;" rowspan="2">Roll</th>  --}}
+                                            <th style="width:12%;height:1%;" rowspan="2" >Section</th>
+                                            {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
+                                            <th rowspan="1">Fee Title</th>
+                                            <th rowspan="1">Sub Total </th>
+                                            <th rowspan="2" colspan="1">Total Number Student</th>
+                                        </tr>
+                                        {{--  <tr>
+                                            <th rowspan="1">Fee D</th>
+                                            <th rowspan="1">T</th>
+                                        </tr>  --}}
+                                    </thead>
+                                <tbody class="sectionTotal" id="government">
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="clearix"></div>
+
+                <div class="col-md-8">
+                    <div class="tile">
+                    <div class="tile-body">
+                        <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
+                        {{--  <input id="myInput" type="text" placeholder="Search..">  --}}
+                        <div id="print_div">
+                            <h3 class="tile-title"> Non-Government Fee Type Report </h3>
+                                <div class="table-responsive">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl</th>
+                                            <th>Class</th>
+                                            {{--  <th style="width:2%;height:1%;" rowspan="2">Roll</th>  --}}
+                                            <th style="width:12%;height:1%;" rowspan="2" >Section</th>
+                                            {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
+                                            <th rowspan="1">Fee Title</th>
+                                            <th rowspan="1">Sub Total </th>
+                                            <th rowspan="2" colspan="1">Total Number Student</th>
+                                        </tr>
+                                        {{--  <tr>
+                                            <th rowspan="1">Fee D</th>
+                                            <th rowspan="1">T</th>
+                                        </tr>  --}}
+                                    </thead>
+                                <tbody class="sectionTotal" id="nongovt">
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
 
 
     </div>
@@ -108,16 +182,27 @@ $('#month').change(function(e){
         url:"{{ url('feemanagement/report/sectionwise/show')}}"+'/'+month+'/'+sessionYearId,
         success: function (data) {
 
-            console.log(data);
-            $('tbody').html(data);
+            console.log(data.sectionTotalTableOutput);
+            console.log(data.governmentFeeTableOutput);
+            console.log(data.nonGovtFeeTableOutput);
 
 
+            $('#sectionwisereport').html(data.sectionTotalTableOutput);
+            $('#government').html(data.governmentFeeTableOutput);
+            $('#nongovt').html(data.nonGovtFeeTableOutput);
         }
     });
 
 
 
 });
+
+$("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".sectionTotal tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 
 
 
