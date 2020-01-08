@@ -1,12 +1,13 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
-      @foreach(App\model\File::where('userId', Auth::guard()->user()->id)->get() as $fill)
+        <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" style="width: 25%; height: 25%;" alt="User Image">
+      {{-- @foreach(App\model\File::where('userId', Auth::guard()->user()->id)->get() as $fill)
         @if($fill->image)
             <img class="app-sidebar__user-avatar" src="{{asset('users/'.$fill->image)}}" style="width: 25%; height: 25%;" alt="User Image">
           @else
-            die<img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" style="width: 25%; height: 25%;" alt="User Image">
+            <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" style="width: 25%; height: 25%;" alt="User Image">
         @endif
-      @endforeach
+      @endforeach --}}
         <div>
           <span class="text-info">Welcome,</span>
           <p class="app-sidebar__user-name">{{Auth::guard('web')->user()->name}}</p>
@@ -80,7 +81,7 @@
           @endcan
           @can('Admission')
 
-          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-refresh fa-spin fa-fw"></i><span class="app-menu__label">Admission</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Admission</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('admissison.index') }}"><i class="icon fa fa-angle-right"></i>Admission</a></li>
             </ul>
@@ -96,14 +97,14 @@
           @endcan
 
             @can('Section')
-          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Section</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Section</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('section.index') }}"><i class="icon fa fa-angle-right"></i>Section</a></li>
             </ul>
           </li>
           @endcan
           @can('Subject')
-          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Subject</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Subject</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('subject.index') }}"><i class="icon fa fa-angle-right"></i>Subject</a></li>
             </ul>
@@ -111,7 +112,7 @@
           @endcan
 
           @can('SessionYear')
-          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fas fa-spinner fa-pulse"></i><span class="app-menu__label">Session Year</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Session Year</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('sessionyear.index') }}"><i class="icon fa fa-angle-right"></i>Session year</a></li>
             </ul>
@@ -130,7 +131,7 @@
 
 
           @can('mark')
-          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i><span class="app-menu__label">Marks Distribution (underdevlopment)</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Marks Distribution (underdevlopment)</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('marks.index') }}"><i class="icon fa fa-angle-right"></i>Provied Marks </a></li>
               <!-- <li><a class="treeview-item" href="{{route('attendance.classwish') }}"><i class="icon fa fa-angle-right"></i>class wish</a></li> -->
@@ -139,7 +140,7 @@
           </li>
           @endcan
           @can('Fee Management')
-          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Fee Mnagement</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Fee Mnagement</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('fee.index') }}"><i class="icon fa fa-angle-right"></i>Manage Fee </a></li>
               <li><a class="treeview-item" href="{{route('feehistory.index') }}"><i class="icon fa fa-angle-right"></i>Fee Update History </a></li>
@@ -151,12 +152,14 @@
             </ul>
           </li>
           @endcan
-
+          @can('Scholarship')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Scholarship Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('scholarship.management')}}"><i class="icon fa fa-angle-right"></i>Schoolarship</a></li>
             </ul>
           </li>
+          @endcan
+
 
           {{-- end admin sidebar --}}
 
