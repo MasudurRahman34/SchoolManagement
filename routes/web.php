@@ -164,7 +164,7 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
 
-   
+
 });
 
 Route::group(['middleware' => ['api']], function () {
@@ -306,6 +306,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespac
 
  //Class Teacher option
  Route::group(['middleware' => ['auth','role_or_permission:Class Teacher']], function () {
+
 
     Route::get('/myclass/attendance','backend\ClassTeacherController@myclassattendance')->name('myclass.attendance');
     Route::post('/myclass/attendance/store','backend\ClassTeacherController@storeAttendence')->name('myclass.store');

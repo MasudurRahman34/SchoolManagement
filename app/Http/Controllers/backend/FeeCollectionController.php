@@ -280,17 +280,35 @@ class FeeCollectionController extends Controller
     //find student for group fee collection
     public function student(Request $request)
     {
+
         $fee=feeCollection::where('sectionId', $request->sectionId)
          ->where('feeId',$request->feeId)
          ->where('month',$request->month)
+         ->where('sessionYearId',$request->sessionYear)
          ->where('bId' , Auth::guard('web')->user()->bId)
          ->first();
+
         if($fee!=null){
             $bId=Auth::guard('web')->user()->bId;
             $feeId=$request->feeId;
             $month=$request->month;
-            $dueStudent=DB::select("select students.id,students.firstName,students.roll from students where  students.id NOT IN(select fee_collections.studentId from fee_collections where fee_collections.bId='$bId' and fee_collections.feeId='$feeId' and fee_collections.month='$month')");
-            $paidStudent=DB::select("select fee_collections.id,students.id,students.firstName,students.roll from students,fee_collections where fee_collections.studentId=students.id and fee_collections.sectionId='$request->sectionId' and fee_collections.feeId='$feeId' and fee_collections.bId='$bId' and fee_collections.month='$month'");
+            $sessionYear=$request->sessionYear;
+
+            $dueStudent=DB::select("select students.id,students.firstName,students.roll from
+            students where  students.id NOT IN(select fee_collections.studentId from fee_collections
+            where fee_collections.bId='$bId'
+            and fee_collections.feeId='$feeId'
+            and fee_collections.month='$month'
+            and fee_collections.sessionYearId='$sessionYear')");
+
+            $paidStudent=DB::select("select fee_collections.id,students.id,students.firstName,students.roll from
+            students,fee_collections where fee_collections.studentId=students.id
+            and fee_collections.sectionId='$request->sectionId'
+            and fee_collections.feeId='$feeId'
+            and fee_collections.bId='$bId'
+            and fee_collections.month='$month
+            and fee_collections.sessionYearId='$sessionYear'");
+
             return response()->json(["dueStudent"=>$dueStudent, "paidStudent"=>$paidStudent]);
         }else{
             $sectionId= $request->sectionId;

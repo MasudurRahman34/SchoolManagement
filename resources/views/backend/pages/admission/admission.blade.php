@@ -104,7 +104,7 @@
                   <option value="">--Please Select--</option>
                     @foreach ($SessionYear as $SYear)
                 <option value="{{$SYear->id}}" data-sessionYear="{{$SYear->sessionYear}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>
-                    @endforeach 
+                    @endforeach
                 </select>
               </div>
               <div class="form-group col-md-6">
@@ -289,6 +289,11 @@
 @endsection
 @section('script')
 <script>
+
+    $("#btnToggle" ).click(function() {
+        $( "#feeList" ).toggle();
+      });
+
 $('#schfee').hide();
 dynamicSectionSelection();
 checkClassTenOrNine();
@@ -474,7 +479,7 @@ function validate(){
       return false;
     }
 
-   
+
 }
 
 

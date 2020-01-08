@@ -21,6 +21,7 @@ class ClassTeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function myclassattendance()
     {
         $userId= Auth::guard('web')->user()->id;
@@ -36,28 +37,34 @@ class ClassTeacherController extends Controller
             $shift = $teacher->shift;
                 //return($sessionYearId);
         }
-
-        $sessionYears=SessionYear::where('id',$sessionYearId)->where('bId',$bId)->get();
+        if($sessionYears=SessionYear::where('id',$sessionYearId)->where('bId',$bId)->get()>0)
+        {
             foreach($sessionYears as $sessionYear){
-            if($sessionYear->status == 1){
+                if($sessionYear->status == 1){
 
-                //return($sectionId);
+                    //return($sectionId);
 
-                // $attendences=Attendance::where('sectionId', $sectionId)
-                //     ->whereDate('created_at',date('Y-m-d'))
-                //     ->where('bId' , Auth::guard('web')->user()->bId)
-                //     ->first();
-                //     if($attendences!=null){
-                //         return response()->json(["redirectToEdit"=>"/student/attendance/edit/$sectionId"]);
-                //     }else{
-                //         $sectionId= $sectionId;
-                //         $students = Student::where('sectionId',$sectionId)->orderBy('id','ASC')->get();
-                //         return response()->json($students);
-                //     }
+                    // $attendences=Attendance::where('sectionId', $sectionId)
+                    //     ->whereDate('created_at',date('Y-m-d'))
+                    //     ->where('bId' , Auth::guard('web')->user()->bId)
+                    //     ->first();
+                    //     if($attendences!=null){
+                    //         return response()->json(["redirectToEdit"=>"/student/attendance/edit/$sectionId"]);
+                    //     }else{
+                    //         $sectionId= $sectionId;
+                    //         $students = Student::where('sectionId',$sectionId)->orderBy('id','ASC')->get();
+                    //         return response()->json($students);
+                    //     }
 
-                return view('backend.pages.classTeacher.myclassAttendence',['sectionId'=>$sectionId,'classId'=>$classId ]);
+                    return view('backend.pages.classTeacher.myclassAttendence',['sectionId'=>$sectionId,'classId'=>$classId ]);
+                }else{
+                    return ('Session Expired!. You are not enroled in any class');
+                }
             }
+        }else{
+            return ("No session Year Found");
         }
+
     }
 
     /**

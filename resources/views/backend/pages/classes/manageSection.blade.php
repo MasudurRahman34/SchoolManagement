@@ -69,13 +69,13 @@
                     <legend type="hidden">Study Shift</legend>
                     <div class="form-check">
                         <label class="radio">
-                            <input type="radio" id="shift" name="shift"  value="Morning" checked> Morning
+                            <input type="radio" id="shift" name="shift"  value="Morning" checked class="pointer"> Morning
                         </label> &nbsp;
                         <label class="radio">
-                            <input type="radio"  id="shift" name="shift"  value="Day"> Day
+                            <input type="radio"  id="shift" name="shift"  value="Day" class="pointer"> Day
                         </label>
                         <label class="radio">
-                            <input type="radio"  id="shift" name="shift"  value="Evening"> Evening
+                            <input type="radio"  id="shift" name="shift"  value="Evening" class="pointer"> Evening
                         </label>
                     </div>
                 </div>
@@ -118,6 +118,11 @@
 
          //update and submit
 
+         //$("#classId").removeAttr("style")
+         //$('#classId').attr("style", "pointer-events: auto;");
+         //$("#classId option:selected").remove();
+
+
          $('#submit').click(function (e) {
                 e.preventDefault();
                 var id=$('#submit').val();
@@ -147,6 +152,8 @@
                             console.log(result);
                             successNotification();
                             removeUpdateProperty("section");
+                            $("#classId").removeAttr("style");
+                            $("#sessionYearId").removeAttr("style");
                             document.getElementById("myform").reset();
                         }
                         if(result.errors){
@@ -168,19 +175,68 @@
              success:function(data) {
 
                  $('#classId').val(data.classId);
+                 //$('#classId').attr('disabled',true);
+                $('#classId').attr("style", "pointer-events: none;");
+
+                 //$('#classId option:not(:selected)').remove();
                  $('#sectionName').val(data.sectionName);
                  $('#sessionYearId').val(data.sessionYearId);
+                 //$('#sessionYearId option:not(:selected)').remove();
+                 $('#sessionYearId').attr("style", "pointer-events: none;");
                  console.log(data);
                  $("input[name='shift'][value='"+data.shift+"']").prop('checked', true);
+                 //$("input[name='shift'][value='"data.shift+"']")css('pointer-events', 'none');
+                 $('.pointer').css('pointer-events', 'none');
                  //$('#shift').val('"+data.shift+"').prop('checked', true);
+                 //document.getElementById("myform").reset();
+                 //$("#classId").removeAttr("style")
+                // $(':radio').click(function(){
+                  //  return false;
+               // });
           }
          });
+
+
+
 
      }
 
      function deleteSection(id) {
         var url = "{{url('/section/delete')}}";
-        deleteAttribute(url,id);
+       // deleteAttribute(url,id);
+
+       swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel plx!",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+    }, function(isConfirm) {
+        if (isConfirm) {
+       //    var url = "{{url('/section/delete')}}";
+          $.ajax({
+              url:url+"/"+id,
+              type:"GET",
+              dataType:"json",
+              success:function(data) {
+                  if(data.error){
+                   swal("Sorry",data.error , "error");
+                  console.log(data.error);
+                  }if(data.success){
+                   table.draw();
+                   swal(data.success);
+                  }
+              }
+          })
+
+        } else {
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+        }
+    });
+
 
     }
 

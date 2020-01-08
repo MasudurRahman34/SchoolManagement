@@ -282,11 +282,12 @@
                 sectionId:sectionId,
                 feeId:feeId,
                 month:month,
+                sessionYear:sessionYear,
               },
               success: function (response) {
 
               if(response.dueStudent){
-                    console.log('if');
+                    console.log('if due student');
 
 
                         //Un-Paid Student
@@ -318,7 +319,7 @@
                         $("#paid").click(function(e){
 
                             //for lode paid student list
-                            console.log('else');
+                            console.log('else paid student');
                             $('#tblHidden').attr('hidden',false);
                             $('#btnFee').attr('disabled',false);
                             var tr='';
@@ -341,7 +342,8 @@
                     });
                 }else{
 
-                    console.log('else');
+                    console.log('else new entry');
+                    console.log(response);
                     //newly add  fee data
                     $('#tblHidden').attr('hidden',false);
                     $('#btnFee').attr('disabled',false);

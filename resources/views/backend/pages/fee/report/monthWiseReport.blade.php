@@ -58,7 +58,7 @@
                     <div class="tile-body">
                         <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
                         <input id="myInput" type="text" placeholder="Search..">
-                        <div id="print_div">
+                        <div id="print_div" class="print_div">
                             <h3 class="tile-title">Section Wise Monthly Report </h3>
                                 <div class="table-responsive">
                                 <table class="table table-hover table-bordered" id="sampleTable">
@@ -88,14 +88,13 @@
                     <div class="tile">
                     <div class="tile-body">
                         <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
-                        {{--  <input id="myInput" type="text" placeholder="Search..">  --}}
-                        <div id="print_div">
-                            <h3 class="tile-title"> Government Fee Type Report </h3>
+                        <div id="print_div" class="print_div">
+                            <h3 class="tile-title text-warning"> Government Fee Type Report </h3>
                                 <div class="table-responsive">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                         <tr>
-                                            <th>Sl</th>
+                                            <th >Sl</th>
                                             <th>Class</th>
                                             {{--  <th style="width:2%;height:1%;" rowspan="2">Roll</th>  --}}
                                             <th style="width:12%;height:1%;" rowspan="2" >Section</th>
@@ -124,8 +123,7 @@
                     <div class="tile">
                     <div class="tile-body">
                         <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
-                        {{--  <input id="myInput" type="text" placeholder="Search..">  --}}
-                        <div id="print_div">
+                        <div id="print_div" class="print_div">
                             <h3 class="tile-title"> Non-Government Fee Type Report </h3>
                                 <div class="table-responsive">
                                 <table class="table table-hover table-bordered" id="sampleTable">
@@ -208,7 +206,7 @@ $("#myInput").on("keyup", function() {
 
 //print button in table
 $('#doPrint').on("click", function () {
-    $('#print_div').printThis({
+    $('.print_div').printThis({
         debug: false,               // show the iframe for debugging
         importCSS: true,            // import parent page css
         importStyle: true,         // import style tags

@@ -53,94 +53,94 @@ class AdmissionController extends Controller
      */
     public function store(Request $request)
 {
-        // $this->validate($request,[
-        //     'firstName'=>'required|min:3', 'string', 'max:255',
-        //     'lastName'=>'required|min:3', 'string', 'max:255',
-        //     'gender'=>'required',
-        //     'mobile'=>'required', 'string', 'max:255','unique:users',
-        //     'birthDate'=>'required',
-        //     'blood'=>'required',
-        //     'group'=>'required',
-        //     'roll'=>'required',
-        //     'total'=>'required'
-            
-        // ]);
+        $this->validate($request,[
+            'firstName'=>'required|min:3', 'string', 'max:255',
+            'lastName'=>'required|min:3', 'string', 'max:255',
+            'gender'=>'required',
+            'mobile'=>'required', 'string', 'max:255','unique:users',
+            'birthDate'=>'required',
+            'blood'=>'required',
+            'group'=>'required',
+            'roll'=>'required',
+            'total'=>'required'
 
-        // $password=mt_rand(100000,999999);
-        // $Student= new Student();
-        // $Student->studentId=mt_rand(100000,999999);
-        // $Student->firstName=$request->firstName;
-        // $Student->lastName=$request->lastName;
-        // $Student->gender=$request->gender;
-        // $Student->email=$request->email;
-        // $Student->mobile=$request->mobile;
-        // $Student->birthDate=$request->birthDate;
-        // $Student->blood=$request->blood;
-        // $Student->address=$request->address;
-        // $Student->password=Hash::make($password);
-        // $Student->readablePassword=$password;
-        // $Student->bId=Auth::guard('web')->user()->bId;
-        // $Student->sectionId=$request->sectionId;
-        // $Student->roll=$request->roll;
-        // $Student->group=$request->group;
-        // $Student->type=$request->type;
-        // $Student->schoolarshipId=$request->schoolarshipId;
-        // $Student->save();
+        ]);
 
-        // //if optinal subject
-        //     if($request->has('optionalSubjectId')){
-        //         $optionalSubjectId= $request->optionalSubjectId;
-        //         foreach ($optionalSubjectId as $is_optional => $subjectId) {
-        //             if($subjectId!==null){
-        //             $studentoptionalsubject = new studentoptionalsubject();
-        //             $studentoptionalsubject->subjectId = $subjectId;
-        //             $studentoptionalsubject->studentId = $Student->id;
-        //             $studentoptionalsubject->optional = $is_optional;
-        //             $studentoptionalsubject->bId= Auth::user()->bId;
-        //             $studentoptionalsubject->save();
-        //             }
-        //         }
-        //     }
+        $password=mt_rand(100000,999999);
+        $Student= new Student();
+        $Student->studentId=mt_rand(100000,999999);
+        $Student->firstName=$request->firstName;
+        $Student->lastName=$request->lastName;
+        $Student->gender=$request->gender;
+        $Student->email=$request->email;
+        $Student->mobile=$request->mobile;
+        $Student->birthDate=$request->birthDate;
+        $Student->blood=$request->blood;
+        $Student->address=$request->address;
+        $Student->password=Hash::make($password);
+        $Student->readablePassword=$password;
+        $Student->bId=Auth::guard('web')->user()->bId;
+        $Student->sectionId=$request->sectionId;
+        $Student->roll=$request->roll;
+        $Student->group=$request->group;
+        $Student->type=$request->type;
+        $Student->schoolarshipId=$request->schoolarshipId;
+        $Student->save();
 
-        //  //student scholarship
-        //  if($request->has('forScholarshipFeeId')){
-        //     $scholarship = new studentScholarship;
-        //     $scholarship->studentId=$Student->id;
-        //     $scholarship->scholershipId =$request->schoolarshipId;
-        //     $scholarship->feeId =$request->forScholarshipFeeId;
-        //     $scholarship->discount =$request->setDiscount;
-        //     $scholarship->sessionYear =$request->sessionYear;
-        //     $scholarship->save();
-        //  }
-        //  //fee collection data
-        //  $fees=$request->fee;
-        //  if($fees>0){
-        //  foreach ($fees as $feeid => $amount) {
-        //     $feeCollection = new feeCollection();
-        //     $feeCollection->studentId= $Student->id;
-        //     $feeCollection->feeId = $feeid;
-        //     $feeCollection->amount = $amount;
-        //     $feeCollection->due  = 0;
-        //     if($request->has('forScholarshipFeeId')){
-        //         if($request->forScholarshipFeeId == $feeid){
-        //             $feeCollection->totalAmount = $request->feeAmountAfterDiscount;
-        //         }else{
-        //             $feeCollection->totalAmount = $amount;
-        //         }
-        //     }else{
-        //         $feeCollection->totalAmount = $amount;
-        //     }
+        //if optinal subject
+            if($request->has('optionalSubjectId')){
+                $optionalSubjectId= $request->optionalSubjectId;
+                foreach ($optionalSubjectId as $is_optional => $subjectId) {
+                    if($subjectId!==null){
+                    $studentoptionalsubject = new studentoptionalsubject();
+                    $studentoptionalsubject->subjectId = $subjectId;
+                    $studentoptionalsubject->studentId = $Student->id;
+                    $studentoptionalsubject->optional = $is_optional;
+                    $studentoptionalsubject->bId= Auth::user()->bId;
+                    $studentoptionalsubject->save();
+                    }
+                }
+            }
 
-        //     $feeCollection->paidMonth =strtoupper(date('F'));
-        //     $feeCollection->month  = strtoupper(date('F'));
-        //     $feeCollection->sessionYearId   = $request->sessionYear;
-        //     $feeCollection->sectionId   = $request->sectionId;;
-        //     $feeCollection->bId    = Auth::guard('web')->user()->bId;
+         //student scholarship
+         if($request->has('forScholarshipFeeId')){
+            $scholarship = new studentScholarship;
+            $scholarship->studentId=$Student->id;
+            $scholarship->scholershipId =$request->schoolarshipId;
+            $scholarship->feeId =$request->forScholarshipFeeId;
+            $scholarship->discount =$request->setDiscount;
+            $scholarship->sessionYear =$request->sessionYear;
+            $scholarship->save();
+         }
+         //fee collection data
+         $fees=$request->fee;
+         if($fees>0){
+         foreach ($fees as $feeid => $amount) {
+            $feeCollection = new feeCollection();
+            $feeCollection->studentId= $Student->id;
+            $feeCollection->feeId = $feeid;
+            $feeCollection->amount = $amount;
+            $feeCollection->due  = 0;
+            if($request->has('forScholarshipFeeId')){
+                if($request->forScholarshipFeeId == $feeid){
+                    $feeCollection->totalAmount = $request->feeAmountAfterDiscount;
+                }else{
+                    $feeCollection->totalAmount = $amount;
+                }
+            }else{
+                $feeCollection->totalAmount = $amount;
+            }
 
-        //     $feeCollection->save();
+            $feeCollection->paidMonth =strtoupper(date('F'));
+            $feeCollection->month  = strtoupper(date('F'));
+            $feeCollection->sessionYearId   = $request->sessionYear;
+            $feeCollection->sectionId   = $request->sectionId;;
+            $feeCollection->bId    = Auth::guard('web')->user()->bId;
 
-        //  }
-        // }//
+            $feeCollection->save();
+
+         }
+        }//
 
 
 

@@ -1,12 +1,12 @@
 @extends('backend.layouts.master')
 	@section('title', 'Class Management')
         @section('content')
-        
-       
+
+
       <div class="app-title">
         <div>
           <h1><i class="fa fa-file-text-o"></i> Student Admission Invoice</h1>
-          
+
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -18,14 +18,14 @@
           <div class="tile">
           <a id='doPrint' class="btn btn-light float-right"><i class="fa fa-print"></i> Print</a>
           <a class="float-right btn btn-primary" href="{{route('admissison.index')}}"><i class="fa fa-plus-circle"></i>New Admission</a>
-          
+
             <section class="invoice m-4" id="print_div">
               <div class="row">
                 <div class="col-6">
                   <h2 style="color: black;" class="page-header text-drak"><i class="fa fa-graduation-cap"></i>{{$students->schoolBranch->nameOfTheInstitution}}</h2>
                 </div>
                 <div class="col-4">
-                
+
                 </div>
                 <div class="col-2">
                     <h5 class="text-right">{{date("Y-m-d")}}</h5>
@@ -36,7 +36,7 @@
                   <address><strong>{{Auth::guard('web')->user()->name}}</strong><br><br></address>
                 </div>
                 <div class="col-4">To
-                  <address><strong>{{$students->firstName }} {{$students->lastName}}</strong><br>Class: {{$students->Section->classes->className}},{{$students->group}}<br>Section: {{$students->Section->sectionName}}<br>Session: {{$students->Section->sessionYear->sessionYear}},Blood:{{$students->blood}}</address>
+                  <address><strong>{{$students->firstName }} {{$students->lastName}}</strong><br>Class: {{$students->Section->classes->className}},{{$students->group}}<br>Section: {{$students->Section->sectionName}}<br>Session: {{$students->Section->sessionYear->sessionYear}}<br>Blood:{{$students->blood}}</address>
                 </div>
                 <div class="col-4">Student ID:{{$students->studentId }}<br><b>Type : {{$students->type}}</b><br>Scholarship: @if($students->schoolarshipId==0)
                     {{'No'}}
@@ -73,7 +73,7 @@
                     <a class="ml-auto" href="http://www.sms.quadinfoltd.com/">http://www.sms.quadinfoltd.com/</a>
                 </div>
               </div>
-              
+
             </section>
           </div>
         </div>

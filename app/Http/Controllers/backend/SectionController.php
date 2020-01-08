@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\model\classes;
 use App\model\Section;
 use App\model\SessionYear;
+use App\model\Student;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -126,11 +127,18 @@ class SectionController extends Controller
      */
     public function destroy($id)
     {
-        $sectionDelete = Section::find($id);
-        if($sectionDelete){
-            $sectionDelete->delete();
-            return response()->json(["success"=>'data deleted',201]);
+        $sectionId = Student::where('sectionId', $id)->get();
+
+            if(count($sectionId)>=1){
+
+                return response()->json(["error"=>'Sorry! Section have student. Can Not be Deleted']);
+                }else{
+                $sectionDelete = Section::find($id);
+                if($sectionDelete){
+                    $sectionDelete->delete();
+                    return response()->json(["success"=>'Data Deleted',201]);
+                }
+            return response()->json(["error"=>'error',422]);
         }
-        return response()->json(["error"=>'error',422]);
     }
 }
