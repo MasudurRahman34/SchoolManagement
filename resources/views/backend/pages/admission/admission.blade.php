@@ -19,7 +19,9 @@
       <div class="tile">
         <h3 class="tile-title border-bottom p-2">Student Admission Form</h3>
         <div class="tile-body">
-          <form name="form" class="row" method="post" action="{{route('admission.store')}}" enctype='multipart/form-data' onSubmit="return validate()">
+        <!-- method="post" action="{{route('admission.store')}}" -->
+          <!-- <form name="form" class="row" onSubmit="return validate()"> -->
+          <form name="form" method="post" action="{{route('admission.store')}}" class="row" onSubmit="return validate()">
             @csrf
             <div class="col-md-12">
                     <div class="alert alert-warning text-center" role="alert">
@@ -278,7 +280,7 @@
         </div>
         <div class="tile-footer">
           <a class="btn btn-secondary" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-primary float-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
+        <button class="btn btn-primary float-right" id="register"><i class="fa fa-fw fa-lg fa-check-circle"></i>Register</button>
         </div>
         </form>
       </div>
@@ -290,7 +292,7 @@
 $('#schfee').hide();
 dynamicSectionSelection();
 checkClassTenOrNine();
-getFeesByClass()
+getFeesByClass();
 $("#sectionId").change(function () {
 var sectionId=$(this).val();
     lastRollFind(sectionId);
@@ -448,27 +450,8 @@ $('#classId').change(function (e) {
 });
 }
 
-$("#btnToggle" ).click(function() {
-  $( "#feeList" ).toggle();
-});
 
-// function validateThisFrom(thisForm) {
-//         // if (thisForm.sessionYear.value == "") {
-//         //     alert("Please Select Session Year");
-//         //     thisForm.sessionYear.focus();
-//         //     return false;
-//         // }
-//         if (thisForm.classId.value == "") {
-//             alert("Please Select Class");
-//             thisForm.classId.focus();
-//             return;
-//         }
-//         if (thisForm.sectionId.value == "") {
-//             alert("Please Select Section");
-//             thisForm.sectionId.focus();
-//             return;
-//         }
-//     }
+
 function validate(){
     if(document.form.classId.selectedIndex==""){
     alert ( "Please Select class !");
@@ -490,42 +473,9 @@ function validate(){
       alert ( "Please Select Schoolarship Fee Type !");
       return false;
     }
+
+   
 }
-
-//optional subject
-
-//end optional subject
-
-//end last roll find
-
-//     var sessionId=$('#sessionYear option:selected').val();
-//     var shift=[];
-//     $(".admission").change(function(e){
-// e.preventDefault();
-//         $("#classId").change(function (e) {
-// e.preventDefault();
-// console.log('working');
-
-// });
-
-
-//     });
-
-    // $(".admission").change(function () {
-    //     // element == this
-    //     var bloodGroup=$('#blood').val();
-    //     var sessionYearId=$('#sessionYear').val();
-    //     var address=$('#address').val();
-    //     var shift=$('input[name="shift"]:checked').val();
-    //     var classId=$('#classId').val();
-
-    //     var sectionId=$('#sectionId').val();
-    //     var group=$('input[name="group"]:checked').val();
-    //     var fourthSubject=$('#fourthSubject').val();
-    //     console.log(bloodGroup, sessionYearId, address, shift, classId, sectionId,group);
-
-    // });
-
 
 
 

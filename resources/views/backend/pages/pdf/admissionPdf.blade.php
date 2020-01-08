@@ -1,106 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title></title>
-    <style>
-        .content-wrapper{
-            background: #FFF;
-        }
-        .invoice-header{
-            background: #f7f7f7;
-            padding: 10px 20px 10px 20px;
-            border-bottom: 1px solid gray;
-        }
-        #customers {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-            }
-
-            #customers td, #customers th {
-            border: 1px solid #ddd;
-            padding: 8px;
-            }
-            #customers tr:nth-child(even){background-color: #f2f2f2;}
-            #customers tr:hover {background-color: #ddd;}
-            #customers th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #4CAF50;
-            color: white;
-            }
-    </style>
-
-</head>
-<body>
-       <div class="content-wrapper">
-        <div class="row">
-                <div class="col-md-12">
-                    <!-- {{-- @foreach ($students as $student) --}} -->
-                    <div class="float-left">
-                    <h5 class="text-left">Date: 1-05-2020</h5>
-                    </div>
-                    <div class="float-right">
-                      <a class="" href="{{route('admissison.index')}}">New Admission</a>
-                    </div>
-                    <div class="text-center m-5">
-                        <h1 class="text-warning">{{$students->schoolBranch->nameOfTheInstitution}}</h1>
-                    </div>
-                </div>
-            </div>
-           <div class="invoice-header">
-                <div class="float-left site-left">Form
-                    <p>{{Auth::guard('web')->user()->name}}</p>
-                    <p>{{Auth::guard('web')->user()->designation}}</p>
-                    <p>Address: {{Auth::guard('web')->user()->address}}</p>
-                    <p>Email: {{Auth::guard('web')->user()->email}}</p>
-                </div>
-                <div class="float-right site-right">To
-                    <p>{{$students->firstName }} {{$students->lastName}}</p>
-                    <p>{{$students->Section->classes->className}},{{$students->group}}</p>
-                    <p>Section: {{$students->Section->sectionName}}</p>
-                    <p>{{$students->Section->sessionYear->sessionYear}},{{$students->blood}}</p>
-                    <p>{{$students->birthDate}},{{$students->type}}</p>
-                    <p>{{$students->mobile}}</p>
-                    <p>{{$students->email}}</p>
-                </div>
-           </div>
-        <div class=clearfix></div>
+@extends('backend.layouts.master')
+	@section('title', 'Class Management')
+        @section('content')
+        
+       
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-file-text-o"></i> Student Admission Invoice</h1>
+          
         </div>
-    <br>
-    <table id="customers">
-  <tr>
-    <th>Fee Name</th>
-    <th>Paid Month</th>
-    <th>Amount</th>
-    <th>Due</th>
-    <th>Total Amount</th>
-  </tr>
-  @foreach($students->feeCollection as $feeCollection)
-    <tr>
-        <td>{{$feeCollection->Fee->name}}</td>
-        <td>{{$feeCollection->paidMonth}}</td>
-        <td>{{$feeCollection->amount}}</td>
-        <td>{{$feeCollection->due}}</td>
-        <td>{{$feeCollection->totalAmount}}</td>
-    </tr>
-  @endforeach
-  
-</table>
-    <!-- {{-- @endforeach --}} -->
-    <h6 class="text-center m-5 text-success">Thanks You For Your Admission !! <br></h6>
-    <a class="float-right" href="http://www.sms.quadinfoltd.com/">http://www.sms.quadinfoltd.com/</a>
-
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-</body>
-</html>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item"><a href="#">{{$students->schoolBranch->nameOfTheInstitution}}</a></li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tile">
+          <a id='doPrint' class="btn btn-light float-right"><i class="fa fa-print"></i> Print</a>
+          <a class="float-right btn btn-primary" href="{{route('admissison.index')}}"><i class="fa fa-plus-circle"></i>New Admission</a>
+          
+            <section class="invoice m-4" id="print_div">
+              <div class="row">
+                <div class="col-6">
+                  <h2 style="color: black;" class="page-header text-drak"><i class="fa fa-graduation-cap"></i>{{$students->schoolBranch->nameOfTheInstitution}}</h2>
+                </div>
+                <div class="col-4">
+                
+                </div>
+                <div class="col-2">
+                    <h5 class="text-right">{{date("Y-m-d")}}</h5>
+                </div>
+              </div>
+              <div class="row invoice-info">
+                <div class="col-4">From
+                  <address><strong>{{Auth::guard('web')->user()->name}}</strong><br><br></address>
+                </div>
+                <div class="col-4">To
+                  <address><strong>{{$students->firstName }} {{$students->lastName}}</strong><br>Class: {{$students->Section->classes->className}},{{$students->group}}<br>Section: {{$students->Section->sectionName}}<br>Session: {{$students->Section->sessionYear->sessionYear}},Blood:{{$students->blood}}</address>
+                </div>
+                <div class="col-4">Student ID:{{$students->studentId }}<br><b>Type : {{$students->type}}</b><br>Scholarship: @if($students->schoolarshipId==0)
+                    {{'No'}}
+                @else
+                @foreach($students->studentScholarship as $scholarship) {{$scholarship->scholarship->name}} {{$scholarship->discount}}% on {{$scholarship->Fee->name}} @endforeach
+                @endif</b><br><h4 class="pt-2">Paid Amount: <b> {{$students->feeCollection->sum('totalAmount')}} Taka Only
+              </div>
+              </div>
+              <div class="row">
+                <div class="col-12 table-responsive">
+                  <table id="customers" class="table table-bordered">
+                    <thead>
+                      <tr style="">
+                        <th>Fee Name</th>
+                        <th>Paid Month</th>
+                        <th>Amount</th>
+                        <th>Due</th>
+                        <th>Total Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($students->feeCollection as $feeCollection)
+                      <tr>
+                        <td>{{$feeCollection->Fee->name}}</td>
+                        <td>{{$feeCollection->paidMonth}}</td>
+                        <td>{{$feeCollection->amount}}</td>
+                        <td>{{$feeCollection->due}}</td>
+                        <td>{{$feeCollection->totalAmount}}</td>
+                      </tr>
+                    @endforeach
+                    </tbody>
+                  </table>
+                  <h3 class="text-center m-5">Thank You For Your Admission !! <br></h3>
+                    <a class="ml-auto" href="http://www.sms.quadinfoltd.com/">http://www.sms.quadinfoltd.com/</a>
+                </div>
+              </div>
+              
+            </section>
+          </div>
+        </div>
+      </div>
+        @endsection
+    @section('script')
+    <script>
+     //print button in table
+    $('#doPrint').on("click", function () {
+        $('#print_div').printThis({
+            debug: false,               // show the iframe for debugging
+            importCSS: true,            // import parent page css
+            importStyle: true,         // import style tags
+            printContainer: true,       // print outer container/$.selector
+            loadCSS: "",                // path to additional css file - use an array [] for multiple
+            pageTitle: "",              // add title to print page
+            removeInline: false,        // remove inline styles from print elements
+            removeInlineSelector: "*",  // custom selectors to filter inline styles. removeInline must be true
+            printDelay: 533,            // variable print delay
+            header: null,               // prefix to html
+            footer: null,               // postfix to html
+            base: false,                // preserve the BASE tag or accept a string for the URL
+            formValues: true,           // preserve input/form values
+            canvas: false,              // copy canvas content
+            doctypeString: '...',       // enter a different doctype for older markup
+            removeScripts: false,       // remove script tags from print content
+            copyTagClasses: false,      // copy classes from the html & body tag
+            beforePrintEvent: null,     // function for printEvent in iframe
+            beforePrint: null,          // function called before iframe is filled
+            afterPrint: null            // function called before iframe is removed
+        });
+      });
+    </script>
+    @endsection
