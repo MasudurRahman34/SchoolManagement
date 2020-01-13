@@ -193,10 +193,10 @@
 
                     //for check and uncheck checkBox
                     if(data.optionalstatus==0){
-                        console.log(data.optionalstatus);
+
                         $("input[name='optionalstatus']").prop("checked", false);
                     }else{
-                        console.log(data.status);
+
                         $("input[name='optionalstatus']").prop("checked", true);
                     }
 

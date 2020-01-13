@@ -14,6 +14,51 @@
         </ul>
     </div>
       <div class="row">
+        <div class="col-md-7 col-sm-12">
+            <div class="tile">
+                    <h3 class="tile-title border-bottom p-2">Role With Permission</h3>
+                    <div class="tile-body">
+                            <div class="animated-checkbox">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tile">
+                                    <div class="tile-body">
+                                      <div class="table-responsive">
+                                      <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                          <tr>
+                                            <th></th>
+                                            <th>Role Name</th>
+                                            <th>Permissions</th>
+                                            <th>Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($roles as $role)
+                                            <tr>
+                                                <td></td>
+                                                <td>{{$role->name}}</td>
+                                                    <td>
+                                                    <div class="bs-component">
+                                                        @foreach ($role->permissions as $roleprm)
+                                                            <button class="btn btn-warning btn-sm" type="button">{{$roleprm->name}}</button>
+                                                        @endforeach
+                                                    </div>
+                                                </td>
+                                                <td><button class="btn btn-info btn-sm" onClick="editSection({{$role->id}})"><i class="fa fa-edit"></i></button></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                      </table>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
       <div class="col-md-5 col-sm-12">
         <div class="tile">
           <h3 class="tile-title border-bottom p-2">Add New Role</h3>
@@ -21,27 +66,28 @@
             <form class="form-horizontal ml-5" style="font-size: 1rem;";
             font-weight: 400;">
               <div class="form-group row">
-                <label class="control-label col-md-3 pl-4 col-sm-12"> Role Name</label>
+                <label class="control-label col-md-3 col-sm-12"> Role Name</label>
                 <div class="col-md-9 col-sm-12">
-                  <input class="form-control col-md-10 col-sm-12" type="text" id="roleName" name="roleName">
+                  <input class="form-control col-md-10 col-sm-12" type="text" id="roleName" name="roleName" required>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="control-label col-md-3 col-sm-12 pl-4">Assign Permissions</label>
-                <div class="col-md-9 col-sm-12">
+                <label class="control-label col-md-12 col-sm-12 text-primary">Assign Permissions :</label>
+
+                <div class="col-md-12 col-sm-12">
                     <div class="row">
 
                     @foreach ($prms as $prm)
                     @if($prm->id % 2==0)
                     <div class="col-md-6">
-                        <label class="pr-5">
-                            <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions"><span class="label-text">{{$prm->name}}</span>
+                        <label class="pr">
+                            <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions" required><span class="label-text">{{$prm->name}}</span>
                         </label>
                     </div>
                     @else
                     <div class="col-md-6">
-                            <label class="pr-5">
-                                <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions"><span class="label-text">{{$prm->name}}</span>
+                            <label class="pr">
+                                <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions" required><span class="label-text" >{{$prm->name}}</span>
                             </label>
                         </div>
                     @endif
@@ -61,48 +107,7 @@
         </form>
           </div>
         </div>
-        <div class="col-md-7 col-sm-12">
-                <div class="tile">
-                        <h3 class="tile-title border-bottom p-2">Role With Permission</h3>
-                        <div class="tile-body">
-                                <div class="animated-checkbox">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="tile">
-                                        <div class="tile-body">
-                                          <div class="table-responsive">
-                                          <table class="table table-hover table-bordered" id="sampleTable">
-                                            <thead>
-                                              <tr>
-                                                <th>Role Name</th>
-                                                <th>Permissions</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($roles as $role)
-                                                <tr>
-                                                    <td>{{$role->name}}</td>
-                                                        <td>
-                                                        <div class="bs-component">
-                                                            @foreach ($role->permissions as $roleprm)
-                                                                <button class="btn btn-warning btn-sm" type="button">{{$roleprm->name}}</button>
-                                                            @endforeach
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                          </table>
-                                          </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        </div>
-      </div>
 
       <div class="clearix"></div>
     @endsection
@@ -111,7 +116,20 @@
     @include('backend.partials.js.datatable');
 
       <script>
-
+        //   var table= $('#sampleTable').DataTable({
+        //         dom: 'lBfrtip',
+        //         buttons: [
+        //             'copy', 'csv', 'excel', 'pdf', 'print'
+        //         ],
+        //      processing:true,
+        //      serverSide:true,
+        //      ajax:"{{url('/subject/show')}}",
+        //      columns:[
+        //          { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+        //          { data: 'name', name: 'name' },
+        //          { data: 'rolepermissions', name: 'rolepermissions' }
+        //      ]
+        //  });
 
         $(document).ready(function () {
             $('#submit').click(function (e) {
@@ -159,6 +177,9 @@
 
             });
         });
+        function editSection(id) {
+            // alert(id);
+        }
       </script>
 
     @endsection
