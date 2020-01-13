@@ -62,20 +62,20 @@
                     </div>
                     <div class="form-group col-md-3" id="hidden" >
                             <label for="exampleFormControlSelect1"> Fee Name</label>
-                            <select class="form-control " id="feeId">
+                            <select class="form-control feeChange" id="feeId">
                                     <option value="">--Select Fee--</option>
                             </select>
                     </div>
                     <div class="form-group col-md-3 pr-2" id="hidden1" hidden>
                         <label for="exampleFormControlSelect1"> Amount</label>
-                        <input class="form-control " type="number" id="amount" name="amount" required  readonly>
+                        <input class="form-control feeChange" type="number" id="amount" name="amount" required  readonly>
 
                     </div>
 
                     <div class="form-group col-md-3 pr-2" >
                         <label for="exampleFormControlSelect1"> Month</label>
                         {{-- <input class="form-control " id="month" type="month" placeholder="Pick a month" value="{{date('Y-m')}}"/> --}}
-                        <select class="form-control " id="month">
+                        <select class="form-control feeChange" id="month">
                             <option value="">--Select Fee--</option>
                             <option value="JANUARY">JANUARY</option>
                             <option value="FEBRUARY">FEBRUARY</option>
@@ -93,13 +93,13 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="exampleFormControlSelect1"> Section</label>
-                        <select class="form-control " id="sectionId">
+                        <select class="form-control feeChange" id="sectionId">
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="exampleFormControlSelect1"> Student Name</label>
-                        <select class="form-control " id="studentId">
+                        <select class="form-control feeChange" id="studentId">
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
@@ -218,7 +218,7 @@
     });
 
 //on change fee id for find amount
-    $('#feeId').change(function (e) {
+    $('.feeChange').change(function (e) {
         e.preventDefault();
         var feeId= $("#feeId").val();
         console.log(feeId);
@@ -238,36 +238,33 @@
                     $('#amount1').val(data);
                 }
             });
-    });
 
-//on change section for find student
-    $('#sectionId').change(function (e) {
-        e.preventDefault();
+
+        //on change section for find student
         var sectionId=$("#sectionId").val();
         $("#sectionId2").attr('value',sectionId);
         var classId=$("#classId").val();
         $("#classId2").attr('value',classId);
 
-
-    var amount=$("#amount").val();
-    $("#amount2").attr('value',amount);
-    var feeId=$("#feeId").val();
-    $("#feeId2").attr('value',feeId);
-    var month=$("#month").val();
-    $("#month2").attr('value',month);
-    var sessionYear=$("#sessionYear").val();
-    $("#sessionYear2").attr('value',sessionYear);
+        var amount=$("#amount").val();
+        $("#amount2").attr('value',amount);
+        var feeId=$("#feeId").val();
+        $("#feeId2").attr('value',feeId);
+        var month=$("#month").val();
+        $("#month2").attr('value',month);
+        var sessionYear=$("#sessionYear").val();
+        $("#sessionYear2").attr('value',sessionYear);
 
         console.log(sectionId2,classId2);
         $.ajax({
-          type: "get",
-          url: "{{ url('feecollection/individualStudent')}}",
-          data: {
+            type: "get",
+            url: "{{ url('feecollection/individualStudent')}}",
+            data: {
             sectionId:sectionId,
             feeId:feeId,
             month:month,
-          },
-          success: function (data) {
+            },
+            success: function (data) {
             //change start from here
             //console.log(data);
             var option="<option>--Please Select--</option>";
@@ -277,130 +274,122 @@
                 $('#studentId').html(option);
                 }
         });
-    });
 
 
-//on change section for find student
-$('#studentId').change(function (e) {
-    e.preventDefault();
-    var sectionId=$("#sectionId").val();
-    $("#sectionId2").attr('value',sectionId);
-    var classId=$("#classId").val();
-    $("#classId2").attr('value',classId);
+        //on change section for find student
+        var sectionId=$("#sectionId").val();
+        $("#sectionId2").attr('value',sectionId);
+        var classId=$("#classId").val();
+        $("#classId2").attr('value',classId);
 
-    var amount=$("#amount").val();
-    $("#amount2").attr('value',amount);
-    var feeId=$("#feeId").val();
-    $("#feeId2").attr('value',feeId);
-    var month=$("#month").val();
-    $("#month2").attr('value',month);
-    var sessionYear=$("#sessionYear").val();
-    $("#sessionYear2").attr('value',sessionYear);
-    var studentId=$("#studentId").val();
-    var st= $("#studentId2").attr('value',studentId);
+        var amount=$("#amount").val();
+        $("#amount2").attr('value',amount);
+        var feeId=$("#feeId").val();
+        $("#feeId2").attr('value',feeId);
+        var month=$("#month").val();
+        $("#month2").attr('value',month);
+        var sessionYear=$("#sessionYear").val();
+        $("#sessionYear2").attr('value',sessionYear);
+        var studentId=$("#studentId").val();
+        var st= $("#studentId2").attr('value',studentId);
 
-    //var discount=$("#discount").val();
-    //$("#discount2").attr('value', discount);
+        //var discount=$("#discount").val();
+        //$("#discount2").attr('value', discount);
 
-    console.log(discount2);
+        console.log(discount2);
 
-    console.log(sectionId2,amount2,feeId2,month2,sessionYear2,studentId2,discount2);
-    // scholarship amount check for due calculation
-    $.ajax({
-        type: "get",
-        url:"{{ url('feecollection/scholarshipAmount')}}",
-        data: {
-            sectionId:sectionId,
-            feeId:feeId,
-            month:month,
-            studentId:studentId,
-            classId:classId,
-            amount:amount,
-        },
-        success: function (data) {
-            console.log(data);
-            console.log(data.paidAmount);
-            console.log(data.discountAmount);
-            console.log(data.percentage);
-        //var amount = data;
-            //$('#amount').text();
-            $('#btnamount').attr('hidden',false);
-            $('#stamount').attr('hidden',false);
-            $('#scholarshipAmount').attr('hidden',false);
-            $('#scholarshipAmount').attr('value', data.paidAmount);
-            $('#btndiscount').attr('hidden',false);
-            $('#discount').attr('value', data.discountAmount);
-            $('#percentage').html(data.percentage);
+            console.log(sectionId2,amount2,feeId2,month2,sessionYear2,studentId2,discount2);
+            // scholarship amount check for due calculation
+            $.ajax({
+                type: "get",
+                url:"{{ url('feecollection/scholarshipAmount')}}",
+                data: {
+                    sectionId:sectionId,
+                    feeId:feeId,
+                    month:month,
+                    studentId:studentId,
+                    classId:classId,
+                    amount:amount,
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log(data.paidAmount);
+                    console.log(data.discountAmount);
+                    console.log(data.percentage);
+                //var amount = data;
+                    //$('#amount').text();
+                    $('#btnamount').attr('hidden',false);
+                    $('#stamount').attr('hidden',false);
+                    $('#scholarshipAmount').attr('hidden',false);
+                    $('#scholarshipAmount').attr('value', data.paidAmount);
+                    $('#btndiscount').attr('hidden',false);
+                    $('#discount').attr('value', data.discountAmount);
+                    $('#percentage').html(data.percentage);
 
-            var discount=$("#discount").val();
-            $("#discount2").attr('value', discount);
-        }
-    });
-
-        $.ajax({
-        type: "get",
-        url: "{{ url('feecollection/individualStudentfind')}}",
-        data: {
-            sectionId:sectionId,
-            feeId:feeId,
-            month:month,
-            studentId:studentId,
-            classId:classId,
-            amount:amount,
-        },
-        success: function (data) {
-
-            if(data.outPut){
-                //check for due condition
-                //console.log(data.Stfees[0]['due']);
-                console.log('if')
-                var data1 =parseFloat(data.Stfees[0]['due']).toFixed(2);
-                //checking for due amount in fee collection
-                if(data1>0){
-                    console.log("due founr",data1)
-                    $('#tblHidden').attr('hidden',false);
-                    $('#btnFee').attr('disabled',false);
-                    $('#btnFee').html("Update Due Fee");
-                    $('#myfeeform').attr("action", "../feecollection/individual/update");
-
-                    $('tbody').html(data.outPut);
-                    $('#inputAmount').keypress(function(e){
-                        console.log('change');
-                        var inputAmount=$('#inputAmount').val();
-                        var newDue=$("#newDue").val();
-                    });
-
-                }else{
-                    $('#tblHidden').attr('hidden',false);
-                    $('#btnFee').attr('disabled',true);
-
-                    $('#btnFee').html("Take Fee");
-                    $('tbody').html(data.outPut);
+                    var discount=$("#discount").val();
+                    $("#discount2").attr('value', discount);
                 }
-            }else{
+            });
 
-                console.log("else");
+                $.ajax({
+                type: "get",
+                url: "{{ url('feecollection/individualStudentfind')}}",
+                data: {
+                    sectionId:sectionId,
+                    feeId:feeId,
+                    month:month,
+                    studentId:studentId,
+                    classId:classId,
+                    amount:amount,
+                },
+                success: function (data) {
 
-                $('#tblHidden').attr('hidden',false);
-                $('#btnFee').attr('disabled',false);
+                    if(data.outPut){
+                        //check for due condition
+                        //console.log(data.Stfees[0]['due']);
+                        console.log('if')
+                        var data1 =parseFloat(data.Stfees[0]['due']).toFixed(2);
+                        //checking for due amount in fee collection
+                        if(data1>0){
+                            console.log("due founr",data1)
+                            $('#tblHidden').attr('hidden',false);
+                            $('#btnFee').attr('disabled',false);
+                            $('#btnFee').html("Update Due Fee");
+                            $('#myfeeform').attr("action", "../feecollection/individual/update");
 
-                $('#btnFee').html("Take Fee");
+                            $('tbody').html(data.outPut);
+                            $('#inputAmount').keypress(function(e){
+                                console.log('change');
+                                var inputAmount=$('#inputAmount').val();
+                                var newDue=$("#newDue").val();
+                            });
 
-                $('tbody').html(data.Fee);
-                var max=$('#scholarshipAmount').val();
-                $('#totalAmount').attr('max', max);
+                        }else{
+                            $('#tblHidden').attr('hidden',false);
+                            $('#btnFee').attr('disabled',true);
 
-            };
-        }
+                            $('#btnFee').html("Take Fee");
+                            $('tbody').html(data.outPut);
+                        }
+                    }else{
 
-        });
+                        console.log("else");
 
-});
+                        $('#tblHidden').attr('hidden',false);
+                        $('#btnFee').attr('disabled',false);
 
+                        $('#btnFee').html("Take Fee");
 
+                        $('tbody').html(data.Fee);
+                        var max=$('#scholarshipAmount').val();
+                        $('#totalAmount').attr('max', max);
 
+                    };
+                }
 
+         });
 
+    });
 
 //print button in table
     $('#doPrint').on("click", function () {

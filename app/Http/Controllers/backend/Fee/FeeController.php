@@ -8,6 +8,7 @@ use App\model\feeHistory;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\model\feeCollection;
 use Illuminate\Support\Facades\Auth;
 use App\model\SessionYear;
 use Illuminate\Support\Facades\Validator;
@@ -166,11 +167,19 @@ class FeeController extends Controller
      */
     public function destroy($id)
     {
-        $feeDelete = Fee::find($id);
-        if($feeDelete){
-            $feeDelete->delete();
-            return response()->json(["success"=>'data deleted',201]);
+        $feeId = feeCollection::where('feeId', $id)->get();
+
+    if(count($feeId)>=1){
+
+        return response()->json(["error"=>'Sorry! This Fee Is Taken by Teacher. Can Not be Deleted']);
+        }else{
+
+            $feeDelete = Fee::find($id);
+            if($feeDelete){
+                $feeDelete->delete();
+                return response()->json(["success"=>'successfully deleted the fee from the list',201]);
+            }
+            return response()->json(["error"=>'error',422]);
         }
-        return response()->json(["error"=>'error',422]);
     }
 }

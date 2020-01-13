@@ -105,72 +105,67 @@ class FeeManagementReportController extends Controller
 
 
         //Government Fee Type Report
-        $governmentFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, fees.name, SUM(fee_collections.totalAmount) as total, COUNT(fee_collections.sectionId) as totalStudent
-                                FROM fee_collections, fees, sections, classes
-                                WHERE fee_collections.feeId=fees.id
-                                AND fees.classid=classes.id
+        $governmentFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, sections.shift, fees.name, SUM(fee_collections.totalAmount) as total, COUNT(fee_collections.sectionId) as totalStudent
+                                            FROM fee_collections, fees, sections, classes
+                                            WHERE fee_collections.feeId=fees.id
+                                            AND fees.classid=classes.id
+                                            AND fee_collections.sectionId=sections.id
+                                            AND fee_collections.sessionYearId='$sessionYearId'
+                                            AND fee_collections.month='$month'
+                                            AND fee_collections.bId='$bId'
+                                            AND fees.type='gov'
+                                            GROUP BY feeId, fee_collections.sectionId
+                                            ORDER BY fee_collections.sectionId");
 
-                                AND fee_collections.sectionId=sections.id
+                $governmentFeeTableOutput="";
+                $i=1;
 
-                                AND fee_collections.sessionYearId='$sessionYearId'
-                                AND fee_collections.month='$month'
-                                AND fee_collections.bId='$bId'
-                                AND fees.type='gov'
-                                GROUP BY feeId, fee_collections.sectionId
-                                ORDER BY fee_collections.sectionId");
+                    foreach ($governmentFeeTotal as $feeTotal) {
 
-        $governmentFeeTableOutput="";
-        $i=1;
-
-        foreach ($governmentFeeTotal as $feeTotal) {
-
-
-            $governmentFeeTableOutput.='<tr>'.
-            '<td>'.$i++.'</td>'.
-            '<td>'.$feeTotal->className.'</td>'.
-            '<td>'.$feeTotal->sectionName.'</td>'.
-            '<td>'.$feeTotal->name.'</td>'.
-            '<td>'.$feeTotal->total.'</td>'.
-            '<td>'.$feeTotal->totalStudent.'</td>'.
-
-            '</tr>';
-        }
+                        $governmentFeeTableOutput.='<tr>'.
+                        '<td>'.$i++.'</td>'.
+                        '<td>'.$feeTotal->className.'</td>'.
+                        '<td>'.$feeTotal->sectionName.'</td>'.
+                        '<td>'.$feeTotal->shift.'</td>'.
+                        '<td>'.$feeTotal->name.'</td>'.
+                        '<td>'.$feeTotal->total.'</td>'.
+                        '<td>'.$feeTotal->totalStudent.'</td>'.
+                        '</tr>';
+                    }
 
 
         //Non-Government Fee Type Report
-        $nonGovtFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, fees.name, SUM(fee_collections.totalAmount) as total, COUNT(fee_collections.sectionId) as totalStudent
-        FROM fee_collections, fees, sections, classes
-        WHERE fee_collections.feeId=fees.id
-        AND fees.classid=classes.id
+        $nonGovtFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, sections.shift, fees.name, SUM(fee_collections.totalAmount) as total, COUNT(fee_collections.sectionId) as totalStudent
+                                        FROM fee_collections, fees, sections, classes
+                                        WHERE fee_collections.feeId=fees.id
+                                        AND fees.classid=classes.id
+                                        AND fee_collections.sectionId=sections.id
+                                        AND fee_collections.sessionYearId='$sessionYearId'
+                                        AND fee_collections.month='$month'
+                                        AND fee_collections.bId='$bId'
+                                        AND fees.type='nonGov'
+                                        GROUP BY feeId, fee_collections.sectionId
+                                        ORDER BY fee_collections.sectionId");
 
-        AND fee_collections.sectionId=sections.id
+                    $nonGovtFeeTableOutput="";
+                    $i=1;
 
-        AND fee_collections.sessionYearId='$sessionYearId'
-        AND fee_collections.month='$month'
-        AND fee_collections.bId='$bId'
-        AND fees.type='nonGov'
-        GROUP BY feeId, fee_collections.sectionId
-        ORDER BY fee_collections.sectionId");
+                        foreach ($nonGovtFeeTotal as $nongovtfee) {
 
-            $nonGovtFeeTableOutput="";
-            $i=1;
+                        $nonGovtFeeTableOutput.='<tr>'.
+                        '<td>'.$i++.'</td>'.
+                        '<td>'.$nongovtfee->className.'</td>'.
+                        '<td>'.$nongovtfee->sectionName.'</td>'.
+                        '<td>'.$nongovtfee->shift.'</td>'.
+                        '<td>'.$nongovtfee->name.'</td>'.
+                        '<td>'.$nongovtfee->total.'</td>'.
+                        '<td>'.$nongovtfee->totalStudent.'</td>'.
 
-            foreach ($nonGovtFeeTotal as $nongovtfee) {
-
-
-            $nonGovtFeeTableOutput.='<tr>'.
-            '<td>'.$i++.'</td>'.
-            '<td>'.$nongovtfee->className.'</td>'.
-            '<td>'.$nongovtfee->sectionName.'</td>'.
-            '<td>'.$nongovtfee->name.'</td>'.
-            '<td>'.$nongovtfee->total.'</td>'.
-            '<td>'.$nongovtfee->totalStudent.'</td>'.
-
-            '</tr>';
-            }
+                        '</tr>';
+                        }
 
 
-            return Response()->json(["sectionTotalTableOutput"=>$sectionTotalTableOutput,"governmentFeeTableOutput"=>$governmentFeeTableOutput,"nonGovtFeeTableOutput"=>$nonGovtFeeTableOutput]);
+        return Response()->json(["sectionTotalTableOutput"=>$sectionTotalTableOutput,"governmentFeeTableOutput"=>$governmentFeeTableOutput,"nonGovtFeeTableOutput"=>$nonGovtFeeTableOutput]);
 
     }
 

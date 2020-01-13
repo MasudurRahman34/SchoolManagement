@@ -98,10 +98,7 @@
             });
         // });
 
-        function deleteStudentCls(id) {
-            var url = "{{url('/class/delete')}}";
-            deleteAttribute(url,id);
-        }
+
         //edit
         function editClass(id) {
             var editId=id;
@@ -160,6 +157,44 @@
             });
 
         });
+
+         //delet
+         function deleteStudentCls(id) {
+
+            var url = "{{url('/class/delete')}}";
+            //deleteAttribute(url,id);
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: true,
+            }, function(isConfirm) {
+                if (isConfirm) {
+               //    var url = "{{url('/section/delete')}}";
+                  $.ajax({
+                      url:url+"/"+id,
+                      type:"GET",
+                      dataType:"json",
+                      success:function(data) {
+                          if(data.error){
+                           swal("Sorry",data.error , "error");
+                          console.log(data.error);
+                          }if(data.success){
+                           table.draw();
+                           swal(data.success);
+                          }
+                      }
+                  })
+
+                } else {
+                    swal("Cancelled", "Your file is safe :)", "error");
+                }
+            });
+        }
 
 
     </script>

@@ -221,7 +221,39 @@
     //delete option
      function deletefee(id) {
         var url = "{{url('/fee/delete')}}";
-        deleteAttribute(url,id);
+        //deleteAttribute(url,id);
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel plx!",
+            closeOnConfirm: false,
+            closeOnCancel: true,
+        }, function(isConfirm) {
+            if (isConfirm) {
+              $.ajax({
+                  url:url+"/"+id,
+                  type:"GET",
+                  dataType:"json",
+                  success:function(data) {
+                      if(data.error){
+                       swal("Sorry",data.error , "error");
+                      console.log(data.error);
+                      }if(data.success){
+                       table.draw();
+                       swal(data.success);
+                      }
+                  }
+              })
+
+            } else {
+                swal("Cancelled", "Your data is safe :)", "error");
+            }
+        });
+
+
     }
 
     </script>

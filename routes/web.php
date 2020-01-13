@@ -102,7 +102,7 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     Route::get('/student/fee/index','StudentFeeController@index')->name('student.fee.index');
     Route::get('/fee/show/{id}/{sessionYearId}', 'StudentFeeController@show')->name('student.fee.show');
     Route::get('/due/fee/show', 'StudentFeeController@dueFee')->name('student.due.fee');
-    Route::get('/due2/fee/show/{id}/{sessionYearId}', 'StudentFeeController@dueFee2')->name('student.due.fee2');
+    Route::get('/due2/fee/show/{id}/{sessionYearId}/{classId}', 'StudentFeeController@dueFee2')->name('student.due.fee2');
 
 });
 //endforstudent
@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
     Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
     Route::get('/classwise', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
     Route::get('/classwiseList/{id}/{sessionYearId}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
+    Route::get('/student/delete/{id}','MyStudentConttroller@destroy')->name('student.delete');
 
 
     Route::get('/sectionwise', 'MyStudentConttroller@Sectionwise')->name('mystudent.sectionwise');
@@ -222,7 +223,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     //Student Fee Details
     Route::get('/feecollection/student/feeDetails','backend\FeeCollectionController@studentFeeDetails')->name('student.feeDetails');
     Route::get('/feecollection/individualStudentDetails','backend\FeeCollectionController@individualFeeDetails')->name('individualStudent.feeDtails');
-    Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
+    Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}/{classId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
     //Route::get('/feecollection/studentMonthly/paiedFee/{month}/{studentId}','backend\FeeCollectionController@studentMonthlyPaiedFee')->name('student.monthlyPaiedFee');
 
     //Admin Report

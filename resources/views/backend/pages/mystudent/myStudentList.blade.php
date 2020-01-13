@@ -32,14 +32,16 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>ID</th>
+                                {{--  <th>ID</th>  --}}
                                 <th>Roll</th>
                                 <th>Name</th>
-                                <th>Class</th>
+                                {{--  <th>Class</th>
                                 <th>Section</th>
-                                <th>Shift</th>
+                                <th>Shift</th>  --}}
                                 <th>Father</th>
                                 <th>Mother</th>
+                                <th>Blood Group</th>
+                                <th>Date of Birth</th>
                                 <th>Contact</th>
                                 <th>Action</th>
                             </tr>
@@ -75,19 +77,27 @@
                 ajax:"{{url('mystudent/list')}}",
                 columns:[
                     {data: 'DT_RowIndex',name: 'DT_RowIndex'},
-                    { data: 'studentId', name: 'studentId' },
+                    //{ data: 'studentId', name: 'studentId' },
                     { data: 'roll', name: 'roll' },
                     { data: 'firstName', name: 'firstName' },
-                    { data: 'section.classes', name: 'section.classes' },
-                    { data: 'section.sectionName', name: 'section.sectionName'},
-                    { data: 'section.shift', name: 'section.shift'},
+                    //{ data: 'section.classes', name: 'section.classes' },
+                   // { data: 'section.sectionName', name: 'section.sectionName'},
+                   // { data: 'section.shift', name: 'section.shift'},
                     { data: 'fatherName', name: 'fatherName'},
                     { data: 'motherName', name: 'motherName'},
+                    { data: 'blood', name: 'blood'},
+                    { data: 'birthDate', name: 'birthDate'},
                     { data: 'mobile', name: 'mobile'},
                     { data: 'action', name: 'action' }
                 ]
             });
        // });
+
+        //delete
+        function deleteStudent(id) {
+            var url = "{{url('mystudent/student/delete')}}";
+            deleteAttribute(url,id);
+    }
 
     </script>
 

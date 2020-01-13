@@ -213,7 +213,9 @@ class UserController extends Controller
         $sc->activeStatus=1;
         $sc->save();
             $password=mt_rand(100000,999999);
+            $userId=mt_rand(100000,999999);
             $user=new User;
+            $user->userId=$userId;
             $user->email=$sc->email;
             $user->name=$sc->nameOfHead;
             $user->mobile=$sc->phoneNumber;

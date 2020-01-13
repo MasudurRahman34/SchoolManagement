@@ -66,7 +66,7 @@ class FeeCollectionController extends Controller
     }
 
     //Students Individual due fees are show
-    public function dueDetailsFee($month,$studentId,$sessionYearId){
+    public function dueDetailsFee($month,$studentId,$sessionYearId,$classId){
         //Monthly paied
         //$cur_year=date('Y');
         $cur_year=$sessionYearId;
@@ -97,10 +97,12 @@ class FeeCollectionController extends Controller
         $NotGivenMonth=DB::table('fees')->select('*')
         ->whereNotIn('id', $feeid)
         ->where('interval', 'monthly')
+        ->where('classId', $classId)
         ->get();
         //Check which month, this student do not pay their fee==(Monthly Un-paid Fees)
         $totalNotGiven=Fee::whereNotIn('id', $feeid)
         ->where('interval', 'monthly')
+        ->where('classId', $classId)
         ->sum('amount');
         $tableOut="";
         foreach ($NotGivenMonth as $notGive) {
@@ -138,9 +140,11 @@ class FeeCollectionController extends Controller
         $yearlyUnPaidFees=DB::table('fees')->select('*')
         ->whereNotIn('id', $yearlyfeeid)
         ->where('interval', 'yearly')
+        ->where('classId', $classId)
         ->get();
         $totalyearlyUnPaidFees=Fee::whereNotIn('id', $yearlyfeeid)
         ->where('interval', 'yearly')
+        ->where('classId', $classId)
         ->sum('amount');
         $yearlyUnPaidHTML="";
         foreach ($yearlyUnPaidFees as $yearlyUnPaidFee) {
@@ -289,9 +293,11 @@ class FeeCollectionController extends Controller
          ->first();
 
         if($fee!=null){
+
             $bId=Auth::guard('web')->user()->bId;
             $feeId=$request->feeId;
             $month=$request->month;
+            $sectionId=$request->sectionId;
             $sessionYear=$request->sessionYear;
 
             $dueStudent=DB::select("select students.id,students.firstName,students.roll from
@@ -299,14 +305,18 @@ class FeeCollectionController extends Controller
             where fee_collections.bId='$bId'
             and fee_collections.feeId='$feeId'
             and fee_collections.month='$month'
-            and fee_collections.sessionYearId='$sessionYear')");
+            And fee_collections.sectionId='$sectionId'
+            and fee_collections.sessionYearId='$sessionYear')
+
+            AND students.sectionId='$sectionId'
+            AND students.bId='$bId'");
 
             $paidStudent=DB::select("select fee_collections.id,students.id,students.firstName,students.roll from
             students,fee_collections where fee_collections.studentId=students.id
             and fee_collections.sectionId='$request->sectionId'
             and fee_collections.feeId='$feeId'
             and fee_collections.bId='$bId'
-            and fee_collections.month='$month
+            and fee_collections.month='$month'
             and fee_collections.sessionYearId='$sessionYear'");
 
             return response()->json(["dueStudent"=>$dueStudent, "paidStudent"=>$paidStudent]);

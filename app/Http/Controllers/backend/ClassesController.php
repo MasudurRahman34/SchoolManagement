@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\model\classes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\model\Section;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
@@ -19,7 +20,7 @@ class ClassesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //form view 
+     //form view
     public function index()
     {
 
@@ -43,7 +44,7 @@ class ClassesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //create new class 
+     //create new class
     public function store(Request $request)
     { $validator= Validator::make($request->all(), Classes::$rules);
         if ($validator->fails()) {
@@ -71,14 +72,14 @@ class ClassesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //show classes information for this school  
+     //show classes information for this school
     public function show()
     {
 
         $Class=Classes::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->get();
 
         $data_table_render = DataTables::of($Class)
-           
+
             ->addColumn('action',function ($row){
 
                 return '<button class="btn btn-info btn-sm" onClick="editClass('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
@@ -97,7 +98,7 @@ class ClassesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //find classes 
+     //find classes
     public function edit($id)
     {
         $studentclg = Classes::find($id);
@@ -112,7 +113,7 @@ class ClassesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //update class information 
+     //update class information
     public function update(Request $request, $id)
     {
         $validator= Validator::make($request->all(), Classes::$rules);
@@ -138,14 +139,23 @@ class ClassesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //delete class information by id 
+     //delete class information by id
     public function destroy($id)
     {
-        $studentCls = Classes::find($id);
-        if($studentCls){
-            $studentCls->delete();
-            return response()->json('successful',201);
+
+    $classId = Section::where('classId', $id)->get();
+
+    if(count($classId)>=1){
+
+        return response()->json(["error"=>'Sorry! This Class Contain Section. Can Not be Deleted']);
+        }else{
+
+            $studentCls = Classes::find($id);
+                if($studentCls){
+                    $studentCls->delete();
+                    return response()->json(["success"=>'Data Deleted',201]);
+                }
+            return response()->json(["error"=>'error',422]);
         }
-        return response()->json('error',422);
     }
 }

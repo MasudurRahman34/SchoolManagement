@@ -25,7 +25,7 @@ class StudentClassController extends Controller
      //form view
     public function index()
     {
-        return view('backend.student.pages.myclass.classmatesList');
+        return view('backend.student.pages.myClass.ClassMatesList');
     }
 
     /**

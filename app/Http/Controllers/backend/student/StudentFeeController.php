@@ -95,17 +95,27 @@ class StudentFeeController extends Controller
         return view('backend.student.pages.fee.studentDueFees',compact("sessionYear"));
     }
     //Bringing to fee_collections data where to check "interval" monthly due fees this specific student
-    public function dueFee2($month,$sessionYearId){
+    public function dueFee2($month,$sessionYearId,$classId){
+
         $cur_year= $sessionYearId;
         $stid=Auth::guard('student')->user()->id;
-        $feeid=DB::table('fee_collections')->select('feeId')->where('studentId', Auth::guard('student')->user()->id)->where('sessionYearId', $cur_year)->where('month', $month)->pluck('feeId');
+        $feeid=DB::table('fee_collections')->select('feeId')
+        ->where('studentId', Auth::guard('student')->user()->id)
+        ->where('sessionYearId', $cur_year)
+        ->where('month', $month)->pluck('feeId');
+
+
         $NotGivenMonth=DB::table('fees')->select('*')
         ->whereNotIn('id', $feeid)
         ->where('interval', 'monthly')
+        ->where('classId', $classId)
         ->get();
+
+
         //Check which month, this student do not pay their fee==(Monthly Un-paid Fees)
         $totalNotGiven=Fee::whereNotIn('id', $feeid)
         ->where('interval', 'monthly')
+        ->where('classId', $classId)
         ->sum('amount');
         $tableOut="";
         foreach ($NotGivenMonth as $notGive) {
@@ -115,15 +125,17 @@ class StudentFeeController extends Controller
             '</tr>';
         }
         //feeCollection query and check which month this specific student do not fee pay
-        $monthlyFeeid=DB::table('fees')->select('id')->where('sessionYearId', $cur_year)->where('interval', 'monthly')->pluck('id');
+        $monthlyFeeid=DB::table('fees')->select('id')->where('sessionYearId', $cur_year)->where('interval', 'monthly')->where('classId', $classId)->pluck('id');
         $dueFeeByMonth=feeCollection::where('due','>',0)->where('studentId', Auth::guard('student')->user()->id)
         ->where('month',$month)
         ->whereIn('feeId', $monthlyFeeid)
+
         ->get();
         //Total due check of feeCollection table
         $totalDueByMonth=feeCollection::where('due','>',0)->where('studentId', Auth::guard('student')->user()->id)
         ->where('month',$month)
         ->whereIn('feeId', $monthlyFeeid)
+        //->where('classId', $classId)
         ->sum('due');
         $HTMLdueFeeByMonth="";
         foreach ($dueFeeByMonth as $dueFee) {
@@ -141,9 +153,11 @@ class StudentFeeController extends Controller
         $yearlyUnPaidFees=DB::table('fees')->select('*')
         ->whereNotIn('id', $yearlyfeeid)
         ->where('interval', 'yearly')
+        ->where('classId', $classId)
         ->get();
         $totalyearlyUnPaidFees=Fee::whereNotIn('id', $yearlyfeeid)
         ->where('interval', 'yearly')
+        ->where('classId', $classId)
         ->sum('amount');
         $yearlyUnPaidHTML="";
         foreach ($yearlyUnPaidFees as $yearlyUnPaidFee) {

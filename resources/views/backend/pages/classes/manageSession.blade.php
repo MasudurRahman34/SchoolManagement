@@ -23,7 +23,7 @@
                             <tr>
                                 <th></th>
                                 <th>Session Year</th>
-                                <th>Status</th>
+                                <th>Current Status</th>
                                 <th>Created Date</th>
                                 <th>Action</th>
                             </tr>

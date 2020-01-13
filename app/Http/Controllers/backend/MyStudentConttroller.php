@@ -12,7 +12,7 @@ use App\model\SessionYear;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Support\Facades\Session;
 
 class MyStudentConttroller extends Controller
 {
@@ -40,7 +40,8 @@ class MyStudentConttroller extends Controller
 
             ->addColumn('action',function ($row){
                $edit_url = url('mystudent/show/studentProfile/'.$row['id']);
-                return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
+                return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+                '<a  onClick="deleteStudent('.$row['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
             })
             ->editColumn('firstName', function($student)
                           {
@@ -88,7 +89,8 @@ class MyStudentConttroller extends Controller
                         ->addColumn('action',function ($class){
                             foreach ($class as $key => $cl) {
                                 $edit_url = url('mystudent/show/studentProfile/'.$cl);
-                                return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
+                                return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+                                '<a  onClick="deleteStudent('.$cl['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
                             }
 
                          })
@@ -123,7 +125,8 @@ class MyStudentConttroller extends Controller
                         ->addColumn('action',function ($class){
                             foreach ($class as $key => $cl) {
                                 $edit_url = url('mystudent/show/studentProfile/'.$cl);
-                                return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
+                                return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+                                '<a  onClick="deleteStudent('.$cl['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
                             }
 
                          })
@@ -254,7 +257,12 @@ class MyStudentConttroller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::find($id);
+                if($student){
+                    $student->delete();
+                    return response()->json(["success"=>'Data Deleted',201]);
+                }
+            return response()->json(["error"=>'error',422]);
     }
 
     //showProfile method

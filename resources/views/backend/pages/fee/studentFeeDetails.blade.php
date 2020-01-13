@@ -272,11 +272,12 @@ $('#studentId').change(function (e) {
     var month=$("#month").val();
     var studentId=$(this).val();
     var sessionYearId=$('#sessionYear').val();
+    var classId=$('#classId').val();
     // show fee details information
-    console.log(month,sessionYearId);
+    console.log(month,sessionYearId,classId);
     $.ajax({
         type: "get",
-        url: "{{url('feecollection/details/show')}}"+"/"+month+"/"+studentId+"/"+sessionYearId,
+        url: "{{url('feecollection/details/show')}}"+"/"+month+"/"+studentId+"/"+sessionYearId+"/"+classId,
 
         success: function (response) {
               console.log(response);

@@ -1,6 +1,6 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
-      @foreach(App\model\File::where('studentId', Auth::guard()->user()->id)->get() as $fill)
+      @foreach(App\model\File::where('studentId', Auth::guard('student')->user()->id)->get() as $fill)
         @if(!empty($fill))
               <img class="app-sidebar__user-avatar" src="{{asset('students/'.$fill->image)}}" style="width: 25%; height: 25%;">
             @else

@@ -51,15 +51,18 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>student ID</th>
-                                <th>Name</th>
+                                {{--  <th>student ID</th>  --}}
                                 <th>Roll</th>
-                                <th>Class</th>
+                                <th>Name</th>
+
+                               {{-- <th>Class</th>
                                 <th>Section</th>
-                                <th>Shift</th>
+                                <th>Shift</th>  --}}
                                 {{-- <th>Session Year</th> --}}
                                 <th>Father Name</th>
                                 <th>Mother Name</th>
+                                <th>Blood Group</th>
+                                <th>Date of Birth</th>
                                 <th>Contact</th>
                                 <th>Action</th>
                             </tr>
@@ -94,15 +97,18 @@
                 ajax:"{{url('mystudent/classwiseList/')}}"+'/'+classId+'/'+sessionYearId,
                 columns:[
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                    { data: 'studentId', name: 'studentId' },
-                    { data: 'firstName', name: 'firstName' },
+                    //{ data: 'studentId', name: 'studentId' },
+
                     { data: 'roll', name: 'roll' },
-                    { data: 'className', name: 'className' },
-                    { data: 'sectionName', name: 'sectionName'},
-                    { data: 'shift', name: 'shift'},
+                    { data: 'firstName', name: 'firstName' },
+                    //{ data: 'className', name: 'className' },
+                    //{ data: 'sectionName', name: 'sectionName'},
+                    //{ data: 'shift', name: 'shift'},
                     // { data: 'session_years', name: 'session_years'},
                     { data: 'fatherName', name: 'fatherName'},
                     { data: 'motherName', name: 'motherName'},
+                    { data: 'blood', name: 'blood'},
+                    { data: 'birthDate', name: 'birthDate'},
                     { data: 'mobile', name: 'mobile'},
                     { data: 'action', name: 'action' }
                 ]
@@ -110,7 +116,11 @@
             // table.destroy();
 
     });
-
+ //delete
+ function deleteStudent(id) {
+    var url = "{{url('mystudent/student/delete')}}";
+    deleteAttribute(url,id);
+}
 
 
     </script>

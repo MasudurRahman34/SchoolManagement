@@ -28,17 +28,25 @@ class ClassTeacherController extends Controller
         //dd($userId);
         $bId= Auth::guard('web')->user()->bId;
         //dd($bId);
-        $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+        $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
         //return($teachers);
-        foreach($teachers as $teacher){
-            $sessionYearId = $teacher->sessionYearId;
-            $sectionId = $teacher->sectionId;
-            $classId = $teacher->classId;
-            $shift = $teacher->shift;
-                //return($sessionYearId);
-        }
-        if($sessionYears=SessionYear::where('id',$sessionYearId)->where('bId',$bId)->get()>0)
-        {
+        if($teachers<=0){
+
+             return;
+
+        }else{
+
+            $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+
+            foreach($teachers as $teacher){
+                $sessionYearId = $teacher->sessionYearId;
+                $sectionId = $teacher->sectionId;
+                $classId = $teacher->classId;
+                $shift = $teacher->shift;
+                    //return($sessionYearId);
+            }
+        $sessionYears=SessionYear::where('id',$sessionYearId)->where('bId',$bId)->get();
+
             foreach($sessionYears as $sessionYear){
                 if($sessionYear->status == 1){
 
@@ -58,11 +66,10 @@ class ClassTeacherController extends Controller
 
                     return view('backend.pages.classTeacher.myclassAttendence',['sectionId'=>$sectionId,'classId'=>$classId ]);
                 }else{
-                    return ('Session Expired!. You are not enroled in any class');
+                    return redirect()->back()->with('Session Expired!. You are not enroled in any class');
                 }
             }
-        }else{
-            return ("No session Year Found");
+
         }
 
     }

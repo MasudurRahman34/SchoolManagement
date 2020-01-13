@@ -4,6 +4,7 @@
     <div class="row ">
         <div class="col-md-3">
         <div class="tile p-0">
+
             <div class="form-group col pr-2" >
                 <label for="exampleFormControlSelect1">Session Year</label>
                 <select class="form-control admission" id="sessionYear">
@@ -12,6 +13,7 @@
                     <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
                   @endforeach
                 </select>
+                <input type="text" name="month" id="classId" value="{{Auth::guard('student')->user()->Section->classes->id}}" class=" admission" hidden>
               </div>
         <div class="form-group col-md-3" id="tblFruits">
               <label class="control-label mt-3">Month</label><br>
@@ -19,6 +21,7 @@
                     <input type="radio" name="month" id="month1" value="JANUARY" class="custom-control-input admission">
                     <label class="custom-control-label attnchange"  for="month1">JANUARY</label>
                  </div>
+
                 <div class="custom-control month-radio custom-control-inline">
                     <input type="radio" name="month" id="month2" value="FEBRUARY" class="custom-control-input admission">
                     <label class="custom-control-label attnchange" for="month2">FEBRUARY</label>
@@ -180,10 +183,11 @@ $(function(){
 
       var month =$('input[type="radio"]:checked').val();
       var sessionYearId= $("#sessionYear option:selected").val()
-      console.log(month);
+      var classId=$('#classId').val();
+      console.log(month,classId);
       $.ajax({
           type: "get",
-          url: "{{url('student/due2/fee/show')}}"+"/"+month+"/"+sessionYearId,
+          url: "{{url('student/due2/fee/show')}}"+"/"+month+"/"+sessionYearId+"/"+classId,
           success: function (response) {
               console.log(response);
               $('#unpaid').html(response.tableOut);

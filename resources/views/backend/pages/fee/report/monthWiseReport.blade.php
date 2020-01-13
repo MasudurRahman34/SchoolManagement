@@ -98,6 +98,7 @@
                                             <th>Class</th>
                                             {{--  <th style="width:2%;height:1%;" rowspan="2">Roll</th>  --}}
                                             <th style="width:12%;height:1%;" rowspan="2" >Section</th>
+                                            <th>Shift</th>
                                             {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
                                             <th rowspan="1">Fee Title</th>
                                             <th rowspan="1">Sub Total </th>
@@ -133,6 +134,7 @@
                                             <th>Class</th>
                                             {{--  <th style="width:2%;height:1%;" rowspan="2">Roll</th>  --}}
                                             <th style="width:12%;height:1%;" rowspan="2" >Section</th>
+                                            <th>Shift</th>
                                             {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
                                             <th rowspan="1">Fee Title</th>
                                             <th rowspan="1">Sub Total </th>

@@ -76,9 +76,9 @@
 
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="tile">
-                    <h3 class="tile-title"> Classwish Attendance Today</h3>
+                    <h3 class="tile-title"> Classwise Attendance Today</h3><hr>
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
@@ -93,12 +93,12 @@
                     </div>
                 </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="tile">
-                        <h3 class="tile-title"> Attendance Report DateWish</h3>
+                        <h4 class="tile-title"> Attendance Report Datewise</h4><hr>
                         <div class="tile-body">
                             <div class="row">
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-xs-2 pl-2">
                                     <label class="control-label mt-3">Shift</label><br>
                                     <div class="custom-control shift-radio custom-control-inline">
                                     <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
@@ -113,7 +113,7 @@
                                     <label class="custom-control-label" for="shift3">Evening</label>
                                     </div>
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-xs-2 pr-2">
                                     <label for="exampleFormControlSelect1">Select Class</label>
                                     <select class="form-control admission" id="classId" name="classId">
                                     <option value="">--Please Select--</option>
@@ -122,16 +122,16 @@
                                     @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-xs-2 pr-2">
                                     <label for="exampleFormControlSelect1"> Section</label>
-                                    <select class="form-control attnchange" id="sectionId">
+                                    <select class="form-control " id="sectionId">
                                     <option value=""> --Please Select--  </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-xs-2">
                                         <label for="exampleFormControlSelect1">Date</label>
                                         <div class="">
-                                          <input class="form-control attnchange" type="date" name="dateId" id="dateId" value="{{date('Y-m-d')}}" >
+                                          <input class="form-control " type="date" name="dateId" id="dateId" value="{{date('Y-m-d')}}" >
                                         </div>
                                       </div>
                                 <div class="form-group col-md-6" hidden>
@@ -158,8 +158,6 @@
                                         <th>Attendace</th>
                                         <th>roll</th>
                                         <th>Name</th>
-
-
 
                                     </tr>
                                 </thead>
@@ -256,10 +254,11 @@
              ]
          });
 
-         //find section for attendance information
-         dynamicSectionSelection();
+    //find section for attendance information
+     dynamicSectionSelection();
 
-         $('.attnchange').change(function (e) {
+        //on change date
+         $('#dateId').change(function (e) {
             e.preventDefault();
 
             var classId=$("#classId").val();
@@ -287,8 +286,6 @@
 
                     { data: 'student.roll', name: 'student.roll' },
                     { data: 'student.firstName', name: 'student.firstName' },
-
-
 
                 ],
 
