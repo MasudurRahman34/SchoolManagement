@@ -219,7 +219,30 @@ class FeeCollectionController extends Controller
     //for individual student page find student fee
     public function individualStudentfind(Request $request)
     {
+        $feeId=$request->feeId;
+        $studentId=$request->studentId;
+        $amount=$request->amount;
+        //return($amount);
 
+         $scholership= studentScholarship::where('studentId',$studentId)->where('feeId',$feeId)->get();
+        //return($scholership);
+
+        $discount=0;
+        if($scholership){
+            foreach ($scholership as $sc) {
+                $discount= $sc->discount;
+                }
+                $paidAmount =  $amount-(($amount*$discount)/100);
+                $discountAmount= ($amount*$discount)/100;
+                $discountPercentAge=$discount;
+                //return($discountAmount);
+
+
+                //return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
+        }
+        //return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
+
+        //individual student find form feeCollection
         $feeCollection=feeCollection::where('sectionId', $request->sectionId)
         ->where('feeId',$request->feeId)
         ->where('month',$request->month)
@@ -249,7 +272,7 @@ class FeeCollectionController extends Controller
                     '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
                     '</tr>';
             }
-            return Response()->json(["outPut"=>$output, "Stfees"=>$Stfees]);
+            return Response()->json(["outPut"=>$output, "Stfees"=>$Stfees,"paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
 
         }else{
 
@@ -267,10 +290,11 @@ class FeeCollectionController extends Controller
                 '<td>'.$Stfee->amount.'</td>'.
                 '<td>'.'<input type="number" name="due" value="0" min="0"  readonly >'.'</td>'.
                 '<td>'.'<input type="number" name="totalAmount" min="0" id="totalAmount" max="0">'.'</td>'.
+                '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
 
                 '</tr>';
             }
-            return Response()->json(["Fee"=>$feeoutput]);
+            return Response()->json(["Fee"=>$feeoutput, "paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
 
         }
     }
@@ -395,30 +419,30 @@ class FeeCollectionController extends Controller
     }
 
     //scholership and discount amount for individual student
-    public function scholarshipAmount(Request $request)
-    {
-        $feeId=$request->feeId;
-        $studentId=$request->studentId;
-        $amount=$request->amount;
-        //return($amount);
+    // public function scholarshipAmount(Request $request)
+    // {
+    //     $feeId=$request->feeId;
+    //     $studentId=$request->studentId;
+    //     $amount=$request->amount;
+    //     //return($amount);
 
-         $scholership= studentScholarship::where('studentId',$studentId)->where('feeId',$feeId)->get();
-        //return($scholership);
+    //      $scholership= studentScholarship::where('studentId',$studentId)->where('feeId',$feeId)->get();
+    //     //return($scholership);
 
-        $discount=0;
-        if($scholership){
-            foreach ($scholership as $sc) {
-                $discount= $sc->discount;
-                }
-                $paidAmount =  $amount-(($amount*$discount)/100);
-                $discountAmount= ($amount*$discount)/100;
-                $discountPercentAge=$discount;
-                //return($discountAmount);
+    //     $discount=0;
+    //     if($scholership){
+    //         foreach ($scholership as $sc) {
+    //             $discount= $sc->discount;
+    //             }
+    //             $paidAmount =  $amount-(($amount*$discount)/100);
+    //             $discountAmount= ($amount*$discount)/100;
+    //             $discountPercentAge=$discount;
+    //             //return($discountAmount);
 
-            return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
+    //         return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
 
-        }
-    }
+    //     }
+    // }
     /**
      * Display the specified resource.
      *

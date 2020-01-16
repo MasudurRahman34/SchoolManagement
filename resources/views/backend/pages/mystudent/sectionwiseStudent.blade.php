@@ -100,8 +100,8 @@
     @section('script')
       @include('backend.partials.js.datatable');
       <script>
+    var table="";
     dynamicSectionSelection();
-
     $('#sectionId').change(function (e) {
         e.preventDefault();
 
@@ -111,7 +111,7 @@
 
         console.log(classId, sectionId, sessionYearId);
 
-        var table= $('#sampleTable').DataTable({
+        var table2= $('#sampleTable').DataTable({
         dom: 'lBfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -139,6 +139,7 @@
         ]
     });
     //table.destroy();
+    table=table2;
 
     });
 

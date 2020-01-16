@@ -74,7 +74,13 @@ class MyStudentConttroller extends Controller
 
     {
         $bId=Auth::guard('web')->user()->bId;
-            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' AND sections.sessionYearId='$sessionYearId'  AND students.bId='$bId'");
+            $class=DB::select("select students.id as stdId, students.firstName, students.lastName, students.fatherName,students.motherName,students.roll, students.blood, students.birthDate,students.mobile
+                                from students, sections, classes
+                                WHERE sections.classId=classes.id
+                                AND students.sectionId=sections.id
+                                And classes.id='$classId'
+                                AND sections.sessionYearId='$sessionYearId'
+                                AND students.bId='$bId'");
 
                 $data_table_render = DataTables::of($class)
 
@@ -86,12 +92,12 @@ class MyStudentConttroller extends Controller
                         //   {
                         //      return $student->Section->SessionYear->sectionName;
                         //   })
-                        ->addColumn('action',function ($class){
-                            foreach ($class as $key => $cl) {
-                                $edit_url = url('mystudent/show/studentProfile/'.$cl);
+                        ->addColumn('action',function ($student){
+
+                                $edit_url = url('mystudent/show/studentProfile/'.$student->stdId);
                                 return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
-                                '<a  onClick="deleteStudent('.$cl['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
-                            }
+                                '<a  onClick="deleteStudent('.$student->stdId.')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
+
 
                          })
                         ->rawColumns(['action'])
@@ -114,7 +120,14 @@ class MyStudentConttroller extends Controller
     public function sectionwiselist($classId, $sectionId, $sessionYearId)
     {
         $bId=Auth::guard('web')->user()->bId;
-            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId' AND sections.sessionYearId='$sessionYearId' AND students.bId='$bId'");
+            $class=DB::select("select students.id as stdId, students.firstName, students.lastName, students.fatherName,students.motherName,students.roll, students.blood, students.birthDate,students.mobile
+                                from students, sections, classes
+                                WHERE sections.classId=classes.id
+                                AND students.sectionId=sections.id
+                                And classes.id='$classId'
+                                And sections.id='$sectionId'
+                                AND sections.sessionYearId='$sessionYearId'
+                                AND students.bId='$bId'");
 
                 $data_table_render = DataTables::of($class)
 
@@ -122,12 +135,12 @@ class MyStudentConttroller extends Controller
                           {
                              return $student->firstName. " ".$student->lastName;
                           })
-                        ->addColumn('action',function ($class){
-                            foreach ($class as $key => $cl) {
-                                $edit_url = url('mystudent/show/studentProfile/'.$cl);
-                                return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
-                                '<a  onClick="deleteStudent('.$cl['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
-                            }
+                          ->addColumn('action',function ($student){
+
+                            $edit_url = url('mystudent/show/studentProfile/'.$student->stdId);
+                            return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+                            '<a  onClick="deleteStudent('.$student->stdId.')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
+
 
                          })
                         ->rawColumns(['action'])

@@ -78,14 +78,16 @@
           <div class="row">
             <div class="col-md-5">
                 <div class="tile">
-                    <h3 class="tile-title"> Classwise Attendance Today</h3><hr>
+                    <h3 class="tile-title"> Today: Attendance Report </h3><hr>
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                                 <tr>
                                     {{-- <th>#</th> --}}
                                     <!-- <th> Class Name</th> -->
-                                    <th> Class Name</th>
+                                    <th> Class </th>
+                                    <th> Section </th>
+                                    <th> Shift</th>
                                     <th>Number of Present Student </th>
                                 </tr>
                             </thead>
@@ -95,7 +97,7 @@
                 </div>
                 <div class="col-md-7">
                     <div class="tile">
-                        <h4 class="tile-title"> Attendance Report Datewise</h4><hr>
+                        <h4 class="tile-title"> Datewise: Student Attendance Report </h4><hr>
                         <div class="tile-body">
                             <div class="row">
                                 <div class="form-group col-xs-2 pl-2">
@@ -250,6 +252,8 @@
                 //  { data: 'hash', name: 'hash' },
                 //  { data: 'ClassName', name: 'ClassName' },
                  { data: 'className', name: 'className' },
+                 { data: 'sectionName', name: 'sectionName' },
+                 { data: 'shift', name: 'shift' },
                  { data: 'present', name: 'present' },
              ]
          });

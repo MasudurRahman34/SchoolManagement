@@ -80,12 +80,13 @@
       @include('backend.partials.js.datatable');
       <script>
         // $(document).ready( function () {
+            var table="";
             $('#classId').change(function (e) {
                 e.preventDefault();
                 var classId=$(this).val();
                 var sessionYearId=$('#sessionYear').val();
                 console.log(classId,sessionYearId);
-                var table= $('#sampleTable').DataTable({
+                var table2= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
@@ -113,12 +114,15 @@
                     { data: 'action', name: 'action' }
                 ]
             });
-            // table.destroy();
+table=table2;
+
 
     });
  //delete
+
  function deleteStudent(id) {
     var url = "{{url('mystudent/student/delete')}}";
+
     deleteAttribute(url,id);
 }
 

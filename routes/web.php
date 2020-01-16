@@ -216,7 +216,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     Route::get('/feecollection/individual','backend\FeeCollectionController@individualCollection')->name('individualFee.individualCollection');
     Route::get('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
     Route::get('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
-    Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
+    //Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
     Route::post('/feecollection/individual/store','backend\FeeCollectionController@storeIndividualy')->name('store.individualFeecollection');
     Route::post('/feecollection/individual/update','backend\FeeCollectionController@updateIndividualStudent')->name('update.individualFeecollection');
 

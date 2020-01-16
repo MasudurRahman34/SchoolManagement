@@ -57,7 +57,7 @@
                     <div class="tile">
                     <div class="tile-body">
                         <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
-                        <input id="myInput" type="text" placeholder="Search..">
+                        <input id="myInput" type="text" placeholder="Search.."><hr>
                         <div id="print_div" class="print_div">
                             <h3 class="tile-title">Section Wise Monthly Report </h3>
                                 <div class="table-responsive">
@@ -71,6 +71,7 @@
                                     <th>Government Fees Total</th>
                                     <th>Non-Government Fees Total</th>
                                     <th>Total Fee</th>
+                                    <th>Due</th>
 
                                     </tr>
                                 </thead>
@@ -87,9 +88,9 @@
                 <div class="col-md-8">
                     <div class="tile">
                     <div class="tile-body">
-                        <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
+                        {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
                         <div id="print_div" class="print_div">
-                            <h3 class="tile-title text-warning"> Government Fee Type Report </h3>
+                            <h3 class="tile-title "> Government Fee Type Report </h3>
                                 <div class="table-responsive">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
@@ -102,6 +103,7 @@
                                             {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
                                             <th rowspan="1">Fee Title</th>
                                             <th rowspan="1">Sub Total </th>
+                                            <th>Due</th>
                                             <th rowspan="2" colspan="1">Total Number Student</th>
                                         </tr>
                                         {{--  <tr>
@@ -123,7 +125,7 @@
                 <div class="col-md-8">
                     <div class="tile">
                     <div class="tile-body">
-                        <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
+                        {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
                         <div id="print_div" class="print_div">
                             <h3 class="tile-title"> Non-Government Fee Type Report </h3>
                                 <div class="table-responsive">
@@ -138,6 +140,7 @@
                                             {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
                                             <th rowspan="1">Fee Title</th>
                                             <th rowspan="1">Sub Total </th>
+                                            <th>Due</th>
                                             <th rowspan="2" colspan="1">Total Number Student</th>
                                         </tr>
                                         {{--  <tr>
@@ -146,6 +149,44 @@
                                         </tr>  --}}
                                     </thead>
                                 <tbody class="sectionTotal" id="nongovt">
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="clearix"></div>
+
+                <div class="col-md-8">
+                    <div class="tile">
+                    <div class="tile-body">
+                        {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
+                        <div id="print_div" class="print_div">
+                            <h3 class="tile-title"> Due Fee Collection Report </h3>
+                                <div class="table-responsive">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl</th>
+                                            <th>Class</th>
+                                            {{--  <th style="width:2%;height:1%;" rowspan="2">Roll</th>  --}}
+                                            <th style="width:12%;height:1%;" rowspan="2" >Section</th>
+                                            <th>Shift</th>
+                                            {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
+                                            <th rowspan="1">Fee Title</th>
+                                            <th rowspan="1">Sub Total </th>
+                                            <th rowspan="2" colspan="1">Number of Student</th>
+                                            <th rowspan="2" colspan="1">Fee month</th>
+                                            <th rowspan="2" colspan="1">Paid Month</th>
+                                        </tr>
+                                        {{--  <tr>
+                                            <th rowspan="1">Fee D</th>
+                                            <th rowspan="1">T</th>
+                                        </tr>  --}}
+                                    </thead>
+                                <tbody class="sectionTotal" id="dueFee">
                                 </tbody>
                                 </table>
                             </div>
@@ -185,11 +226,13 @@ $('#month').change(function(e){
             console.log(data.sectionTotalTableOutput);
             console.log(data.governmentFeeTableOutput);
             console.log(data.nonGovtFeeTableOutput);
+            console.log(data.dueFeeTotalsdata);
 
 
             $('#sectionwisereport').html(data.sectionTotalTableOutput);
             $('#government').html(data.governmentFeeTableOutput);
             $('#nongovt').html(data.nonGovtFeeTableOutput);
+            $('#dueFee').html(data.dueFeeTotalsdata);
         }
     });
 

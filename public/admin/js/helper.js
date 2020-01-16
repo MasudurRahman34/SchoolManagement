@@ -35,11 +35,11 @@ function successNotification() {
 function deleteAttribute(url, id){
     swal({
              title: "Are you sure?",
-             text: "You will not be able to recover this imaginary file!",
+             text: "You won't be able to recover this data!",
              type: "warning",
              showCancelButton: true,
              confirmButtonText: "Yes, delete it!",
-             cancelButtonText: "No, cancel plx!",
+             cancelButtonText: "No, cancel!",
              closeOnConfirm: true,
              closeOnCancel: true,
          }, function(isConfirm) {

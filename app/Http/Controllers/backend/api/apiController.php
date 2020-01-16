@@ -260,6 +260,7 @@ class apiController extends Controller
     public function classwishAttentage(){
 
         $bId=Auth::guard('web')->user()->bId;
+        $date= date('Y-m-d');
         //$totalStudent=DB::select("select count(students.id) as totalStudent from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And students.bId='$bId' groupby ");
         // $totalStudent=DB::select("select count(attendences.attendances) as totalStudent from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And students.bId='$bId'");
         // $attendances = DB::table('sections')
@@ -272,15 +273,26 @@ class apiController extends Controller
         //              ->groupBy('attendances.sectionId')->get();
         //$attendances=DB::select("select sections.sectionName, COUNT(attendances.studentId) from sections, attendances WHERE sections.id=attendances.sectionId AND attendances.attendence='present' AND attendances.bId=30 GROUP BY attendances.sectionId");
 
-        $attendances= classes::selectRaw('classes.className, count(classId) as present')
-        ->Join ('attendances','attendances.classId', '=', 'classes.id')
-        ->where('attendances.bId',Auth::guard('web')->user()->bId)
-        ->where('attendence','present')
-        ->whereDate('attendances.created_at',date('Y-m-d'))
-        ->groupBy('classes.className')->get();
+        // $attendances= classes::selectRaw('classes.className, count(attendances.sectionId) as present, sections.sectionName, sections.shift')
+        // ->Join ('attendances','attendances.classId', '=', 'classes.id')
+        // ->Join ('sections','sections.classId', '=', 'classes.id')
+        // ->where('attendances.bId',Auth::guard('web')->user()->bId)
+        // ->where('attendence','present')
+        // ->whereDate('attendances.created_at',date('Y-m-d'))
+        // ->groupBy('attendances.sectionId')->get();
+
         // attnArray=array(
         //     'sections'=>
         // )
+
+        $attendances=DB::select("SELECT classes.className, count(attendances.sectionId) as present, sections.sectionName, sections.shift
+                                From sections, attendances, classes
+                                where classes.id= sections.classId AND attendances.sectionId= sections.id
+                                AND attendances.bId ='$bId'
+                                AND attendances.attendence='present'
+                                AND DATE(attendances.created_at)='$date'
+                                GROUP BY attendances.sectionId
+                                ");
 
 
         $data_table_render = DataTables::of($attendances)

@@ -29,40 +29,19 @@ class ClassTeacherController extends Controller
         $bId= Auth::guard('web')->user()->bId;
         //dd($bId);
         $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
-        //return($teachers);
+        //dd($teachers);
         if($teachers<=0){
 
-             return;
+             return "You are not enroled in any class";
 
         }else{
 
             $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
-
             foreach($teachers as $teacher){
-                $sessionYearId = $teacher->sessionYearId;
-                $sectionId = $teacher->sectionId;
-                $classId = $teacher->classId;
-                $shift = $teacher->shift;
-                    //return($sessionYearId);
-            }
-        $sessionYears=SessionYear::where('id',$sessionYearId)->where('bId',$bId)->get();
-
-            foreach($sessionYears as $sessionYear){
-                if($sessionYear->status == 1){
-
-                    //return($sectionId);
-
-                    // $attendences=Attendance::where('sectionId', $sectionId)
-                    //     ->whereDate('created_at',date('Y-m-d'))
-                    //     ->where('bId' , Auth::guard('web')->user()->bId)
-                    //     ->first();
-                    //     if($attendences!=null){
-                    //         return response()->json(["redirectToEdit"=>"/student/attendance/edit/$sectionId"]);
-                    //     }else{
-                    //         $sectionId= $sectionId;
-                    //         $students = Student::where('sectionId',$sectionId)->orderBy('id','ASC')->get();
-                    //         return response()->json($students);
-                    //     }
+                    if($teacher->Section->sessionYear->status == 1){
+                        //dd($teacher->Section);
+                        $classId = $teacher->classId;
+                        $sectionId = $teacher->sectionId;
 
                     return view('backend.pages.classTeacher.myclassAttendence',['sectionId'=>$sectionId,'classId'=>$classId ]);
                 }else{
