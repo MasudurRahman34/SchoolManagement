@@ -15,7 +15,7 @@
     {{-- section --}}
         <div class="row justify-content-md-center">
             <div class="clearix"></div>
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="tile">
                         <div class="tile-body">
                         <div class="row">
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="clearix"></div>
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="tile">
                     <div class="tile-body">
                         <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'>
@@ -72,6 +72,8 @@
                                     <th>Non-Government Fees Total</th>
                                     <th>Total Fee</th>
                                     <th>Due</th>
+                                    {{-- <th>Due collection</th>
+                                    <th>Total Collection</th> --}}
 
                                     </tr>
                                 </thead>
@@ -85,7 +87,7 @@
                 </div>
                 <div class="clearix"></div>
 
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="tile">
                     <div class="tile-body">
                         {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
@@ -122,7 +124,7 @@
 
                 <div class="clearix"></div>
 
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="tile">
                     <div class="tile-body">
                         {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
@@ -159,7 +161,7 @@
 
                 <div class="clearix"></div>
 
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="tile">
                     <div class="tile-body">
                         {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
@@ -189,6 +191,23 @@
                                 <tbody class="sectionTotal" id="dueFee">
                                 </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="clearix"></div>
+                <div class="col-md-9">
+                    <div class="tile">
+                    <div class="tile-body">
+                        {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
+                        <div id="print_div" class="print_div">
+                            {{-- <h3 class="tile-title"> Due Fee Collection Report </h3> --}}
+                                <div class="" id="f" hidden>
+                                    <br><br><br>
+                                    <p>................................................</p>
+                                    <p>Signature & Date</p>
+
                             </div>
                         </div>
                     </div>
@@ -247,7 +266,12 @@ $("#myInput").on("keyup", function() {
     });
   });
 
-
+function show(){
+    $('#f').attr('hidden',false);
+}
+function hide(){
+    $('#f').attr('hidden',true);
+}
 
 //print button in table
 $('#doPrint').on("click", function () {
@@ -270,8 +294,8 @@ $('#doPrint').on("click", function () {
         removeScripts: false,       // remove script tags from print content
         copyTagClasses: false,      // copy classes from the html & body tag
         beforePrintEvent: null,     // function for printEvent in iframe
-        beforePrint: null,          // function called before iframe is filled
-        afterPrint: null            // function called before iframe is removed
+        beforePrint: show,          // function called before iframe is filled
+        afterPrint: hide,            // function called before iframe is removed
     });
   });
 

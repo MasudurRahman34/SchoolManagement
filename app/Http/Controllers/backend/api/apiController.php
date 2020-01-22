@@ -71,6 +71,16 @@ class apiController extends Controller
         return Response()->json($feelist);
     }
 
+    //fee list in a class
+    public function classfeelistMonthly(Request $request)
+    {
+        $feelist= Fee::where('classId', $request->classId)
+                        ->where('interval','monthly')
+                        ->where('bId', Auth::guard('web')->user()->bId)
+                        ->get();
+        return Response()->json($feelist);
+    }
+
     //fee amount
     public function feeamount(Request $request)
     {

@@ -66,11 +66,11 @@
                                     <option value="">--Select Fee--</option>
                             </select>
                     </div>
-                    <div class="form-group col-md-3 pr-2" id="hidden1" hidden>
+                    {{--  <div class="form-group col-md-3 pr-2" id="hidden1" hidden>
                         <label for="exampleFormControlSelect1"> Amount</label>
                         <input class="form-control feeChange" type="number" id="amount" name="amount" required  readonly>
 
-                    </div>
+                    </div>  --}}
 
                     <div class="form-group col-md-3 pr-2" >
                         <label for="exampleFormControlSelect1"> Month</label>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="exampleFormControlSelect1"> Section</label>
-                        <select class="form-control feeChange" id="sectionId">
+                        <select class="form-control " id="sectionId">
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
@@ -209,7 +209,7 @@
                     console.log(data);
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
-                        option+=("<option value='"+element.id+"'>"+element.name+"</option>");
+                        option+=("<option value='"+element.id+"'  data-amount='"+element.amount+"'>"+element.name+"</option>");
                     });
                     $('#feeId').html(option);
                 }
@@ -217,12 +217,41 @@
         }
     });
 
+
+    //on change section for find student
+    $("#sectionId").change(function(){
+        sectionId=$(this).val();
+        console.log(sectionId2,classId2);
+            $.ajax({
+                type: "get",
+                url: "{{ url('feecollection/individualStudent')}}",
+                data: {
+                sectionId:sectionId,
+                //feeId:feeId,
+            // month:month,
+                },
+                success: function (data) {
+                //change start from here
+                //console.log(data);
+                var option="<option>--Please Select--</option>";
+                data.forEach(element => {
+                    option+=("<option value='"+element.id+"'>"+element.firstName+' '+element.lastName+'('+element.roll+')'+"</option>");
+                    });
+                    $('#studentId').html(option);
+                    }
+            });
+        });//end section
+
 //on change fee id for find amount
     $('.feeChange').change(function (e) {
         e.preventDefault();
-        var feeId= $("#feeId").val();
-        console.log(feeId);
-        var url='/api/search/feeamount';
+        var feeId= $("#feeId option:selected").val();
+
+        var feeAmount= $("#feeId option:selected").data('amount');
+        $("#amount1").attr('value',feeAmount);
+        console.log(feeId,feeAmount);
+
+       /* var url='/api/search/feeamount';
             var data= {
                 'feeId' : feeId,
             }
@@ -234,62 +263,21 @@
                     console.log(data);
                 //var amount = data;
                     //$('#amount').text();
-                    $('#amount').val(data);
+                    //$('#amount').val(data);
                     $('#amount1').val(data);
                 }
-            });
-
-
-        //on change section for find student
-        $("#sectionId").change(function(){
-            sectionId=$(this).val();
-
-
-       // $("#sectionId2").attr('value',sectionId);
-       // var classId=$("#classId").val();
-       // $("#classId2").attr('value',classId);
-
-       // var amount=$("#amount").val();
-       // $("#amount2").attr('value',amount);
-      //  var feeId=$("#feeId").val();
-      //  $("#feeId2").attr('value',feeId);
-       // var month=$("#month").val();
-       // $("#month2").attr('value',month);
-       // var sessionYear=$("#sessionYear").val();
-       // $("#sessionYear2").attr('value',sessionYear);
-
-        console.log(sectionId2,classId2);
-
-
-        $.ajax({
-            type: "get",
-            url: "{{ url('feecollection/individualStudent')}}",
-            data: {
-            sectionId:sectionId,
-            //feeId:feeId,
-           // month:month,
-            },
-            success: function (data) {
-            //change start from here
-            //console.log(data);
-            var option="<option>--Please Select--</option>";
-            data.forEach(element => {
-                option+=("<option value='"+element.id+"'>"+element.firstName+' '+element.lastName+'('+element.roll+')'+"</option>");
-                });
-                $('#studentId').html(option);
-                }
-        });
-    });
-
+            });*/
 
         //on change section for find student
         var sectionId=$("#sectionId").val();
         $("#sectionId2").attr('value',sectionId);
+
         var classId=$("#classId").val();
         $("#classId2").attr('value',classId);
 
-        var amount=$("#amount").val();
+        var amount=$("#amount1").val();
         $("#amount2").attr('value',amount);
+
         var feeId=$("#feeId").val();
         $("#feeId2").attr('value',feeId);
         var month=$("#month").val();
@@ -428,10 +416,7 @@ if(studentId>0){
         return false;
         }
 
-
     }*/
-
-
     </script>
     @endsection
 

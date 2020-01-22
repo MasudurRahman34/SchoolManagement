@@ -41,6 +41,10 @@ Route::post('/api/search/classsubject', 'backend\api\apiController@classsubject'
 //find fee list for class
 Route::get('/api/search/classfeelist', 'backend\api\apiController@classfeelist')->name('api.classfeelist');
 
+//find monthly fee list
+Route::get('/api/search/classfeelistMonthly', 'backend\api\apiController@classfeelistMonthly')->name('api.feelistmonthly');
+
+
 //find fee amount
 Route::get('/api/search/feeamount', 'backend\api\apiController@feeamount')->name('api.feeamount');
 
@@ -219,6 +223,12 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     //Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
     Route::post('/feecollection/individual/store','backend\FeeCollectionController@storeIndividualy')->name('store.individualFeecollection');
     Route::post('/feecollection/individual/update','backend\FeeCollectionController@updateIndividualStudent')->name('update.individualFeecollection');
+
+    //For more then one month
+    Route::get('/feecollection/individual/monthly','backend\FeeCollectionController@monthlyindex')->name('monthly.index');
+    Route::get('/feecollection/individual/findMonth','backend\FeeCollectionController@findMonth')->name('find.month');
+    Route::get('/feecollection/individual/findmonthlyyearlyfee','backend\FeeCollectionController@findMonthForAdvancefeeCollection')->name('find.monthlyoryearly');
+    Route::post('/feecollection/individual/monthly/store','backend\FeeCollectionController@storeMorethenOneMonth')->name('store.storeMorethenOneMonth');
 
     //Student Fee Details
     Route::get('/feecollection/student/feeDetails','backend\FeeCollectionController@studentFeeDetails')->name('student.feeDetails');

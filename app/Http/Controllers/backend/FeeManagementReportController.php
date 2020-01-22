@@ -61,18 +61,39 @@ class FeeManagementReportController extends Controller
     $bId=Auth::guard('web')->user()->bId;
 
     //Section wise Monthly Report
+
+    // SELECT fee_collections.sectionId, sections.sectionName,  sections.shift, classes.className,
+    //                                 COALESCE(sum(case when fees.type='gov' then fee_collections.totalAmount end), 0) as govtpayment,
+    //                                 COALESCE(sum(case when fees.type='nonGov' then fee_collections.totalAmount end), 0) as Nongovtpayment,
+    //                                 COALESCE(sum(fee_collections.totalAmount), 0) as total,
+    //                                 COALESCE(sum(fee_collections.due), 0) as totaldue,
+    //                                 COALESCE(SUM(due_fee_histories.paidAmount),0) as totalduecollection
+    //                                 COALESCE(sum(due_fee_histories.paidAmount+fee_collections.totalAmount), 0) as t
+    //                                 FROM fee_collections, fees, sections, classes,due_fee_histories
+    //                                 WHERE fee_collections.feeId=fees.id
+    //                                 AND due_fee_histories.feeCollectionId=fee_collections.id
+    //                                 AND fee_collections.sectionId=sections.id
+    //                                 AND sections.classId=classes.id
+    //                                 AND fee_collections.sessionYearId='$sessionYearId'
+    //                                 AND fee_collections.month='$month'
+    //                                 AND due_fee_histories.paidMonth='$month'
+    //                                 AND fee_collections.bId='$bId'
+    //                                 GROUP BY fee_collections.sectionId");
     $sectionCalculation=DB::select("SELECT fee_collections.sectionId, sections.sectionName,  sections.shift, classes.className,
                                     COALESCE(sum(case when fees.type='gov' then fee_collections.totalAmount end), 0) as govtpayment,
                                     COALESCE(sum(case when fees.type='nonGov' then fee_collections.totalAmount end), 0) as Nongovtpayment,
+
                                     COALESCE(sum(fee_collections.totalAmount), 0) as total,
                                     COALESCE(sum(fee_collections.due), 0) as totaldue
+
+
                                     FROM fee_collections, fees, sections, classes
                                     WHERE fee_collections.feeId=fees.id
+                                    AND fees.classid=classes.id
                                     AND fee_collections.sectionId=sections.id
-                                    AND sections.classId=classes.id
                                     AND fee_collections.sessionYearId='$sessionYearId'
-                                    AND fee_collections.month='$month'
                                     AND fee_collections.bId='$bId'
+                                    AND fee_collections.paidMonth='$month'
                                     GROUP BY fee_collections.sectionId");
 
         $sectionTotalTableOutput="";
@@ -89,7 +110,8 @@ class FeeManagementReportController extends Controller
                 '<td>'.$sectionTotal->Nongovtpayment.'</td>'.
                 '<td>'.$sectionTotal->total.'</td>'.
                 '<td>'.$sectionTotal->totaldue.'</td>'.
-                // '<td>'.'link'.'</td>'.
+              // '<td>'.$sectionTotal->totalduecollection.'</td>'.
+                // '<td>'.$sectionTotal->t.'</td>'.
                 '</tr>';
         }
 
@@ -97,14 +119,14 @@ class FeeManagementReportController extends Controller
         //Government Fee Type Report
         $governmentFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, sections.shift, fees.name,
                                         SUM(fee_collections.totalAmount) as total,
-                                        COUNT(fee_collections.sectionId) as totalStudent,
+                                        COUNT( DISTINCT fee_collections.studentId) as totalStudent,
                                         sum(fee_collections.due) as totaldue
                                         FROM fee_collections, fees, sections, classes
                                         WHERE fee_collections.feeId=fees.id
                                         AND fees.classid=classes.id
                                         AND fee_collections.sectionId=sections.id
                                         AND fee_collections.sessionYearId='$sessionYearId'
-                                        AND fee_collections.month='$month'
+                                        AND fee_collections.paidMonth='$month'
                                         AND fee_collections.bId='$bId'
                                         AND fees.type='gov'
                                         GROUP BY feeId, fee_collections.sectionId
@@ -131,14 +153,14 @@ class FeeManagementReportController extends Controller
         //Non-Government Fee Type Report
         $nonGovtFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, sections.shift, fees.name,
                                         SUM(fee_collections.totalAmount) as total,
-                                        COUNT(fee_collections.sectionId) as totalStudent,
+                                        COUNT(DISTINCT fee_collections.studentId) as totalStudent,
                                         sum(fee_collections.due) as totaldue
                                         FROM fee_collections, fees, sections, classes
                                         WHERE fee_collections.feeId=fees.id
                                         AND fees.classid=classes.id
                                         AND fee_collections.sectionId=sections.id
                                         AND fee_collections.sessionYearId='$sessionYearId'
-                                        AND fee_collections.month='$month'
+                                        AND fee_collections.paidMonth='$month'
                                         AND fee_collections.bId='$bId'
                                         AND fees.type='nonGov'
                                         GROUP BY feeId, fee_collections.sectionId
@@ -172,7 +194,7 @@ class FeeManagementReportController extends Controller
                                         AND fees.classid=classes.id
                                         AND fee_collections.sectionId=sections.id
                                         AND fee_collections.sessionYearId='$sessionYearId'
-                                        AND fee_collections.month='$month'
+                                        AND due_fee_histories.paidMonth='$month'
                                         AND fee_collections.bId='$bId'
                                         GROUP BY feeId, fee_collections.sectionId
                                         ORDER BY fee_collections.sectionId");

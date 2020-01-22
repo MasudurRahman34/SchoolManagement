@@ -22,6 +22,7 @@ use App\model\Fee;
 use App\model\feeCollection;
 use App\model\feeHistory;
 use App\model\dueFeeHistory;
+use Illuminate\Support\Facades\Route;
 
 
 class FeeCollectionController extends Controller
@@ -194,6 +195,48 @@ class FeeCollectionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+    //for morethen one month index
+    public function monthlyindex()
+
+    {
+        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $fees=Fee::where('bid', Auth::guard('web')->user()->bId)->get();
+        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.fee.individualFeeForMultipalMonth')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('fees',$fees);
+    }
+
+
+
+    //Advance feecollection //findMonth
+    public function findMonth(Request $request){
+
+        $bId=Auth::guard('web')->user()->bId;
+        $feeId=$request->feeId;
+        $studentId=$request->studentId;
+        $sessionYear=$request->sessionYear;
+        //check fee type
+        // $feType=Fee::findOrFail($feeId);
+        // if($feType->interval=='yearly'){
+
+
+
+        // }else{
+
+        $month=DB::select("select month from months where month NOT IN(select fee_collections.month from
+        fee_collections where fee_collections.bId='$bId'
+        AND fee_collections.feeId='$feeId'
+        and fee_collections.studentId='$studentId'
+        AND fee_collections.sessionYearId='$sessionYear')");
+
+        return response()->json($month);
+       // }
+
+    }
+
+
+
     //find student list for individual fee section
     public function individualStudent(Request $request)
     {
@@ -216,12 +259,72 @@ class FeeCollectionController extends Controller
         return response()->json($student);
     }
 
+    //Advance fee collection
+    public function findMonthForAdvancefeeCollection(Request $request)
+    {
+        $feeId=$request->feeId;
+        $studentId=$request->studentId;
+        $amount=$request->amount;
+        $type=$request->type;
+        $sessionYear=$request->sessionYear;
+        $bId=Auth::guard('web')->user()->bId;
+
+
+         $scholership= studentScholarship::where('studentId',$studentId)->where('feeId',$feeId)->get();
+
+
+        $discount=0;
+        if($scholership){
+            foreach ($scholership as $sc) {
+                $discount= $sc->discount;
+                }
+                $paidAmount =  $amount-(($amount*$discount)/100);
+                $discountAmount= ($amount*$discount)/100;
+                $discountPercentAge=$discount;
+        }
+        if($type=='yearly'){
+            //return($type);
+
+            $feeCollection=feeCollection::where('feeId',$feeId)
+            ->where('sessionYearId',$sessionYear)
+            ->where('studentId',$request->studentId)
+            ->where('bId' , Auth::guard('web')->user()->bId)
+            ->count();
+            //return($feeCollection);
+            if($feeCollection>0){
+                return Response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge, "yearlypayment"=>"already taken"],);
+
+            }else{
+                $yearlypayment="";
+                $yearlypayment.='<tr>'.
+                '<td>'.'<input type="checkbox" name="month['.strtoupper(date('F')).']" value="month['.strtoupper(date('F')).']" readonly>'.'</td>'.
+                '<td>'.strtoupper(date('F')).'</td>'.
+                '</tr>';
+
+                return Response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge, "yearlypayment"=>$yearlypayment]);
+            }
+
+        }else{
+
+        $month=DB::select("select month from months where month NOT IN(select fee_collections.month from
+        fee_collections where fee_collections.bId='$bId'
+        AND fee_collections.feeId='$feeId'
+        and fee_collections.studentId='$studentId'
+        AND fee_collections.sessionYearId='$sessionYear')");
+        return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge,"month"=>$month]);
+
+        }
+    }
+
     //for individual student page find student fee
     public function individualStudentfind(Request $request)
     {
         $feeId=$request->feeId;
         $studentId=$request->studentId;
         $amount=$request->amount;
+        $type=$request->type;
+        $sessionYear=$request->sessionYear;
+        $bId=Auth::guard('web')->user()->bId;
         //return($amount);
 
          $scholership= studentScholarship::where('studentId',$studentId)->where('feeId',$feeId)->get();
@@ -240,7 +343,6 @@ class FeeCollectionController extends Controller
 
                 //return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
         }
-        //return response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
 
         //individual student find form feeCollection
         $feeCollection=feeCollection::where('sectionId', $request->sectionId)
@@ -290,13 +392,14 @@ class FeeCollectionController extends Controller
                 '<td>'.$Stfee->amount.'</td>'.
                 '<td>'.'<input type="number" name="due" value="0" min="0"  readonly >'.'</td>'.
                 '<td>'.'<input type="number" name="totalAmount" min="0" id="totalAmount" max="0">'.'</td>'.
-                '<td>'.$Stfee->created_at->format('d-M-Y').'</td>'.
+                '<td>'.date('d-M-Y').'</td>'.
 
                 '</tr>';
             }
             return Response()->json(["Fee"=>$feeoutput, "paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge]);
 
-        }
+            }
+
     }
     /**
      * Store a newly created resource in storage.
@@ -418,6 +521,51 @@ class FeeCollectionController extends Controller
         return redirect()->route('individualFee.individualCollection');
     }
 
+    public function storeMorethenOneMonth(Request $request)
+    {
+
+        //return($request);
+        $month= $request->month;
+        foreach ($month as $id =>$value) {
+            $stfee = new feeCollection();
+
+
+            $stfee->feeId = $request->feeId2;
+            $stfee->paidMonth = strtoupper(date('F'));
+            $stfee->sessionYearId = $request->sessionYear2;
+            $stfee->sectionId = $request->sectionId;
+            $stfee->amount  = $request->amount2;
+            $stfee->totalAmount  = $request->totalCharge2;
+            $stfee->studentId = $request->studentId2;
+            $stfee->month = $id;
+
+
+
+
+            //change for total amount
+            // if($id!=null){
+            //     $scholership= studentScholarship::where('studentId',$id)->where('feeId',$request->feeId2)->get();
+            //     $discount=0;
+            //     if($scholership){
+            //         foreach ($scholership as $sc) {
+            //             $discount= $sc->discount;
+
+            //             }
+            //             $totalAmount =  $fee-(($fee*$discount)/100);
+
+            //             $stfee->totalAmount  = $totalAmount;
+            //             $stfee->studentId = $id;
+            //     }
+            // }
+            $stfee->bId= Auth::user()->bId;
+
+            //return($stfee);
+            $stfee->save();
+        }
+        Session::flash('success','Succesfully Data Saved');
+        return redirect()->route('monthly.index');
+    }
+
     //scholership and discount amount for individual student
     // public function scholarshipAmount(Request $request)
     // {
@@ -514,7 +662,9 @@ class FeeCollectionController extends Controller
             $individualFeeStudent->paidMonth = strtoupper(date('F'));
 
             $due= ($request->newDue-$request->inputAmount);
-            $totalAmount=($request->originalTotalAmount+$request->inputAmount);
+
+            //16-1-2020 change for due fee calculation
+            //$totalAmount=($request->originalTotalAmount+$request->inputAmount);
 
             if($request->inputAmount>0){
             //return('active due fee history');
@@ -525,6 +675,7 @@ class FeeCollectionController extends Controller
                 $dueFeeHistory->due =$request->newDue;
                 $dueFeeHistory->PreviousPaidAmount =$request->originalTotalAmount;
                 $dueFeeHistory->paidAmount =$request->inputAmount;
+                $dueFeeHistory->sectionId =$request->sectionId;
                 $dueFeeHistory->paidMonth =strtoupper(date('F'));
                 $dueFeeHistory->bId= Auth::user()->bId;
 
@@ -534,7 +685,8 @@ class FeeCollectionController extends Controller
 
             $individualFeeStudent->due =$due;
 
-            $individualFeeStudent->totalAmount =$totalAmount;
+            //16-1-2020 change for due fee calculation
+            //$individualFeeStudent->totalAmount =$totalAmount;
             $individualFeeStudent->save();
 
             Session::flash('success','Student Fee Date Succesfully Updated with Due history');
