@@ -1,19 +1,19 @@
 @extends('backend.layouts.master')
-	@section('title', 'Student List Page')
+	@section('title', 'Scholarship List Page')
     @section('content')
     <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i>Manage All Student</h1>
+          <h1><i class="fa fa-edit"></i>Manage scholarship List</h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item"><a href="#">All Student</a></li>
+          <li class="breadcrumb-item"><a href="#">Scholarship List</a></li>
         </ul>
     </div>
 <div class="row justify-content-md-center">
-    <div class="col-md-9">
+    <div class="col-md-10">
         <div class="tile">
                 <div class="tile-body">
                     {{--  <form class="row" id="myform" action="javascript:void(0)">
@@ -34,14 +34,18 @@
                                 <th></th>
                                 {{--  <th>ID</th>  --}}
                                 <th>Roll</th>
-                                <th>Name</th>
-                                {{--  <th>Class</th>
+                                <th>Class</th>
                                 <th>Section</th>
-                                <th>Shift</th>  --}}
+                                <th>Shift</th>
+
+                                <th>Name</th>
+                                <th>Session </th>
+
+                                <th>scholarship</th>
                                 <th>Father</th>
                                 <th>Mother</th>
                                 <th>Blood Group</th>
-                                <th>Date of Birth</th>
+                                <th>Birth Date</th>
                                 <th>Contact</th>
                                 <th>Action</th>
                             </tr>
@@ -68,21 +72,24 @@
            var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                    'copy', 'csv', 'excel', 'pdf', 'print','colvis'
                 ],
                 processing:true,
                 serverSide:true,
 
                 // fixedColumns: true,
-                ajax:"{{url('mystudent/list')}}",
+                ajax:"{{url('mystudent/scholarship/list')}}",
                 columns:[
                     {data: 'DT_RowIndex',name: 'DT_RowIndex'},
                     //{ data: 'studentId', name: 'studentId' },
                     { data: 'roll', name: 'roll' },
+                    { data: 'className', name: 'sections.classes' },
+                    { data: 'sectionName', name: 'sections.sectionName'},
+                    { data: 'shift', name: 'sections.shift'},
                     { data: 'firstName', name: 'firstName' },
-                    //{ data: 'section.classes', name: 'section.classes' },
-                   // { data: 'section.sectionName', name: 'section.sectionName'},
-                   // { data: 'section.shift', name: 'section.shift'},
+                    { data: 'sessionYear', name: 'sessionYear' },
+
+                    { data: 'name', name: 'name'},
                     { data: 'fatherName', name: 'fatherName'},
                     { data: 'motherName', name: 'motherName'},
                     { data: 'blood', name: 'blood'},

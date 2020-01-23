@@ -115,6 +115,8 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
 Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>'mystudent', 'namespace'=>'backend'], function () {
     Route::get('/list/index', 'MyStudentConttroller@index')->name('mystudent.index');
     Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
+    Route::get('/scholarship', 'MyStudentConttroller@scholarship')->name('scholarship.index');
+    Route::get('/scholarship/list', 'MyStudentConttroller@scholarshiplist')->name('scholarship.list');
     Route::get('/classwise', 'MyStudentConttroller@classwise')->name('mystudent.classwise');
     Route::get('/classwiseList/{id}/{sessionYearId}', 'MyStudentConttroller@classwiseList')->name('mystudent.classwiseList');
     Route::get('/student/delete/{id}','MyStudentConttroller@destroy')->name('student.delete');

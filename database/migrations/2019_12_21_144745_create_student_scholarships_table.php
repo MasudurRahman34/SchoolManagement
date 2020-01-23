@@ -20,6 +20,7 @@ class CreateStudentScholarshipsTable extends Migration
             $table->unsignedBigInteger('feeId')->comment('fee_table_id');
             $table->float('discount',8,2)->comment('Discount %');
             $table->string('sessionYear')->comment('year of scholarship');
+            $table->unsignedBigInteger('bId');
             $table->timestamps();
             $table->softDeletes();
         });

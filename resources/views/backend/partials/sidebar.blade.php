@@ -66,6 +66,7 @@
               <li><a class="treeview-item" href="{{route('mystudent.classwise') }}"><i class="icon fa fa-angle-right"></i>Class Wise Student</a></li>
               {{-- <li><a class="treeview-item" href="{{route('section.index') }}"><i class="icon fa fa-angle-right"></i>Previous Student</a></li> --}}
               <li><a class="treeview-item" href="{{route('mystudent.sectionwise') }}"><i class="icon fa fa-angle-right"></i>Section Wise Student</a></li>
+              <li><a class="treeview-item" href="{{route('scholarship.index') }}"><i class="icon fa fa-angle-right"></i>Scholarship list </a></li>
             </ul>
           </li>
           @endcan

@@ -8,7 +8,7 @@ use App\model\classes;
 use App\model\Student;
 use App\model\Section;
 use App\model\SessionYear;
-
+use App\model\studentScholarship;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -56,7 +56,55 @@ class MyStudentConttroller extends Controller
             ->make(true);
         return $data_table_render;
     }
-//class Wish student List
+
+
+    //scholarship page
+    public function scholarship(){
+
+        return view('backend.pages.mystudent.scholarshipList');
+    }
+
+    //find scholarship student list
+    public function scholarshiplist(){
+$bId=Auth::guard('web')->user()->bId;
+        $scholarshiplist=DB::select("SELECT  students.id as id,students.roll,students.firstName,students.lastName,students.fatherName,students.motherName,
+                                    students.blood,students.birthDate,students.mobile,classes.className,sections.sectionName,sections.shift,scholarships.name,
+                                    session_years.sessionYear
+                                    FROM students,student_scholarships,classes,sections,scholarships,session_years
+                                    where students.id=student_scholarships.studentId
+                                    AND scholarships.id=student_scholarships.scholershipId
+                                    AND sections.id=students.sectionId
+                                    AND session_years.id=sections.sessionYearId
+                                    AND classes.id=sections.classid
+                                    AND students.bId='$bId'
+
+                                    ");
+
+       // $scholarshiplist=studentScholarship::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->with('Student')->with('Fee')->get();
+             $data_table_render = DataTables::of($scholarshiplist)
+
+             ->addColumn('action',function ($student){
+                $edit_url = url('mystudent/show/studentProfile/'.$student->id);
+                 return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+                 '<a  onClick="deleteStudent('.$student->id.')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
+             })
+             ->editColumn('firstName', function($scholarshiplist)
+                          {
+                             return $scholarshiplist->firstName. " ".$scholarshiplist->lastName;
+                          })
+            //  ->editColumn('sections.classes', function($scholarshiplist)
+            //  {
+            //     return $scholarshiplist->Section->classes->className;
+            //  })
+             ->rawColumns(['action'])
+             ->addIndexColumn()
+             ->make(true);
+             return $data_table_render;
+
+    }
+
+
+    //class Wish student List
     public function classwise()
     {
         $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
