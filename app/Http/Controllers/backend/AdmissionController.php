@@ -64,6 +64,7 @@ class AdmissionController extends Controller
             'roll'=>'required',
             'total'=>'required'
 
+            
         ]);
 
         $password=mt_rand(100000,999999);

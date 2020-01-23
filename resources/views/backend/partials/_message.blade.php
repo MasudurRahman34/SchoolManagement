@@ -36,3 +36,8 @@
 	Please check the form below for errors
 </div>
 @endif
+@if(Session::has('error'))
+    <div class="alert alert-danger" role="alert">
+        {{ Session::get('error') }}
+    </div>
+@endif

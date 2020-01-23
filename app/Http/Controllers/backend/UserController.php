@@ -23,7 +23,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index()
     {
@@ -393,13 +396,28 @@ class UserController extends Controller
     //Change password
     public function changePassword(Request $request, $id){
         $this->validate($request,[
-            'password'=>'required|confirmed|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*#?&]/'
+            'old_password'=>'required',
+            'password'=>'required||min:6|confirmed',
+            // 'password_confirmation'=>'required|same:new_password',
+
         ]);
-        $users = User::find($id);
-        $users->password = Hash::make($request->password);
-        $users->save();
-        Session::flash('success','You Have Successfully Changed The Password');
-        return redirect()->back();
+        $hashedPassword=Auth::user()->password;
+        if(Hash::check($request->old_password,$hashedPassword)){
+                if(! Hash::check($request['password'],$hashedPassword)){
+                $users = User::find(Auth::guard('web')->user()->id);
+                $users->password = Hash::make($request->password);
+                $users->save();
+                Session::flash('success','You Have Successfully Changed The Password');
+                Auth::logout();
+                return redirect()->route('login'); 
+               }else{
+                Session::flash('error','New Password Cannot Be the same as old pass');
+                return redirect()->back();
+               }  
+        }else{
+            Session::flash('error','Old Password Does Not Matched');
+            return redirect()->back();      
+        }   
     }
 
     /**
