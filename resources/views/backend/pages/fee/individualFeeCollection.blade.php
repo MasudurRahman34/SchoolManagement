@@ -66,15 +66,9 @@
                                     <option value="">--Select Fee--</option>
                             </select>
                     </div>
-                    {{--  <div class="form-group col-md-3 pr-2" id="hidden1" hidden>
-                        <label for="exampleFormControlSelect1"> Amount</label>
-                        <input class="form-control feeChange" type="number" id="amount" name="amount" required  readonly>
-
-                    </div>  --}}
 
                     <div class="form-group col-md-3 pr-2" >
                         <label for="exampleFormControlSelect1"> Month</label>
-                        {{-- <input class="form-control " id="month" type="month" placeholder="Pick a month" value="{{date('Y-m')}}"/> --}}
                         <select class="form-control feeChange" id="month" required>
                             <option value="">--Select Fee--</option>
                             <option value="JANUARY">JANUARY</option>
@@ -223,7 +217,7 @@
         sectionId=$(this).val();
         console.log(sectionId2,classId2);
             $.ajax({
-                type: "get",
+                type: "POST",
                 url: "{{ url('feecollection/individualStudent')}}",
                 data: {
                 sectionId:sectionId,
@@ -251,22 +245,6 @@
         $("#amount1").attr('value',feeAmount);
         console.log(feeId,feeAmount);
 
-       /* var url='/api/search/feeamount';
-            var data= {
-                'feeId' : feeId,
-            }
-            $.ajax({
-                type: "get",
-                url:url,
-                data: data,
-                success: function (data) {
-                    console.log(data);
-                //var amount = data;
-                    //$('#amount').text();
-                    //$('#amount').val(data);
-                    $('#amount1').val(data);
-                }
-            });*/
 
         //on change section for find student
         var sectionId=$("#sectionId").val();
@@ -297,7 +275,7 @@
 if(studentId>0){
 
                 $.ajax({
-                type: "get",
+                type: "POST",
                 url: "{{ url('feecollection/individualStudentfind')}}",
                 data: {
                     sectionId:sectionId,

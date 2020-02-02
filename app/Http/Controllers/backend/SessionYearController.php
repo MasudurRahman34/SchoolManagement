@@ -141,6 +141,8 @@ class SessionYearController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //used SoftDeleted
     public function destroy($id)
     {
         // $SessionYear=SessionYear::find($id);
@@ -171,4 +173,26 @@ class SessionYearController extends Controller
 
 
     }
+    // public function readsoftdelete(){
+
+    //     $sessionYearDelete = SessionYear::withTrashed()->get();
+    //     $sessionYearDelete = SessionYear::onlyTrashed()->get();
+    // }
+
+    // public function restoresoftdelete(){
+
+    //     $sessionYearDelete = SessionYear::withTrashed()->restore();
+
+
+    // }
+
+    // public function forcedeletesoftdelete(){
+    //     //user where to find id
+    //     $sessionYearDelete = SessionYear::withTrashed()->forceDelete();
+
+
+    // }
+
+
+
 }

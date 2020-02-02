@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\Facades\DataTables;
 
 class ApiAttendanceController extends Controller
 {
@@ -37,12 +38,6 @@ class ApiAttendanceController extends Controller
         ->where('bId' , Auth::guard('web')->user()->bId)
         ->first();
         if($attendences!=null){
-            // $attendences=Attendance::where('sectionId', $request->sectionId)
-            // ->whereDate('created_at',date('Y-m-d'))
-            // ->where('bId' , Auth::guard('web')->user()->bId)
-            // ->get();
-
-            // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
             return response()->json(["redirectToEdit"=>"/student/attendance/edit/$request->sectionId"]);
         }else{
@@ -51,11 +46,6 @@ class ApiAttendanceController extends Controller
             return response()->json($students);
         }
 
-
-        // $sectionId= $request->sectionId;
-        // $students = Student::where('sectionId',$sectionId)->get();
-        // return response()->json($students);
-        // return response()->json($attendences);
     }
 
     /**
@@ -85,10 +75,52 @@ class ApiAttendanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+      //from view
+      public function show($month, $studentId)
+      {
+
+          $Attendance=Attendance::orderBy('id','DESC')
+                          ->where('studentId', $studentId)
+                          ->whereMonth('created_at', $month)
+                          ->get();
+          $data_table_render = DataTables::of($Attendance)
+
+          ->editColumn('created_at1', function($Attendance)
+          {
+             return $Attendance->created_at;
+          })
+          ->editColumn('created_at', function($Attendance)
+              {
+                 return $Attendance->created_at->diffForHumans();
+              })
+
+          ->addIndexColumn()
+          ->make(true);
+      return $data_table_render;
+
+
+      }
+
+      //student attendance percentage
+      public function attendancePercentage($month, $studentId)
+      {
+          $totalday=Attendance::where('studentId', $studentId)
+                          ->whereMonth('created_at', $month)
+                          ->count();
+                          if($totalday==0){
+                              $totalday=1;
+                          }else{
+                              $totalday=$totalday;
+                          }
+
+          $Attendance=Attendance::where('attendence','present')
+                          ->where('studentId', $studentId)
+                          ->whereMonth('created_at', $month)
+                          ->count();
+           $percentage = (100*$Attendance)/$totalday;
+           return $percentage;
+      }
+
 
     /**
      * Show the form for editing the specified resource.

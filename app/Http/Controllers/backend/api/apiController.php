@@ -8,6 +8,7 @@ use App\model\classes;
 use App\model\Section;
 use App\model\Attendance;
 use App\model\Fee;
+use App\model\month;
 use App\model\schoolBranch;
 use App\model\Subject;
 use App\model\Student;
@@ -201,12 +202,14 @@ class apiController extends Controller
         // return $percentage;
         return Response()->json(["success"=>'Counted', "data"=>$percentage,201]);
     }
+
+
     //for individual student
-    public function present($month)
+    public function present(Request $request)
     {
     //$bId=Auth::guard('web')->user()->bId;
-
-    $id=Auth::guard('student')->user()->id;
+    $month=$request->month;
+    $id=$request->studentId;
         $presentAttendance=Attendance::where('attendence','present')
                         ->where('studentId',$id)
                         ->whereMonth('created_at', $month)
@@ -216,10 +219,10 @@ class apiController extends Controller
         return Response()->json(["success"=>'presentThisMonth', "data"=>$presentAttendance,201]);
     }
 
-    public function absent($month)
+    public function absent(Request $request)
     {
-    //$bId=Auth::guard('web')->user()->bId;
-    $id=Auth::guard('student')->user()->id;
+        $month=$request->month;
+        $id=$request->studentId;
 
     $absent=Attendance::where('attendence','absent')
                     ->where('studentId',$id)
@@ -271,30 +274,6 @@ class apiController extends Controller
 
         $bId=Auth::guard('web')->user()->bId;
         $date= date('Y-m-d');
-        //$totalStudent=DB::select("select count(students.id) as totalStudent from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And students.bId='$bId' groupby ");
-        // $totalStudent=DB::select("select count(attendences.attendances) as totalStudent from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And students.bId='$bId'");
-        // $attendances = DB::table('sections')
-        //              ->select(DB::raw('sections', 'sections.sectionName'))
-        //              ->rightJoin ('attendances','attendances.sectionId', '=', 'sections.id')
-        //              ->where('attendence','present')
-        //              ->where('attendances.bId',Auth::guard('web')->user()->bId)
-        //             //  ->whereDate('attendances.created_at',date('Y-m-d'))
-        //              ->select(DB::raw('sectionId, count(studentId) as user_count'))
-        //              ->groupBy('attendances.sectionId')->get();
-        //$attendances=DB::select("select sections.sectionName, COUNT(attendances.studentId) from sections, attendances WHERE sections.id=attendances.sectionId AND attendances.attendence='present' AND attendances.bId=30 GROUP BY attendances.sectionId");
-
-        // $attendances= classes::selectRaw('classes.className, count(attendances.sectionId) as present, sections.sectionName, sections.shift')
-        // ->Join ('attendances','attendances.classId', '=', 'classes.id')
-        // ->Join ('sections','sections.classId', '=', 'classes.id')
-        // ->where('attendances.bId',Auth::guard('web')->user()->bId)
-        // ->where('attendence','present')
-        // ->whereDate('attendances.created_at',date('Y-m-d'))
-        // ->groupBy('attendances.sectionId')->get();
-
-        // attnArray=array(
-        //     'sections'=>
-        // )
-
         $attendances=DB::select("SELECT classes.className, count(attendances.sectionId) as present, sections.sectionName, sections.shift
                                 From sections, attendances, classes
                                 where classes.id= sections.classId AND attendances.sectionId= sections.id
@@ -306,25 +285,9 @@ class apiController extends Controller
 
 
         $data_table_render = DataTables::of($attendances)
-            // ->addColumn('hash',function ($row){
-            //     for($i = 1; $i <$row().Length;) {
 
-            //         return $i;
-
-
-            //     }$i --;
-
-            // })
-            // ->editColumn('ClassName', function($attendances)
-            // {
-            //    return $attendances->Section->classes->className;
-            // })
-
-            // ->rawColumns(['hash'])
             ->make(true);
         return $data_table_render;
-
-        // return response()->json(["success"=>'Counted', "attn"=>$attendances,201]);
 
     }
     public function sectionAttendance($classId,$sectionId,$dateId)

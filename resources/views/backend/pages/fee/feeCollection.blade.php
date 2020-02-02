@@ -372,6 +372,11 @@
         });
 
     });
+
+
+
+
+//print button in table
     $('#doPrint').on("click", function () {
         $('#print_div').printThis({
             debug: false,               // show the iframe for debugging

@@ -1,4 +1,4 @@
-@extends('backend.student.layouts.master')
+@extends('backend.layouts.master')
 	@section('title', 'Attendance Page')
     @section('content')
     <div class="row ">
@@ -16,6 +16,7 @@
 
                  </div>
                  @endforeach
+                 {{-- {{ $id}} --}}
               </div>
         </div>
         </div>
@@ -25,7 +26,7 @@
 
             <div class="col-md-8">
                 <div class="tile">
-                <h3 class=" row justify-content-md-center">Attendance Information </h3>
+                <h3 class=" row justify-content-md-center">Attendance Information</h3>
                     <div class="tile-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered" id="sampleTable">
@@ -59,18 +60,21 @@
       <div class="clearix"></div>
     @endsection
     @section('script')
-       @include('backend.student.partials.js.datatable');
+       @include('backend.partials.js.datatable');
 
        <script src="{{ asset('admin/js/plugins/chart.js') }} "></script>
        <script type="text/javascript">
 
   $(function(){
-  $('input[type="radio"]').click(function(){
+  $('input[type="radio"]').click(function(e){
+      e.preventDefault();
     if ($(this).is(':checked'))
     {
 
       var month=$(this).val();
     //   $('table').attr('id',month);
+    var studentId= {{$id}};
+    console.log(studentId);
       var table=$('#sampleTable').DataTable({
             dom: 'lBfrtip',
             buttons: [
@@ -80,7 +84,7 @@
              serverSide:true,
              paging : true,
              destroy : true,
-             ajax:"{{url('/student/attendance/show/')}}"+"/"+month,
+             ajax:"{{url('/attendance/show/')}}"+"/"+month+"/"+studentId,
              columns:[
                  { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                  { data: 'created_at1', name: 'created_at1' },
@@ -94,7 +98,7 @@
         table.draw();
         $.ajax({
             type: "get",
-            url: "{{url('/student/attendance/attendancePercentage/')}}"+"/"+month,
+            url: "{{url('/attendance/attendancePercentage/')}}"+"/"+month+"/"+studentId,
             data: "data",
 
             success: function (response) {
@@ -116,8 +120,6 @@
 
           ]
 
-
-
           var ctxp = $("#pieChartDemo").get(0).getContext("2d");
           var pieChart = new Chart(ctxp).Pie(pdata);
 
@@ -126,6 +128,8 @@
     }
   });
 });
+
+jQuery.event.special.touchstart = { setup: function( _, ns, handle ){ if ( ns.includes("noPreventDefault") ) { this.addEventListener("touchstart", handle, { passive: false }); } else { this.addEventListener("touchstart", handle, { passive: true }); } } };
 
 
   </script>

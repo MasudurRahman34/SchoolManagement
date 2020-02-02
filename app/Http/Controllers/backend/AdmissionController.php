@@ -111,6 +111,7 @@ class AdmissionController extends Controller
             $scholarship->feeId =$request->forScholarshipFeeId;
             $scholarship->discount =$request->setDiscount;
             $scholarship->sessionYear =$request->sessionYear;
+            $scholarship->bId=Auth::guard('web')->user()->bId;
             $scholarship->save();
          }
          //fee collection data
@@ -146,9 +147,10 @@ class AdmissionController extends Controller
 
 
 
-         $students=Student::with('Section', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
+         //$students=Student::with('Section', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
          //dd($students);
-         return view('backend.pages.pdf.admissionPdf',compact('students'));
+         return redirect()->route('lastAdmission');
+        // return view('backend.pages.pdf.admissionPdf',compact('students'));
         //$pdf = PDF::loadView('backend.pages.pdf.admissionPdf',compact('students'))->setPaper('a4','portrait');
         // return $pdf->stream($Student->firstName.$Student->roll.$Student->mobile.'.pdf');
 
@@ -168,9 +170,11 @@ class AdmissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function lastAdmission()
     {
-        //
+        $students=Student::with('Section', 'feeCollection', 'studentScholarship')->where('bId', Auth::guard('web')->user()->bId)->latest()->First();
+         //dd($students);
+         return view('backend.pages.pdf.admissionPdf',compact('students'));
     }
 
     /**

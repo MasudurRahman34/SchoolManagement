@@ -10,9 +10,9 @@ class SessionYear extends Model
 {
 
     //SoftDeletes
-    //use SoftDeletes;
+    use SoftDeletes;
 
-    //protected $date =['deleted_at'];
+    protected $date =['deleted_at'];
 
 
     public function Fee(){

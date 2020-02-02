@@ -28,7 +28,7 @@
 
                 </div>
                 <div class="col-2">
-                    <h5 class="text-right">{{date("Y-m-d")}}</h5>
+                    <h5 class="text-right">Date:{{date("Y-m-d")}}</h5>
                 </div>
               </div>
               <div class="row invoice-info">
@@ -36,7 +36,7 @@
                   <address><strong>{{Auth::guard('web')->user()->name}}</strong><br><br></address>
                 </div>
                 <div class="col-4">To
-                  <address><strong>{{$students->firstName }} {{$students->lastName}}</strong><br>Class: {{$students->Section->classes->className}},{{$students->group}}<br>Section: {{$students->Section->sectionName}}<br>Session: {{$students->Section->sessionYear->sessionYear}}<br>Blood:{{$students->blood}}</address>
+                  <address><strong>{{$students->firstName }} {{$students->lastName}}</strong><br>Class: {{$students->Section->classes->className}} ({{$students->group}})<br>Roll: {{$students->roll}}<br>Section: {{$students->Section->sectionName}}<br>Session: {{$students->Section->sessionYear->sessionYear}}<br>Blood Group: {{$students->blood}}</address>
                 </div>
                 <div class="col-4">Student ID:{{$students->studentId }}<br><b>Type : {{$students->type}}</b><br>Scholarship: @if($students->schoolarshipId==0)
                     {{'No'}}

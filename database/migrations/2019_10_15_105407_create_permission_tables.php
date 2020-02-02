@@ -21,6 +21,7 @@ class CreatePermissionTables extends Migration
             $table->string('name');
             $table->string('guard_name');
             $table->integer('status')->default(0)->comment('0=superAdmin,schoolAdmin, 1=other');
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -30,6 +31,7 @@ class CreatePermissionTables extends Migration
             $table->string('guard_name');
             $table->integer('status')->default(0)->comment('0=superAdmin,schoolAdmin, 1=other');
             $table->unsignedBigInteger('bId')->default(0)->comment('branch id');
+            $table->softDeletes();
             $table->timestamps();
         });
 

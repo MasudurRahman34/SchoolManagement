@@ -29,8 +29,8 @@ Route::get('api/search/classwishAttentage', 'backend\api\apiController@classwish
 Route::get('api/search/sectionAttendance/{classId}/{sectionId}/{dateId}', 'backend\api\apiController@sectionAttendance')->name('api.sectionAttendance');
 
 //student section api for attendance count
-Route::get('api/search/present/{id}', 'backend\api\apiController@present')->name('api.present');
-Route::get('api/search/absent/{id}', 'backend\api\apiController@absent')->name('api.absent');
+Route::get('api/search/present', 'backend\api\apiController@present')->name('api.present');
+Route::get('api/search/absent', 'backend\api\apiController@absent')->name('api.absent');
 //student section api for datatable
 Route::get('/api/search/studentname', 'backend\api\apiController@studentname')->name('api.studentname');
 
@@ -64,7 +64,14 @@ Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
 //New Admin APi Section
 Route::group(['namespace'=>'backend'], function () {
     Route::post('/student/attendance/studentData','Attendance\ApiAttendanceController@studentData')->name('studentData.attendence');
+
+    //28/01/2019 ->student Attendance view
+    Route::get('/attendance/show/{id}/{studentId}', 'Attendance\ApiAttendanceController@show')->name('apiattendence.show');
+    Route::get('/attendance/attendancePercentage/{id}/{studentId}', 'Attendance\ApiAttendanceController@attendancePercentage')->name('apiattendence.attendancePercentage');
+
     Route::get('/getAllFeesByClass/{classId}/{sessionYearId}','Fee\ApiFeeController@getAllFeesByClass')->name('getAllFeesByClass');
+
+
 
 });
 
@@ -92,7 +99,10 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     Route::get('/class/classmates', 'StudentClassController@index')->name('student.classmates');
     Route::get('/class/classmates/show', 'StudentClassController@show')->name('student.classmates.show');
     Route::get('/totalstudent', 'StudentController@totalStudent')->name('student.totalStudent');
+
+
     Route::get('/attendance/index', 'StudentAttendanceController@index')->name('attendence.index');
+
     Route::get('/attendance/show/{id}', 'StudentAttendanceController@show')->name('attendence.show');
     Route::get('/attendance/attendancePercentage/{id}', 'StudentAttendanceController@attendancePercentage')->name('attendence.attendancePercentage');
 
@@ -186,6 +196,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Admission'],'prefix'=>
 
     Route::get('/','AdmissionController@index')->name('admissison.index');
     Route::post('/store','AdmissionController@store')->name('admission.store');
+    Route::get('/last/admission','AdmissionController@lastAdmission')->name('lastAdmission');
 
 });
 
@@ -200,8 +211,6 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
 });
 
-
-//Fee management
 Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], function () {
     //Fee Management for admin
     Route::get('/fee','backend\Fee\FeeController@index')->name('fee.index');
@@ -214,6 +223,10 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     //feeHisory admin view
     Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');
     Route::get('/feehistory/show','backend\FeeHistoryController@show')->name('feehistory.show');
+});
+
+//Fee management
+Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], function () {
 
     //feecollection management for admin
     Route::get('/feecollection','backend\FeeCollectionController@index')->name('feecollection.index');
@@ -223,8 +236,8 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
 
     //individual fee Collection Management for admin
     Route::get('/feecollection/individual','backend\FeeCollectionController@individualCollection')->name('individualFee.individualCollection');
-    Route::get('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
-    Route::get('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
+    Route::post('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
+    Route::post('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
     //Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
     Route::post('/feecollection/individual/store','backend\FeeCollectionController@storeIndividualy')->name('store.individualFeecollection');
     Route::post('/feecollection/individual/update','backend\FeeCollectionController@updateIndividualStudent')->name('update.individualFeecollection');
@@ -232,7 +245,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], fun
     //For more then one month
     Route::get('/feecollection/individual/monthly','backend\FeeCollectionController@monthlyindex')->name('monthly.index');
     Route::get('/feecollection/individual/findMonth','backend\FeeCollectionController@findMonth')->name('find.month');
-    Route::get('/feecollection/individual/findmonthlyyearlyfee','backend\FeeCollectionController@findMonthForAdvancefeeCollection')->name('find.monthlyoryearly');
+    Route::post('/feecollection/individual/findmonthlyyearlyfee','backend\FeeCollectionController@findMonthForAdvancefeeCollection')->name('find.monthlyoryearly');
     Route::post('/feecollection/individual/monthly/store','backend\FeeCollectionController@storeMorethenOneMonth')->name('store.storeMorethenOneMonth');
 
     //Student Fee Details
@@ -315,6 +328,8 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespac
     Route::post('/student/attendance/studentDatabydate','AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
     Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
 
+    //28/01/2019 -> student attendance view
+    Route::get('/student/attendance/studentviewindex/{id}', 'AttendanceController@studentView')->name('studentviewindex.index');
 
 
 });

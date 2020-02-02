@@ -237,13 +237,18 @@
 
       var d = new Date();
       var month=d.getMonth()+1;
+      var studentId= {{Auth::guard('student')->user()->id}};
+      //console.log(studentId);
             //document.getElementById("date").innerHTML = month;
            //   $('table').attr('id',month);
 
     $.ajax({
         type: "get",
-        url: "{{url('/api/search/present')}}"+"/"+month,
-        data: "data",
+        url: "{{route('api.present')}}",
+        data: {
+            month :month,
+            studentId:studentId,
+        },
         success: function (data) {
          //var data1 =parseFloat(data.data).toFixed(2);
         $('#present').html(data.data);
@@ -254,8 +259,11 @@
     });
     $.ajax({
         type: "get",
-        url: "{{url('/api/search/absent')}}"+"/"+month,
-        data: "data",
+        url: "{{route('api.absent')}}",
+        data: {
+            month :month,
+            studentId:studentId,
+        },
         success: function (data) {
          //var data1 =parseFloat(data.data).toFixed(2);
          $('#absent').html(data.data);
@@ -267,14 +275,13 @@
         url: "{{url('/api/search/studentname')}}",
         data: "data",
             success:function(data) {
-                console.log(data);
+
                 var firstname = data[0].firstName;
                 var lastname = data[0].lastName;
                 var mobile = data[0].mobile;
 
                 var fullname= firstname+' '+lastname;
-                console.log(data[0].firstName,data[0].lastName);
-                console.log(data[0].school_branch.nameOfTheInstitution);
+
                 var schoolname= data[0].school_branch.nameOfTheInstitution;
                document.title = schoolname;
                 $('#name').html(fullname);
@@ -315,8 +322,8 @@
                  { data: 'created_at', name: 'created_at' },
              ]
          });
-        // table.destroy();
-        // table.draw();
+
+
         $.ajax({
             type: "get",
             url: "{{url('/student/attendance/attendancePercentage/')}}"+"/"+month,

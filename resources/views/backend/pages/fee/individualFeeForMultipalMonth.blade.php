@@ -232,7 +232,7 @@
     sectionId=$(this).val();
     console.log(sectionId);
             $.ajax({
-                type: "get",
+                type: "POST",
                 url: "{{ url('feecollection/individualStudent')}}",
                 data: {
                 sectionId:sectionId,
@@ -264,28 +264,6 @@
 
         var studentId= $("#studentId option:selected").val();
         console.log(feeAmount,feeId,studentId);
-       /* var url='/api/search/feeamount';
-            var data= {
-                'feeId' : feeId,
-                'feeAmount':feeAmount,
-                'studentId':studentId,
-
-            }
-            /*$.ajax({
-                type: "get",
-                url:url,
-                data: data,
-                success: function (data) {
-                    console.log(data);
-
-                    $('#amount1').val(data);
-
-                    var amount=$("#amount1").val();
-                    $("#amount2").attr('value',amount);
-                }
-            });*/
-
-        //});
 
         //on change section for find student
 
@@ -317,7 +295,7 @@
         // scholarship amount check for due calculation
         if(studentId>0 && feeId>0){
             $.ajax({
-                type: "get",
+                type: "POST",
                 //url: "{{ url('feecollection/individualStudentfind')}}",
                 url: "{{ url('/feecollection/individual/findmonthlyyearlyfee')}}",
                 data: {
@@ -397,9 +375,6 @@
                                     }
                                 }
                         }
-
-
-
                 }
              });
 

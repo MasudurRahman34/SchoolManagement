@@ -15,6 +15,7 @@
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
 
                     <li class="nav-item"><a class="nav-link" href="{{route('mystudent.editProfile', $students->id)}}"> Update Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" id="Attendance"> Attendance</a></li>
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
@@ -118,39 +119,34 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                   <div class="tab-content">
                     <div class="tab-pane active" id="user-timeline">
-                      <div class="timeline-post">
-                        <div class="post-media"><a href="#"><img
-                              src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"></a>
-                          <div class="content">
-                            <h5><a href="#">{{$students->firstName}}</a></h5>
-                            <p class="text-muted"><small>{{$students->created_at}} {{$students->created_at->diffForHumans()}}</small></p>
-                          </div>
-                        </div>
-                        <div class="post-content">
-                          <p>Nothing</p>
-                        </div>
-                      </div>
-                      <div class="timeline-post">
-                        <div class="post-media"><a href="#"><img
-                              src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"></a>
-                          <div class="content">
-                            <h5><a href="#">{{$students->firstName}}</a></h5>
-                            <p class="text-muted"><small>{{$students->created_at}} {{$students->created_at->diffForHumans()}}</small></p>
-                          </div>
-                        </div>
-                        <div class="post-content">
-                          <p>Nothing.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tab-pane fade" id="user-settings">
-                      <div class="tile user-settings">
+                      <div class="timeline-post" id="modelAttendance" hidden>
+                        <div class="post-media">
+                          <div class="content" >
+                            <div class="form-group col-md-12">
 
+
+                            <h5><a href="#">{{$students->firstName}}</a></h5>
+
+                               <label>Attendance Information</label><br><hr>
+                               <div class="custom-control custom-control-inline">
+                                <lable >Total Present This month &nbsp;</lable>
+                                <lable  id="present"></lable> &nbsp DAY
+                                </div><br>
+                                <div class="custom-control month-radio custom-control-inline">
+                                <lable >Total Absent This month &nbsp;</lable>
+                                <lable id="absent"></lable> &nbsp DAY</div>
+                                <div class="custom-control custom-control-inline">
+                                    <a class=" nav-link" href="{{route('studentviewindex.index', $students->id)}}"> Details</a>
+                                </div>
+                          </div>
+                          </div>
+                        </div>
+                        <div class="post-content">
+                        </div>
                       </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -158,7 +154,50 @@
       <div class="clearix"></div>
     @endsection
     @section('script')
-      {{-- @include('backend.partials.js.datatable'); --}}
+
       <script>
+
+        $('#Attendance').click(function (e) {
+            e.preventDefault();
+            $('#modelAttendance').attr('hidden',false);
+
+
+      var d = new Date();
+      var month=d.getMonth()+1;
+      var studentId= {{$students->id}};
+      console.log(studentId);
+            //document.getElementById("date").innerHTML = month;
+           //   $('table').attr('id',month);
+
+    $.ajax({
+        type: "get",
+        url: "{{route('api.present')}}",
+        data: {
+            month :month,
+            studentId:studentId,
+        },
+        success: function (data) {
+         //var data1 =parseFloat(data.data).toFixed(2);
+        $('#present').html(data.data);
+
+
+           // document.getElementById("attendance").innerHTML= parseFloat(data).toFixed(2);
+        }
+    });
+    $.ajax({
+        type: "get",
+        url: "{{route('api.absent')}}",
+        data: {
+            month :month,
+            studentId:studentId,
+        },
+        success: function (data) {
+         //var data1 =parseFloat(data.data).toFixed(2);
+         $('#absent').html(data.data);
+
+        }
+    });
+
+        });
         </script>
 @endsection

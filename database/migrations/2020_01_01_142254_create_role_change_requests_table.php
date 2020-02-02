@@ -21,6 +21,7 @@ class CreateRoleChangeRequestsTable extends Migration
             $table->unsignedBigInteger('status');
             $table->unsignedBigInteger('bId');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
