@@ -411,7 +411,7 @@ class UserController extends Controller
                 Auth::logout();
                 return redirect()->route('login'); 
                }else{
-                Session::flash('error','New Password Cannot Be the same as old pass');
+                Session::flash('error','New Password Cannot Be The Same As Old Pass');
                 return redirect()->back();
                }  
         }else{

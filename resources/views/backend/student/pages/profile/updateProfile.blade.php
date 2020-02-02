@@ -44,6 +44,11 @@
                      {{ Session::get('failed') }}
                   </div>
                 @endif
+                @if(Session::has('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ Session::get('error') }}
+                 </div>
+               @endif
                  <br>
               <!-- Nav tabs -->
               <ul class="nav nav-tabs">
@@ -212,13 +217,17 @@
              <form action="{{route('change.password')}}" method="post">
                @csrf
                 <div class="row">
+                  <div class="form group col-md-3">
+                    <label class="control-label">Old Password</label>
+                       <input type="password" class="form-control" name="old_password" id="old_password">
+                  </div>
                     <div class="form group col-md-3">
                       <label class="control-label">New Password</label>
-                      <input type="password" class="form-control" name="password">
+                      <input type="password" class="form-control" name="password" id="password">
                     </div>
                     <div class="form group col-md-3">
                       <label class="control-label">Confirm Password</label>
-                      <input type="password" class="form-control" name="password_confirmation">
+                      <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
                     </div>
                     </div>
                         <div class="tile-footer">
