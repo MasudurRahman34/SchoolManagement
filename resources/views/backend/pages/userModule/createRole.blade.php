@@ -45,7 +45,7 @@
                                                         @endforeach
                                                     </div>
                                                 </td>
-                                                <td><button class="btn btn-info btn-sm" onClick="editSection({{$role->id}})"><i class="fa fa-edit"></i></button></td>
+                                                <td><button class="btn btn-info btn-sm" onClick="editRolePermission({{$role->id}})"><i class="fa fa-edit"></i></button></td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -81,13 +81,13 @@
                     @if($prm->id % 2==0)
                     <div class="col-md-6">
                         <label class="pr">
-                            <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions" required><span class="label-text">{{$prm->name}}</span>
+                            <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions" class="permissions" required><span class="label-text">{{$prm->name}}</span>
                         </label>
                     </div>
                     @else
                     <div class="col-md-6">
                             <label class="pr">
-                                <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions" required><span class="label-text" >{{$prm->name}}</span>
+                                <input type="checkbox"  value="{{$prm->id}}" id="permissions" name="permissions" class="permissions"  required><span class="label-text" >{{$prm->name}}</span>
                             </label>
                         </div>
                     @endif
@@ -116,24 +116,11 @@
     @include('backend.partials.js.datatable');
 
       <script>
-        //   var table= $('#sampleTable').DataTable({
-        //         dom: 'lBfrtip',
-        //         buttons: [
-        //             'copy', 'csv', 'excel', 'pdf', 'print'
-        //         ],
-        //      processing:true,
-        //      serverSide:true,
-        //      ajax:"{{url('/subject/show')}}",
-        //      columns:[
-        //          { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-        //          { data: 'name', name: 'name' },
-        //          { data: 'rolepermissions', name: 'rolepermissions' }
-        //      ]
-        //  });
-
         $(document).ready(function () {
             $('#submit').click(function (e) {
                 e.preventDefault();
+                var submitValue=$(this).val();
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -148,12 +135,20 @@
             console.log(permission);
                 var roleName=$('#roleName').val();
                 console.log(name);
+                var url='';
+
+                if(submitValue>0){
+                    url="{{route('updateRolePermission')}}";
+                }else{
+                    url="{{ route('addRole') }}";
+                }
                 jQuery.ajax({
                     method: 'post',
-                    url: "{{ url('/addRole') }}",
+                    url: url,
                     data: {
                         roleName: roleName,
                         permissions: permission,
+                        roleId:submitValue,
 
                     },
                     success: function(result){
@@ -177,8 +172,30 @@
 
             });
         });
-        function editSection(id) {
-            // alert(id);
+        function editRolePermission(id) {
+            var editId=id;
+            $('#submit').val(editId);
+            var editId=id;
+            setUpdateProperty(editId, "Role");
+            $("#submit").val(id);
+            var url="{{route('editRolePermission')}}";
+            $.ajax({
+                type:'GET',
+                url:url,
+                data:{
+                    id:id,
+                },
+                success:function(data) {
+                    console.log(data);
+                   data.roles.forEach(role => {
+                       $('#roleName').val(role.name);
+                       $("input[name='permissions']").prop('checked', false);
+                        role.permissions.forEach(permission => {
+                            $("input[name='permissions'][value='"+permission.id+"']").prop('checked', true);
+                        });
+                   });
+                }
+            });
         }
       </script>
 

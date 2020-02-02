@@ -175,24 +175,13 @@
              success:function(data) {
 
                  $('#classId').val(data.classId);
-                 //$('#classId').attr('disabled',true);
                 $('#classId').attr("style", "pointer-events: none;");
-
-                 //$('#classId option:not(:selected)').remove();
                  $('#sectionName').val(data.sectionName);
                  $('#sessionYearId').val(data.sessionYearId);
-                 //$('#sessionYearId option:not(:selected)').remove();
                  $('#sessionYearId').attr("style", "pointer-events: none;");
                  console.log(data);
                  $("input[name='shift'][value='"+data.shift+"']").prop('checked', true);
-                 //$("input[name='shift'][value='"data.shift+"']")css('pointer-events', 'none');
                  $('.pointer').css('pointer-events', 'none');
-                 //$('#shift').val('"+data.shift+"').prop('checked', true);
-                 //document.getElementById("myform").reset();
-                 //$("#classId").removeAttr("style")
-                // $(':radio').click(function(){
-                  //  return false;
-               // });
           }
          });
 

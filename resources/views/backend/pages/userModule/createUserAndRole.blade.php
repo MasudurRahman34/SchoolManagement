@@ -28,6 +28,9 @@
                       <th>Email</th>
                       <th>Password</th>
                       <th>Role</th>
+                      <th>Class</th>
+                      <th>Section</th>
+                      <th>Shift</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -230,6 +233,9 @@
                     { data: 'email', name: 'email' },
                     { data: 'readablePassword', name: 'readablePassword' },
                     { data: 'role', name: 'role' },
+                    { data: 'class', name: 'class' },
+                    { data: 'section', name: 'section' },
+                    { data: 'shift', name: 'shift' },
                     { data: 'action', name: 'action' }
                 ]
             });

@@ -30,7 +30,7 @@
             </div>
             <div class="form group col-md-6 {{$errors->has('firstName') ? 'has-error' : ''}}">
               <label class="control-label">First Name<span style="color: red;">*</span></label>
-              <input class="form-control" name="firstName" id="firstName" type="text" value="{{old('firstName')}}">
+              <input class="form-control" name="firstName" id="firstName" type="text" value="{{old('firstName')}}" required>
               @if($errors->has('firstName'))
                 <span class="help-block text-danger">
                   {{$errors->first('firstName')}}
@@ -40,7 +40,7 @@
 
             <div class="form group col-md-6 {{$errors->has('lastName') ? 'has-error' : ''}}">
                 <label class="control-label">Last Name<span style="color: red;">*</span></label>
-                <input class="form-control" name="lastName" id="lastName" type="text" value="{{old('lastName')}}">
+                <input class="form-control" name="lastName" id="lastName" type="text" value="{{old('lastName')}}" required>
                 @if($errors->has('lastName'))
                   <span class="help-block text-danger">
                     {{$errors->first('lastName')}}
@@ -55,7 +55,7 @@
             </div>
             <div class="form group col-md-6 {{$errors->has('mobile') ? 'has-error' : ''}}">
               <label class="control-label">Mobile No<span style="color: red;">*</span></label>
-              <input class="form-control" id="mobile" name="mobile" type="text" value="{{old('mobile')}}">
+              <input class="form-control" id="mobile" name="mobile" type="number" maxlength="11" value="{{old('mobile')}}" required>
               @if($errors->has('mobile'))
                   <span class="help-block text-danger">
                     {{$errors->first('mobile')}}
@@ -65,7 +65,7 @@
             <div class="form-group col-md-6 {{$errors->has('birthDate') ? 'has-error' : ''}}">
                 <label class=" control-label">Date of Birth<span style="color: red;">*</span></label>
                 <div class="">
-                  <input class="form-control" type="date" name="birthDate" id="birthDate" value="{{old('birthDate')}}">
+                  <input class="form-control" type="date" name="birthDate" id="birthDate" value="{{old('birthDate')}}" required>
                   @if($errors->has('birthDate'))
                   <span class="help-block text-danger">
                     {{$errors->first('birthDate')}}
@@ -75,7 +75,7 @@
               </div>
               <div class="form-group col-md-6 {{$errors->has('blood') ? 'has-error' : ''}}">
                 <label for="exampleFormControlSelect1">Student BLood Group<span style="color: red;">*</span></label>
-                <select class="form-control" id="blood" name="blood">
+                <select class="form-control" id="blood" name="blood" required>
                 <option value="">--Please Select--</option>
                   <option value="0+">O+</option>
                   <option value="0-">O-</option>
@@ -100,7 +100,7 @@
 
             <div class="form-group col-md-6">
                 <label for="exampleFormControlSelect1">Session Year<span style="color: red;">*</span></label>
-                <select class="form-control admission" id="sessionYear" name="sessionYear">
+                <select class="form-control admission" id="sessionYear" name="sessionYear" required>
                   <option value="">--Please Select--</option>
                     @foreach ($SessionYear as $SYear)
                 <option value="{{$SYear->id}}" data-sessionYear="{{$SYear->sessionYear}}" {{$SYear->status==1 ? 'selected' : ''}}>{{$SYear->sessionYear}}</option>

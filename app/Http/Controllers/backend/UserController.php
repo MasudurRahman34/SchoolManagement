@@ -40,7 +40,7 @@ class UserController extends Controller
 
     public function requestedUserData()
     {
-        $applyInstitutes=schoolBranch::orderBy('id', 'DESC')->where('activeStatus', false)->get();
+        $applyInstitutes=schoolBranch::orderBy('id', 'DESC')->get();
         $data_table_render = DataTables::of($applyInstitutes)
         ->addColumn('Status',function ($row){
 
@@ -81,7 +81,7 @@ class UserController extends Controller
         }else{
             $Users=User::where('bId', $id)->with(['roles'=>function($query){
                 $query->whereNotIn('status', [1])->where('bId', Auth::guard('web')->user()->bId);
-            }])->get();
+            }, 'ClassTeacher'])->get();
         }
 
         $data_table_render = DataTables::of($Users)
@@ -102,6 +102,28 @@ class UserController extends Controller
                               }
 
                           })
+            ->editColumn('class', function($Users)
+            {
+
+                foreach ($Users->ClassTeacher as $clsTeacher) {
+                return $clsTeacher->Section->classes->className;
+                }
+
+            })
+            ->editColumn('section', function($Users)
+            {
+                foreach ($Users->ClassTeacher as $clsTeacher) {
+                    return $clsTeacher->Section->sectionName;
+                    }
+
+            })
+            ->editColumn('shift', function($Users)
+            {
+                foreach ($Users->ClassTeacher as $clsTeacher) {
+                    return $clsTeacher->Section->shift;
+                    }
+
+            })
             ->rawColumns(['hash','action'])
             ->make(true);
         return $data_table_render;
@@ -203,11 +225,37 @@ class UserController extends Controller
             200
         ]);
     }
+    public function editRolePermission(Request $request){
+       $id= $request->id;
+
+        $roles=Role::where('id', $id)->with('permissions')->get();
+        return response()->json([
+            "roles"=>$roles,
+            "success" => "stored",
+                200,
+            ]);
+    }
+    public function updateRolePermission(Request $request){
+        $role=Role::find($request->roleId);
+        $role->name=$request->roleName;
+        $role->bId=Auth::guard('web')->user()->bId;
+        $role->save();
+       $role->syncPermissions($request->permissions);
+        // $prm= new Permission();
+        // $prm->name=$request->permissionName;
+        // $prm->save();
+        return response()->json([
+            "success" => "updated",
+            200
+        ]);
+
+    }
 
     public function createSchoolBranch()
     {
 
         return view('backend.pages.userModule.createSchoolBranch');
+
     }
     public function addSchoolBranch(Request $request)
     {
@@ -284,22 +332,6 @@ class UserController extends Controller
     }
 }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -343,21 +375,6 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        // $this->validate($request,[
-        //         'name'=>'required',
-        //         'email'=>'',
-        //         'mobile'=>'',
-        //         'designation'=>'',
-        //         'joinDate'=>'',
-        //         'address'=>'string',
-        //         'skill'=>'',
-        //         'education'=>'string',
-        //         'biography'=>'',
-        //         'resume'=>'',
-        //         'certificate'=>'',
-        //         'bId'=>'',
-        //         ]);
-        // 2. data update
         $userss = User::find($id);
         $userss->name = $request->name;
         $userss->email = $request->email;
@@ -409,15 +426,15 @@ class UserController extends Controller
                 $users->save();
                 Session::flash('success','You Have Successfully Changed The Password');
                 Auth::logout();
-                return redirect()->route('login'); 
+                return redirect()->route('login');
                }else{
                 Session::flash('error','New Password Cannot Be The Same As Old Pass');
                 return redirect()->back();
-               }  
+               }
         }else{
             Session::flash('error','Old Password Does Not Matched');
-            return redirect()->back();      
-        }   
+            return redirect()->back();
+        }
     }
 
     /**
@@ -430,12 +447,20 @@ class UserController extends Controller
     {
         //
     }
+
     public function updateRole(Request $request, $id)
     {
         $user=User::findorFail($id);
         // get request role name
-        $role=Role::findOrFail($request->role);
-        if($role->name=='Class Teacher'){
+       // $role=Role::findOrFail($request->role);
+       $roleId=$request->role;
+       $roleHasClassTeacher=Role::with('permissions')->where('bId', '=', Auth::guard('web')->user()->bId)
+        ->whereHas('permissions', function($query) use ($roleId) {
+            $query->where('role_id', $roleId)->where('permission_id',106);
+        })
+          ->count('id');
+
+        if($roleHasClassTeacher>0){
 
             DB::table('class_teachers')
             ->updateOrInsert(

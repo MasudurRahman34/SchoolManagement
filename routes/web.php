@@ -170,6 +170,9 @@ Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'na
     Route::post('/add/userAndRole', 'UserController@addUserAndRole')->name('addUserAndRole');
     Route::get('/createRole', 'UserController@createRole')->name('createRole');
     Route::post('/addRole', 'UserController@addRole')->name('addRole');
+    Route::post('/updateRolePermission', 'UserController@updateRolePermission')->name('updateRolePermission');
+    Route::get('/editRolePermission', 'UserController@editRolePermission')->name('editRolePermission');
+
 
 
 });
