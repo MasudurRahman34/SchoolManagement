@@ -379,22 +379,6 @@ if(studentId>0){
         });
       });
 
-     /* function validate(){
-
-        if(document.form.sectionId2.value==""){
-        alert ( "Please Select section !");
-        return false;
-        }
-        if(document.form.feeId2.value==""){
-        alert ( "Please Select A Fee !");
-        return false;
-        }
-        if(document.form.month2.value==""){
-        alert ( "Please Select A Month !");
-        return false;
-        }
-
-    }*/
     </script>
     @endsection
 

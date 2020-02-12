@@ -83,8 +83,19 @@
            var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    'copy', 'csv', 'excel', 'pdf',
+                    {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                            }
+                    },
+                    'colvis',
                 ],
+                columnDefs: [ {
+                    // targets: -1,
+                    visible: false
+                } ],
                 processing:true,
                 serverSide:true,
                 ajax:"{{url('schoolarship/show')}}",
@@ -96,12 +107,12 @@
                 ]
             });
 
-        
+
         function deleteScholarship(id) {
             var url = "{{url('/schoolarship/delete')}}";
             deleteAttribute(url,id);
         }
-        
+
         function editScholarship(id) {
             var editId=id;
             setUpdateProperty(editId, "Scholarship");

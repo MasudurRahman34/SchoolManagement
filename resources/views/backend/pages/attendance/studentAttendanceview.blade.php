@@ -4,7 +4,7 @@
     <div class="row ">
         <div class="col-md-3">
         <div class="tile p-0">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2">
               <label class="control-label mt-3">Month</label><br>
               @foreach (App\model\month::orderBy('id', 'ASC')->get() as $month)
                 <div class="custom-control month-radio custom-control-inline">
@@ -24,7 +24,7 @@
 
 
 
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="tile">
                 <h3 class=" row justify-content-md-center">Attendance Information</h3>
                     <div class="tile-body">
@@ -44,17 +44,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="tile">
+                    <h3 class="tile-title">Attendance Information in Pie Chart</h3>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+                    </div>
+                </div>
+            </div>
+
             </div>
             <div class="row">
 
-              <div class="col-md-5">
-                  <div class="tile">
-                      <h3 class="tile-title">Attendance Information in Pie Chart</h3>
-                      <div class="embed-responsive embed-responsive-16by9">
-                          <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
-                      </div>
-                  </div>
-              </div>
+
           </div>
 
       <div class="clearix"></div>

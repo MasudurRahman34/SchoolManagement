@@ -12,25 +12,25 @@
                 </div>
                 <div class="tile p-0">
                   <ul class="nav flex-column nav-tabs user-tabs">
-                    <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{route('mystudent.showProfile', $students->id)}}" data-toggle="tab">Timeline</a></li>
 
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>
                 </div>
               </div>
-    
+
     <div class="col-md-9">
       <div class="">
         <div class="tile">
           <div class="tile-body">
-            
-              <h2>Student Information</h2>
+
+              <h2>Student Informations</h2>
               @if(count($errors)>0)
                 <div class="alert alert-danger" role="alert">
                   <ul>
                      @foreach($errors->all() as $error)
                       <li>{{ $error }}</li>
-                     @endforeach 
+                     @endforeach
                   </ul>
                  </div>
               @endif
@@ -54,7 +54,7 @@
                   <a class="nav-link" href="#menu2">Other Information</a>
                 </li>
               </ul>
-            
+
               <!-- Tab panes -->
               <div class="tab-content">
                 <div id="home" class="container tab-pane active"><br>
@@ -74,7 +74,7 @@
                               id="studentname" value="{{$students->firstName}}">
                           </div>
                           <div class="form group col-md-3">
-                            <label class="control-label">Father's Name</label>
+                            <label class="control-label">Fathers Name</label>
                             <input class="form-control" type="text" placeholder="Enter father name" name="fatherName"
                               id="studentname" value="{{$students->fatherName}}">
                           </div>
@@ -93,7 +93,7 @@
                               </label>
                             </div>
                           </div>
-                          
+
                           <div class="form-group col-md-3">
                             <label class=" control-label">Date of Birth*</label>
                             <div class="">
@@ -104,7 +104,7 @@
                             <label class="control-label">Religion</label>
                             <input class="form-control" type="text" name="religion" id="religion" value="{{$students->religion}}">
                           </div>
-                          
+
                           <div class="form group col-md-3">
                             <label class="control-label">Email</label>
                             <input class="form-control" type="email" placeholder="Enter Email Address" id="email" name="email" value="{{$students->email}}" readonly>
@@ -121,7 +121,7 @@
                           <!-- single section-->
                           <div class="form-group col-md-3">
                             <label for="exampleFormControlSelect1">Blood Group</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="blood" id="bloodgroup">               
+                            <select class="form-control" id="exampleFormControlSelect1" name="blood" id="bloodgroup">
                                 <option value="0+" {{ $students->blood=='O+'?'selected':'' }}>O+</option>
                                 <option value="0-" {{ $students->blood=='0-'?'selected':'' }}>O-</option>
                                 <option value="A-" {{ $students->blood=='A-'?'selected':'' }}>A-</option>
@@ -133,7 +133,7 @@
                             </select>
                           </div>
                           <!--End primary dev section-->
-                            
+
                             <div class="form-group col-md-3">
                                 <lable class="">Change Image</lable>
                                 <input type="file" name="image" id="image" class="form-control btn btn-light">
@@ -141,7 +141,7 @@
                             <div class="form-group col-md-3">
                                 <lable class="">Preview Image</lable>
                                 <img id="image_preview" src="" style="width: 180px;height: 180px">
-                            </div>   
+                            </div>
                       </div>
                       <div class="tile-footer">
                       <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Profile</button>
@@ -180,12 +180,12 @@
                               id="mobileno" value="{{$students->mobile}}">
                           </div>
                           <!-- single section-->
-                          <!--End primary dev section-->  
+                          <!--End primary dev section-->
                       </div>
                         <div class="tile-footer">
                           <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update Information</button>
                         </div>
-                    </form>   
+                    </form>
           </div>
         </div>
       </div>
@@ -205,7 +205,7 @@
           $(this).tab('show');
         });
       });
-       
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

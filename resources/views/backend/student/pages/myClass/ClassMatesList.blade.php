@@ -30,18 +30,23 @@
       <div class="clearix"></div>
     @endsection
     @section('script')
-       @include('backend.student.partials.js.datatable'); 
-       
+       @include('backend.student.partials.js.datatable');
+
     <script type="text/javascript">
-    
+
     $(function(){
     $(document).ready(function () {
-        
+
       var table=$('#sampleTable').DataTable({
             dom: 'lBfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'pdf','print'
+
             ],
+            columnDefs: [ {
+                // targets: -1,
+                visible: false
+            } ],
              processing:true,
              serverSide:true,
              ajax:"{{url('student/class/classmates/show')}}",
@@ -53,10 +58,10 @@
                  { data: 'mobile', name: 'mobile' },
                  { data: 'email', name: 'email' },
                  { data: 'fatherName', name: 'fatherName'},
-                 { data: 'motherName', name: 'motherName'},   
+                 { data: 'motherName', name: 'motherName'},
              ]
          });
-    
+
   });
 });
   </script>

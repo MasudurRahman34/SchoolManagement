@@ -22,13 +22,13 @@
             <section class="invoice m-4" id="print_div">
               <div class="row">
                 <div class="col-6">
-                  <h2 style="color: black;" class="page-header text-drak"><i class="fa fa-graduation-cap"></i>{{$students->schoolBranch->nameOfTheInstitution}}</h2>
+                  <h2 style="color: black;" class="page-header text-drak"><i class="fa fa-graduation-cap"></i>  {{$students->schoolBranch->nameOfTheInstitution}}</h2>
                 </div>
                 <div class="col-4">
 
                 </div>
                 <div class="col-2">
-                    <h5 class="text-right">Date:{{date("Y-m-d")}}</h5>
+                    <h5 class="text-right">Date: {{date("Y-m-d")}}</h5>
                 </div>
               </div>
               <div class="row invoice-info">
@@ -38,7 +38,7 @@
                 <div class="col-4">To
                   <address><strong>{{$students->firstName }} {{$students->lastName}}</strong><br>Class: {{$students->Section->classes->className}} ({{$students->group}})<br>Roll: {{$students->roll}}<br>Section: {{$students->Section->sectionName}}<br>Session: {{$students->Section->sessionYear->sessionYear}}<br>Blood Group: {{$students->blood}}</address>
                 </div>
-                <div class="col-4">Student ID:{{$students->studentId }}<br><b>Type : {{$students->type}}</b><br>Scholarship: @if($students->schoolarshipId==0)
+                <div class="col-4">Student ID: {{$students->studentId }}<br>Mobile: {{$students->mobile}}<br>Password: {{$students->readablePassword}}<br><b>Type : {{$students->type}}</b><br>Scholarship: @if($students->schoolarshipId==0)
                     {{'No'}}
                 @else
                 @foreach($students->studentScholarship as $scholarship) {{$scholarship->scholarship->name}} {{$scholarship->discount}}% on {{$scholarship->Fee->name}} @endforeach
@@ -69,8 +69,8 @@
                     @endforeach
                     </tbody>
                   </table>
-                  <h3 class="text-center m-5">Thank You For Your Admission !! <br></h3>
-                    <a class="ml-auto" href="http://www.sms.quadinfoltd.com/">http://www.sms.quadinfoltd.com/</a>
+                  <h3 class="text-center m-5">Thank You For Your Admission<br></h3>
+                    <a class="mx-auto" href="http://www.sms.quadinfoltd.com/">www.sms.quadinfoltd.com</a>
                 </div>
               </div>
 

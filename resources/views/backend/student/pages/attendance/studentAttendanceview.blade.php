@@ -23,7 +23,7 @@
 
 
 
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="tile">
                 <h3 class=" row justify-content-md-center">Attendance Information </h3>
                     <div class="tile-body">
@@ -43,17 +43,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="tile">
+                    <h3 class="tile-title">Attendance Information in Pie Chart</h3>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+                    </div>
+                </div>
+            </div>
+
             </div>
             <div class="row">
 
-              <div class="col-md-5">
-                  <div class="tile">
-                      <h3 class="tile-title">Attendance Information in Pie Chart</h3>
-                      <div class="embed-responsive embed-responsive-16by9">
-                          <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
-                      </div>
-                  </div>
-              </div>
+
           </div>
 
       <div class="clearix"></div>
@@ -74,8 +76,14 @@
       var table=$('#sampleTable').DataTable({
             dom: 'lBfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'pdf','print'
+
+
             ],
+            columnDefs: [ {
+                // targets: -1,
+                visible: false
+            } ],
              processing:true,
              serverSide:true,
              paging : true,

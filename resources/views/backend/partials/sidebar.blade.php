@@ -155,19 +155,15 @@
             <ul class="treeview-menu">
 
               <li><a class="treeview-item" href="{{route('feecollection.index') }}"><i class="icon fa fa-angle-right"></i> Section Wise Fee</a></li>
-              <li><a class="treeview-item" href="{{route('individualFee.individualCollection') }}"><i class="icon fa fa-angle-right"></i>Individual Fee</a></li>
-              <li><a class="treeview-item" href="{{route('monthly.index') }}"><i class="icon fa fa-angle-right"></i>Advance Fee Collection</a></li>
+           {{--     <li><a class="treeview-item" href="{{route('individualFee.individualCollection') }}"><i class="icon fa fa-angle-right"></i>Individual Fee</a></li>  --}}
+              <li><a class="treeview-item" href="{{route('monthly.index') }}"><i class="icon fa fa-angle-right"></i>Individual Fee Collection</a></li>
               <li><a class="treeview-item" href="{{route('student.feeDetails') }}"><i class="icon fa fa-angle-right"></i> Student Fee Details</a></li>
               <li><a class="treeview-item" href="{{route('feemanagementreport.index') }}"><i class="icon fa fa-angle-right"></i>Monthly Section Wise Report</a></li>
 
             </ul>
           </li>
           @endcan
-
-
-
           {{-- end admin sidebar --}}
-
           {{-- student side bar --}}
             @else
 

@@ -25,19 +25,24 @@
       <div class="clearix"></div>
     @endsection
     @section('script')
-       @include('backend.student.partials.js.datatable'); 
-       
+       @include('backend.student.partials.js.datatable');
+
     <script src="{{ asset('admin/js/plugins/chart.js') }} "></script>
     <script type="text/javascript">
-    
+
     $(function(){
     $(document).ready(function () {
-        
+
       var table=$('#sampleTable').DataTable({
             dom: 'lBfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'pdf','print'
+
             ],
+            columnDefs: [ {
+                // targets: -1,
+                visible: false
+            } ],
              processing:true,
              serverSide:true,
              ajax:"{{url('student/teacher/list/show')}}",
@@ -49,12 +54,12 @@
              ]
          });
         // table.destroy();
-         
+
         // $.ajax({
         //     type: "get",
         //     url: "{{url('/student/attendance/attendancePercentage/')}}"+"/"+month,
         //     data: "data",
-           
+
         //     success: function (response) {
         //         console.log(response);
         //         var absent=100- response;
@@ -71,17 +76,17 @@
         //           highlight: "#FF5A5E",
         //           label: "Absent"
         //       }
-              
+
         //   ]
-  
-  
-  
+
+
+
         //   var ctxp = $("#pieChartDemo").get(0).getContext("2d");
         //   var pieChart = new Chart(ctxp).Pie(pdata);
-                
+
         //     }
         // });
-    
+
   });
 });
   </script>

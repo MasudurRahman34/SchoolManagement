@@ -170,8 +170,9 @@
                 if(idChecked.length>0){
                     return roll=true;
                 }else{
-                    alert('missiion');
                     roll= false;
+                    alert('missing');
+
                 }return roll;
 
               });

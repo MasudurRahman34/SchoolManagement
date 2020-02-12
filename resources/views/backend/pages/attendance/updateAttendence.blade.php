@@ -94,7 +94,7 @@
                             </tbody>
                         </table>
                         </div>
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-plus-square" aria-hidden="true"></i> Update Attendence</button>
+                        <button class="btn btn-primary float-right" type="submit"><i class="fa fa-plus-square" aria-hidden="true"></i> Update Attendence</button>
                     </form>
                 </div>
             </div>

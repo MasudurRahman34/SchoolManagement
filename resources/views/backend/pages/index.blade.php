@@ -243,8 +243,10 @@
          var table=$('#sampleTable').DataTable({
             dom: 'lBfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel', 'pdf','print'
+
             ],
+
              processing:true,
              serverSide:true,
              ajax:"{{url('/api/search/classwishAttentage')}}",
@@ -276,8 +278,10 @@
             var table= $('#sampleTable1').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    'copy', 'csv', 'excel', 'pdf','print'
+
                 ],
+
                 processing:true,
                 serverSide:true,
                 pagin:true,

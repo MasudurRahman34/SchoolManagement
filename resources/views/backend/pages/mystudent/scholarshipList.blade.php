@@ -94,9 +94,9 @@
                     {data: 'DT_RowIndex',name: 'DT_RowIndex'},
                     //{ data: 'studentId', name: 'studentId' },
                     { data: 'roll', name: 'roll' },
-                    { data: 'className', name: 'sections.classes' },
-                    { data: 'sectionName', name: 'sections.sectionName'},
-                    { data: 'shift', name: 'sections.shift'},
+                    { data: 'className', name: 'className' },
+                    { data: 'sectionName', name: 'sectionName'},
+                    { data: 'shift', name: 'shift'},
                     { data: 'firstName', name: 'firstName' },
                     { data: 'sessionYear', name: 'sessionYear' },
 
@@ -118,5 +118,4 @@
     }
 
     </script>
-
     @endsection

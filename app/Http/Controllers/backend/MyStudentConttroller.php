@@ -306,8 +306,9 @@ $bId=Auth::guard('web')->user()->bId;
             $std->image = $filename;
         }
         $std->save();
-        Session::flash('success','Successfully Student Profile Updated');
-        return redirect()->back();
+       // Session::flash('success','Successfully Student Profile Updated');
+        //return redirect()->back();
+        return view('backend.pages.mystudent.myStudentProfile',['students' => $std]);
     }
 
     /**

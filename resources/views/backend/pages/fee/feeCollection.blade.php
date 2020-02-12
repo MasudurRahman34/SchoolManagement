@@ -22,7 +22,7 @@
     </style>
 <div class="row justify-content-md-center">
     <div class="clearix"></div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="tile">
                 <div class="tile-body">
                 <div class="row">
@@ -105,7 +105,7 @@
 <div class="clearix"></div>
 
 <div class="row justify-content-md-center">
-    <div class="col-md-9 ">
+    <div class="col-md-10 ">
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>
@@ -146,7 +146,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
+          <h4 class="modal-title">Fee Collection</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
 
@@ -181,7 +181,7 @@
                 if(idChecked.length>0){
                     return roll=true;
                 }else{
-                    alert('missiion');
+                    alert('missing');
                     roll= false;
                 }return roll;
 
@@ -211,7 +211,7 @@
                 url:url,
                 data: data,
                 success: function (data) {
-                    console.log(data);
+                  {{--    console.log(data);  --}}
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
                         option+=("<option value='"+element.id+"'>"+element.sectionName+"</option>");
@@ -224,7 +224,7 @@
                 url:'/api/search/classfeelist',
                 data: data,
                 success: function (data) {
-                    console.log(data);
+                    {{--  console.log(data);  --}}
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
                         option+=("<option value='"+element.id+"'>"+element.name+"</option>");
@@ -240,7 +240,7 @@
     $('.feeChange').change(function (e) {
         e.preventDefault();
         var feeId= $("#feeId").val();
-        console.log(feeId);
+        {{--  console.log(feeId);  --}}
         var url='/api/search/feeamount';
         var data= {
                 'feeId' : feeId,
@@ -251,7 +251,7 @@
             url:url,
             data: data,
             success: function (data) {
-                console.log(data);
+               // console.log(data);
             //var amount = data;
                 //$('#amount').text();
                 $('#amount').val(data);
@@ -271,7 +271,7 @@
         var sessionYear=$("#sessionYear").val();
         $("#sessionYear2").attr('value',sessionYear);
 
-        console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
+       // console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
 
         if(sectionId>0){
 
@@ -287,7 +287,8 @@
               success: function (response) {
 
               if(response.dueStudent){
-                    console.log('if due student');
+                  //  console.log('if due student');
+
 
 
                         //Un-Paid Student
@@ -319,7 +320,7 @@
                         $("#paid").click(function(e){
 
                             //for lode paid student list
-                            console.log('else paid student');
+                          //  console.log('else paid student');
                             $('#tblHidden').attr('hidden',false);
                             $('#btnFee').attr('disabled',false);
                             var tr='';
@@ -341,9 +342,10 @@
 
                     });
                 }else{
+                    if(response.length>0){
 
-                    console.log('else new entry');
-                    console.log(response);
+                   // console.log('else new entry');
+                  //  console.log(response);
                     //newly add  fee data
                     $('#tblHidden').attr('hidden',false);
                     $('#btnFee').attr('disabled',false);
@@ -360,7 +362,7 @@
                     });
                     $('tbody').html(tr);
                     checkedAtlestOne();
-
+                        }//End if
                     }
                 }
             });
@@ -372,9 +374,6 @@
         });
 
     });
-
-
-
 
 //print button in table
     $('#doPrint').on("click", function () {
@@ -401,18 +400,6 @@
             afterPrint: null            // function called before iframe is removed
         });
       });
-
-     // var divContents = document.getElementById("btn").innerHTML;
-      //var a = window.open('', '', 'height=500, width=500');
-      //a.document.write('<html>');
-      //a.document.write('<body > <h1>Div contents are <br>');
-      //a.document.write(divContents);
-      //a.document.write('</body></html>');
-      //a.document.close();
-      //a.focus();
-      //a.print();
-      //a.close();
-
     </script>
     @endsection
 

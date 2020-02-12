@@ -77,8 +77,19 @@
         var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                    'copy', 'csv', 'excel', 'pdf',
+                    {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                            }
+                    },
+                    'colvis',
                 ],
+                columnDefs: [ {
+                    // targets: -1,
+                    visible: false
+                } ],
                 processing:true,
                 serverSide:true,
                 ajax:"{{url('group/show')}}",

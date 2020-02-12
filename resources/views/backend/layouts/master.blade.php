@@ -16,6 +16,6 @@
         </main>
 
         @include ('backend.partials.js.script')
-        @yield('script');
+        @yield('script')
     </body>
 </html>

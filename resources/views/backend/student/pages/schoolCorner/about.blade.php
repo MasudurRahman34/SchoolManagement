@@ -11,11 +11,11 @@
               <div class="row">
                 <div class="col-md-7 col-sm-12"><a class="navbar-brand" href="#"><img style="height:15%; width:15%;" src="{{asset('student/images/sirclelogo1.png')}}"></a></div>
                 <div class="col-md-5 mt-5">
-              
-            
+
+
               <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                   <!-- <ul class="nav navbar-nav">
-                     
+
                     </ul> -->
                 <ul class=" nav navbar-nav ml-auto">
                   <li class="nav-item {{Request::is('school/corner') ? 'active' : ''}}">
@@ -47,7 +47,7 @@
               </div>
     </div>
       <!-- Will be applied progress bar -->
-      
+
 
       <div class="row">
         <div class="col-md-12">
@@ -86,11 +86,11 @@
           </div>
         </div>
              </div>
-          </div> 
+          </div>
       </div>
     </div>
 
-   
+
     <div class="tile">
       <h2 class="text-primary text-center">Let's Go To See More About</h2><br>
        <div class="row">
@@ -158,7 +158,7 @@
                     <div class="card">
                       <div class="card-body text-center mt-4">
                         <h4 class="card-title">Importatnt talk</h4>
-                        <p class="card-text">Stay positive and happy. Work hard and don't give up hope. Be open to criticism and keep learning. Surround yourself with happy, warm and genuine people.</p>
+                        <p class="card-text">Stay positive and happy. Work hard and dont give up hope. Be open to criticism and keep learning. Surround yourself with happy, warm and genuine people.</p>
                         <ul class="list-inline">
                             <li class="list-inline-item">
                                 <a class="social-icon text-xs-center" target="_blank" href="#">
@@ -386,8 +386,8 @@
 <!-- Footer -->
 </div>
 
-      
-     
+
+
     @endsection
     @section('script')
       {{-- @include('backend.partials.js.datatable'); --}}

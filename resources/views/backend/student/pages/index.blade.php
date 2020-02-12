@@ -125,9 +125,9 @@
                                 <thead>
                                     <tr>
                                         <th></th>
+                                        <th>Date</th>
                                         <th>StudentId</th>
                                         <th>attendance</th>
-                                        <th>Date</th>
                                         <th>Last Attendance</th>
                                     </tr>
                                 </thead>
@@ -316,9 +316,9 @@
              ajax:"{{url('/student/attendance/show/')}}"+"/"+month,
              columns:[
                  { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                 { data: 'created_at1', name: 'created_at1' },
                  { data: 'studentId', name: 'studentId' },
                  { data: 'attendence', name: 'attendence' },
-                 { data: 'created_at1', name: 'created_at1' },
                  { data: 'created_at', name: 'created_at' },
              ]
          });

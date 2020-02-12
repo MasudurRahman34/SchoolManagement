@@ -334,15 +334,18 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespac
 
 });
 
-
  //Class Teacher option
  Route::group(['middleware' => ['auth','role_or_permission:Class Teacher']], function () {
 
-
+    //attendance
     Route::get('/myclass/attendance','backend\ClassTeacherController@myclassattendance')->name('myclass.attendance');
     Route::post('/myclass/attendance/store','backend\ClassTeacherController@storeAttendence')->name('myclass.store');
     Route::get('/student/attendance/edit/{sectionId}','backend\ClassTeacherController@edit')->name('myclass.edit');
     Route::post('/myclass/attendance/update','backend\ClassTeacherController@update')->name('myclass.update');
+
+    //feecollection
+
+
 });
 
 //Marks Distribution
@@ -367,9 +370,12 @@ Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')-
 // });
 //
 
+//Notification
+Route::get('notification/index','backend\notificationController@index')->name('notification.index');
+
 
 //permission and role
 
 
 
-//misuk 06/01/2020
+//misuk 02/04/2020

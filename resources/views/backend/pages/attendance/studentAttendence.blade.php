@@ -98,14 +98,15 @@
 
                             </tbody>
                         </table>
-                        </div>
-                        <button class="btn btn-primary " type="submit" id="btnAttendance" disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Attendance</button>
+
+                        <button class="btn btn-primary float-right" type="submit" id="btnAttendance" disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Attendance</button>
+                    </div>
                     </form>
                 </div>
             </div>
         </div>
         </div>
-    </div>
+    {{--  </div>  --}}
     <!--End Row-->
     <div class="clearix"></div>
 @endsection
@@ -141,6 +142,7 @@
               }
 
           }else{
+              if(response.length>0){
             $('#tblHidden').attr('hidden',false);
             $('#btnAttendance').attr('disabled',false);
 
@@ -160,6 +162,7 @@
            });
 
             $('tbody').html(tr);
+            }//end if
           }
         }
         });

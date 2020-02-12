@@ -89,27 +89,23 @@
                           <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Father name
-                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
+                              <p class="list-group justify-content-between align-items-center"> {{$students->fatherName}} </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Mother Name
-                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                              Father Mobile No
-                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                              father/mother NID
-                              <p class="list-group justify-content-between align-items-center"> Not complete yet </p>
+                              <p class="list-group justify-content-between align-items-center"> {{$students->motherName}} </p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Father occopation
-                              <p class="list-group justify-content-between align-items-center"> Not complete yet</p>
+                              <p class="list-group justify-content-between align-items-center"> {{$students->fatherOccupation}}</p>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                               Mother occopation
-                              <p class="list-group justify-content-between align-items-center"> Not complete yet</p>
+                              <p class="list-group justify-content-between align-items-center"> {{$students->motherOccupation}}</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Religion
+                             <p class="list-group justify-content-between align-items-center"> {{$students->religion}}</p>
                             </li>
                           </ul>
                         </div>
