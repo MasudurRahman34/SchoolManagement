@@ -19,11 +19,16 @@ class CreateFilesTable extends Migration
             $table->string('image')->nullable();
             $table->unsignedBigInteger('userId')->nullable();
             $table->unsignedBigInteger('studentId')->nullable();
+            $table->unsignedBigInteger('classId')->nullable();
+            $table->string('className')->nullable();
+            $table->string('fileName')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('studentId')->references('id')->on('students')
                 ->onDelete('cascade');
             $table->foreign('userId')->references('id')->on('users')
+                ->onDelete('cascade');
+            $table->foreign('classId')->references('id')->on('classes')
                 ->onDelete('cascade');
         });
     }

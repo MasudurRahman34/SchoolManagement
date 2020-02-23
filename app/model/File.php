@@ -15,6 +15,7 @@ class File extends Model
     public function users(){
         return $this->belongsTo('App\User','userId');
     }
+    
     public function getUrlPath()
         {
             return Storage::url($this->path);

@@ -225,6 +225,7 @@ class StudentController extends Controller
         if(Hash::check($request->old_password,$hashedPassword)){
                 if(! Hash::check($request['password'],$hashedPassword)){
                 $students = Student::find(Auth::guard('student')->user()->id);
+                $students-> readablePassword = $request['password'];
                 $students->password = Hash::make($request->password);
                 $students->save();
                 Session::flash('success','You Have Successfully Changed The Password');

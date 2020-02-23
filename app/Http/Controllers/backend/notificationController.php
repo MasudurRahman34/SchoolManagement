@@ -17,6 +17,20 @@ class notificationController extends Controller
     {
         return view('backend.pages.notification.notification');
     }
+    
+    public function notificationBoard()
+    {
+        return view('backend.pages.notification.notificationBoard');
+    }
+    
+    public function notificationEmailSms()
+    {
+        return view('backend.pages.notification.sendEmailSms');
+    }
+
+    public function emailSmsLog(){
+        return view('backend.pages.notification.emailSmsLog');
+    }
 
     /**
      * Show the form for creating a new resource.

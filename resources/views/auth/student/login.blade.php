@@ -27,7 +27,7 @@
                     <div class="input-group mb-2 mr-sm-2">
                       <div class="input-group-prepend">
                       </div>
-                      <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     </div>
 
 

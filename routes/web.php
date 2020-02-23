@@ -174,6 +174,14 @@ Route::post('/addPermission', 'backend\UserController@addPermission')->name('add
     Route::post('/user/updateRole//{id?}','UserController@updateRole')->name('updateRole');
 });
 
+//user file method
+    Route::get('/file/store','backend\file\FileController@applyFile')->name('file.apply');
+    Route::post('/file/store/document','backend\file\FileController@fileStore')->name('file.store');
+    Route::get('/file/datatable/','backend\file\FileController@fileData');
+    //Route::get('/download/file/{id}','backend\file\FileController@bookDownload')->name('book.download');
+    
+
+
 Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'namespace'=>'backend'], function () {
     Route::get('/create/userAndRole', 'UserController@createUserAndRole')->name('createUserAndRole');
     Route::get('/userAndRole/list', 'UserController@UserAndRoleList')->name('UserAndRole.list');
@@ -371,8 +379,10 @@ Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')-
 //
 
 //Notification
-Route::get('notification/index','backend\notificationController@index')->name('notification.index');
-
+Route::get('/notification/index','backend\notificationController@index')->name('notification.index');
+Route::get('/notification/notificationBoard','backend\notificationController@notificationBoard')->name('notification.board');
+Route::get('/notification/emailSms','backend\notificationController@notificationEmailSms')->name('notification.emailSms');
+Route::get('/notification/emailSmsLog','backend\notificationController@emailSmsLog')->name('notification.emailSmsLog');
 
 //permission and role
 

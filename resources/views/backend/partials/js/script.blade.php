@@ -7,6 +7,7 @@
     <script src="{{ asset('admin/js/plugins/bootstrap-notify.min.js') }} "></script>
     <script src="{{ asset('admin/js/helper.js') }} "></script>
     <script src="{{ asset('admin/js/printThis.js') }} "></script>
+    <script src="{{ asset('admin/js/plugins/bootstrap-datepicker.min.js') }} "></script>
     {{-- <script src="{{ asset('admin/js/monthpicker.min.js') }} "></script> --}}
 
 

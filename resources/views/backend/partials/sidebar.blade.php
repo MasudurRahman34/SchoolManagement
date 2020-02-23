@@ -163,6 +163,29 @@
             </ul>
           </li>
           @endcan
+          @can('Scholarship')
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Scholarship Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('scholarship.management')}}"><i class="icon fa fa-angle-right"></i>Schoolarship</a></li>
+            </ul>
+          </li>
+          @endcan
+
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Book</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{url('file/store')}}"><i class="icon fa fa-angle-right"></i>File Document</a></li>
+            </ul>
+          </li>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Notification</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+            <li><a class="treeview-item" href="{{url('notification/notificationBoard')}}"><i class="icon fa fa-angle-right"></i>Notice Board</a></li>
+              <li><a class="treeview-item" href="{{url('notification/index')}}"><i class="icon fa fa-angle-right"></i>Send Message</a></li>
+              <li><a class="treeview-item" href="{{url('notification/emailSms')}}"><i class="icon fa fa-angle-right"></i>Send Email / SMS</a></li>
+              <li><a class="treeview-item" href="{{url('notification/emailSmsLog')}}"><i class="icon fa fa-angle-right"></i>Email / SMS Log</a></li>
+            </ul>
+          </li>
+
+
           {{-- end admin sidebar --}}
           {{-- student side bar --}}
             @else
