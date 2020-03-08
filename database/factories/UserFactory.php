@@ -95,8 +95,8 @@ $factory->define(Student::class, function (Faker $faker) {
         'roll' => rand(),
         'gender' =>  $faker->randomElement(['Male','Female']),
         'religion' => $faker->randomElement(['Islam','Hinduism','Buddhism','Christianity','Atheism']),
-        'bId' =>30,
-        'sectionId' =>41,
+        'bId' =>1,
+        'sectionId' =>4,
         'group' => $faker->randomElement(['General','Science','Arts','Commerce']),
         'schoolarshipId' =>0,
         'type' =>  'regular',
@@ -112,7 +112,7 @@ $factory->define(studentoptionalsubject::class, function (Faker $faker) {
         'studentId' => $numbersettwo,
         'subjectId' => $numbersetone,
         'optional' => rand(0,1),
-        'bId' => rand(0,30),
+        'bId' => rand(1,1),
 
 
     ];

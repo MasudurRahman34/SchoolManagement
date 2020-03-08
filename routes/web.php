@@ -34,7 +34,7 @@ Route::get('api/search/absent', 'backend\api\apiController@absent')->name('api.a
 //student section api for datatable
 Route::get('/api/search/studentname', 'backend\api\apiController@studentname')->name('api.studentname');
 
-
+//for mark
 Route::post('/api/search/sectionbyclass', 'backend\api\apiController@sectionbyclass')->name('api.sectionbyclass');
 Route::post('/api/search/classsubject', 'backend\api\apiController@classsubject')->name('api.classsubject');
 
@@ -47,8 +47,6 @@ Route::get('/api/search/classfeelistMonthly', 'backend\api\apiController@classfe
 
 //find fee amount
 Route::get('/api/search/feeamount', 'backend\api\apiController@feeamount')->name('api.feeamount');
-
-
 
 Auth::routes();
 //api routes
@@ -165,8 +163,8 @@ Route::post('/addPermission', 'backend\UserController@addPermission')->name('add
 
 
 //userManagement
- //user profile Open
- Route::group(['namespace'=>'backend'], function () {
+//user profile Open
+Route::group(['namespace'=>'backend'], function () {
     Route::get('/show/Userprofile/{id?}', 'UserController@show')->name('user.show');
     Route::get('user/edit/profile/{id?}','UserController@edit')->name('userEditProfile');
     Route::post('user/update/profile/{id?}','UserController@update')->name('userUpdate.profile');
@@ -179,7 +177,7 @@ Route::post('/addPermission', 'backend\UserController@addPermission')->name('add
     Route::post('/file/store/document','backend\file\FileController@fileStore')->name('file.store');
     Route::get('/file/datatable/','backend\file\FileController@fileData');
     //Route::get('/download/file/{id}','backend\file\FileController@bookDownload')->name('book.download');
-    
+
 
 
 Route::group(['middleware' => ['auth','role_or_permission:User Management'], 'namespace'=>'backend'], function () {
@@ -262,8 +260,13 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], fun
     Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}/{classId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
     //Route::get('/feecollection/studentMonthly/paiedFee/{month}/{studentId}','backend\FeeCollectionController@studentMonthlyPaiedFee')->name('student.monthlyPaiedFee');
 
+    //payment
+    Route::get('/feecollection/student/payment','backend\FeeCollectionController@payment')->name('payment.index');
+    Route::get('/payment/details/show/{month}/{studentId}/{sessionYearId}/{classId}', 'backend\FeeCollectionController@paymentDetailsFee')->name('individualStudent.studentDue.fees');
+
     //Admin Report
     Route::get('/feemanagement/report/sectionwise','backend\FeeManagementReportController@index')->name('feemanagementreport.index');
+    Route::post('/feemanagement/report/sectionwise/feedetails','backend\FeeManagementReportController@feedetails')->name('report.feedetails');
     Route::get('/feemanagement/report/sectionwise/show/{month}/{sessionYearId}','backend\FeeManagementReportController@show')->name('detail.show');
 
 });
@@ -352,40 +355,70 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespac
     Route::post('/myclass/attendance/update','backend\ClassTeacherController@update')->name('myclass.update');
 
     //feecollection
+    Route::get('/myclass/feecollection','backend\ClassTeacherController@myclassfeecollection')->name('myclass.feecollection');
+    Route::post('/myclass/student/Data','backend\ClassTeacherController@student')->name('myclass.studentdata');
+    Route::post('/myclass/feecollection/store','backend\ClassTeacherController@storefeecollection')->name('myclass.feecollection.store');
+    Route::post('/myclass/update','backend\ClassTeacherController@updatefeecollection')->name('myclass.feecollection.update');
 
+    //student list
+    Route::get('/myclass/studentlist','backend\ClassTeacherController@studentlist')->name('myclass.studentlist');
 
 });
 
 //Marks Distribution
-Route::get('adminview/student/marksdistribution','backend\MarksDistributionController@index')->name('marks.index');
-Route::get('adminview/student/sectionwiselist/{classId}/{sectionId}', 'backend\MarksDistributionController@sectionwiselist')->name('mystudent.sectionwiselist');
-Route::post('adminview/student/studentData','backend\MarksDistributionController@studentData')->name('studentData.mark');
-Route::post('adminview/student/markstore','backend\MarksDistributionController@storemark')->name('store.mark');
+    Route::get('adminview/student/marksdistribution','backend\MarksDistributionController@index')->name('marks.index');
+    Route::get('adminview/student/sectionwiselist/{classId}/{sectionId}', 'backend\MarksDistributionController@sectionwiselist')->name('mystudent.sectionwiselist');
+    Route::post('adminview/student/studenlist','backend\MarksDistributionController@studenlist')->name('studentlist.mark');
+    Route::post('adminview/student/markstore','backend\MarksDistributionController@storemark')->name('store.mark');
+
+
+//Exam attendance
+    Route::get('adminview/student/examattendance','backend\MarksDistributionController@examattendanceindex')->name('examattendance.index');
+    Route::post('adminview/student/studentData','backend\MarksDistributionController@studentData')->name('studentData.mark');
+    Route::post('adminview/student/examattendance/store','backend\MarksDistributionController@examattendancestore')->name('examattendance.store');
+    Route::post('adminview/student/examattendance/update','backend\MarksDistributionController@examattendanceupdate')->name('examattendance.update');
+
+
+//Exam management
+    Route::get('/exam','backend\ExamController@index')->name('exam.index');
+    Route::post('/exam/store','backend\ExamController@store')->name('exam.store');
+    Route::get('/exam/show','backend\ExamController@show')->name('exam.show');
+    Route::get('/exam/edit/{id}','backend\ExamController@edit')->name('exam.edt');
+    Route::post('/exam/update/{id}','backend\ExamController@update')->name('exam.update');
+    Route::get('/exam/delete/{id}','backend\ExamController@destroy')->name('exam.delete');
+
+    //examlist
+    Route::post('/exam/search/examlist', 'backend\ExamController@examlist')->name('api.examlist');
+
 
 //schoolarship Management for admin
-Route::get('/schoolarship/Management','backend\ScholarshipController@index')->name('scholarship.management');
-Route::post('/schoolarship/store','backend\ScholarshipController@store')->name('scholarship.store');
-Route::get('/schoolarship/show','backend\ScholarshipController@show')->name('scholarship.show');
-Route::get('/schoolarship/edit/{id}','backend\ScholarshipController@edit')->name('scholarship.edt');
-Route::post('/schoolarship/update/{id}','backend\ScholarshipController@update')->name('scholarship.update');
-Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')->name('scholarship.delete');
+    Route::get('/schoolarship/Management','backend\ScholarshipController@index')->name('scholarship.management');
+    Route::post('/schoolarship/store','backend\ScholarshipController@store')->name('scholarship.store');
+    Route::get('/schoolarship/show','backend\ScholarshipController@show')->name('scholarship.show');
+    Route::get('/schoolarship/edit/{id}','backend\ScholarshipController@edit')->name('scholarship.edt');
+    Route::post('/schoolarship/update/{id}','backend\ScholarshipController@update')->name('scholarship.update');
+    Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')->name('scholarship.delete');
 
-    // Route::get('/class/edit/{id}','backend\ClassesController@edit')->name('class.edt');
-    // Route::post('/class/update/{id}','backend\ClassesController@update')->name('class.update');
-    // Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
-// Route::group(['middleware' => ['auth','role_or_permission:Scholarship'], 'namespace'=>'backend'], function () {
-
-// });
-//
 
 //Notification
-Route::get('/notification/index','backend\notificationController@index')->name('notification.index');
-Route::get('/notification/notificationBoard','backend\notificationController@notificationBoard')->name('notification.board');
-Route::get('/notification/emailSms','backend\notificationController@notificationEmailSms')->name('notification.emailSms');
-Route::get('/notification/emailSmsLog','backend\notificationController@emailSmsLog')->name('notification.emailSmsLog');
+    Route::get('/notification/index','backend\notificationController@index')->name('notification.index');
+    Route::get('/notification/notificationBoard','backend\notificationController@notificationBoard')->name('notification.board');
+    Route::get('/notification/emailSms','backend\notificationController@notificationEmailSms')->name('notification.emailSms');
+    Route::get('/notification/emailSmsLog','backend\notificationController@emailSmsLog')->name('notification.emailSmsLog');
+    Route::get('notification/index','backend\notificationController@index')->name('notification.index');
+
+//Grade management
+    Route::get('/grade','backend\GradeController@index')->name('grade.index');
+    Route::post('/grade/store','backend\GradeController@store')->name('grade.store');
+    Route::get('/grade/show','backend\GradeController@show')->name('grade.show');
+    Route::get('/grade/edit/{id}','backend\GradeController@edit')->name('grade.edt');
+    Route::post('/grade/update/{id}','backend\GradeController@update')->name('grade.update');
+    Route::get('/grade/delete/{id}','backend\GradeController@destroy')->name('grade.delete');
+
+    //gradelist
+    Route::post('/grade/search/gradelist', 'backend\GradeController@gradelist')->name('api.gradelist');
 
 //permission and role
 
 
-
-//misuk 02/04/2020
+//misuk 03/08/2020

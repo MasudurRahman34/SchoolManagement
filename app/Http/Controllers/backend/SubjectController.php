@@ -48,7 +48,7 @@ class SubjectController extends Controller
             return response()->json(["errors"=>$validator->errors(),400]);
         }else{
             $subject = new Subject();
-           
+
             $subject->subjectName = $request->subjectName;
             $subject->subjectCode = $request->subjectCode;
             $subject->classId = $request->classId;
@@ -75,7 +75,7 @@ class SubjectController extends Controller
     {
         $subjects=Subject::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
         $data_table_render = DataTables::of($subjects)
-          
+
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editSubject('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteSubject('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
@@ -113,7 +113,7 @@ class SubjectController extends Controller
             return response()->json(["errors"=>$validator->errors(),400]);
         }else{
             $subject = Subject::find($id);
-           
+
             $subject->subjectName = $request->subjectName;
             $subject->subjectCode = $request->subjectCode;
             $subject->classId = $request->classId;
@@ -125,7 +125,7 @@ class SubjectController extends Controller
             }
             $subject->bId = Auth::user()->bId;
             $subject->save();
-            
+
             return response()->json(["success"=>'Saved', "data"=>$subject, 201]);
 
         }
@@ -146,5 +146,5 @@ class SubjectController extends Controller
         }
         return response()->json(["error"=>'error',422]);
     }
-    
+
 }

@@ -106,7 +106,8 @@
                                             <th rowspan="1">Fee Title</th>
                                             <th rowspan="1">Sub Total </th>
                                             <th>Due</th>
-                                            <th rowspan="2" colspan="1">Total Number Student</th>
+                                            <th rowspan="" colspan="">Total Number Student</th>
+                                            <th rowspan="" colspan="">Details</th>
                                         </tr>
                                         {{--  <tr>
                                             <th rowspan="1">Fee D</th>
@@ -143,7 +144,8 @@
                                             <th rowspan="1">Fee Title</th>
                                             <th rowspan="1">Sub Total </th>
                                             <th>Due</th>
-                                            <th rowspan="2" colspan="1">Total Number Student</th>
+                                            <th rowspan="1" colspan="1">Total Number Student</th>
+                                            <th rowspan="" colspan="">Details</th>
                                         </tr>
                                         {{--  <tr>
                                             <th rowspan="1">Fee D</th>
@@ -222,6 +224,73 @@
 
 {{-- End Section --}}
 <div class="clearix"></div>
+
+<div class="clearix"></div>
+    <!-- The Modal -->
+    <div class="modal" id="newModal" >
+      <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Fee Details</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="col-md">
+                <div class="tile">
+                <div class="tile-body">
+
+                    {{-- <input class="bg-warning text-dark float-right" type='button'  value=' Print ' id='doPrint'> --}}
+                    <div id="print_div" class="print_div">
+                        <h3 class="tile-title"> Student Fee Collection Report </h3>
+                            <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Student Id</th>
+                                        <th>Name</th>
+                                        <th>Roll</th>
+                                        <th>Class</th>
+                                        {{--  <th style="width:2%;height:1%;" rowspan="2">Roll</th>  --}}
+                                        {{--  <th style="width:12%;height:1%;" rowspan="2" >Section</th>
+                                        <th>Shift</th>  --}}
+                                        {{--  <th rowspan="1" colspan="2">Fee Amount</th>  --}}
+                                        <th rowspan="1">Fee Title</th>
+                                        <th rowspan="1">Paid Amount</th>
+
+
+                                        <th rowspan="2" colspan="1">Fee month</th>
+                                        <th rowspan="2" colspan="1">Paid Month</th>
+                                    </tr>
+                                    {{--  <tr>
+                                        <th rowspan="1">Fee D</th>
+                                        <th rowspan="1">T</th>
+                                    </tr>  --}}
+                                </thead>
+                            <tbody class="sectionTotal" id="feedetails">
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            {{--  <button id="btnPrint" type="button" class="btn btn-default">Print</button>  --}}
+            <button type="button" class="btn btn-primary" id="yes" data-dismiss="modal"> Yes </button>
+            <button type="button" class="btn btn-danger" id="cancel" data-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
     @endsection
     @section('script')
       @include('backend.partials.js.datatable');
@@ -272,6 +341,62 @@ function show(){
 function hide(){
     $('#f').attr('hidden',true);
 }
+
+function details(sectionId,classId,feeId){
+
+    var month =$('#month').val();
+    var sessionYearId =$('#sessionYear').val();
+
+    console.log(sectionId,feeId,classId,month,sessionYearId);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        },
+    });
+
+    $.ajax({
+        type: "post",
+        url:"{{ url('feemanagement/report/sectionwise/feedetails')}}",
+        data: {
+            sectionId:sectionId,
+            feeId:feeId,
+            sessionYearId: sessionYearId,
+            month: month,
+            classId: classId,
+          },
+        success: function (data) {
+         console.log(data.feedetaildata);
+         $("#newModal").modal("show");
+        $("#yes").click(function(e){
+            alert("Thank You");
+
+        });
+         $('#feedetails').html(data.feedetaildata);
+
+
+        }
+    });
+
+};
+{{--  $("#btnPrint").onclick = function () {
+    printElement(document.getElementById("printThis"));
+}
+
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+
+    var $printSection = document.getElementById("printSection");
+
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+}  --}}
 
 //print button in table
 $('#doPrint').on("click", function () {

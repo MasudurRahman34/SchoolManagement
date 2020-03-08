@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\model\ClassTeacher;
-use Auth;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends Controller

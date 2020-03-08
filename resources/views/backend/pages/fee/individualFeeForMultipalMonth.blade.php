@@ -9,7 +9,7 @@
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item"><a href="#">Individual Student Fee Collection</a></li>
+          <li class="breadcrumb-item"><a href="#">Individual Students Fee Collection</a></li>
         </ul>
     </div>
     @include('backend.partials._message')
@@ -60,9 +60,6 @@
                             @endforeach
                         </select>
                     </div>
-
-
-
                     <div class="form-group col-md-4">
                         <label for="exampleFormControlSelect1"> Section</label>
                         <select class="form-control" id="sectionId">
@@ -250,7 +247,6 @@
                     }
                 });
     });//end sectionId
-
 
     //on change section for find student
     //$("#sectionId").change(function(){

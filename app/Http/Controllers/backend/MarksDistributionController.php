@@ -12,11 +12,12 @@ use App\model\Student;
 use App\model\Subject;
 use App\model\Section;
 use App\model\SessionYear;
-use DataTables;
-use DB;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Auth;
+use App\model\studentoptionalsubject;
 
 class MarksDistributionController extends Controller
 {
@@ -32,7 +33,17 @@ class MarksDistributionController extends Controller
         $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
 
-            return view('backend.pages.marksdistribution.marksDistributionStudent')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('subjects',$subjects);
+        return view('backend.pages.marksdistribution.marksDistributionStudent')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('subjects',$subjects);
+    }
+
+    public function examattendanceindex()
+    {
+        $subjects=Subject::where('bid', Auth::guard('web')->user()->bId)->get();
+        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+
+        return view('backend.pages.marksdistribution.examAttendance')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('subjects',$subjects);
     }
 
     /**
@@ -42,7 +53,7 @@ class MarksDistributionController extends Controller
      */
     public function sectionwiselist($classId, $sectionId)
     {
-       
+
             $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
 
                 $data_table_render = DataTables::of($class)
@@ -59,39 +70,96 @@ class MarksDistributionController extends Controller
                                 $edit_url = url('mystudent/show/studentProfile/'.$cl);
                                 return '<a href="'.$edit_url.'" class="btn btn-info btn-xs"><i class="fa fa-edit"></i></a>';
                             }
-                            
+
                          })
                         ->rawColumns(['hash','action'])
                         ->make(true);
             return $data_table_render;
     }
-    
+
     public function studentData(Request $request)
     {
-        // $attendences=Attendance::where('sectionId', $request->sectionId)
-        // ->whereDate('created_at',date('Y-m-d'))
-        // ->where('bId' , Auth::guard('web')->user()->bId)
-        // ->first();
-        // if($attendences!=null){
-            // $attendences=Attendance::where('sectionId', $request->sectionId)
-            // ->whereDate('created_at',date('Y-m-d'))
-            // ->where('bId' , Auth::guard('web')->user()->bId)
-            // ->get();
-            
-            // return view('backend.pages.attendance.updateAttendence')->with('attendences', $attendences);
 
-        //     return response()->json(["redirectToEdit"=>"http://localhost:8000/student/attendance/edit/$request->sectionId"]);
-        // }else{
+        $sectionId= $request->sectionId;
+        $group= $request->group;
+        $subjectId=$request->subjectId;
+        $optionalstatus=$request->optional;
+
+        $sessionYearId=$request->sessionYearId;
+        $classId=$request->classId;
+        $examType=$request->examType;
+        $shift=$request->shift;
+
+        $bId=Auth::guard('web')->user()->bId;
+        //find exam Attendance
+        $examAttendanceList=Mark::where('sectionId', $sectionId)
+            ->where('classId',$classId)
+            ->where('examType',$examType)
+            ->where('subjectId',$subjectId)
+            ->where('sessionYearId',$sessionYearId)
+            ->where('bId' , $bId)
+            ->first();
+        if($examAttendanceList!=null){
+
+            $AttendStudents=DB::select("select students.firstName,students.id,students.roll,marks.examAttendence from
+            students,marks
+            where marks.studentId=students.id
+            and marks.subjectId='$subjectId'
+            and marks.sectionId='$sectionId'
+            and marks.examType='$examType'
+            and marks.sessionYearId='$sessionYearId'
+            and marks.bId='$bId' ");
+
+            return response()->json(["AttendStudents"=>$AttendStudents]);
+        }else{
+
+            if($optionalstatus==1){
+                $students=DB::select("select * from
+                students,studentoptionalsubjects
+                where studentoptionalsubjects.studentId=students.id
+                and studentoptionalsubjects.subjectId='$subjectId'
+                and students.sectionId='$sectionId'");
+
+                return response()->json($students);
+            }else{
+                if($group=="General"){
+                    $students = Student::where('sectionId',$sectionId)->get();
+                    return response()->json($students);
+
+                }else{
+                    $students = Student::where('sectionId',$sectionId)
+                    ->where('group',$group)->get();
+                    return response()->json($students);
+                }
+            }
+        }
+    }
+    public function studenlist(Request $request)
+    {
+
             $sectionId= $request->sectionId;
-            $students = Student::where('sectionId',$sectionId)->get();
-            return response()->json($students);
-        // }
+            $subjectId=$request->subjectId;
+            $examType=$request->examType;
+            $sessionYearId=$request->sessionYearId;
 
- 
-        // $sectionId= $request->sectionId;
-        // $students = Student::where('sectionId',$sectionId)->get();
-        // return response()->json($students);
-        // return response()->json($attendences);
+            $bId=Auth::guard('web')->user()->bId;
+
+
+            $students=DB::select("select students.firstName,students.lastName,students.id,students.roll,marks.examAttendence,marks.ca,marks.mcq,marks.written,marks.practical,marks.total,marks.gradeName,marks.gradePoint FROM
+            students,marks
+            WHERE marks.studentId=students.id
+            AND marks.subjectId='$subjectId'
+            AND marks.sectionId='$sectionId'
+            AND marks.examType='$examType'
+            AND marks.sessionYearId='$sessionYearId'
+            AND marks.bId='$bId'
+
+
+            ");
+
+            return response()->json($students);
+
+
     }
 
 
@@ -106,25 +174,61 @@ class MarksDistributionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    //Auth::guard('student/web')->user()->id;
+
+    public function examattendancestore(Request $request)
+    {
+        $Attendence= $request->Attendence;
+        foreach ($Attendence as $id => $value) {
+
+            $examAttendance = new Mark();
+            $examAttendance->examAttendence = $value;
+            $examAttendance->classId = $request->classId;
+            $examAttendance->sectionId = $request->sectionId;
+            $examAttendance->subjectId = $request->subjectId;
+            $examAttendance->examType = $request->examType;
+            $examAttendance->sessionYearId = $request->sessionYearId;
+
+            $examAttendance->ca = 0;
+            $examAttendance->mcq = 0;
+            $examAttendance->written = 0;
+            $examAttendance->practical = 0;
+            $examAttendance->total = 0;
+            $examAttendance->gradeName = "F";
+            $examAttendance->gradePoint = 0.0;
+            $examAttendance->studentId = $id;
+
+            $examAttendance->bId= Auth::user()->bId;
+            $examAttendance->save();
+        }
+        return response()->json(["success"=>'Saved',201]);
+    }
+
     public function storemark(Request $request)
     {
-        $mark= $request->attend;
-        foreach ($mark as $id => $value) {  
-            $stmark = new Mark();
-            $stmark->mark = $value;
-            $stmark->classId = $request->classId2;
-            $stmark->sectionId = $request->sectionId;
-            $stmark->subjectId = $request->subjectId2;
-            $stmark->markType = $request->markType2;
-            $stmark->studentId = $id;
-           
-            $stmark->bId= Auth::user()->bId;
-            $stmark->save();
-        }
-        Session::flash('success','Succesfully Student Marks Data Saved');
-        $marks=Mark::orderBy('id','ASC')->get();
-        return redirect()->route('marks.index');
+        $id= $request->studentid;
+         $marks = Mark::where('studentId', $request->studentid)
+                                    ->where('subjectId',$request->subjectId)
+                                    ->where('examType',$request->examType)
+                                    ->where('sessionYearId',$request->sessionYearId)
+                                    ->where('bId', Auth::guard('web')->user()->bId)
+                                    ->first();
+            if($marks!=null){
+                $marks->ca = $request->ca;
+                $marks->mcq = $request->mcq;
+                $marks->written = $request->written;
+                $marks->practical = $request->practical;
+                $marks->total = $request->totalMarks;
+                $marks->gradeName = $request->grade;
+                $marks->gradePoint = $request->gradePoint;
+                //$marks->bId= Auth::guard('web')->user()->bId;
+                $marks->update();
+                return response()->json(["success"=>'Saved',201,"id"=>$id]);
+
+            }else{
+             return "not found";
+            }
+
+
     }
 
     /**
@@ -156,9 +260,24 @@ class MarksDistributionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function examattendanceupdate(Request $request)
     {
-        //
+        //return($request->Attendence);
+
+        $Attendence= $request->Attendence;
+        foreach ($Attendence as $id => $value) {
+
+            $updatEexamAttednance = Mark::where('studentId', $id)
+                                    ->where('subjectId',$request->subjectId)
+                                    ->where('examType',$request->examType)
+                                    ->where('sessionYearId',$request->sessionYearId)
+                                    ->where('bId', Auth::guard('web')->user()->bId)
+                                    ->first();
+            $updatEexamAttednance->examAttendence = $value;
+            //$updatEexamAttednance->bId= Auth::guard('web')->user()->bId;
+            $updatEexamAttednance->update();
+        }
+        return response()->json(["success"=>'Saved',201]);
     }
 
     /**

@@ -26,16 +26,17 @@
             <div class="tile">
                 <div class="tile-body">
                 <div class="row">
-                    <div class="form-group col-xs-2 pr-2">
+                    {{--  <div class="form-group col-xs-2 pr-2">
                         <label for="exampleFormControlSelect1">Session Year</label>
                         <select class="form-control admission" id="sessionYear" >
                             <option value="">--Please Select--</option>
+                            <option value="{{$sessionYearId}}">{{$sessionYear}}</option>
                             @foreach ($sessionYear as $year)
                                 <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="form-group col-xs-2">
+                    </div>  --}}
+                    {{--  <div class="form-group col-xs-2">
                         <label class="control-label mt-3">Shift</label><br>
                             <div class="custom-control shift-radio custom-control-inline">
                                 <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
@@ -54,24 +55,25 @@
                         <label for="exampleFormControlSelect1">Select Class</label>
                         <select class="form-control admission" id="classId" name="classId">
                             <option value="">--Please Select--</option>
+                            <option value="{{$classId}}">{{$className}}</option>
                             @foreach ($class as $class)
                             <option value="{{$class->id}}">{{$class->className}}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="form-group col-xs-2 pr-2" id="hidden" >
+                    </div>  --}}
+                    <div class="form-group col-md-4 pr-2" id="hidden" >
                             <label for="exampleFormControlSelect1"> Fee Name</label>
                             <select class="form-control feeChange" id="feeId">
                                     <option value="">--Select Fee--</option>
                             </select>
                     </div>
-                    <div class="form-group col-xs-2 pr-2" id="hidden1" >
+                    <div class="form-group col-md-4 pr-2" id="hidden1" >
                         <label for="exampleFormControlSelect1"> Amount</label>
                         <input class="form-control feeChange" type="number" id="amount" name="amount" required  readonly>
 
                     </div>
 
-                    <div class="form-group col-xs-2 pr-2" >
+                    <div class="form-group col-md-4 pr-2" >
                         <label for="exampleFormControlSelect1"> Month</label>
                         {{-- <input class="form-control " id="month" type="month" placeholder="Pick a month" value="{{date('Y-m')}}"/> --}}
                         <select class="form-control feeChange" id="month">
@@ -90,12 +92,13 @@
                             <option value="DECEMBER">DECEMBER</option>
                     </select>
                     </div>
-                    <div class="form-group col-xs-2">
+                    {{--  <div class="form-group col-xs-2">
                         <label for="exampleFormControlSelect1"> Section</label>
                         <select class="form-control feeChange" id="sectionId">
                             <option value=""> --Please Select--  </option>
+                            <option value="{{$sectionId}}">{{$sectionName}}</option>
                         </select>
-                    </div>
+                    </div>  --}}
 
                     </div>
                 </div>
@@ -109,14 +112,15 @@
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>
-                    <form action="{{route('store.feecollection')}}" method="post"   id="myfeeform">
+                    <form action="{{route('myclass.feecollection.store')}}" method="Post"   id="myfeeform">
                         @csrf
-                       <input type="text" name="sectionId" id="sectionId2" hidden>
-                       <input type="text" name="classId2" id="classId2" hidden>
+                       <input type="text" name="sectionId" id="sectionId2" value="{{$sectionId}}" hidden>
+                       <input type="text" name="classId2" id="classId2"  value="{{$classId}}" hidden>
+                       <input type="text" name="shift" id="shift"  value="{{$shift}}" hidden>
                        <input type="text" name="feeId2" id="feeId2" hidden>
                        <input type="text" name="amount2" id="amount2" hidden>
                        <input type="text" name="month2" id="month2" hidden>
-                       <input type="text" name="sessionYear2" id="sessionYear2" hidden>
+                       <input type="text" name="sessionYear2" id="sessionYear2" value="{{$sessionYearId}}" hidden>
                        <input type="text" name="paymentType2" id="paymentType2" hidden>
                        <input type='button' class="bg-warning text-dark float-right"  value=' Print ' id='doPrint'>
                         <div class="table-responsive"  id="print_div">
@@ -181,24 +185,33 @@
                 if(idChecked.length>0){
                     return roll=true;
                 }else{
-                    alert('missing');
+                    alert(' Check At least one ');
                     roll= false;
                 }return roll;
 
               });
 
         }
-    $('.admission').change(function (e) {
-        e.preventDefault();
-        var classId= $("#classId").val();
-        var sessionYearId=$('#sessionYear').val();
-        var shift=$('input[name="shift"]:checked').val();
+
+
+    $(document).ready(function () {
+        //e.preventDefault();
+        //var classId= $("#classId2").val();
+        var classId= {{$classId}};
+        //var sessionYearId=$('#sessionYear2').val();
+        var sessionYearId= {{$sessionYearId}};
+        //var shift=$('input[name="shift"]:checked').val();
+        //var shift=$('shift').val();
+        //var shift= {{$shift}};
+
+
+
         console.log(classId);
-        var url='/api/search/sectionbyclass';
+        //var url='/api/search/sectionbyclass';
         var data= {
             'classId' : classId,
-            'sessionYearId' : sessionYearId,
-            'shift' : shift,
+            //'sessionYearId' : sessionYearId,
+            //'shift' : shift,
         }
         if(classId>0){
             $.ajaxSetup({
@@ -206,19 +219,7 @@
                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                         },
                     });
-            $.ajax({
-                type: "post",
-                url:url,
-                data: data,
-                success: function (data) {
-                  {{--    console.log(data);  --}}
-                    var option="<option>--Please Select--</option>";
-                    data.forEach(element => {
-                        option+=("<option value='"+element.id+"'>"+element.sectionName+"</option>");
-                    });
-                    $('#sectionId').html(option);
-                }
-            });
+
             $.ajax({
                 type: "get",
                 url:'/api/search/classfeelist',
@@ -257,7 +258,10 @@
                 $('#amount').val(data);
             }
         });
-        var sectionId=$("#sectionId").val();
+    });
+    $('#month').change(function (e) {
+        //var sectionId=$("#sectionId").val();
+        var sectionId= {{$sectionId}};
         $("#sectionId2").attr('value',sectionId);
         var classId=$("#classId").val();
         $("#classId2").attr('value',classId);
@@ -269,7 +273,9 @@
         var month=$("#month").val();
         $("#month2").attr('value',month);
         var sessionYear=$("#sessionYear").val();
+        var sessionYear= {{$sessionYearId}};
         $("#sessionYear2").attr('value',sessionYear);
+        console.log(month,sectionId,feeId,sessionYear);
 
        // console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
 
@@ -277,7 +283,7 @@
 
             $.ajax({
               type: "post",
-              url: "{{ url('feecollection/student/Data')}}",
+              url: "{{ url('/myclass/student/Data')}}",
               data: {
                 sectionId:sectionId,
                 feeId:feeId,
@@ -291,7 +297,7 @@
 
 
 
-                        //Un-Paid Student-list
+                        //Un-Paid Student
                         $("#newModal").modal("show");
                         $("#unpaid").click(function(e){
                             $('#tblHidden').attr('hidden',false);
@@ -330,13 +336,13 @@
                             tr +=
                                 "<tr>"+
                                     "<td>"+
-                                        '<input class="roll" type="checkbox" name="studentId[]" value="'+value.id+'"  checked>'
+                                        '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="'+value.id+'"  checked>'
                                     +"</td>"+
                                     "<td>"+value.roll+"</td>"+
                                     "<td>"+value.firstName+' '+value.lastName+"</td>"+
                             "</tr>";
                             $('#btnFee').html("Update Fee");
-                            $('#myfeeform').attr("action", "feecollection/update");
+                            $('#myfeeform').attr("action", "{{route('myclass.feecollection.update')}}");
                         });
                         $('tbody').html(tr);
 

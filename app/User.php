@@ -42,10 +42,10 @@ class User extends Authenticatable
     ];
 
     public static $rules = [
-        'email'=>'required', 'string', 'email', 'max:255', 'unique:users',
-        'name'=>'required', 'string', 'max:255',
-        'mobile'=>'required', 'string', 'max:255','unique:users',
-        'designation'=>'string', 'max:255',
+        'email'=>['required', 'string', 'email', 'max:255', 'unique:users'],
+        'name'=>['required', 'string', 'max:255'],
+        'mobile'=>['required', 'string', 'max:255','unique:users'],
+        'designation'=>['string', 'max:255'],
 
     ];
 

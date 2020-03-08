@@ -57,10 +57,11 @@ class apiController extends Controller
     }
     public function classsubject(Request $request)
     {
-        $section= Subject::where('classId', $request->classId)
+        $subjectlist= Subject::where('classId', $request->classId)
+                        ->where('group', $request->group)
                         ->where('bId', Auth::guard('web')->user()->bId)
                         ->get();
-        return Response()->json($section);
+        return Response()->json($subjectlist);
     }
 
     //fee list in a class

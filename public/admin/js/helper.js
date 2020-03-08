@@ -32,6 +32,35 @@ function successNotification() {
         setTimeout(function() {table.draw()}, 600);
 }
 
+function successNotification2() {
+    $.notify({
+            title: "Update Complete : ",
+            message: "Something cool is just updated!",
+            icon: 'fa fa-exclamation-triangle'
+        }, {
+            type: "success",
+            delay: 100,
+            timer: 600,
+
+        });
+         setTimeout(function() {window.location.reload();}, 600);
+
+}
+function successNotification3() {
+    $.notify({
+            title: "Update Complete: ",
+            message: "Just updated Your requerted data",
+            icon: 'fa fa-exclamation-triangle'
+        }, {
+            type: "success",
+            delay: 100,
+            timer: 600,
+
+        });
+         //setTimeout(function() {window.location.reload();}, 600);
+
+}
+
 function deleteAttribute(url, id){
     swal({
              title: "Are you sure?",

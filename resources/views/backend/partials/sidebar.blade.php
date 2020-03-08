@@ -101,7 +101,9 @@
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class=""></i><span class="app-menu__label">My Class</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               {{-- <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-angle-right"></i>My User & Password</a></li> --}}
-                <li><a class="treeview-item" href="{{route('myclass.attendance')}}"><i class="icon fa fa-angle-right"></i>My Class Attendance</a></li>
+                <li><a class="treeview-item" href="{{route('myclass.attendance')}}"><i class="icon fa fa-angle-right"></i>Class Attendance</a></li>
+                <li><a class="treeview-item" href="{{route('myclass.feecollection')}}"><i class="icon fa fa-angle-right"></i> Fee Collection</a></li>
+                <li><a class="treeview-item" href="{{route('myclass.studentlist')}}"><i class="icon fa fa-angle-right"></i> Student List</a></li>
             </ul>
           </li>
           @endcan
@@ -126,6 +128,7 @@
             </ul>
           </li>
           @endcan
+
           @can('Attendance')
 
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class=""></i><span class="app-menu__label">Student Attendance</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -139,15 +142,7 @@
 
 
 
-          @can('mark')
-          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Marks Distribution (underdevlopment)</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-              <li><a class="treeview-item" href="{{route('marks.index') }}"><i class="icon fa fa-angle-right"></i>Provied Marks </a></li>
-              <!-- <li><a class="treeview-item" href="{{route('attendance.classwish') }}"><i class="icon fa fa-angle-right"></i>class wish</a></li> -->
-              {{-- <li><a class="treeview-item" href="{{route('attendance.bydate') }}"><i class="icon fa fa-angle-right"></i>Datewish Attendance</a></li> --}}
-            </ul>
-          </li>
-          @endcan
+
 
           @can('Fee Collection')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Fee Collection</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -158,7 +153,16 @@
               <li><a class="treeview-item" href="{{route('monthly.index') }}"><i class="icon fa fa-angle-right"></i>Individual Fee Collection</a></li>
               <li><a class="treeview-item" href="{{route('student.feeDetails') }}"><i class="icon fa fa-angle-right"></i> Student Fee Details</a></li>
               <li><a class="treeview-item" href="{{route('feemanagementreport.index') }}"><i class="icon fa fa-angle-right"></i>Monthly Section Wise Report</a></li>
+              <li><a class="treeview-item" href="{{route('payment.index') }}"><i class="icon fa fa-angle-right"></i>Check Payment</a></li>
 
+            </ul>
+          </li>
+          @endcan
+
+          @can('Mark')
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Mark Entry</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('marks.index') }}"><i class="icon fa fa-angle-right"></i> Marks Entry</a></li>
             </ul>
           </li>
           @endcan
@@ -170,11 +174,14 @@
           </li>
           @endcan
 
+        {{-- @can('file')--}}
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Book</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{url('file/store')}}"><i class="icon fa fa-angle-right"></i>File Document</a></li>
             </ul>
           </li>
+
+          {{-- @can('Notification')--}}
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Notification</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
             <li><a class="treeview-item" href="{{url('notification/notificationBoard')}}"><i class="icon fa fa-angle-right"></i>Notice Board</a></li>
@@ -185,7 +192,23 @@
           </li>
 
 
+
+           {{-- @can('Grade Management')--}}
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Grade Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('grade.index') }}"><i class="icon fa fa-angle-right"></i> Grade list</a></li>
+            </ul>
+          </li>
+          {{-- @endan --}}
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Exam Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('exam.index') }}"><i class="icon fa fa-angle-right"></i> Exam list</a></li>
+              <li><a class="treeview-item" href=""><i class="icon fa fa-angle-right"></i> Exam Schedule</a></li>
+              <li><a class="treeview-item" href="{{route('examattendance.index') }}"><i class="icon fa fa-angle-right"></i> Exam Attendance</a></li>
+            </ul>
+          </li>
           {{-- end admin sidebar --}}
+
           {{-- student side bar --}}
             @else
 

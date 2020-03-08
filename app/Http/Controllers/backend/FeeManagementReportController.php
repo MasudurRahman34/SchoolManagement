@@ -55,6 +55,8 @@ class FeeManagementReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function show($month,$sessionYearId)
     {
 
@@ -117,7 +119,7 @@ class FeeManagementReportController extends Controller
 
 
         //Government Fee Type Report
-        $governmentFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, sections.shift, fees.name,
+        $governmentFeeTotal=DB::select("SELECT sectionName,sectionId,feeId, fees.classId, classes.className, sections.shift, fees.name,
                                         SUM(fee_collections.totalAmount) as total,
                                         COUNT( DISTINCT fee_collections.studentId) as totalStudent,
                                         sum(fee_collections.due) as totaldue
@@ -146,12 +148,13 @@ class FeeManagementReportController extends Controller
                         '<td>'.$feeTotal->total.'</td>'.
                         '<td>'.$feeTotal->totaldue.'</td>'.
                         '<td>'.$feeTotal->totalStudent.'</td>'.
+                        '<td>'.'<button class="btn btn-primary details"  onClick="details('.$feeTotal->sectionId.','.$feeTotal->classId.','.$feeTotal->feeId.')" name="button" id="submit" ><i class="fa fa-plus-square" aria-hidden="true"></i>Details</button>'.'</td>'.
                         '</tr>';
                     }
 
 
         //Non-Government Fee Type Report
-        $nonGovtFeeTotal=DB::select("SELECT sectionName, fees.classId, classes.className, sections.shift, fees.name,
+        $nonGovtFeeTotal=DB::select("SELECT sectionName,sectionId,feeId, fees.classId, classes.className, sections.shift, fees.name,
                                         SUM(fee_collections.totalAmount) as total,
                                         COUNT(DISTINCT fee_collections.studentId) as totalStudent,
                                         sum(fee_collections.due) as totaldue
@@ -179,7 +182,8 @@ class FeeManagementReportController extends Controller
                         '<td>'.$nongovtfee->name.'</td>'.
                         '<td>'.$nongovtfee->total.'</td>'.
                         '<td>'.$nongovtfee->totaldue.'</td>'.
-                        '<td>'.$nongovtfee->totalStudent.'</td>'.
+                        '<td class="details">'.$nongovtfee->totalStudent.'</td>'.
+                        '<td>'.'<button class="btn btn-primary details"  onClick="details('.$nongovtfee->sectionId.','.$nongovtfee->classId.','.$nongovtfee->feeId.')" name="button" id="submit" ><i class="fa fa-plus-square" aria-hidden="true"></i>Details</button>'.'</td>'.
 
                         '</tr>';
                         }
@@ -234,6 +238,59 @@ class FeeManagementReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function feedetails(Request $request)
+    {
+        //return($request);
+        $bId=Auth::guard('web')->user()->bId;
+        $sessionYearId=$request->sessionYearId;
+        $month=$request->month;
+        $sectionId=$request->sectionId;
+        $classId=$request->classid;
+        $feeId=$request->feeId;
+
+
+        $feedetails=DB::select("SELECT sections.sectionName,classes.className,sections.shift,
+                                        fees.name, fee_collections.paidMonth,fee_collections.month,fee_collections.totalAmount,
+                                        students.studentId,students.firstName,students.lastName,students.roll
+
+                                FROM fee_collections, fees, sections, classes,students
+                                WHERE fee_collections.feeId=fees.id
+                                AND fees.classid=classes.id
+                                AND fee_collections.studentId=students.id
+                                AND fee_collections.sectionId=sections.id
+                                AND fee_collections.sessionYearId='$sessionYearId'
+                                AND fee_collections.paidMonth='$month'
+                                AND fee_collections.bId='$bId'
+                                AND fee_collections.sessionYearId='$sessionYearId'
+                                AND fee_collections.sectionId='$sectionId'
+                                AND fee_collections.feeId='$feeId'
+
+                                ");
+                     $feedetaildata="";
+                     $i=1;
+
+                     foreach ($feedetails as $feedetail) {
+
+                     $feedetaildata.='<tr>'.
+                     '<td>'.$i++.'</td>'.
+                     '<td>'.$feedetail->studentId.'</td>'.
+                     '<td>'.$feedetail->firstName. ' '.$feedetail->lastName.'</td>'.
+                     '<td>'.$feedetail->roll.'</td>'.
+                     '<td>'.$feedetail->className.'</td>'.
+                    //  '<td>'.$feedetail->sectionName.'</td>'.
+                    //  '<td>'.$feedetail->shift.'</td>'.
+                     '<td>'.$feedetail->name.'</td>'.
+                     '<td>'.$feedetail->totalAmount.'</td>'.
+                     '<td>'.$feedetail->month.'</td>'.
+                     '<td>'.$feedetail->paidMonth.'</td>'.
+
+                     '</tr>';
+                     }
+
+     return Response()->json(["feedetaildata"=>$feedetaildata]);
+
+    }
     public function edit($id)
     {
         //

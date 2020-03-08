@@ -88,17 +88,12 @@
                             <tr>
                                 <th>Student Roll</th>
                                 <th>Attendence</th>
-
                                 <th>Student Name</th>
-
                             </tr>
                             </thead>
                             <tbody>
-
-
                             </tbody>
                         </table>
-
                         <button class="btn btn-primary float-right" type="submit" id="btnAttendance" disabled="true"><i class="fa fa-plus-square" aria-hidden="true"></i>Attendance</button>
                     </div>
                     </form>
@@ -114,6 +109,7 @@
 
     <script>
      dynamicSectionSelection();
+
     </script>
     <script>
       $('#sectionId').change(function (e) {
@@ -152,7 +148,9 @@
                 "<tr>"+
                     "<td>"+value.roll+"</td>"+
                     "<td>"+
-                    '<label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="present">Present</label><label class="radio"><input class="roll['+value.roll+']" type="radio"  name="attend['+value.id+']" value="absent">Absent</label><label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="late">late</label>'
+                    '<label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="present">Present</label>'+
+                    '<label class="radio"><input class="roll['+value.roll+']" type="radio"  name="attend['+value.id+']" value="absent">Absent</label>'+
+                    '<label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="late">late</label>'
                     +"</td>"+
 
                     "<td>"+value.firstName+"</td>"+
