@@ -23,6 +23,11 @@ class FileController extends Controller
 
      //File store
      public function fileStore(Request $request){
+         //1. Validation
+        $this->validate($request,[
+            'className'=>'required',
+            'fileName'=>'required',
+        ]);
         // 1. data insert
         $files = new File();
         $files->userId = Auth::user()->id;

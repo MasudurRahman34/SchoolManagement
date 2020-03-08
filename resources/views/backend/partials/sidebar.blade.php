@@ -1,13 +1,12 @@
 <aside class="app-sidebar">
       <div class="app-sidebar__user">
-        <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" style="width: 25%; height: 25%;" alt="User Image">
-      {{-- @foreach(App\model\File::where('userId', Auth::guard()->user()->id)->get() as $fill)
-        @if($fill->image)
-            <img class="app-sidebar__user-avatar" src="{{asset('users/'.$fill->image)}}" style="width: 25%; height: 25%;" alt="User Image">
+      @foreach(App\model\File::where('userId', Auth::guard()->user()->id)->where('type','profile')->get() as $fill)
+      @if(!empty($fill))
+            <img class="app-sidebar__user-avatar" src="{{asset('users/'.$fill->image)}}" style="width: 25%; height: 25%;">
           @else
             <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" style="width: 25%; height: 25%;" alt="User Image">
         @endif
-      @endforeach --}}
+      @endforeach
         <div>
           <span class="text-info">Welcome,</span>
           <p class="app-sidebar__user-name">{{Auth::guard('web')->user()->name}}</p>

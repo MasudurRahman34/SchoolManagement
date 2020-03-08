@@ -388,23 +388,26 @@ class UserController extends Controller
         $userss->resume = $request->resume;
         $userss->certificate = $request->certificate;
         $userss->bId = $request->bId;
+      // dd($request->file('image'));
         // file upload
+        
         if ($request->hasFile('image')){
-            $image = $request->file('image');
-            $filename = time().".".$image->getClientOriginalExtension();
-            $path = public_path ('users',$filename);
-            $image->move($path,$filename);
-            $previous_profile=File::where("userId", $userss->id)->first();
+            $previous_profile=File::where('type', 'profile')->where('userId',$userss->id)->first();
             if ($previous_profile){
                 unlink(public_path("users/".$previous_profile->image));
                 $previous_profile->delete();
             }
+            $image = $request->file('image');
+            $filename = time().".".$image->getClientOriginalExtension();
+            $path = public_path ('users',$filename);
+            $image->move($path,$filename);
+            
             $file = new File;
             $file->userId=$userss->id;
             $file->image=$filename;
             $file->type='profile';
             $file->Save();
-        }
+        };
         $userss->save();
         Session::flash('success','Successfully User Information Updated');
         return redirect()->back();

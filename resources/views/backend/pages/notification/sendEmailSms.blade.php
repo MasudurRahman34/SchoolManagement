@@ -50,7 +50,7 @@
                                                                     <input type="checkbox" value="sms" name="group_send_by[]">SMS                                                
                                                                 </label>
                                                                 <label class="checkbox-inline">
-                                                                    <input type="checkbox" value="push" name="group_send_by[]">Mobile App                                                
+                                                                    <input type="checkbox" value="push" name="group_send_by[]">System                                               
                                                                 </label>
                                                                 <span class="text-danger"></span>
                                                             </div>

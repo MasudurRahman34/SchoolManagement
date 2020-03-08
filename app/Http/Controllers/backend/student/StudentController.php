@@ -145,7 +145,7 @@ class StudentController extends Controller
             $filename = time().".".$image->getClientOriginalExtension();
             $path = public_path ('students',$filename);
             $image->move($path,$filename);
-            $previous_profile=File::where("studentId", $std->id)->first();
+            $previous_profile=File::where('type', 'profile')->where("studentId", $std->id)->first();
             if ($previous_profile){
                 unlink(public_path("students/".$previous_profile->image));
                 $previous_profile->delete();

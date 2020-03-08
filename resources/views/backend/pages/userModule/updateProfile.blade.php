@@ -2,7 +2,7 @@
 	@section('title', 'User profile')
     @section('content')
     <div class="row user">
-        <div class="col-md-3 col-sm-9">
+        <div class="col-md-3">
             <div class="card text-white bg-dark text-center" style="">
                 <div class="card-content">
                     <div class="card-body">
@@ -17,7 +17,15 @@
                     </div>
                 </div>
             </div>
+            <div class="tile p-0">
+              <ul class="nav flex-column nav-tabs user-tabs">
+                @if(Auth::guard('web')->user()->id=$editId)
+                 <li class="nav-item"><a class="nav-link" href="{{route('user.show', [$editId])}}"> Show Profile</a></li>
+                @endif
+              </ul>
+            </div>
         </div>
+       
     <div class="col-md-9">
       <div class="">
         <div class="tile">
