@@ -135,161 +135,50 @@
                 <div id="exam" class="container tab-pane fade"><br>
                   <div class="" id="print_div">
                     <div class="tile">
-                      <div class="mailbox-controls">
-                        <div class="animated-checkbox">
-                          <label>
-                            <input type="checkbox"><span class="label-text text-warning">1st Tearm Exam</span>
-                          </label>
+                      <div class="panel-group" id="accordion">
+                        @foreach (App\model\exam::orderBy('examName', 'asc')->get() as $exam)
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$exam->id}}">{{$exam->examName}}</a>
+                            </h4>
+                          </div>
+              
+                          <div id="collapse{{$exam->id}}" class="panel-collapse collapse in">
+                            <div class="btn-group pull-right">
+                              <input class="bg-warning text-dark" type='button'  value='Click To Print' id='doPrint'>
+                            </div>
+                            <div class="panel-body">
+                              <div class="table-responsive mailbox-messages">
+                                <table class="table table-hover">
+                                  <thead>
+                                    <tr role="row">
+                                      <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Subject </th>
+                                      <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Full Marks</th>
+                                      <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Passing Marks</th>
+                                      <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Obtain Marks</th>
+                                      <th class="text text-right sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach (App\model\Mark::where('studentId', Auth::guard('student')->user()->id)->get() as $mark)
+                                  <tr role="row" class="odd">
+                                    <td tabindex="0"> {{$mark->Subject->subjectName}} </td>
+                                    <td>100</td>
+                                    <td>33</td>
+                                    <td>{{$mark->total}}</td>
+                                    <td class="text text-center"><span class="label pull-right bg-green">{{$mark->gradeName}}</span></td>
+                                  </tr>
+                                      
+                              @endforeach
+                                </tbody>
+                                </table>
+                              </div>
+                              
+                            </div>
+                          </div>
                         </div>
-                        <div class="btn-group">
-                          <input class="bg-warning text-dark" type='button'  value='Click To Print' id='doPrint'>
-                        </div>
-                      </div>
-                      <div class="table-responsive mailbox-messages">
-                        <table class="table table-hover">
-                          <thead>
-                            <tr role="row">
-                              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Subject </th>
-                              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Full Marks</th>
-                              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Passing Marks</th>
-                              <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Obtain Marks</th>
-                              <th class="text text-right sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Result</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          <tr role="row" class="odd">
-                            <td tabindex="0">  Bangla 1st Paper (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>79.00</td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                          </tr>
-                          <tr role="row" class="even">
-                            <td tabindex="0">  Bangla 2nd Paper (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>89.00</td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                          </tr>
-                          <tr role="row" class="odd">
-                            <td tabindex="0">  English 1st Paper (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>98.00 </td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                          </tr>
-                          <tr role="row" class="even">
-                            <td tabindex="0">  English 2nd Paper (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>95.00</td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                          </tr>
-                          <tr role="row" class="odd">
-                            <td tabindex="0">  Math (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>100.00</td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                          </tr>
-                          <tr role="row" class="even">
-                            <td tabindex="0">  Information &amp; Technology (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>96.00</td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                          </tr>
-                          <tr role="row" class="odd">
-                            <td tabindex="0">  Physics (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>ABS</td>
-                            <td class="text text-center"><span class="label pull-right text-danger">Fail</span> </td>
-                          </tr>
-                          <tr role="row" class="even">
-                            <td tabindex="0">  Chemistry (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>ABS</td>
-                            <td class="text text-center"><span class="label pull-right text-danger">Fail</span></td>
-                          </tr>
-                          <tr role="row" class="odd">
-                            <td tabindex="0">  Biology (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>ABS</td>
-                            <td class="text text-center"><span class="label pull-right text-danger">Fail</span></td>
-                         </tr>
-                         <tr role="row" class="even">
-                            <td tabindex="0">  Science (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>85.00 </td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span> </td>
-                        </tr><tr role="row" class="odd">
-                            <td tabindex="0">  Accounting (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>100.00</td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                        </tr><tr role="row" class="even">
-                            <td tabindex="0">  Finance &amp; Banking (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>72.00</td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                        </tr><tr role="row" class="odd">
-                            <td tabindex="0">  Business &amp; Entrepreneurship (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>33.00</td>
-                        <td class="text text-center"><span class="label pull-right bg-green">Pass</span> </td>
-                      </tr><tr role="row" class="even">
-                            <td tabindex="0">  Economics (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>90.00 </td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span> </td>
-                     </tr><tr role="row" class="odd">
-                            <td tabindex="0">  Civic &amp; Citizenship (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>70.00 </td>
-                           <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                      </tr><tr role="row" class="even">
-                            <td tabindex="0">  Geography (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>80.00 </td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                      </tr><tr role="row" class="odd">
-                            <td tabindex="0">  Islam &amp; Moral Edu/other (Th.) </td>
-                            <td>100</td>
-                            <td>33</td>
-                            <td>100.00 </td>
-                            <td class="text text-center"><span class="label pull-right bg-green">Pass</span></td>
-                      </tr><tr class="hide even" role="row">
-                           <td tabindex="0"><b class="text text-info">Exam: 1st</b></td>
-                            <td><b class="text text-danger">Result: Fail</b></td>
-                              <td><b class="text-success">Grand Total: 1187/1700</b></td>
-                              <td><b class="text-warning">Percentage: 69.82%</b></td>
-                              <td></td>
-
-                      </tr><tr class="hide odd" role="row">
-                            <td tabindex="0">Name: Rakib Hossain</td>
-                            <td>Roll Number: 52</td>
-                            <td>Admission Number: ST-01</td>
-                            <td>Class: Nine(B)</td>
-                            <td></td>
-                              </tr>
-                        </tbody>
-                        </table>
-                      </div>
-                      <div class="text-right"><span class="text-muted mr-2">Showing 1-15 out of 60</span>
-                        <div class="btn-group">
-                          <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-chevron-left"></i></button>
-                          <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-chevron-right"></i></button>
-                        </div>
+                        @endforeach
                       </div>
                     </div>        
                 </div>

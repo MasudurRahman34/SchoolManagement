@@ -4,7 +4,9 @@ namespace App\Http\Controllers\backend\student;
 use App\Http\Controllers\Controller;
 use App\model\Student;
 use App\User;
+use App\model\Mark;
 use App\model\File;
+use App\model\exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -62,6 +64,13 @@ class StudentController extends Controller
         $students=Student::with('schoolBranch','Section')
         ->where('bId', Auth::guard('student')->user()->bId)
         ->findOrFail(Auth::guard('student')->user()->id);
+
+        // $examWiseMark=Mark:: where('studentId', Auth::guard('student')->user()->id)
+        // ->where('sessionYearId', Auth::guard('student')->user()->id)
+        // ->groupBy('examType')
+        // ->get();
+       
+        
         return view('backend.student.pages.profile.profile',['students' => $students]);
     }
 

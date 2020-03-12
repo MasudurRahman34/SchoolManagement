@@ -109,6 +109,10 @@ class Student extends Authenticatable
         return $this->hasMany(studentScholarship::class,'studentId', 'id');
     }
 
+    public function Mark(){
+        return $this->hasMany(Mark::class,'studentId', 'id');
+    }
+
 
 }
 
