@@ -42,20 +42,15 @@
              <div class="form-group">
               <label class="control-label">District</label>
               <select class="form-control" id="district" name="district">
-                <option value="Faridpur">Faridpur</option>
-                <option value="Jeshore">Jeshore</option>
-                <option value="Dhaka">Dhaka</option>
-                <option value="Feni">Feni</option>
-                <option value="Comilla">Comilla</option>
+                <option value> --please Select--</option>
+                @foreach ($district as $ds)
+                    <option value="{{$ds->id}}" data-districtName="{{$ds->name}}">{{$ds->name}}</option>
+                @endforeach
               </select>
             </div>
             <div class="form-group">
                 <label for="exampleSelect1">Upozila</label>
                 <select class="form-control" id="upazilla" name="upazilla">
-                  <option value="Boalmari Upazila">Boalmari Upazila</option>
-                  <option value="MohammadPur">MohammadPur</option>
-                  <option value="Dhanmodi">Dhanmodi</option>
-                  <option value="5">Bhanga Upazila</option>
                 </select>
               </div>
             <div class="form-group">
@@ -110,6 +105,8 @@
 </script>
 <script>
 jQuery(document).ready(function(){
+    getUpazilaByDistrict();
+
   jQuery('#ajaxSubmit').click(function(e){
      e.preventDefault();
      $.ajaxSetup({
@@ -125,7 +122,7 @@ jQuery(document).ready(function(){
             eiinNumber: jQuery('#eiinNumber').val(),
             phoneNumber: jQuery('#phoneNumber').val(),
             upazilla: jQuery('#upazilla').val(),
-            district: jQuery('#district').val(),
+            district: jQuery('#district option:selected').attr('data-districtName'),
             nameOfHead: jQuery('#nameOfHead').val(),
             schoolType: jQuery('#schoolType').val(),
             address: jQuery('#address').val(),
@@ -140,6 +137,34 @@ jQuery(document).ready(function(){
         }});
      });
   });
+
+  function getUpazilaByDistrict(){
+    $('#district').change(function (e) {
+        e.preventDefault();
+        var districtId= $(this).val();
+        var url="{{route('getUpazilaByDistrict')}}";
+        var data= {
+            'districtId' : districtId,
+        }
+        console.log(data);
+
+            $.ajax({
+                type: "get",
+                url:url,
+                data: data,
+                success: function (data) {
+                    console.log(data);
+                    var option="<option>--Please Select--</option>";
+                    data.forEach(element => {
+
+                        option+=("<option value='"+element.name+"'>"+element.name+"</option>");
+
+                    });
+                    $('#upazilla').html(option);
+                }
+            });
+    });
+ }
 </script>
   </body>
 </html>

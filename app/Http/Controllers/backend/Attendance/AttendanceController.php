@@ -12,13 +12,20 @@ use App\model\Section;
 use App\model\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Notification\multipleSmsService;
 
 use Illuminate\Support\Facades\Session;
-use Carbon\Carbon;
-use PhpParser\Node\Stmt\Foreach_;
+
 
 class AttendanceController extends Controller
 {
+    public function __construct()
+    {
+        //$this->emailService= new emailService();
+        $this->multipleSmsService= new multipleSmsService();
+
+        $this->middleware('auth');
+    }
     //form view
     public function index(){
 
@@ -43,6 +50,9 @@ public function storeAttendence(Request $request){
 
         $attendence= $request->attend;
         foreach ($attendence as $id => $value) {
+             if ($value=="absent") {
+                 $absentStudentId[]=$id;
+             }
             $stAttendence = new Attendance();
             $stAttendence->attendence = $value;
             $stAttendence->sectionId = $request->sectionId;
@@ -54,6 +64,16 @@ public function storeAttendence(Request $request){
             $stAttendence->bId= Auth::user()->bId;
             $stAttendence->save();
         }
+        $absentStudentDetailes=Student::whereIn('id', $absentStudentId)->with('Section')->get();
+        foreach($absentStudentDetailes as $value){
+            $msgAndContact[]=array(
+                "to"=>$value->mobile,
+                "message"=>$value->firstName." ".$value->lastName.",Class ".$value->Section->classes->className.",Section ".$value->Section->sectionName.", Roll ". $value->roll. " is absent on ".date("Y/m/d")." Thank You."
+            );
+        }
+        //dd($msgAndContact);
+        $notifyBy= $this->multipleSmsService;
+        $notifyBy->notification("dfas", $msgAndContact);
         Session::flash('success','Succesfully Student Attendence Data Saved');
         $attendences=Attendance::orderBy('id','ASC')->get();
         if((url()->previous())!==(url('/student/attendance'))){

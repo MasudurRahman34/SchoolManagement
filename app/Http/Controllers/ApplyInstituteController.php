@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\model\schoolBranch;
+use App\model\District;
+use App\model\Upazila;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ApplyInstituteController extends Controller
 {
@@ -24,7 +27,15 @@ class ApplyInstituteController extends Controller
      */
     public function create()
     {
-        return view('auth.applyInstitute');
+     $district=District::all();
+
+        return view('auth.applyInstitute', compact('district', $district));
+    }
+    public function getUpazilaByDistrict(Request $request)
+    {
+     $district=Upazila::where('district_id', $request->districtId)->get();
+
+        return response()->json($district);
     }
 
     /**

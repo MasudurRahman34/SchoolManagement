@@ -72,7 +72,7 @@ class MyStudentConttroller extends Controller
 
     //find scholarship student list
     public function scholarshiplist(){
-$bId=Auth::guard('web')->user()->bId;
+        $bId=Auth::guard('web')->user()->bId;
         $scholarshiplist=DB::select("SELECT  students.id as id,students.roll,students.firstName,students.lastName,students.fatherName,students.motherName,
                                     students.blood,students.birthDate,students.mobile,classes.className,sections.sectionName,sections.shift,scholarships.name,
                                     session_years.sessionYear

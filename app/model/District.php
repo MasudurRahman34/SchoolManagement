@@ -4,7 +4,7 @@ namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class District extends Model
 {
     //
 }

@@ -158,6 +158,7 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin']], funct
 //open route
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/applyInstitute', 'ApplyInstituteController@create')->name('applyInstitute');
+Route::get('/getUpazilaByDistrict', 'ApplyInstituteController@getUpazilaByDistrict')->name('getUpazilaByDistrict');
 Route::post('/applyInstitute/store', 'ApplyInstituteController@store')->name('applyInstitute.store');
 Route::get('/createPermission', 'backend\UserController@createPermission')->name('createPermission');
 Route::post('/addPermission', 'backend\UserController@addPermission')->name('addPermission');
@@ -443,6 +444,12 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teach
 
     //gradelist
     Route::post('/grade/search/gradelist', 'backend\GradeController@gradelist')->name('api.gradelist');
+
+Route::get('/notification/index','backend\notificationController@index')->name('notification.index');
+Route::get('/notification/notificationBoard','backend\notificationController@notificationBoard')->name('notification.board');
+Route::get('/notification/emailSms','backend\notificationController@notificationEmailSms')->name('notification.emailSms');
+Route::get('/notification/emailSmsLog','backend\notificationController@emailSmsLog')->name('notification.emailSmsLog');
+Route::post('/notification/create','backend\notificationController@create')->name('notification.create');
 
 //permission and role
 
