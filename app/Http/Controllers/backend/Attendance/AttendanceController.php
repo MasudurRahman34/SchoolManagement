@@ -87,7 +87,7 @@ public function storeAttendence(Request $request){
            return response()->json(["redirectToEdit"=>"/student/attendance/datewishAttendance/$request->dateId/$request->sectionId"]);
         }else{
             $sectionId= $request->sectionId;
-            $students = Student::where('sectionId',$sectionId)->get();
+            $students = Student::where('sectionId',$sectionId)->whereNull('deleted_at')->get();
             return response()->json($students);
         }
 

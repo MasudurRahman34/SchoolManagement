@@ -133,13 +133,16 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
     Route::get('/sectionwise', 'MyStudentConttroller@Sectionwise')->name('mystudent.sectionwise');
     Route::get('/sectionwiselist/{classId}/{sectionId}/{sessionYearId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
 
-    //profile
+
+
+
+});
+//Student profile
+Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher'], 'prefix'=>'mystudent', 'namespace'=>'backend'], function () {
     Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
     Route::get('edit/studentProfile/{id}','MyStudentConttroller@edit')->name('mystudent.editProfile');
     Route::post('update/studentProfile/{id}','MyStudentConttroller@update')->name('mystudent.update');
-
 });
-
 //only for Super Admin
 Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin']], function () {
     Route::post('/addSchoolBranch/store', 'backend\UserController@addSchoolBranch')->name('addSchoolBranch.store');
@@ -242,7 +245,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], fun
 
     //individual fee Collection Management for admin
     Route::get('/feecollection/individual','backend\FeeCollectionController@individualCollection')->name('individualFee.individualCollection');
-    Route::post('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
+    //Route::post('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
     Route::post('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
     //Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
     Route::post('/feecollection/individual/store','backend\FeeCollectionController@storeIndividualy')->name('store.individualFeecollection');
@@ -271,6 +274,12 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], fun
 
 });
 
+// Class Teacher or fee Collection
+Route::group(['middleware' => ['auth','role_or_permission:Fee Collection|Class Teacher']], function () {
+    Route::post('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
+    Route::post('/feecollection/individual/findmonthlyyearlyfee','backend\FeeCollectionController@findMonthForAdvancefeeCollection')->name('find.monthlyoryearly');
+    //Route::post('/feecollection/individual/monthly/store','backend\FeeCollectionController@storeMorethenOneMonth')->name('store.storeMorethenOneMonth');
+});
 
 
 //section Management
@@ -331,18 +340,24 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespac
     Route::get('/student/attendance','AttendanceController@index')->name('attendance.index');
     Route::post('/student/attendance/store','AttendanceController@storeAttendence')->name('store.attendence');
     Route::get('/student/attendance/edit/{sectionId}','AttendanceController@edit')->name('attendance.edit');
-    Route::post('/student/attendance/update','AttendanceController@update')->name('update.attendence');
+
     Route::get('/student/attendance/classwish','AttendanceController@classwish')->name('attendance.classwish');
 
     Route::get('/student/attendance/bydate','AttendanceController@bydate')->name('attendance.bydate');
 
-    Route::post('/student/attendance/studentDatabydate','AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
-    Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
+    //Route::post('/student/attendance/studentDatabydate','AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
+    //Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
 
     //28/01/2019 -> student attendance view
     Route::get('/student/attendance/studentviewindex/{id}', 'AttendanceController@studentView')->name('studentviewindex.index');
 
 
+});
+
+Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teacher'],'namespace'=>'backend\Attendance'], function () {
+    Route::post('/student/attendance/studentDatabydate','AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
+    Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
+    Route::post('/student/attendance/update','AttendanceController@update')->name('update.attendence');
 });
 
  //Class Teacher option
@@ -354,15 +369,26 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespac
     Route::get('/student/attendance/edit/{sectionId}','backend\ClassTeacherController@edit')->name('myclass.edit');
     Route::post('/myclass/attendance/update','backend\ClassTeacherController@update')->name('myclass.update');
 
+    //Attendance by Date
+    Route::get('/myclass/attendancebydate','backend\ClassTeacherController@myclassattendancebydate')->name('myclass.attendancebydate');
+    //Route::post('/myclass/attendance/update','backend\ClassTeacherController@update')->name('myclass.update');
+
     //feecollection
     Route::get('/myclass/feecollection','backend\ClassTeacherController@myclassfeecollection')->name('myclass.feecollection');
     Route::post('/myclass/student/Data','backend\ClassTeacherController@student')->name('myclass.studentdata');
     Route::post('/myclass/feecollection/store','backend\ClassTeacherController@storefeecollection')->name('myclass.feecollection.store');
     Route::post('/myclass/update','backend\ClassTeacherController@updatefeecollection')->name('myclass.feecollection.update');
 
+    //Individual Fecollection
+    Route::get('/myclass/feecollection/individual','backend\ClassTeacherController@myclassIndividualFeeCollection')->name('myclass.feecollection.individual');
+    Route::post('myclass/feecollection/individual/monthly/store','backend\ClassTeacherController@myclassStoreMonthly')->name('myclass.storeMonthly');
+
+
     //student list
     Route::get('/myclass/studentlist','backend\ClassTeacherController@studentlist')->name('myclass.studentlist');
-
+    Route::get('/myclass/sectionwiselist/{classId}/{sectionId}/{sessionYearId}','backend\ClassTeacherController@sectionwiselist')->name('myclass.sectionwiselist');
+    Route::get('myclass/show/studentProfile/{id}', 'backend\ClassTeacherController@showstudentprofile')->name('myclass.showStudentProfile');
+    Route::get('/myclass/student/delete/{id}','backend\ClassTeacherController@studentdestroy')->name('myclass.student.delete');
 });
 
 //Marks Distribution

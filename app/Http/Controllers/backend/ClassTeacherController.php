@@ -26,6 +26,10 @@ class ClassTeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function myclassattendance()
     {
@@ -167,6 +171,7 @@ public function storeAttendence(Request $request){
         //
     }
 
+    //FeeCollection section
     public function myclassfeecollection()
     {
         $userId= Auth::guard('web')->user()->id;
@@ -360,12 +365,10 @@ public function storeAttendence(Request $request){
 
      }
 
-     public function sectionwiselist(Request $request)
+     public function sectionwiselist($classId,$sectionId,$sessionYearId)
 
      {
-        $classId= $request->classId;
-        $sectionId= $request->sectionId;
-        $sessionYearId= $request->sessionYearid;
+
          $bId=Auth::guard('web')->user()->bId;
              $class=DB::select("select students.id as stdId, students.firstName, students.lastName, students.fatherName,students.motherName,students.roll, students.blood, students.birthDate,students.mobile
                                  from students, sections, classes
@@ -395,6 +398,140 @@ public function storeAttendence(Request $request){
                          ->make(true);
              return $data_table_render;
      }
+
+     public function showstudentprofile($id)
+     {
+         $students=Student::with('schoolBranch','Section')
+         ->where('bId', Auth::guard('web')->user()->bId)
+         ->findOrFail($id);
+         return view('backend.pages.mystudent.myStudentProfile',['students' => $students]);
+     }
+
+
+     public function studentdestroy($id)
+    {
+        $student = Student::find($id);
+                if($student){
+                    $student->delete();
+                    return response()->json(["success"=>'Data Deleted',201]);
+                }
+            return response()->json(["error"=>'error',422]);
+    }
+
+
+    public function myclassattendancebydate()
+    {
+        $userId= Auth::guard('web')->user()->id;
+        //dd($userId);
+        $bId= Auth::guard('web')->user()->bId;
+        //dd($bId);
+        $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
+        //dd($teachers);
+        if($teachers<=0){
+
+             return "You are not enroled in any class";
+
+        }else{
+
+            $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+            foreach($teachers as $teacher){
+                    if($teacher->Section->sessionYear->status == 1){
+                        //dd($teacher->Section);
+                        $classId = $teacher->classId;
+                        $sectionId = $teacher->sectionId;
+
+                    return view('backend.pages.classTeacher.myclassAttendenceByDate',['sectionId'=>$sectionId,'classId'=>$classId ]);
+                }else{
+                    return redirect()->back()->with('Session Expired!. You are not enroled in any class');
+                }
+            }
+
+        }
+
+    }
+
+        //FeeCollection section
+        public function myclassIndividualFeeCollection()
+        {
+            $userId= Auth::guard('web')->user()->id;
+            //dd($userId);
+            $bId= Auth::guard('web')->user()->bId;
+            //dd($bId);
+            $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
+            //dd($teachers);
+            if($teachers<=0){
+
+                 return "You are not enroled in any class";
+
+            }else{
+
+                $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+                foreach($teachers as $teacher){
+                        if($teacher->Section->sessionYear->status == 1){
+                            //dd($teacher->Section);
+                            $classId = $teacher->classId;
+                            $shift = $teacher->shift;
+                            $sessionYearId = $teacher->sessionYearId;
+                            $sessionYear = SessionYear::where('id',$sessionYearId)->pluck('sessionYear');
+
+                            $className= classes::where('id',$classId)->pluck('className');
+                            $sectionId = $teacher->sectionId;
+                            $sectionName= Section::where('id',$sectionId)->pluck('sectionName');
+
+                        return view('backend.pages.classTeacher.myclassIndividualFeeCollection',['sectionId'=>$sectionId,'sectionName'=>$sectionName,'classId'=>$classId,'className'=>$className,'sessionYear'=>$sessionYear,'sessionYearId'=>$sessionYearId,'shift'=>$shift]);
+                    }else{
+                        return redirect()->back()->with('Session Expired!. You are not enroled in any class');
+                    }
+                }
+
+            }
+
+        }
+
+
+    public function myclassStoreMonthly(Request $request)
+    {
+
+        //return($request);
+        $month= $request->month;
+        foreach ($month as $id =>$value) {
+            $stfee = new feeCollection();
+
+
+            $stfee->feeId = $request->feeId2;
+            $stfee->paidMonth = strtoupper(date('F'));
+            $stfee->sessionYearId = $request->sessionYear2;
+            $stfee->sectionId = $request->sectionId;
+            $stfee->amount  = $request->amount2;
+            $stfee->totalAmount  = $request->totalCharge2;
+            $stfee->studentId = $request->studentId2;
+            $stfee->month = $id;
+
+            //change for total amount
+            // if($id!=null){
+            //     $scholership= studentScholarship::where('studentId',$id)->where('feeId',$request->feeId2)->get();
+            //     $discount=0;
+            //     if($scholership){
+            //         foreach ($scholership as $sc) {
+            //             $discount= $sc->discount;
+
+            //             }
+            //             $totalAmount =  $fee-(($fee*$discount)/100);
+
+            //             $stfee->totalAmount  = $totalAmount;
+            //             $stfee->studentId = $id;
+            //     }
+            // }
+            $stfee->bId= Auth::user()->bId;
+
+            //return($stfee);
+            $stfee->save();
+        }
+        Session::flash('success','Succesfully Data Saved');
+        return redirect()->route('myclass.feecollection.individual');
+        //return redirect()->url()->previous();
+        //echo url()->previous();
+    }
 
 
 }

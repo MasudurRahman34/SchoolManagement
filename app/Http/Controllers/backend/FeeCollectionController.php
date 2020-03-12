@@ -25,6 +25,9 @@ use App\model\dueFeeHistory;
 use Illuminate\Support\Facades\Route;
 
 
+
+
+
 class FeeCollectionController extends Controller
 {
 
@@ -32,6 +35,7 @@ class FeeCollectionController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -530,7 +534,6 @@ class FeeCollectionController extends Controller
 
     public function storeMorethenOneMonth(Request $request)
     {
-
         //return($request);
         $month= $request->month;
         foreach ($month as $id =>$value) {
@@ -571,6 +574,8 @@ class FeeCollectionController extends Controller
         }
         Session::flash('success','Succesfully Data Saved');
         return redirect()->route('monthly.index');
+        //return redirect()->url()->previous();
+        //echo url()->previous();
     }
 
     //scholership and discount amount for individual student

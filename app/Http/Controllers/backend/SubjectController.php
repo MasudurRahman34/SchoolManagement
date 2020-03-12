@@ -18,6 +18,11 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $class= classes::where('bId', Auth::user()->bId)->get();

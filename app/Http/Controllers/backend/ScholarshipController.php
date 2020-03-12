@@ -21,6 +21,11 @@ class ScholarshipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
       return view('backend.pages.scholarshipManagement.manageScholarship');
@@ -49,7 +54,7 @@ class ScholarshipController extends Controller
      */
     public function store(Request $request)
      {
-        $validator= Validator::make($request->all(), Scholarship::$rules); 
+        $validator= Validator::make($request->all(), Scholarship::$rules);
         if ($validator->fails()) {
             return response()->json(["errors"=>$validator->errors(), 400]);
         }else{
@@ -77,7 +82,7 @@ class ScholarshipController extends Controller
         $scholarship=scholarship::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->get();
 
         $data_table_render = DataTables::of($scholarship)
-           
+
             ->addColumn('action',function ($row){
 
                 return '<button class="btn btn-info btn-sm" onClick="editScholarship('.$row['id'].')"><i class="fa fa-edit"></i></button>'.

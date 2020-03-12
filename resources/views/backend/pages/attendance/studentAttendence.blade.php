@@ -166,6 +166,7 @@
         });
 
         });
+
         $(document).ready(function () {
           $("form").submit(function () {
 
@@ -186,8 +187,6 @@
         });
 
         //misisong validation
-
-
 
     </script>
 

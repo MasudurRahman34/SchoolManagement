@@ -42,7 +42,7 @@ class ApiAttendanceController extends Controller
             return response()->json(["redirectToEdit"=>"/student/attendance/edit/$request->sectionId"]);
         }else{
             $sectionId= $request->sectionId;
-            $students = Student::where('sectionId',$sectionId)->orderBy('id','ASC')->get();
+            $students = Student::where('sectionId',$sectionId)->whereNull('deleted_at')->orderBy('id','ASC')->get();
             return response()->json($students);
         }
 

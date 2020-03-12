@@ -21,6 +21,11 @@ class ClassesController extends Controller
      */
 
      //form view
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
 

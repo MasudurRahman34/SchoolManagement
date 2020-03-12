@@ -13,6 +13,7 @@
         </ul>
     </div>
     @include('backend.partials._message')
+
     <!--Start Row-->
     <div class="row justify-content-md-center"><!-- justify-content-md-center-->
       <!--Start inline section-->
@@ -20,51 +21,9 @@
       <div class="col-md-10">
         <div class="tile">
         <button type="button" class="btn-info float-right" onClick="reloadThePage()">Refresh!</button>
-          <h3 class="tile-title border-bottom p-2">Student Search</h3>
-
+          <h3 class="tile-title border-bottom p-2">Student Search </h3>
           <div class="tile-body">
             <form class="row" id="myform" action="javascript:void(0)">
-            <div class="form-group col-md-3">
-                <label for="exampleFormControlSelect1">Session Year</label>
-                <select class="form-control admission" id="sessionYear">
-                  <option value="">--Please Select--</option>
-                  @foreach ($sessionYear as $year)
-                    <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="form-group col-md-3">
-              <label class="control-label mt-3">Shift</label><br>
-                <div class="custom-control shift-radio custom-control-inline">
-                    <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
-                    <label class="custom-control-label"  for="shift1">Morning</label>
-                 </div>
-                <div class="custom-control shift-radio custom-control-inline">
-                    <input type="radio" name="shift" id="shift2" value="Day" class="custom-control-input admission">
-                    <label class="custom-control-label" for="shift2">Day</label>
-                </div>
-                <div class="custom-control shift-radio custom-control-inline">
-                    <input type="radio" name="shift" id="shift3" value="Evening" class="custom-control-input admission">
-                    <label class="custom-control-label" for="shift3">Evening</label>
-                </div>
-              </div>
-
-              <!-- single section-->
-              <div class="form-group col-md-3">
-                <label for="exampleFormControlSelect1">Class</label>
-                <select class="form-control admission" id="classId">
-                  <option value="">--Select Class--- </option>
-                  @foreach ($class as $class)
-                  <option value="{{$class->id}}">{{$class->className}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="form-group col-md-3">
-                <label for="exampleFormControlSelect1"> Section</label>
-                <select class="form-control" id="sectionId">
-                <option value=""> --Please Section--  </option>
-                </select>
-              </div>
               <div class="form-group col-md-3">
                 <label for="exampleFormControlSelect1">Date</label>
                 <div class="">
@@ -80,6 +39,7 @@
       </div>
       <!--End inline section -->
     </div>
+
     <!--End Row-->
     <div class="row justify-content-md-center" >
         <div class="col-md-10" >
@@ -87,8 +47,8 @@
                 <div class="tile-body" id="tblHidden" hidden>
                     <form action="{{route('store.attendence')}}" method="post" id="attendence">
                         @csrf
-                       <input type="text" name="sectionId" id="sectionId2" hidden>
-                       <input type="date" name="created_date" id="dateId2" hidden>
+                       <input type="text" name="sectionId" id="sectionId2" value="{{$sectionId}}" hidden>
+                       <input type="date" name="created_date" id="dateId2" value="{{$classId}}" hidden>
                        <input type="text" name="classId2" id="classId2" hidden>
                         <div class="table-responsive" >
                         <table class="table table-hover table-bordered" id="sampleTable">
@@ -112,27 +72,30 @@
         </div>
     </div>
     <!--End Row-->
+
     <div class="clearix"></div>
 @endsection
 @section('script')
 
-    <script>
-     dynamicSectionSelection();
-    </script>
     <script>
 
       $('#dateId').change(function (e) {
         e.preventDefault();
         // alert('working');
 
-        var sectionId= $("#sectionId").val();
+        var sectionId= {{$sectionId}};
         var dateId= $("#dateId").val();
-        var classId= $("#classId").val();
+        var classId= {{$classId}};
         $("#sectionId2").attr('value',sectionId);
         $("#dateId2").attr('value',dateId);
-        $("#classId2").attr('value',classId);
+        //$("#classId2").attr('value',classId);
         // var date=$("#dateId2").val();
-        console.log(classId2, dateId2);
+        console.log(sectionId, classId2, dateId2);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+            });
 
         $.ajax({
           type: "post",
@@ -165,11 +128,8 @@
                   '<label class="radio"><input class="roll['+value.roll+']" type="radio"  name="attend['+value.id+']" value="absent">Absent</label>'+
                   '<label class="radio"><input class="roll['+value.roll+']" type="radio" name="attend['+value.id+']" value="late">late</label>'+
                 "</td>"+
-
                 "<td>"+value.firstName+"</td>"+
-
            "</tr>";
-
           });
 
             $('tbody').html(tr);
@@ -178,7 +138,6 @@
         });
 
         })
-
         $(document).ready(function () {
           $("form").submit(function () {
 

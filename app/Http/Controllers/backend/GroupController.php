@@ -18,8 +18,12 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-     //form view 
+     //form view
     public function index()
     {
         $class= classes::where('bId', Auth::user()->bId)->get();
@@ -43,7 +47,7 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //create new group 
+     //create new group
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), Group::$rules);
@@ -66,12 +70,12 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //view group by school 
+     //view group by school
     public function show()
     {
         $group=Group::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
         $data_table_render = DataTables::of($group)
-            
+
             ->addColumn('action',function ($row){
                 return '<button class="btn btn-info btn-sm" onClick="editGroup('.$row['id'].')"><i class="fa fa-edit"></i></button>'.
                     '<button  onClick="deleteGroup('.$row['id'].')" class="btn btn-danger btn-sm delete_section"><i class="fa fa-trash-o"></i></button>';
@@ -89,7 +93,7 @@ class GroupController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //find group by id for edit 
+     //find group by id for edit
     public function edit($id)
     {
       $group = Group::find($id);
@@ -103,7 +107,7 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //update group information 
+    //update group information
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), Group::$rules);
@@ -125,7 +129,7 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //delete group information 
+    //delete group information
     public function destroy($id)
     {
 

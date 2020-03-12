@@ -36,7 +36,8 @@
                         $i--;
                         @endphp
                         @endforeach
-                        <a href="{{route('attendance.index') }}" class="btn btn-info float-right ml-auto mt-2"> <i class="fa fa-arrow-left"></i> Go Back</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-info float-right ml-auto mt-2"> <i class="fa fa-arrow-left"></i> Go Back</a>
+                        {{-- {{route('attendance.index') }}  --}}
                     </ol>
 
                 </nav>

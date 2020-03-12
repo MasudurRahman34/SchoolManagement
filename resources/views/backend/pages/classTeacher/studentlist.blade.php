@@ -82,7 +82,8 @@
         serverSide:true,
         pagin:true,
         destroy:true,
-        ajax:"{{url('mystudent/sectionwiselist/')}}"+'/'+classId+'/'+sectionId+'/'+sessionYearId,
+
+        ajax:"{{url('myclass/sectionwiselist/')}}"+'/'+classId+'/'+sectionId+'/'+sessionYearId,
         columns:[
             { data: 'DT_RowIndex', name: 'DT_RowIndex' },
            // { data: 'studentId', name: 'studentId' },
@@ -108,7 +109,7 @@
 
  //delete
  function deleteStudent(id) {
-    var url = "{{url('mystudent/student/delete')}}";
+    var url = "{{url('myclass/student/delete/')}}";
     deleteAttribute(url,id);
 }
 
