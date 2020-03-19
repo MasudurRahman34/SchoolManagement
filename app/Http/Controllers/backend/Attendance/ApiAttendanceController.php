@@ -11,6 +11,7 @@ use App\model\classes;
 use App\model\ClassTeacher;
 use App\model\Section;
 use App\model\Student;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -150,5 +151,15 @@ class ApiAttendanceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function absentlist()
+    {
+    $absentlist=Attendance::where('attendence','absent')
+                        ->whereDate('created_at', '=', Carbon::today()->toDateString())->with('Student')
+                        ->pluck('studentId');
+
+         return Response()->json(["success"=>'Absent', "data"=>$absentlist,201]);
+
     }
 }

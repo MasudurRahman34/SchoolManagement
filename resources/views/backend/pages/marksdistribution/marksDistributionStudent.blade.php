@@ -377,55 +377,62 @@ function sendMark(id){
     var written= $('input[name=writting'+id+']').val();
     var practical= $('input[name=practical'+id+']').val();
     var totalMarks= $('input[name=totalMarks'+id+']').val();
-    var grade= $('input[name=grade'+id+']').val();
-    var gradePoint= $('input[name=gradePoint'+id+']').val();
-   // console.log(ca,mcq,written,practical,totalMarks,grade,gradePoint);
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        },
-    });
-    var url="{{url('/adminview/student/markstore')}}"
-    //ajax
 
-    jQuery.ajax({
-        method: 'post',
-        url: url,
-        data: {
-            studentid:studentid,
-            sessionYearId: sessionYearId,
-            subjectId: subjectId,
-            examType: examType,
+    if(totalMarks>=100){
+        alert("Total mark Can not be More then 100! please Check it Again");
+    }else{
+        var totalMarks =totalMarks;
+        var grade= $('input[name=grade'+id+']').val();
+        var gradePoint= $('input[name=gradePoint'+id+']').val();
+    // console.log(ca,mcq,written,practical,totalMarks,grade,gradePoint);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+        });
+        var url="{{url('/adminview/student/markstore')}}"
+        //ajax
 
-            ca: ca,
-            mcq: mcq,
-            written: written,
-            practical: practical,
-            totalMarks: totalMarks,
-            grade: grade,
-            gradePoint: gradePoint,
-        },
-        success: function(result){
-            if (result.success) {
-                $( "div" ).remove( ".text-danger" );
-               console.log(result);
-                successNotification3();
-                    //var id= JSON.parse(result.id);
-                     id=$('#stid').val();
-                    console.log(id);
+        jQuery.ajax({
+            method: 'post',
+            url: url,
+            data: {
+                studentid:studentid,
+                sessionYearId: sessionYearId,
+                subjectId: subjectId,
+                examType: examType,
 
-               $('input[name=button'+id+']').html("Updated");
-               $('#submit'+id+'').html("Update");
+                ca: ca,
+                mcq: mcq,
+                written: written,
+                practical: practical,
+                totalMarks: totalMarks,
+                grade: grade,
+                gradePoint: gradePoint,
+            },
+            success: function(result){
+                if (result.success) {
+                    $( "div" ).remove( ".text-danger" );
+                console.log(result);
+                    successNotification3();
+                        //var id= JSON.parse(result.id);
+                        id=$('#stid').val();
+                        console.log(id);
+
+                $('input[name=button'+id+']').html("Updated");
+                $('#submit'+id+'').html("Update");
 
 
-                //removeUpdateProperty("exam");
-                //document.getElementById("myform").reset();
-            }
-            if(result.errors){
-                getError(result.errors);
-            }
-        } //End success
-    });//end ajax
+                    //removeUpdateProperty("exam");
+                    //document.getElementById("myform").reset();
+                }
+                if(result.errors){
+                    getError(result.errors);
+                }
+            } //End success
+        });//end ajax
+    }//end else
+
 
     }//End function
 

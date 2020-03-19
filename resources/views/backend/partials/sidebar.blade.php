@@ -105,6 +105,7 @@
                 <li><a class="treeview-item" href="{{route('myclass.feecollection')}}"><i class="icon fa fa-angle-right"></i> Fee Collection</a></li>
                 <li><a class="treeview-item" href="{{route('myclass.feecollection.individual')}}"><i class="icon fa fa-angle-right"></i>Individual Fee Collection </a></li>
                 <li><a class="treeview-item" href="{{route('myclass.studentlist')}}"><i class="icon fa fa-angle-right"></i> Student List</a></li>
+                <li><a class="treeview-item" href="{{route('myclass.monthlyfee.report')}}"><i class="icon fa fa-angle-right"></i>Monthly Fee Report</a></li>
             </ul>
           </li>
           @endcan
@@ -160,6 +161,7 @@
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Mark Entry</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('marks.index') }}"><i class="icon fa fa-angle-right"></i> Marks Entry</a></li>
+              <li><a class="treeview-item" href="{{route('result.index') }}"><i class="icon fa fa-angle-right"></i>Result </a></li>
             </ul>
           </li>
           @endcan

@@ -59,6 +59,7 @@ Route::group(['prefix' => 'api', 'namespace'=>'backend\api'], function () {
 });
 
 //end api routes
+
 //New Admin APi Section
 Route::group(['namespace'=>'backend'], function () {
     Route::post('/student/attendance/studentData','Attendance\ApiAttendanceController@studentData')->name('studentData.attendence');
@@ -67,7 +68,9 @@ Route::group(['namespace'=>'backend'], function () {
     Route::get('/attendance/show/{id}/{studentId}', 'Attendance\ApiAttendanceController@show')->name('apiattendence.show');
     Route::get('/attendance/attendancePercentage/{id}/{studentId}', 'Attendance\ApiAttendanceController@attendancePercentage')->name('apiattendence.attendancePercentage');
 
-    Route::get('/getAllFeesByClass/{classId}/{sessionYearId}','Fee\ApiFeeController@getAllFeesByClass')->name('getAllFeesByClass');
+    Route::get('/getAllFeesByClass/{classId}/{sessionYearId}','fee\ApiFeeController@getAllFeesByClass')->name('getAllFeesByClass');
+
+    Route::get('/absentlist', 'Attendance\ApiAttendanceController@absentlist')->name('absentData.absentlist');
 
 
 
@@ -221,19 +224,21 @@ Route::group(['middleware' => ['auth','role_or_permission:Class']], function () 
     Route::get('/class/delete/{id}','backend\ClassesController@destroy')->name('class.delete');
 });
 
-Route::group(['middleware' => ['auth','role_or_permission:Fee Management']], function () {
+Route::group(['middleware' => ['auth','role_or_permission:Fee Management'], 'namespace'=>'backend\fee'], function () {
     //Fee Management for admin
-    Route::get('/fee','backend\Fee\FeeController@index')->name('fee.index');
-    Route::post('/fee/store','backend\Fee\FeeController@store')->name('fee.store');
-    Route::get('/fee/show','backend\Fee\FeeController@show')->name('fee.show');
-    Route::get('/fee/edit/{id}','backend\Fee\FeeController@edit')->name('fee.edt');
-    Route::post('/fee/update/{id}','backend\Fee\FeeController@update')->name('fee.update');
-    Route::get('/fee/delete/{id}','backend\Fee\FeeController@destroy')->name('fee.delete');
+    Route::get('/fee','FeeController@index')->name('fee.index');
+    Route::post('/fee/store','FeeController@store')->name('fee.store');
+    Route::get('/fee/show','FeeController@show')->name('fee.show');
+    Route::get('/fee/edit/{id}','FeeController@edit')->name('fee.edt');
+    Route::post('/fee/update/{id}','FeeController@update')->name('fee.update');
+    Route::get('/fee/delete/{id}','FeeController@destroy')->name('fee.delete');
 
-    //feeHisory admin view
-    Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');
-    Route::get('/feehistory/show','backend\FeeHistoryController@show')->name('feehistory.show');
+
 });
+
+ //feeHisory admin view
+ Route::get('/feehistory','backend\FeeHistoryController@index')->name('feehistory.index');
+ Route::get('/feehistory/show','backend\FeeHistoryController@show')->name('feehistory.show');
 
 //Fee management
 Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], function () {
@@ -270,7 +275,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], fun
 
     //Admin Report
     Route::get('/feemanagement/report/sectionwise','backend\FeeManagementReportController@index')->name('feemanagementreport.index');
-    Route::post('/feemanagement/report/sectionwise/feedetails','backend\FeeManagementReportController@feedetails')->name('report.feedetails');
+    //Route::post('/feemanagement/report/sectionwise/feedetails','backend\FeeManagementReportController@feedetails')->name('report.feedetails');
     Route::get('/feemanagement/report/sectionwise/show/{month}/{sessionYearId}','backend\FeeManagementReportController@show')->name('detail.show');
 
 });
@@ -280,6 +285,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection|Class T
     Route::post('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
     Route::post('/feecollection/individual/findmonthlyyearlyfee','backend\FeeCollectionController@findMonthForAdvancefeeCollection')->name('find.monthlyoryearly');
     //Route::post('/feecollection/individual/monthly/store','backend\FeeCollectionController@storeMorethenOneMonth')->name('store.storeMorethenOneMonth');
+    Route::post('/feemanagement/report/sectionwise/feedetails','backend\FeeManagementReportController@feedetails')->name('report.feedetails');
 });
 
 
@@ -390,14 +396,22 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teach
     Route::get('/myclass/sectionwiselist/{classId}/{sectionId}/{sessionYearId}','backend\ClassTeacherController@sectionwiselist')->name('myclass.sectionwiselist');
     Route::get('myclass/show/studentProfile/{id}', 'backend\ClassTeacherController@showstudentprofile')->name('myclass.showStudentProfile');
     Route::get('/myclass/student/delete/{id}','backend\ClassTeacherController@studentdestroy')->name('myclass.student.delete');
+
+    //Monthly Fee Report
+    Route::get('/myclass/monthlyfeereport','backend\ClassTeacherController@monthlyFeeReport')->name('myclass.monthlyfee.report');
+    Route::get('/myclass/monthly/feereport/show/{month}/{sessionYearId}/{sectionId}','backend\ClassTeacherController@monthlyFeeReportDetails')->name('myclass.monthlyfee.detail');
 });
 
 //Marks Distribution
+Route::group(['middleware' => ['auth','role_or_permission:Mark']], function () {
     Route::get('adminview/student/marksdistribution','backend\MarksDistributionController@index')->name('marks.index');
     Route::get('adminview/student/sectionwiselist/{classId}/{sectionId}', 'backend\MarksDistributionController@sectionwiselist')->name('mystudent.sectionwiselist');
     Route::post('adminview/student/studenlist','backend\MarksDistributionController@studenlist')->name('studentlist.mark');
     Route::post('adminview/student/markstore','backend\MarksDistributionController@storemark')->name('store.mark');
 
+//Result management
+    Route::get('adminview/student/result','backend\MarksDistributionController@resultIndex')->name('result.index');
+});
 
 //Exam attendance
     Route::get('adminview/student/examattendance','backend\MarksDistributionController@examattendanceindex')->name('examattendance.index');

@@ -302,13 +302,14 @@ $('#month').change(function(e){
 
     var month =$('#month').val();
     var sessionYearId =$('#sessionYear').val();
+    var sectionId={{$sectionId}};
 
-    console.log(month,sessionYearId);
+    console.log(month,sessionYearId,sectionId);
 
     //alert('working');
     $.ajax({
         type: "get",
-        url:"{{ url('feemanagement/report/sectionwise/show')}}"+'/'+month+'/'+sessionYearId,
+        url:"{{ url('myclass/monthly/feereport/show')}}"+'/'+month+'/'+sessionYearId+'/'+sectionId,
         success: function (data) {
 
             console.log(data.sectionTotalTableOutput);

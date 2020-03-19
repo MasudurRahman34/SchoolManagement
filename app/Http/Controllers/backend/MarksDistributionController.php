@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 //add;
 use App\model\classes;
+use App\model\exam;
 use App\model\Mark;
 use App\model\Student;
 use App\model\Subject;
@@ -296,4 +297,16 @@ class MarksDistributionController extends Controller
     {
         //
     }
+
+    public function resultIndex()
+    {
+        $subjects=Subject::where('bid', Auth::guard('web')->user()->bId)->get();
+        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        $exams= exam::where('bId', Auth::guard('web')->user()->bId)->get();
+
+        return view('backend.pages.marksdistribution.result')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('exams',$exams);
+    }
+
 }

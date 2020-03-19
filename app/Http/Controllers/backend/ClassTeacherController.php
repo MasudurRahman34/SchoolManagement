@@ -547,5 +547,200 @@ public function storeAttendence(Request $request){
         //echo url()->previous();
     }
 
+         // student list section
+         public function monthlyFeeReport()
+         {
+             $userId= Auth::guard('web')->user()->id;
+             //dd($userId);
+             $bId= Auth::guard('web')->user()->bId;
+             //dd($bId);
+             $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
+             //dd($teachers);
+             if($teachers<=0){
+
+                  return "You are not enroled in any class";
+
+             }else{
+
+                 $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+                 foreach($teachers as $teacher){
+                         if($teacher->Section->sessionYear->status == 1){
+                             //dd($teacher->Section);
+                             $classId = $teacher->classId;
+                             $shift = $teacher->shift;
+                             $sessionYearId = $teacher->sessionYearId;
+                             $sessionYear = SessionYear::where('id',$sessionYearId)->get();
+
+
+                             $sectionId = $teacher->sectionId;
+
+
+                         return view('backend.pages.classTeacher.myClassMonthlyFeeReport',['sectionId'=>$sectionId,'classId'=>$classId,'sessionYear'=>$sessionYear,'sessionYearId'=>$sessionYearId]);
+                     }else{
+                         return redirect()->back()->with('Session Expired!. You are not enroled in any class');
+                     }
+                 }
+
+             }
+
+         }
+
+
+    public function monthlyFeeReportDetails($month,$sessionYearId,$sectionId)
+    {
+
+    $bId=Auth::guard('web')->user()->bId;
+
+    //Section wise Monthly Report
+
+    $sectionCalculation=DB::select("SELECT fee_collections.sectionId, sections.sectionName,  sections.shift, classes.className,
+                                    COALESCE(sum(case when fees.type='gov' then fee_collections.totalAmount end), 0) as govtpayment,
+                                    COALESCE(sum(case when fees.type='nonGov' then fee_collections.totalAmount end), 0) as Nongovtpayment,
+
+                                    COALESCE(sum(fee_collections.totalAmount), 0) as total,
+                                    COALESCE(sum(fee_collections.due), 0) as totaldue
+
+
+                                    FROM fee_collections, fees, sections, classes
+                                    WHERE fee_collections.feeId=fees.id
+                                    AND fees.classid=classes.id
+                                    AND fee_collections.sectionId=sections.id
+                                    AND fee_collections.sessionYearId='$sessionYearId'
+                                    AND fee_collections.bId='$bId'
+                                    AND fee_collections.paidMonth='$month'
+                                    AND fee_collections.sectionId='$sectionId'
+                                    GROUP BY fee_collections.sectionId");
+
+        $sectionTotalTableOutput="";
+        $i=1;
+        foreach ($sectionCalculation as $sectionTotal) {
+
+
+            $sectionTotalTableOutput.='<tr>'.
+            '<td>'.$i++.'</td>'.
+            '<td>'.$sectionTotal->className.'</td>'.
+            '<td>'.$sectionTotal->sectionName.'</td>'.
+            '<td>'.$sectionTotal->shift.'</td>'.
+                '<td>'.$sectionTotal->govtpayment.'</td>'.
+                '<td>'.$sectionTotal->Nongovtpayment.'</td>'.
+                '<td>'.$sectionTotal->total.'</td>'.
+                '<td>'.$sectionTotal->totaldue.'</td>'.
+              // '<td>'.$sectionTotal->totalduecollection.'</td>'.
+                // '<td>'.$sectionTotal->t.'</td>'.
+                '</tr>';
+        }
+
+
+        //Government Fee Type Report
+        $governmentFeeTotal=DB::select("SELECT sectionName,sectionId,feeId, fees.classId, classes.className, sections.shift, fees.name,
+                                        SUM(fee_collections.totalAmount) as total,
+                                        COUNT( DISTINCT fee_collections.studentId) as totalStudent,
+                                        sum(fee_collections.due) as totaldue
+                                        FROM fee_collections, fees, sections, classes
+                                        WHERE fee_collections.feeId=fees.id
+                                        AND fees.classid=classes.id
+                                        AND fee_collections.sectionId=sections.id
+                                        AND fee_collections.sessionYearId='$sessionYearId'
+                                        AND fee_collections.paidMonth='$month'
+                                        AND fee_collections.bId='$bId'
+                                        AND fee_collections.sectionId='$sectionId'
+                                        AND fees.type='gov'
+                                        GROUP BY feeId, fee_collections.sectionId
+                                        ORDER BY fee_collections.sectionId");
+
+                $governmentFeeTableOutput="";
+                $i=1;
+
+                    foreach ($governmentFeeTotal as $feeTotal) {
+
+                        $governmentFeeTableOutput.='<tr>'.
+                        '<td>'.$i++.'</td>'.
+                        '<td>'.$feeTotal->className.'</td>'.
+                        '<td>'.$feeTotal->sectionName.'</td>'.
+                        '<td>'.$feeTotal->shift.'</td>'.
+                        '<td>'.$feeTotal->name.'</td>'.
+                        '<td>'.$feeTotal->total.'</td>'.
+                        '<td>'.$feeTotal->totaldue.'</td>'.
+                        '<td>'.$feeTotal->totalStudent.'</td>'.
+                        '<td>'.'<button class="btn btn-primary details"  onClick="details('.$feeTotal->sectionId.','.$feeTotal->classId.','.$feeTotal->feeId.')" name="button" id="submit" ><i class="fa fa-plus-square" aria-hidden="true"></i>Details</button>'.'</td>'.
+                        '</tr>';
+                    }
+
+
+        //Non-Government Fee Type Report
+        $nonGovtFeeTotal=DB::select("SELECT sectionName,sectionId,feeId, fees.classId, classes.className, sections.shift, fees.name,
+                                        SUM(fee_collections.totalAmount) as total,
+                                        COUNT(DISTINCT fee_collections.studentId) as totalStudent,
+                                        sum(fee_collections.due) as totaldue
+                                        FROM fee_collections, fees, sections, classes
+                                        WHERE fee_collections.feeId=fees.id
+                                        AND fees.classid=classes.id
+                                        AND fee_collections.sectionId=sections.id
+                                        AND fee_collections.sessionYearId='$sessionYearId'
+                                        AND fee_collections.paidMonth='$month'
+                                        AND fee_collections.bId='$bId'
+                                        AND fee_collections.sectionId='$sectionId'
+                                        AND fees.type='nonGov'
+                                        GROUP BY feeId, fee_collections.sectionId
+                                        ORDER BY fee_collections.sectionId");
+
+                    $nonGovtFeeTableOutput="";
+                    $i=1;
+
+                        foreach ($nonGovtFeeTotal as $nongovtfee) {
+
+                        $nonGovtFeeTableOutput.='<tr>'.
+                        '<td>'.$i++.'</td>'.
+                        '<td>'.$nongovtfee->className.'</td>'.
+                        '<td>'.$nongovtfee->sectionName.'</td>'.
+                        '<td>'.$nongovtfee->shift.'</td>'.
+                        '<td>'.$nongovtfee->name.'</td>'.
+                        '<td>'.$nongovtfee->total.'</td>'.
+                        '<td>'.$nongovtfee->totaldue.'</td>'.
+                        '<td class="details">'.$nongovtfee->totalStudent.'</td>'.
+                        '<td>'.'<button class="btn btn-primary details"  onClick="details('.$nongovtfee->sectionId.','.$nongovtfee->classId.','.$nongovtfee->feeId.')" name="button" id="submit" ><i class="fa fa-plus-square" aria-hidden="true"></i>Details</button>'.'</td>'.
+
+                        '</tr>';
+                        }
+
+         //Due collection  Fee Type Report  //AND fees.type='nonGov'
+         $dueFeeTotals=DB::select("SELECT sectionName, fees.classId, classes.className, sections.shift, fees.name, due_fee_histories.paidMonth,fee_collections.month,
+                                        SUM(due_fee_histories.paidAmount) as total,
+                                        COUNT(due_fee_histories.feeCollectionId) as totalStudent
+                                        FROM fee_collections, fees, sections, classes,due_fee_histories
+                                        WHERE fee_collections.feeId=fees.id
+                                        AND due_fee_histories.feeCollectionId=fee_collections.id
+                                        AND fees.classid=classes.id
+                                        AND fee_collections.sectionId=sections.id
+                                        AND fee_collections.sessionYearId='$sessionYearId'
+                                        AND due_fee_histories.paidMonth='$month'
+                                        AND fee_collections.bId='$bId'
+                                        AND fee_collections.sectionId='$sectionId'
+                                        GROUP BY feeId, fee_collections.sectionId
+                                        ORDER BY fee_collections.sectionId");
+
+                        $dueFeeTotalsdata="";
+                        $i=1;
+
+                        foreach ($dueFeeTotals as $dueFeeTotal) {
+
+                        $dueFeeTotalsdata.='<tr>'.
+                        '<td>'.$i++.'</td>'.
+                        '<td>'.$dueFeeTotal->className.'</td>'.
+                        '<td>'.$dueFeeTotal->sectionName.'</td>'.
+                        '<td>'.$dueFeeTotal->shift.'</td>'.
+                        '<td>'.$dueFeeTotal->name.'</td>'.
+                        '<td>'.$dueFeeTotal->total.'</td>'.
+                        '<td>'.$dueFeeTotal->totalStudent.'</td>'.
+                        '<td>'.$dueFeeTotal->month.'</td>'.
+                        '<td>'.$dueFeeTotal->paidMonth.'</td>'.
+
+                        '</tr>';
+                        }
+
+        return Response()->json(["sectionTotalTableOutput"=>$sectionTotalTableOutput,"governmentFeeTableOutput"=>$governmentFeeTableOutput,"nonGovtFeeTableOutput"=>$nonGovtFeeTableOutput,"dueFeeTotalsdata"=>$dueFeeTotalsdata]);
+
+    }
+
 
 }

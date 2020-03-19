@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+ @extends('backend.layouts.master')
 	@section('title', 'Date Wish Attendance')
     @section('content')
     {{-- //main content --}}
@@ -61,14 +61,14 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="exampleFormControlSelect1"> Section</label>
-                <select class="form-control" id="sectionId">
+                <select class="form-control changeIdclass" id="sectionId">
                 <option value=""> --Please Section--  </option>
                 </select>
               </div>
               <div class="form-group col-md-3">
                 <label for="exampleFormControlSelect1">Date</label>
                 <div class="">
-                  <input class="form-control admission" type="date" name="dateId" id="dateId" >
+                  <input class="form-control changeIdclass" type="date" name="dateId" id="dateId" >
                 </div>
               </div>
               <!-- <div class="form-group col-md-12">
@@ -121,7 +121,7 @@
     </script>
     <script>
 
-      $('#dateId').change(function (e) {
+      $('.changeIdclass').change(function (e) {
         e.preventDefault();
         // alert('working');
 
@@ -133,7 +133,8 @@
         $("#classId2").attr('value',classId);
         // var date=$("#dateId2").val();
         console.log(classId2, dateId2);
-
+        if(classId>0 && dateId!=0){
+            //alert("ok");
         $.ajax({
           type: "post",
           url: "{{ url('/student/attendance/studentDatabydate')}}",
@@ -175,7 +176,11 @@
             $('tbody').html(tr);
           }
         }
-        });
+        });//end ajax
+    }
+
+
+
 
         })
 

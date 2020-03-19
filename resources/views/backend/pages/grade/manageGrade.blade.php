@@ -81,14 +81,22 @@
                 <label for="exampleSelect1">Grade Point </label>
                     {{-- <input class="form-control"  type="number"  max="" min="0" id="gradePoint" name="gradePoint" placeholder="Enter gradePoint"> --}}
                     <select class="form-control" id="gradePoint" name="gradePoint">
+                        {{--  <option value=""> Select point </option>
+                        <option value="5.00">5.00</option>
+                        <option value="4.00">4.00</option>
+                        <option value="3.50">3.50</option>
+                        <option value="3.00">3.00</option>
+                        <option value="2.00">2.00</option>
+                        <option value="1.00">1.00</option>
+                        <option value="0.00">0.00</option>  --}}
                         <option value=""> Select point </option>
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3.5">3.5</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                        <option value="0">0</option>
+                        <option value="5">5.00</option>
+                        <option value="4">4.00</option>
+                        <option value="3.5">3.50</option>
+                        <option value="3">3.00</option>
+                        <option value="2">2.00</option>
+                        <option value="1">1.00</option>
+                        <option value="0">0.00</option>
                     </select>
             </div>
             </div>
@@ -208,8 +216,12 @@
                     $('#gradeName').val(data.gradeName);
                     $('#maxValue').val(data.maxValue);
                     $('#minValue').val(data.minValue);
+                    //$('#gradePoint').val(data.gradePoint).find(":selected");
+                    //$('#gradePoint').val(data.gradePoint).prop('selected', true);
+                    //$('#gradePoint').html(data.gradePoint);
+                    //$('#gradePoint').html(data.gradePoint).prop('selected', true);
                     $('#gradePoint').val(data.gradePoint);
-                    //console.log(data);
+                    console.log(data);
 
 
             }
