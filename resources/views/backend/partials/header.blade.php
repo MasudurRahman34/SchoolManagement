@@ -1,7 +1,18 @@
 <header class="app-header"><a class="app-header__logo" href="index.html">SMS Erp</a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
+
+
+      <!-- Modal -->
+
       <ul class="app-nav">
+          <li class="mr-1 mt-2">
+
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+                User Manual
+            </button>
+        </li>
         <li class="app-search">
           <input class="app-search__input" type="search" placeholder="Search">
           <button class="app-search__button"><i class="fa fa-search"></i></button>
@@ -63,4 +74,5 @@
           </ul>
         </li>
       </ul>
+
     </header>
