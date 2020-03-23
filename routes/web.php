@@ -484,6 +484,9 @@ Route::get('/notification/notificationBoard','backend\notificationController@not
 Route::get('/notification/emailSms','backend\notificationController@notificationEmailSms')->name('notification.emailSms');
 Route::get('/notification/emailSmsLog','backend\notificationController@emailSmsLog')->name('notification.emailSmsLog');
 Route::post('/notification/create','backend\notificationController@create')->name('notification.create');
+    //Report
+    Route::get('/classBased/income/report','backend\report\ReportController@classbasedReport')->name('classBased.income.Report');
+    Route::get('/dateWise/income/expanse/report','backend\report\ReportController@dateWiseIncomeExpanseReport')->name('dateWise.income.expanse');
 
 //permission and role
 

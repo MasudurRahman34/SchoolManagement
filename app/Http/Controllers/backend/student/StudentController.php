@@ -152,11 +152,11 @@ class StudentController extends Controller
         if ($request->hasFile('image')){
             $image = $request->file('image');
             $filename = time().".".$image->getClientOriginalExtension();
-            $path = public_path ('students',$filename);
+            $path = base_path('image/students',$filename);
             $image->move($path,$filename);
             $previous_profile=File::where('type', 'profile')->where("studentId", $std->id)->first();
             if ($previous_profile){
-                unlink(public_path("students/".$previous_profile->image));
+                unlink(base_path("image/students/".$previous_profile->image));
                 $previous_profile->delete();
             }
             $file = new File;

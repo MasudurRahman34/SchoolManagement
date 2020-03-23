@@ -8,7 +8,7 @@
                             <div class="card-body">
                                 @foreach($students->files as $file)
                                     @if($file->type=="profile")
-                                        <img class="rounded mx-auto d-block" src="{{asset('students/'.$file->image)}}" style="width: 50%; height: 50%;">
+                                        <img class="rounded mx-auto d-block" src="{{base_path('image/students/'.$file->image)}}" style="width: 50%; height: 50%;">
                                     @endif
                                 @endforeach
                                     <hr>
@@ -165,7 +165,7 @@
 
                             <div class="form-group col-md-3">
                                 <lable class="">Change Image</lable>
-                                <input type="file" name="image" class="form-control btn btn-light" id="file">
+                                <input type="file" name="image" class="form-control btn btn-light" id="file" accept="image/*">
                             </div>
                             <div class="form-group col-md-3">
                                 <lable class="">Preview Image</lable>

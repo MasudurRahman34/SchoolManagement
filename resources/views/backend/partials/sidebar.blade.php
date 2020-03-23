@@ -216,6 +216,13 @@
               <li><a class="treeview-item" href="{{route('examattendance.index') }}"><i class="icon fa fa-angle-right"></i> Exam Attendance</a></li>
             </ul>
           </li>
+
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Report Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('classBased.income.Report') }}"><i class="icon fa fa-angle-right"></i>Class Based Income Report</a></li>
+            <li><a class="treeview-item" href="{{route('dateWise.income.expanse')}}"><i class="icon fa fa-angle-right"></i>Income & Expense Report</a></li>
+            </ul>
+          </li>
           {{-- end admin sidebar --}}
 
           {{-- student side bar --}}
