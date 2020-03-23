@@ -87,21 +87,19 @@ class ResultPublish extends Controller
         $sectionId= $request->sectionId;
         $examType=$request->examType;
 
-        foreach ($subjectId as $id) {
-        $resultPublish = Mark::where('subjectId',$id)
+
+        $StudentID = Mark::where('subjectId',$subjectId)
                         ->where('examType',$examType)
                         ->where('sectionId',$sectionId)
                         ->where('sessionYearId',$sessionYearId)
-                        ->where('published',0)
+                        ->where('published',1)
                         ->where('bId', Auth::guard('web')->user()->bId)
-                        ->firstOrfail();
+                        ->update(['published'=>0]);
 
-            if($resultPublish!=null){
-                $resultPublish->published = 1;
-                $resultPublish->update();
-            }
-        }
-        return response()->json(["success"=>'Published',201]);
+            //$resultPublish = Mark::WhereIn('studentId',$StudentID)->update(['published'=>1]);
+
+
+        return response()->json(["success"=>$StudentID,201]);
 
 
 

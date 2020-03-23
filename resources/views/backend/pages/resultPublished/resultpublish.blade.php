@@ -89,7 +89,7 @@
                             <thead>
                             <tr>
                                 <th>subject Name</th>
-                                <th>number of Student</th>
+                                <th>number of Student (Mark Entry)</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
