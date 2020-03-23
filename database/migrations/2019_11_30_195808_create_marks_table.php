@@ -30,6 +30,9 @@ class CreateMarksTable extends Migration
             $table->unsignedBigInteger('sectionId');
             $table->unsignedBigInteger('classId');
             $table->unsignedInteger('sessionYearId')->comment('sessionYearId');
+            $table->boolean('published')->default(0)->comment('0-> not published');
+            $table->boolean('markEntrystatus')->default(0)->comment('0=not_Enter');
+            $table->unsignedBigInteger('userId')->comment('mark_entry_user');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -567,7 +567,7 @@ public function storeAttendence(Request $request){
                          if($teacher->Section->sessionYear->status == 1){
                              //dd($teacher->Section);
                              $classId = $teacher->classId;
-                             $shift = $teacher->shift;
+                             //$shift = $teacher->shift;
                              $sessionYearId = $teacher->sessionYearId;
                              $sessionYear = SessionYear::where('id',$sessionYearId)->get();
 
@@ -741,6 +741,44 @@ public function storeAttendence(Request $request){
         return Response()->json(["sectionTotalTableOutput"=>$sectionTotalTableOutput,"governmentFeeTableOutput"=>$governmentFeeTableOutput,"nonGovtFeeTableOutput"=>$nonGovtFeeTableOutput,"dueFeeTotalsdata"=>$dueFeeTotalsdata]);
 
     }
+
+     //studentFeeDetails
+     public function monthlyStudentFeeReport(){
+
+
+        $userId= Auth::guard('web')->user()->id;
+        //dd($userId);
+        $bId= Auth::guard('web')->user()->bId;
+        //dd($bId);
+        $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
+        //dd($teachers);
+        if($teachers<=0){
+
+             return "You are not enroled in any class";
+
+        }else{
+
+            $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+            foreach($teachers as $teacher){
+                    if($teacher->Section->sessionYear->status == 1){
+                        //dd($teacher->Section);
+                        $classId = $teacher->classId;
+                        //$shift = $teacher->shift;
+                        $sessionYearId = $teacher->sessionYearId;
+                        $sessionYear = SessionYear::where('id',$sessionYearId)->get();
+
+
+                        $sectionId = $teacher->sectionId;
+
+
+                    return view('backend.pages.classTeacher.myclassMonthlyStudentFeeDetails',['sectionId'=>$sectionId,'classId'=>$classId,'sessionYear'=>$sessionYear,'sessionYearId'=>$sessionYearId]);
+                }else{
+                    return redirect()->back()->with('Session Expired!. You are not enroled in any class');
+                }
+            }
+
+        }
+     }
 
 
 }

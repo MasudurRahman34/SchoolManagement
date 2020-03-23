@@ -8,6 +8,7 @@ use App\model\classes;
 use App\model\Section;
 use App\model\Attendance;
 use App\model\Fee;
+use App\model\Mark;
 use App\model\month;
 use App\model\schoolBranch;
 use App\model\Subject;
@@ -61,6 +62,48 @@ class apiController extends Controller
                         ->where('group', $request->group)
                         ->where('bId', Auth::guard('web')->user()->bId)
                         ->get();
+        return Response()->json($subjectlist);
+    }
+
+    public function subjectListFromMarkTable(Request $request)
+    {
+        $sectionId= $request->sectionId;
+        $classId= $request->classId;
+        $group= $request->group;
+
+        $examType=$request->examType;
+        $sessionYearId=$request->sessionYearId;
+
+        $bId=Auth::guard('web')->user()->bId;
+
+        // $subjectlist= DB::select("subjects.id,subjects.subjectName
+        //                             FROM subjects,marks
+        //                             WHERE subjects.id=marks.subjectId
+        //                             AND subjects.classId='$classId'
+        //                             AND subjects.group='$group'
+        //                             AND marks.sectionId='$sectionId'
+        //                             AND marks.examType='$examType'
+        //                             AND marks.sessionYearId='$sessionYearId'
+        //                             AND marks.bId='$bId'
+        //                             ");
+        $subjectlist=DB::table('marks as m')
+                        ->where('sectionId', $sectionId)
+                        ->where('examType',$examType)
+                        ->where('markEntrystatus',1)
+                        //->where('bId', Auth::guard('web')->user()->bId)
+                        ->join('subjects as s', 'm.subjectId','=','s.id' )
+                        ->select('subjectName','s.id', DB::raw("count(subjectId) as numberOfStudent"))
+                        //->DB::raw('count (SubjectId) as numberOfStudent')
+                        ->groupBy('SubjectId')
+                        ->get();
+                        //->with('Subject')->get();
+                        // $subjectlist= Mark::where('sectionId', $sectionId)
+                        // ->where('examType',$examType)
+                        // ->where('markEntrystatus',1)
+                        // ->where('bId', Auth::guard('web')->user()->bId)
+                        // //->DB::raw('count (SubjectId) as numberOfStudent')
+                        // ->groupBy('SubjectId')
+                        // ->count();
         return Response()->json($subjectlist);
     }
 

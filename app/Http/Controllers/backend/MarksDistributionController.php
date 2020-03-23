@@ -205,6 +205,7 @@ class MarksDistributionController extends Controller
             $examAttendance->studentId = $id;
 
             $examAttendance->bId= Auth::user()->bId;
+            $examAttendance->userId= Auth::user()->id;
             $examAttendance->save();
         }
         return response()->json(["success"=>'Saved',201]);
@@ -227,7 +228,8 @@ class MarksDistributionController extends Controller
                 $marks->total = $request->totalMarks;
                 $marks->gradeName = $request->grade;
                 $marks->gradePoint = $request->gradePoint;
-                //$marks->bId= Auth::guard('web')->user()->bId;
+                $marks->markEntrystatus = 1;
+                $marks->userId= Auth::guard('web')->user()->id;
                 $marks->update();
                 return response()->json(["success"=>'Saved',201,"id"=>$id]);
 
@@ -306,7 +308,7 @@ class MarksDistributionController extends Controller
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
         $exams= exam::where('bId', Auth::guard('web')->user()->bId)->get();
 
-        return view('backend.pages.marksdistribution.result')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('exams',$exams);
+        return view('backend.pages.marksdistribution.result2')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('exams',$exams);
     }
 
 }

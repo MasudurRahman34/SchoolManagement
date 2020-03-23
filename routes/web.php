@@ -11,6 +11,8 @@
 |
 */
 
+use App\model\Attendance;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -37,6 +39,9 @@ Route::get('/api/search/studentname', 'backend\api\apiController@studentname')->
 //for mark
 Route::post('/api/search/sectionbyclass', 'backend\api\apiController@sectionbyclass')->name('api.sectionbyclass');
 Route::post('/api/search/classsubject', 'backend\api\apiController@classsubject')->name('api.classsubject');
+
+//result published
+Route::get('/api/search/subjectListFromMarkTable', 'backend\api\apiController@subjectListFromMarkTable')->name('api.subjectListFromMarkTable');
 
 //find fee list for class
 Route::get('/api/search/classfeelist', 'backend\api\apiController@classfeelist')->name('api.classfeelist');
@@ -263,10 +268,11 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], fun
     Route::post('/feecollection/individual/findmonthlyyearlyfee','backend\FeeCollectionController@findMonthForAdvancefeeCollection')->name('find.monthlyoryearly');
     Route::post('/feecollection/individual/monthly/store','backend\FeeCollectionController@storeMorethenOneMonth')->name('store.storeMorethenOneMonth');
 
-    //Student Fee Details
+
+    //Student Fee Details (feeCollection)
     Route::get('/feecollection/student/feeDetails','backend\FeeCollectionController@studentFeeDetails')->name('student.feeDetails');
-    Route::get('/feecollection/individualStudentDetails','backend\FeeCollectionController@individualFeeDetails')->name('individualStudent.feeDtails');
-    Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}/{classId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
+    //Route::get('/feecollection/individualStudentDetails','backend\FeeCollectionController@individualFeeDetails')->name('individualStudent.feeDtails');
+    //Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}/{classId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
     //Route::get('/feecollection/studentMonthly/paiedFee/{month}/{studentId}','backend\FeeCollectionController@studentMonthlyPaiedFee')->name('student.monthlyPaiedFee');
 
     //payment
@@ -280,12 +286,17 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], fun
 
 });
 
-// Class Teacher or fee Collection
+// Class Teacher | fee Collection
 Route::group(['middleware' => ['auth','role_or_permission:Fee Collection|Class Teacher']], function () {
     Route::post('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
     Route::post('/feecollection/individual/findmonthlyyearlyfee','backend\FeeCollectionController@findMonthForAdvancefeeCollection')->name('find.monthlyoryearly');
     //Route::post('/feecollection/individual/monthly/store','backend\FeeCollectionController@storeMorethenOneMonth')->name('store.storeMorethenOneMonth');
     Route::post('/feemanagement/report/sectionwise/feedetails','backend\FeeManagementReportController@feedetails')->name('report.feedetails');
+
+    //student fee report details(classTeacher)
+    Route::get('/feecollection/individualStudentDetails','backend\FeeCollectionController@individualFeeDetails')->name('individualStudent.feeDtails');
+    Route::get('/feecollection/details/show/{month}/{studentId}/{sessionYearId}/{classId}', 'backend\FeeCollectionController@dueDetailsFee')->name('individualStudent.studentDue.fees');
+
 });
 
 
@@ -361,6 +372,7 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance'],'namespac
 
 });
 
+//Attendance |class Teacher
 Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teacher'],'namespace'=>'backend\Attendance'], function () {
     Route::post('/student/attendance/studentDatabydate','AttendanceController@studentDatabydate')->name('attendance.studentDatabydate');
     Route::get('/student/attendance/datewishAttendance/{dateId}/{sectionId}','AttendanceController@datewishAttendance')->name('attendance.datewishAttendance');
@@ -400,6 +412,10 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teach
     //Monthly Fee Report
     Route::get('/myclass/monthlyfeereport','backend\ClassTeacherController@monthlyFeeReport')->name('myclass.monthlyfee.report');
     Route::get('/myclass/monthly/feereport/show/{month}/{sessionYearId}/{sectionId}','backend\ClassTeacherController@monthlyFeeReportDetails')->name('myclass.monthlyfee.detail');
+
+    //Monthly Student Report
+    Route::get('/myclass/monthly/student/feereport','backend\ClassTeacherController@monthlyStudentFeeReport')->name('myclass.studentfee.report');
+
 });
 
 //Marks Distribution
@@ -412,6 +428,10 @@ Route::group(['middleware' => ['auth','role_or_permission:Mark']], function () {
 //Result management
     Route::get('adminview/student/result','backend\MarksDistributionController@resultIndex')->name('result.index');
 });
+
+//Result PUblished
+Route::get('adminview/student/resultPublished','backend\ResultPublish@index')->name('resultPublished.index');
+Route::post('adminview/student/resultPublished/update','backend\ResultPublish@update')->name('update.published');
 
 //Exam attendance
     Route::get('adminview/student/examattendance','backend\MarksDistributionController@examattendanceindex')->name('examattendance.index');
@@ -468,4 +488,4 @@ Route::post('/notification/create','backend\notificationController@create')->nam
 //permission and role
 
 
-//misuk 03/08/2020
+//misuk 03/019/2020

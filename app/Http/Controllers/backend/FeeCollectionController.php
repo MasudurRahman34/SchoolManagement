@@ -660,7 +660,7 @@ class FeeCollectionController extends Controller
                         ->where('bId', Auth::user()->bId)
                         ->where('sessionYearId',$request->sessionYear2)
                         ->where('feeId',$request->feeId2)
-                        ->whereNotIn('studentId',$stid) //not working
+                        ->whereNotIn('studentId',$stid)
                        ->pluck('studentId');
                         //->get();
         //request($deleteStudent);

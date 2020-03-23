@@ -106,6 +106,7 @@
                 <li><a class="treeview-item" href="{{route('myclass.feecollection.individual')}}"><i class="icon fa fa-angle-right"></i>Individual Fee Collection </a></li>
                 <li><a class="treeview-item" href="{{route('myclass.studentlist')}}"><i class="icon fa fa-angle-right"></i> Student List</a></li>
                 <li><a class="treeview-item" href="{{route('myclass.monthlyfee.report')}}"><i class="icon fa fa-angle-right"></i>Monthly Fee Report</a></li>
+                <li><a class="treeview-item" href="{{route('myclass.studentfee.report')}}"><i class="icon fa fa-angle-right"></i>Student Fee Report</a></li>
             </ul>
           </li>
           @endcan
@@ -165,6 +166,16 @@
             </ul>
           </li>
           @endcan
+
+          {{--  result published  --}}
+          @can('Mark')
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Result Publish</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('resultPublished.index') }}"><i class="icon fa fa-angle-right"></i>Result Publish </a></li>
+            </ul>
+          </li>
+          @endcan
+
           @can('Scholarship')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Scholarship Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
@@ -200,6 +211,7 @@
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Exam Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('exam.index') }}"><i class="icon fa fa-angle-right"></i> Exam list</a></li>
+              <li><a class="treeview-item" href="{{route('exam.index') }}"><i class="icon fa fa-angle-right"></i> Exam Slot</a></li>
               <li><a class="treeview-item" href=""><i class="icon fa fa-angle-right"></i> Exam Schedule</a></li>
               <li><a class="treeview-item" href="{{route('examattendance.index') }}"><i class="icon fa fa-angle-right"></i> Exam Attendance</a></li>
             </ul>
