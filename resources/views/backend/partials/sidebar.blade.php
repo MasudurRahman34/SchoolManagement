@@ -100,13 +100,35 @@
           @can('Class Teacher')
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class=""></i><span class="app-menu__label">My Class</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="{{route('myclass.attendance')}}"><i class="icon fa fa-angle-right"></i>Class Attendance</a></li>
-                <li><a class="treeview-item" href="{{route('myclass.attendancebydate')}}"><i class="icon fa fa-angle-right"></i>Class Attendance by Date</a></li>
-                <li><a class="treeview-item" href="{{route('myclass.feecollection')}}"><i class="icon fa fa-angle-right"></i> Fee Collection</a></li>
-                <li><a class="treeview-item" href="{{route('myclass.feecollection.individual')}}"><i class="icon fa fa-angle-right"></i>Individual Fee Collection </a></li>
-                <li><a class="treeview-item" href="{{route('myclass.studentlist')}}"><i class="icon fa fa-angle-right"></i> Student List</a></li>
-                <li><a class="treeview-item" href="{{route('myclass.monthlyfee.report')}}"><i class="icon fa fa-angle-right"></i>Monthly Fee Report</a></li>
-                <li><a class="treeview-item" href="{{route('myclass.studentfee.report')}}"><i class="icon fa fa-angle-right"></i>Student Fee Report</a></li>
+              <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Attendance</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                  <li><a class="treeview-item" href="{{route('myclass.attendance')}}"><i class="icon fa fa-angle-right"></i>Class Attendance</a></li>
+                  <li><a class="treeview-item" href="{{route('myclass.attendancebydate')}}"><i class="icon fa fa-angle-right"></i>Class Attendance by Date</a></li>
+                </ul>
+              </li>
+            </ul>
+             <ul class="treeview-menu">
+              <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Fee Collection</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                   <li><a class="treeview-item" href="{{route('myclass.feecollection')}}"><i class="icon fa fa-angle-right"></i> Fee Collection</a></li>
+                    <li><a class="treeview-item" href="{{route('myclass.feecollection.individual')}}"><i class="icon fa fa-angle-right"></i>Individual Fee Collection </a></li>
+                </ul>
+              </li>
+              <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Student</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                  <li><a class="treeview-item" href="{{route('myclass.studentlist')}}"><i class="icon fa fa-angle-right"></i> Student List</a></li>
+                </ul>
+              </li>
+              <li class="treeview">
+                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Fee Report</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                  <li><a class="treeview-item" href="{{route('myclass.monthlyfee.report')}}"><i class="icon fa fa-angle-right"></i>Monthly Fee Report</a></li>
+                  <li><a class="treeview-item" href="{{route('myclass.studentfee.report')}}"><i class="icon fa fa-angle-right"></i>Student Fee Report</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
           @endcan
