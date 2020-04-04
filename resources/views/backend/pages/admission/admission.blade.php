@@ -49,9 +49,9 @@
             </div>
             <div class="form group col-md-6">
                     <label class="control-label mt-3">Gender<span style="color: red;">*</span></label><br>
-                    <label class="radio-inline"><input type="radio" name="gender" checked value="Male">Male</label>
-                    <label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
-                    <label class="radio-inline"><input type="radio" name="gender" value="Other">Other</label>
+                    <label class="radio-inline"><input type="radio" name="gender" checked value="0">Male</label>
+                    <label class="radio-inline"><input type="radio" name="gender" value="1">Female</label>
+                    <label class="radio-inline"><input type="radio" name="gender" value="2">Other</label>
             </div>
             <div class="form group col-md-6 {{$errors->has('mobile') ? 'has-error' : ''}}">
               <label class="control-label">Mobile No<span style="color: red;">*</span></label>

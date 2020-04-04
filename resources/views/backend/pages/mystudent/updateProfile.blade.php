@@ -92,12 +92,12 @@
                                           id="studentname" value="{{$students->motherName}}">
                                       </div>
                                       <div class="form-group col-md-3">
-                                        <label class="control-label" name="gender">Gender</label>
+                                        <label class="control-label" name="gender">Gender : {{ $students->gender }}</label>
                                         <div class="form-check">
                                           <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="gender" value="male" {{ $students->gender=='male'?'checked':'' }}>Male
+                                            <input class="form-check-input" type="radio" name="gender" value="0" {{ ($students->gender==0) ? 'checked="checked"' : '' }}>Male
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <input class="form-check-input" type="radio" name="gender" value="Female" {{ $students->gender=='female'?'checked':'' }}>FeMale
+                                            <input class="form-check-input" type="radio" name="gender" value="1" {{ ($students->gender==1) ? 'checked="checked"' : ''}}>FeMale
                                           </label>
                                         </div>
                                       </div>
