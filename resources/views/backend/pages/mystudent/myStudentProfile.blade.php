@@ -23,6 +23,7 @@
                     <li class="nav-item"><a class="nav-link active" href="#user-timeline" data-toggle="tab">Timeline</a></li>
 
                     <li class="nav-item"><a class="nav-link" href="{{route('mystudent.editProfile', $students->id)}}"> Update Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{route('mystudent.subjectlist', $students->id)}}">Subject List</a></li>
                     <li class="nav-item"><a class="nav-link" id="Attendance"> Attendance</a></li>
                     <li class="nav-item"><a class="nav-link" href="studentId2.html"> My school ID card</a></li>
                   </ul>

@@ -1,18 +1,18 @@
-@extends('backend.student.layouts.master')
-	@section('title', 'Student Subject Page')
+@extends('backend.layouts.master')
+	@section('title', 'Student List Page')
     @section('content')
     <div class="app-title">
-        <div class="hmmm">
-          <h1><i class="fa fa-edit"></i> Manage Section</h1>
+        <div>
+          <h1><i class="fa fa-edit"></i>Manage All Student</h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item"><a href="#">Manage Section</a></li>
+          <li class="breadcrumb-item"><a href="#">All Student</a></li>
         </ul>
     </div>
-    <div class="row justify-content-md-center">
+<div class="row justify-content-md-center">
     <div class="col-md-7">
         <div class="tile">
             <div class="tile-body">
@@ -63,18 +63,17 @@
             </div>
         </div>
     </div>
-    </div>
-    <div class="clearix"></div>
+</div>
+
+<div class="clearix"></div>
     @endsection
     @section('script')
-       <!-- @include('backend.student.partials.js.datatable');  -->
-
-    <!-- <script src="{{ asset('admin/js/plugins/chart.js') }} "></script> -->
-    <script type="text/javascript">
+      @include('backend.partials.js.datatable');
+<script type="text/javascript">
 
 function subject(){
     alert('File is not Included');
 }
-  </script>
+</script>
 
 @endsection

@@ -345,4 +345,15 @@ class MyStudentConttroller extends Controller
 
         //return view('backend.pagesmystudent.myStudentProfile');
     }
+    public function subjectList($id){
+      //$id=Auth::guard('student')->user()->id;
+        $subjectlists=DB::select("select  subjects.*  from classes, sections, students, subjects
+        where students.sectionId=sections.id and sections.classId=classes.id and classes.id=subjects.classId and subjects.group in (students.group, 'General') and subjects.optionalstatus=false and students.id='$id'");
+        // return $subjectlist;
+        // $opsubjectlist=DB::select("select  subjects.*  from classes, sections, students, subjects
+        // where students.sectionId=sections.id and sections.classId=classes.id and classes.id=subjects.classId and subjects.group in (students.group, 'General') and subjects.optionalstatus=1 and students.id='$id'");
+        $Student=student::find($id);
+
+        return view('backend.pages.mystudent.subjectList',compact('subjectlists', 'Student'));
+    }
 }

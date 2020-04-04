@@ -150,6 +150,7 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher
     Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
     Route::get('edit/studentProfile/{id}','MyStudentConttroller@edit')->name('mystudent.editProfile');
     Route::post('update/studentProfile/{id}','MyStudentConttroller@update')->name('mystudent.update');
+    Route::get('mystudent/subject/list/{id}', 'MyStudentConttroller@subjectList')->name('mystudent.subjectlist');
 });
 //only for Super Admin
 Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin']], function () {
