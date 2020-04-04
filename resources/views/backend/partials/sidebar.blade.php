@@ -120,6 +120,8 @@
                 <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Student</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                 <ul class="treeview-menu">
                   <li><a class="treeview-item" href="{{route('myclass.studentlist')}}"><i class="icon fa fa-angle-right"></i> Student List</a></li>
+                   <li><a class="treeview-item" href="{{route('mystudent.credentialIndex') }}"><i class="icon fa fa-angle-right"></i>Student Credential</a></li>
+
                 </ul>
               </li>
               <li class="treeview">
@@ -146,6 +148,7 @@
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class=""></i><span class="app-menu__label">Student</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('mystudent.index') }}"><i class="icon fa fa-angle-right"></i>All Student</a></li>
+              <li><a class="treeview-item" href="{{route('mystudent.credentialIndex') }}"><i class="icon fa fa-angle-right"></i>Student Credential</a></li>
               <li><a class="treeview-item" href="{{route('mystudent.classwise') }}"><i class="icon fa fa-angle-right"></i>Class Wise Student</a></li>
               {{-- <li><a class="treeview-item" href="{{route('section.index') }}"><i class="icon fa fa-angle-right"></i>Previous Student</a></li> --}}
               <li><a class="treeview-item" href="{{route('mystudent.sectionwise') }}"><i class="icon fa fa-angle-right"></i>Section Wise Student</a></li>

@@ -356,4 +356,44 @@ class MyStudentConttroller extends Controller
 
         return view('backend.pages.mystudent.subjectList',compact('subjectlists', 'Student'));
     }
+
+     public function credentialIndex()
+      {
+       // $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        return view('backend.pages.mystudent.myStudentCredentialList'); 
+      }
+
+    public function credentiallist()
+    {
+
+        $student=Student::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->whereNull('deleted_at')->with('Section')->get();
+        //$student=DB::select("select * from students, sections WHERE students.sectionId=sections.id And sections.sessionYearId='$sessionYearId'");
+        // foreach ($student as $value) {
+        //     dd($value->Section->classes);
+        // }
+        // dd($student->Section->classes);
+        //AND students.deleted_at IS NULL
+
+        $data_table_render = DataTables::of($student)
+
+            ->addColumn('action',function ($row){
+               $edit_url = url('mystudent/show/studentProfile/'.$row['id']);
+                return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+                '<a  onClick="deleteStudent('.$row['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
+            })
+            ->editColumn('firstName', function($student)
+                          {
+                             return $student->firstName. " ".$student->lastName;
+                          })
+            ->editColumn('section.classes', function($student)
+                          {
+                             return $student->Section->classes->className;
+                          })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        return $data_table_render;
+    }
+
+
 }

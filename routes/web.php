@@ -141,6 +141,8 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
     Route::get('/sectionwise', 'MyStudentConttroller@Sectionwise')->name('mystudent.sectionwise');
     Route::get('/sectionwiselist/{classId}/{sectionId}/{sessionYearId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
 
+    
+    
 
 
 
@@ -150,7 +152,14 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher
     Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
     Route::get('edit/studentProfile/{id}','MyStudentConttroller@edit')->name('mystudent.editProfile');
     Route::post('update/studentProfile/{id}','MyStudentConttroller@update')->name('mystudent.update');
+
+    //subject List
     Route::get('mystudent/subject/list/{id}', 'MyStudentConttroller@subjectList')->name('mystudent.subjectlist');
+
+    //credintial List
+    Route::get('/list/credentialIndex', 'MyStudentConttroller@credentialIndex')->name('mystudent.credentialIndex');
+    Route::get('/credential/list', 'MyStudentConttroller@credentiallist')->name('mystudent.credential');
+
 });
 //only for Super Admin
 Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin']], function () {
