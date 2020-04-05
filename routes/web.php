@@ -160,6 +160,8 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher
     Route::get('/list/credentialIndex', 'MyStudentConttroller@credentialIndex')->name('mystudent.credentialIndex');
     Route::get('/credential/list', 'MyStudentConttroller@credentiallist')->name('mystudent.credential');
 
+     Route::post('/change/password','MyStudentConttroller@changePassword')->name('mystudent.change.password');
+
 });
 //only for Super Admin
 Route::group(['middleware' => ['auth', 'role_or_permission:Super Admin']], function () {

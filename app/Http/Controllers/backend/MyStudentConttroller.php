@@ -377,8 +377,8 @@ class MyStudentConttroller extends Controller
         $data_table_render = DataTables::of($student)
 
             ->addColumn('action',function ($row){
-               $edit_url = url('mystudent/show/studentProfile/'.$row['id']);
-                return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+               //$edit_url = url('mystudent/show/studentProfile/'.$row['id']);
+                return '<button id="modelid" onclick="myFunction('.$row['id'].')" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></button>'.
                 '<a  onClick="deleteStudent('.$row['id'].')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
             })
             ->editColumn('firstName', function($student)
@@ -393,6 +393,35 @@ class MyStudentConttroller extends Controller
             ->addIndexColumn()
             ->make(true);
         return $data_table_render;
+    }
+
+    //change password
+    public function changePassword(Request $request){
+      return $request;
+        $this->validate($request,[
+            'old_password'=>'required',
+            'password'=>'required||min:6|confirmed',
+        ]);
+        // $id=$request->studentID;
+        // return $id;
+        $hashedPassword=Auth::guard('student')->user()->password;
+        if(Hash::check($request->old_password,$hashedPassword)){
+                if(! Hash::check($request['password'],$hashedPassword)){
+                $students = Student::find(Auth::guard('student')->user()->id);
+                $students-> readablePassword = $request['password'];
+                $students->password = Hash::make($request->password);
+                $students->save();
+                Session::flash('success','You Have Successfully Changed The Password');
+                Auth::logout();
+                return redirect()->route('student.login'); 
+               }else{
+                Session::flash('error','New Password Cannot Be The Same As Old Pass');
+                return redirect()->back();
+               }  
+        }else{
+            Session::flash('error','Old Password Does Not Matched');
+            return redirect()->back();      
+        }   
     }
 
 

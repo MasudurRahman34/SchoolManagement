@@ -72,6 +72,10 @@ class StudentAttendanceController extends Controller
             {
                return $Attendance->created_at->diffForHumans();
             }) 
+        ->editColumn('studentId', function($Attendance)
+            {
+               return $Attendance->student->studentId;
+            }) 
        
         ->addIndexColumn()
         ->make(true);
