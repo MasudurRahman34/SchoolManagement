@@ -398,22 +398,18 @@ class MyStudentConttroller extends Controller
     //change password
     public function changePassword(Request $request){
       return $request;
-        $this->validate($request,[
-            'old_password'=>'required',
-            'password'=>'required||min:6|confirmed',
-        ]);
+       
         // $id=$request->studentID;
         // return $id;
-        $hashedPassword=Auth::guard('student')->user()->password;
+       $hashedPassword=Auth::guard('student')->user()->password; Student::pluck('password')->where('id',$request->studentID);
         if(Hash::check($request->old_password,$hashedPassword)){
                 if(! Hash::check($request['password'],$hashedPassword)){
-                $students = Student::find(Auth::guard('student')->user()->id);
+                $students = Student::find($request->studentID);
                 $students-> readablePassword = $request['password'];
                 $students->password = Hash::make($request->password);
                 $students->save();
                 Session::flash('success','You Have Successfully Changed The Password');
-                Auth::logout();
-                return redirect()->route('student.login'); 
+                return redirect()->back(); 
                }else{
                 Session::flash('error','New Password Cannot Be The Same As Old Pass');
                 return redirect()->back();
