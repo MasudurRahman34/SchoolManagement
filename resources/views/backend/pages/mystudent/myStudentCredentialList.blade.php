@@ -16,35 +16,45 @@
     <div class="col-md-10">
         <div class="tile">
                 <div class="tile-body">
-                    {{--  <form class="row" id="myform" action="javascript:void(0)">
-                        <div class="form-group col" >
-                            <label for="exampleFormControlSelect1">Session Year</label>
-                            <select class="form-control admission" id="sessionYear">
-                              <option value="">--Please Select--</option>
-                              @foreach ($sessionYear as $year)
-                                <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
-                              @endforeach
-                            </select>
-                        </div>
-                    </form>  --}}
+                  @if(count($errors)>0)
+                            <div class="alert alert-danger" role="alert">
+                              <ul>
+                                @foreach($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                                @endforeach
+                              </ul>
+                            </div>
+                          @endif
+                          @if(Session::has('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ Session::get('success') }}
+                            </div>
+                            @endif
+                            @if(Session::has('failed'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ Session::get('failed') }}
+                              </div>
+                            @endif
+                            <br>
+                    
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <tr>
-                                <th></th>
-                                {{--  <th>ID</th>  --}}
+                                <th>SL</th>
+                                <th>ID</th>
                                 <th>Roll</th>
                                 <th>Name</th>
-                                {{--  <th>Class</th>
+                                <th>Class</th>
                                 <th>Section</th>
-                                <th>Shift</th>  --}}
-                                <th>Father</th>
-                                <th>Mother</th>
-                                <th>Blood Group</th>
-                                <th>Date of Birth</th>
+                                <th>Shift</th>  
+                                 {{--  <th>Father</th>
+                                <th>Mother</th>--}}
+                                {{-- <th>Blood Group</th>
+                                <th>Date of Birth</th> --}}
                                 <th>Mobile</th>
                                 <th>password</th>
-                                <th>Change</th>
+                                <th>Change password</th>
                             </tr>
                             </thead>
                         </table>
@@ -104,13 +114,7 @@
     @section('script')
       @include('backend.partials.js.datatable');
       <script>
-        // $(document).ready( function () {
-
-        //$('#sessionYear').click(function (e) {
-           // e.preventDefault();
-
-       // var sessionYearId=$("#sessionYear").val();
-           // console.log(sessionYearId);
+       
            var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
@@ -134,16 +138,16 @@
                 ajax:"{{url('mystudent/credential/list')}}",
                 columns:[
                     {data: 'DT_RowIndex',name: 'DT_RowIndex'},
-                    //{ data: 'studentId', name: 'studentId' },
+                    { data: 'studentId', name: 'studentId' },
                     { data: 'roll', name: 'roll' },
                     { data: 'firstName', name: 'firstName' },
-                    //{ data: 'section.classes', name: 'section.classes' },
-                   // { data: 'section.sectionName', name: 'section.sectionName'},
-                   // { data: 'section.shift', name: 'section.shift'},
-                    { data: 'fatherName', name: 'fatherName'},
-                    { data: 'motherName', name: 'motherName'},
-                    { data: 'blood', name: 'blood'},
-                    { data: 'birthDate', name: 'birthDate'},
+                    { data: 'section.classes', name: 'section.classes' },
+                   { data: 'section.sectionName', name: 'section.sectionName'},
+                   { data: 'section.shift', name: 'section.shift'},
+                    //{ data: 'fatherName', name: 'fatherName'},
+                    //{ data: 'motherName', name: 'motherName'},
+                    // { data: 'blood', name: 'blood'},
+                    // { data: 'birthDate', name: 'birthDate'},
                     { data: 'mobile', name: 'mobile'},
                     { data: 'readablePassword', name: 'readablePassword'},
                     { data: 'action', name: 'action' }

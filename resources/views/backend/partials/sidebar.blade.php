@@ -99,39 +99,77 @@
 
           @can('Class Teacher')
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class=""></i><span class="app-menu__label">My Class</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-              <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Attendance</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                  <li><a class="treeview-item" href="{{route('myclass.attendance')}}"><i class="icon fa fa-angle-right"></i>Class Attendance</a></li>
-                  <li><a class="treeview-item" href="{{route('myclass.attendancebydate')}}"><i class="icon fa fa-angle-right"></i>Class Attendance by Date</a></li>
+          <ul class="nav nav-pills flex-column treeview-menu">           
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1" style="color:white;">Attendance</a>
+                <div class="collapse" id="submenu1" aria-expanded="false">
+                    <ul class="flex-column pl-2 nav">
+                      {{-- second step --}}
+                        <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.attendance')}}" style="color:#ffbc00;">Class Attendance</a></li>
+                        <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.attendancebydate')}}" style="color:#ffbc00;">Date-wise Attendance</a></li>
+                        {{-- third step example  --}}
+                        {{-- <li class="nav-item">
+                            <a class="nav-link collapsed py-0" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1">Customers</a>
+                            <div class="collapse small" id="submenu1sub1" aria-expanded="false">
+                                <ul class="flex-column nav pl-4">
+                                    <li class="nav-item">
+                                        <a class="nav-link p-0" href="">
+                                            <i class="fa fa-fw fa-clock-o"></i> Daily
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link p-0" href="">
+                                            <i class="fa fa-fw fa-dashboard"></i> Dashboard
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link p-0" href="">
+                                            <i class="fa fa-fw fa-bar-chart"></i> Charts
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link p-0" href="">
+                                            <i class="fa fa-fw fa-compass"></i> Areas
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li> --}}
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#submenu2" data-toggle="collapse" data-target="#submenu2" style="color:white;">Fee Collection</a>
+              <div class="collapse" id="submenu2" aria-expanded="false">
+                  <ul class="flex-column pl-2 nav">
+                    {{-- second step --}}
+                      <li class="nav-item"><a class="nav-link py-0"  href="{{route('myclass.feecollection')}}" style="color:#ffbc00;">Fee Collection</a></li>
+                      <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.feecollection.individual')}}" style="color:#ffbc00;">Individual Fee Collection </a></li>
+                  </ul>
+              </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#submenu3" data-toggle="collapse" data-target="#submenu3" style="color:white;">Student</a>
+            <div class="collapse" id="submenu3" aria-expanded="false">
+                <ul class="flex-column pl-2 nav">
+                  {{-- second step --}}
+                    <li class="nav-item"><a class="nav-link py-0"  href="{{route('myclass.studentlist')}}" style="color:#ffbc00;">Student List</a></li>
+                    <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.credentialIndex') }}" style="color:#ffbc00;">Student Credential</a></li>
                 </ul>
-              </li>
-            </ul>
-             <ul class="treeview-menu">
-              <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Fee Collection</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                   <li><a class="treeview-item" href="{{route('myclass.feecollection')}}"><i class="icon fa fa-angle-right"></i> Fee Collection</a></li>
-                    <li><a class="treeview-item" href="{{route('myclass.feecollection.individual')}}"><i class="icon fa fa-angle-right"></i>Individual Fee Collection </a></li>
-                </ul>
-              </li>
-              <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Student</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                  <li><a class="treeview-item" href="{{route('myclass.studentlist')}}"><i class="icon fa fa-angle-right"></i> Student List</a></li>
-                   <li><a class="treeview-item" href="{{route('mystudent.credentialIndex') }}"><i class="icon fa fa-angle-right"></i>Student Credential</a></li>
-
-                </ul>
-              </li>
-              <li class="treeview">
-                <a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Fee Report</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
-                  <li><a class="treeview-item" href="{{route('myclass.monthlyfee.report')}}"><i class="icon fa fa-angle-right"></i>Monthly Fee Report</a></li>
-                  <li><a class="treeview-item" href="{{route('myclass.studentfee.report')}}"><i class="icon fa fa-angle-right"></i>Student Fee Report</a></li>
-                </ul>
-              </li>
-            </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#submenu3" data-toggle="collapse" data-target="#submenu4" style="color:white;">Fee Report</a>
+          <div class="collapse" id="submenu4" aria-expanded="false">
+              <ul class="flex-column pl-2 nav">
+                {{-- second step --}}
+                  <li class="nav-item"><a class="nav-link py-0"  href="{{route('myclass.monthlyfee.report')}}" style="color:#ffbc00;">Monthly Fee Report</a></li>
+                  <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.studentfee.report')}}" style="color:#ffbc00;">Student Fee Report</a></li>
+              </ul>
+          </div>
+      </li>
+        </ul> 
+            
           </li>
           @endcan
 
@@ -216,7 +254,7 @@
             </ul>
           </li>
 
-          {{-- @can('Notification')--}}
+           @can('Notification')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Notification</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item" href="{{url('notification/emailSms')}}"><i class="icon fa fa-angle-right"></i>Send Email / SMS</a></li>
@@ -225,14 +263,16 @@
                 <li><a class="treeview-item" href="{{url('notification/emailSmsLog')}}"><i class="icon fa fa-angle-right"></i>Email / SMS Log</a></li> --}}
             </ul>
           </li>
+          @endcan
 
-           {{-- @can('Grade Management')--}}
+          @can('Grade Management')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Grade Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('grade.index') }}"><i class="icon fa fa-angle-right"></i> Grade list</a></li>
             </ul>
           </li>
-          {{-- @endan --}}
+          @endcan
+          @can('Exam')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Exam Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('exam.index') }}"><i class="icon fa fa-angle-right"></i> Exam list</a></li>
@@ -241,13 +281,15 @@
               <li><a class="treeview-item" href="{{route('examattendance.index') }}"><i class="icon fa fa-angle-right"></i> Exam Attendance</a></li>
             </ul>
           </li>
-
+          @endcan
+          @can('report')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Report Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('classBased.income.Report') }}"><i class="icon fa fa-angle-right"></i>Class Based Income Report</a></li>
             <li><a class="treeview-item" href="{{route('dateWise.income.expanse')}}"><i class="icon fa fa-angle-right"></i>Income & Expense Report</a></li>
             </ul>
           </li>
+          @endcan
           {{-- end admin sidebar --}}
 
           {{-- student side bar --}}

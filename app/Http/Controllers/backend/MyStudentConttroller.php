@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class MyStudentConttroller extends Controller
 {
@@ -397,14 +398,19 @@ class MyStudentConttroller extends Controller
 
     //change password
     public function changePassword(Request $request){
-      return $request;
+        $this->validate($request,[
+            'old_password'=>'required',
+            'password'=>'required||min:6|confirmed',
+        ]);
+      
        
-        // $id=$request->studentID;
+     // return $request->stdID;
         // return $id;
-       $hashedPassword=Auth::guard('student')->user()->password; Student::pluck('password')->where('id',$request->studentID);
+       $students=Student::find($request->stdID);
+    $hashedPassword=$students->password;
+
         if(Hash::check($request->old_password,$hashedPassword)){
                 if(! Hash::check($request['password'],$hashedPassword)){
-                $students = Student::find($request->studentID);
                 $students-> readablePassword = $request['password'];
                 $students->password = Hash::make($request->password);
                 $students->save();
