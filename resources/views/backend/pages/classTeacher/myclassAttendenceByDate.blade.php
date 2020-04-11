@@ -48,8 +48,8 @@
                     <form action="{{route('store.attendence')}}" method="post" id="attendence">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" value="{{$sectionId}}" hidden>
-                       <input type="date" name="created_date" id="dateId2" value="{{$classId}}" hidden>
-                       <input type="text" name="classId2" id="classId2" hidden>
+                       <input type="date" name="created_date" id="dateId2" hidden>
+                       <input type="text" name="classId2" id="classId2"  value="{{$classId}}" hidden>
                         <div class="table-responsive" >
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
@@ -88,7 +88,7 @@
         var classId= {{$classId}};
         $("#sectionId2").attr('value',sectionId);
         $("#dateId2").attr('value',dateId);
-        //$("#classId2").attr('value',classId);
+        $("#classId2").attr('value',classId);
         // var date=$("#dateId2").val();
         console.log(sectionId, classId2, dateId2);
         $.ajaxSetup({

@@ -404,7 +404,7 @@ class MyStudentConttroller extends Controller
         ]);
       
        
-     // return $request->stdID;
+     //return $request->stdID;
         // return $id;
        $students=Student::find($request->stdID);
     $hashedPassword=$students->password;

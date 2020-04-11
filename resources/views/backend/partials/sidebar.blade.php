@@ -105,7 +105,7 @@
                 <div class="collapse" id="submenu1" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
                       {{-- second step --}}
-                        <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.attendance')}}" style="color:#ffbc00;">Class Attendance</a></li>
+                        <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.attendance')}}" style="color:#ffbc00;">Today Attendance</a></li>
                         <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.attendancebydate')}}" style="color:#ffbc00;">Date-wise Attendance</a></li>
                         {{-- third step example  --}}
                         {{-- <li class="nav-item">
@@ -143,7 +143,7 @@
               <div class="collapse" id="submenu2" aria-expanded="false">
                   <ul class="flex-column pl-2 nav">
                     {{-- second step --}}
-                      <li class="nav-item"><a class="nav-link py-0"  href="{{route('myclass.feecollection')}}" style="color:#ffbc00;">Fee Collection</a></li>
+                      <li class="nav-item"><a class="nav-link py-0"  href="{{route('myclass.feecollection')}}" style="color:#ffbc00;">Total Fee Collection</a></li>
                       <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.feecollection.individual')}}" style="color:#ffbc00;">Individual Fee Collection </a></li>
                   </ul>
               </div>
@@ -154,7 +154,9 @@
                 <ul class="flex-column pl-2 nav">
                   {{-- second step --}}
                     <li class="nav-item"><a class="nav-link py-0"  href="{{route('myclass.studentlist')}}" style="color:#ffbc00;">Student List</a></li>
-                    <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.credentialIndex') }}" style="color:#ffbc00;">Student Credential</a></li>
+                     <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.credentialIndex') }}" style="color:#ffbc00;">My Student Credential</a></li>
+                    <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.credentialIndex') }}" style="color:#ffbc00;">All Student Credential</a></li>
+
                 </ul>
             </div>
         </li>
@@ -239,13 +241,13 @@
           </li>
           @endcan
 
-          @can('Scholarship')
+         {{--  @can('Scholarship')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Scholarship Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('scholarship.management')}}"><i class="icon fa fa-angle-right"></i>Schoolarship</a></li>
             </ul>
           </li>
-          @endcan
+          @endcan --}}
 
         {{-- @can('file')--}}
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Book</span><i class="treeview-indicator fa fa-angle-right"></i></a>

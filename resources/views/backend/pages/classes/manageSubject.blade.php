@@ -54,11 +54,11 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleSelect1">Subject Name</label>
-                    <input class="form-control"  type="text" id="subjectName" name="subjectName" placeholder="Enter Section Name">
+                    <input class="form-control"  type="text" id="subjectName" name="subjectName" placeholder="Enter Subject Name">
                 </div>
                 <div class="form-group">
                   <label for="exampleSelect1">Subject Code</label>
-                    <input class="form-control"  type="text" id="subjectCode" name="subjectCode" placeholder="Enter Section Name">
+                    <input class="form-control"  type="text" id="subjectCode" name="subjectCode" placeholder="Enter Subject Code">
                 </div>
 
                 <div class="form-group">

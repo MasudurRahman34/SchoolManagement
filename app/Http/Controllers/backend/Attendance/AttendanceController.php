@@ -51,7 +51,7 @@ public function storeAttendence(Request $request){
 
     $attendence= $request->attend;
    // dd($attendence);
-   return Response()->json(["success"=>'Absent', "data"=>$attendence,201]);
+   //return Response()->json(["success"=>'Absent', "data"=>$attendence,201]);
         foreach ($attendence as $id => $value) {
              if ($value=="absent") {
                  $absentStudentId[]=$id;

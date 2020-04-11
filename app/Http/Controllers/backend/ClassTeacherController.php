@@ -550,7 +550,7 @@ public function storeAttendence(Request $request){
          // student list section
          public function monthlyFeeReport()
          {
-             $userId= Auth::guard('web')->user()->id;
+            $userId= Auth::guard('web')->user()->id;
              //dd($userId);
              $bId= Auth::guard('web')->user()->bId;
              //dd($bId);
@@ -779,6 +779,81 @@ public function storeAttendence(Request $request){
 
         }
      }
+
+     //student credential
+
+     public function credentialIndex()
+      {
+       $userId= Auth::guard('web')->user()->id;
+         //dd($userId);
+         $bId= Auth::guard('web')->user()->bId;
+         //dd($bId);
+         $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
+         //dd($teachers);
+         if($teachers<=0){
+
+              return "You are not enroled in any class";
+
+         }else{
+
+             $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+             foreach($teachers as $teacher){
+                     if($teacher->Section->sessionYear->status == 1){
+                         //dd($teacher->Section);
+                         $classId = $teacher->classId;
+                         $shift = $teacher->shift;
+                         $sessionYearId = $teacher->sessionYearId;
+                         $sessionYear = SessionYear::where('id',$sessionYearId)->pluck('sessionYear');
+
+                         $className= classes::where('id',$classId)->pluck('className');
+                         $sectionId = $teacher->sectionId;
+                         $sectionName= Section::where('id',$sectionId)->pluck('sectionName');
+
+                     return view('backend.pages.classTeacher.myStudentCredentialList',['sectionId'=>$sectionId,'sectionName'=>$sectionName,'classId'=>$classId,'className'=>$className,'sessionYear'=>$sessionYear,'sessionYearId'=>$sessionYearId,'shift'=>$shift]);
+                 }else{
+                     return redirect()->back()->with('Session Expired!. You are not enroled in any class');
+                 }
+             }
+
+         }
+      }
+
+    public function credentiallist($classId,$sectionId,$sessionYearId)
+    {
+        $bId=Auth::guard('web')->user()->bId;
+        // $student=Student::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->whereNull('deleted_at')->with('Section')->get();
+        $student=DB::select("select students.id as stdId,students.studentId, students.firstName, students.lastName, students.mobile,students.readablePassword,
+            students.roll,classes.className,sections.sectionName,sections.shift
+                                 from students, sections, classes
+                                 WHERE sections.classId=classes.id
+                                 AND students.sectionId=sections.id
+                                 And classes.id='$classId'
+                                 And sections.id='$sectionId'
+                                 AND sections.sessionYearId='$sessionYearId'
+                                 AND students.bId='$bId'");
+        
+//return $student;
+        $data_table_render = DataTables::of($student)
+
+            ->addColumn('action',function ($student){
+               //$edit_url = url('mystudent/show/studentProfile/'.$row['id']);
+                return '<button id="modelid" onclick="myFunction('.$student->stdId.')" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></button>'.
+                '<a  onClick="deleteStudent('.$student->stdId.')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
+            })
+            ->editColumn('firstName', function($student)
+                          {
+                             return $student->firstName. " ".$student->lastName;
+                          })
+            // ->editColumn('section.classes', function($student)
+            //               {
+            //                  return $student->Section->classes->className;
+            //               })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        return $data_table_render;
+    }
+
 
 
 }

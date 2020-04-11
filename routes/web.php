@@ -141,13 +141,14 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student'], 'prefix'=>
     Route::get('/sectionwise', 'MyStudentConttroller@Sectionwise')->name('mystudent.sectionwise');
     Route::get('/sectionwiselist/{classId}/{sectionId}/{sessionYearId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
 
+
     
     
 
 
 
 });
-//Student profile
+//Student profile Student || class Teacher
 Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher'], 'prefix'=>'mystudent', 'namespace'=>'backend'], function () {
     Route::get('/show/studentProfile/{id}', 'MyStudentConttroller@show')->name('mystudent.showProfile');
     Route::get('edit/studentProfile/{id}','MyStudentConttroller@edit')->name('mystudent.editProfile');
@@ -161,6 +162,8 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher
     Route::get('/credential/list', 'MyStudentConttroller@credentiallist')->name('mystudent.credential');
 
      Route::post('/change/password','MyStudentConttroller@changePassword')->name('mystudent.change.password');
+
+    
 
 });
 //only for Super Admin
@@ -427,6 +430,10 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teach
 
     //Monthly Student Report
     Route::get('/myclass/monthly/student/feereport','backend\ClassTeacherController@monthlyStudentFeeReport')->name('myclass.studentfee.report');
+
+    //myclass credintial List
+    Route::get('myclass/list/credentialIndex', 'backend\ClassTeacherController@credentialIndex')->name('myclass.credentialIndex');
+    Route::get('myclass/credential/list/{classId}/{sectionId}/{sessionYearId}', 'backend\ClassTeacherController@credentiallist')->name('myclass.credential'); 
 
 });
 
