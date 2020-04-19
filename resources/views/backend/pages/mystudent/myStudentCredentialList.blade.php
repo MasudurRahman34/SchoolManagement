@@ -163,7 +163,7 @@
     function myFunction(id){
         var studentId=id
         console.log(studentId);
-        $("#stdID").attr('value',studentId);
+        //$("#stdID").val(4);
 
          var studentID= $("#stdID").val();
          console.log(studentID);
