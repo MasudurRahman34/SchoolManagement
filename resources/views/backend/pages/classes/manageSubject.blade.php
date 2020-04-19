@@ -4,13 +4,13 @@
     {{-- //main content --}}
     <div class="app-title">
         <div class="hmmm">
-          <h1><i class="fa fa-edit"></i> Manage Section</h1>
+          <h1><i class="fa fa-edit"></i> Manage Subject</h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item"><a href="#">Manage Section</a></li>
+          <li class="breadcrumb-item"><a href="#">Manage Subject</a></li>
         </ul>
     </div>
     <div class="row">
@@ -26,7 +26,11 @@
                       <th>Subject Name</th>
                       <th>Subject Code</th>
                       <th>Subject Type</th>
-                      <th>Optioal</th>
+                      <th>Optional</th>
+                      <th>CA(%)</th>
+                      <th>MCQ(%)</th>
+                      <th>Written(%)</th>
+                      <th>Practical(%)</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -45,7 +49,7 @@
             <div class="tile-body">
             <div class="form-group">
                   <label for="exampleSelect1">Select Class</label>
-                  <select class="form-control" id="classId" name="classId">
+                  <select class="form-control" id="classId" name="classId" multiple="multiple">
                    @foreach ($class as $class)
                   <option value="{{$class->id}}">{{$class->className}}</option>
                    @endforeach
@@ -93,6 +97,22 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-group">
+                  <label for="exampleSelect1">CA(%)</label>
+                    <input class="form-control exam"  type="number" min="0" value="0" id="ca" name="ca" placeholder="Enter CA Mark">
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelect1">MCQ(%)</label>
+                    <input class="form-control exam"  type="number" min="0" value="0" id="mcq" name="mcq" placeholder="Enter MCQ Mark">
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelect1">WRITTEN(%)</label>
+                    <input class="form-control exam"  type="number" min="0" value="0" id="written" name="written" placeholder="Enter Written Mark">
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelect1">PRACTICAL(%)</label>
+                    <input class="form-control exam"  type="number" min="0" value="0" id="practical" name="practical" placeholder="Enter Practical Mark">
+                </div>
 
 
             </div>
@@ -114,7 +134,10 @@
     @endsection
     @section('script')
         @include('backend.partials.js.datatable');
+        <script type="text/javascript" src="{{ asset('admin/js/plugins/select2.min.js') }}"></script>
 <script>
+  
+  $('#classId').select2();
        var table= $('#sampleTable').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
@@ -141,6 +164,10 @@
                  { data: 'subjectCode', name: 'subjectCode' },
                  { data: 'group', name: 'group' },
                  { data: 'optionalstatus', name: 'optionalstatus' },
+                 { data: 'ca', name: 'ca' },
+                 { data: 'mcq', name: 'mcq' },
+                 { data: 'written', name: 'written' },
+                 { data: 'practical', name: 'practical' },
                  { data: 'action', name: 'action' }
              ]
          });
@@ -149,6 +176,7 @@
 
           $('#submit').click(function (e) {
                 e.preventDefault();
+                console.log($('#classId').val() || []);
                 var id=$('#submit').val();
                 $.ajaxSetup({
                     headers: {
@@ -164,11 +192,16 @@
                     method: 'post',
                     url: url,
                     data: {
-                    classId: $('#classId option:selected').val(),
+                    //classId: $('#classId option:selected').val(),
+                    classId:$('#classId').val() || [],
                     subjectName: $('#subjectName').val(),
                     subjectCode: $('#subjectCode').val(),
                     group: $('#group:checked').val(),
                     optionalstatus: $('#optionalstatus:checked').val(),
+                    ca: $('#ca').val(),
+                    mcq: $('#mcq').val(),
+                    written: $('#written').val(),
+                    practical: $('#practical').val(),
                     },
                     success: function(result){
                         if (result.success) {
@@ -198,6 +231,10 @@
                     $('#classId').val(data.classId);
                     $('#subjectName').val(data.subjectName);
                     $('#subjectCode').val(data.subjectCode);
+                    $('#ca').val(data.ca);
+                    $('#mcq').val(data.mcq);
+                    $('#written').val(data.written);
+                    $('#practical').val(data.practical);
                     console.log(data);
                     $("input[name='group'][value='"+data.group+"']").prop('checked', true);
                     //$("input[name='optionalstatus'][value='"+data.optionalstatus+"']").prop('checked', true);

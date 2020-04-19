@@ -19,6 +19,10 @@ class CreateSubjectsTable extends Migration
             $table->string('subjectCode');
             $table->unsignedInteger('classId')->comment('classId');
             $table->string('group',20)->comment('General','Science','Arts','Commerce','Optional');
+            $table->Integer('ca');
+            $table->Integer('mcq');
+            $table->Integer('written');
+            $table->Integer('practicle');
             $table->unsignedInteger('bId');
             $table->boolean('optionalstatus')->default(false)->comment('1=true, 0= false');
             $table->timestamps();
