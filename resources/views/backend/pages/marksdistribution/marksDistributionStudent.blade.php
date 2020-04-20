@@ -113,11 +113,15 @@
                             <tr>
                                 <th>Roll</th>
                                 <th>Name</th>
-                                <th>Exam Attendance</th>
+                                <th>Exam Atten</th>
                                 <th>CA</th>
+                                <th>CA <b id="thsubca" ></b> %</th>
                                 <th>MCQ</th>
+                                <th>MCQ <b id="thsubmcq" ></b> %</th>
                                 <th>Written</th>
+                                <th>written <b id="thsubwritten" ></b> %</th>
                                 <th>Practical</th>
+                                <th>Practical <b id="thsubpractcle" ></b> %</th>
                                 <th>Total</th>
                                 <th>Grade</th>
                                 <th>Point</th>
@@ -209,10 +213,12 @@
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
 
-                        option+=("<option value='"+element.id+"' data-optionalstatus='"+element.optionalstatus+"'>"+element.subjectName+"</option>");
+                        option+=("<option value='"+element.id+"' data-optionalstatus='"+element.optionalstatus+"' data-subca='"+element.ca+"' data-submcq='"+element.mcq+"'  data-subwritten='"+element.written+"' data-subpracticle='"+element.practicle+"'>"+element.subjectName+"</option>");
 
                     });
                     $('#subjectId').html(option);
+                    
+
                 }
             });
             $.ajax({
@@ -241,6 +247,11 @@
     var examType=$("#examType").val();
     var optionalstatus=$('#subjectId option:selected').attr('data-optionalstatus');
 
+    var subca=$('#subjectId option:selected').attr('data-subca');
+    var submcq=$('#subjectId option:selected').attr('data-submcq');
+    var subwritten=$('#subjectId option:selected').attr('data-subwritten');
+    var subpracticle=$('#subjectId option:selected').attr('data-subpracticle');
+
     var sessionYearId=$('#sessionYear option:selected').val();
 
     //console.log(classId, sectionId,subjectId,examType,group);
@@ -264,6 +275,10 @@
 
                 $('#tblHidden').attr('hidden',false);
                 $('#btnAttendance').attr('disabled',false);
+                $('#thsubca').html(subca);
+                $('#thsubmcq').html(submcq);
+                $('#thsubwritten').html(subwritten);
+                $('#thsubpractcle').html(subpracticle);
 
                 var tr='';
                 $.each (response, function (key, value) {
@@ -272,18 +287,39 @@
                             "<td>"+value.roll+"</td>"+
                             "<td>"+value.firstName+" "+value.lastName+"</td>"+
                             "<td>"+value.examAttendence+"</td>"+
+
                             "<td>"+
-                            '<input class="marks validation" type="number" min="0" max="100" name="ca'+value.id+'" value="'+value.ca+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
+                            '<input class="inputmarks validation" type="number" min="0" max="100" name="inputca'+value.id+'" value="'+value.ca+'" onblur="checkca('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
                             +"</td>"+
                             "<td>"+
-                                '<input class="marks validation" type="number" min="0" max="100" name="mcq'+value.id+'" value="'+value.mcq+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
-                                +"</td>"+
+                            '<input class="marks validation" type="number" min="0" max="100" name="ca'+value.id+'" value="'+value.ca+'" onblur="checkGrade('+value.id+')" readonly >'
+                            +"</td>"+
+
+
+
                             "<td>"+
-                            '<input class="marks validation" type="number" min="0" max="100" name="writting'+value.id+'" value="'+value.written+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
+                                '<input class="inputmarks validation" type="number" min="0" max="100" name="inputmcq'+value.id+'" value="'+value.mcq+'" onblur="checkmcq('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
                             +"</td>"+
                             "<td>"+
-                            '<input class="marks validation" type="number" min="0" max="100" name="practical'+value.id+'" value="'+value.practical+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
+                                '<input class="marks validation" type="number" min="0" max="100" name="mcq'+value.id+'" value="'+value.mcq+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' readonly>'
                             +"</td>"+
+
+
+                            "<td>"+
+                            '<input class="inputmarks validation" type="number" min="0" max="100" name="inputwritting'+value.id+'" value="'+value.written+'" onblur="checkwritting('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
+                            +"</td>"+
+                            "<td>"+
+                            '<input class="marks validation" type="number" min="0" max="100" name="writting'+value.id+'" value="'+value.written+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' readonly >'
+                            +"</td>"+
+
+
+                            "<td>"+
+                            '<input class="inputmarks validation" type="number" min="0" max="100" name="inputpractical'+value.id+'" value="'+value.practical+'" onblur="checkpractical('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
+                            +"</td>"+
+                            "<td>"+
+                            '<input class="marks validation" type="number" min="0" max="100" name="practical'+value.id+'" value="'+value.practical+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' readonly >'
+                            +"</td>"+
+
                             "<td>"+
                             '<input class="totalMarks validation " type="number" min="0" max="100" name="totalMarks'+value.id+'" value="'+value.total+'" onblur="checkGrade('+value.id+')" readonly>'
                             +"</td>"+
@@ -331,6 +367,57 @@
 
 });
 
+//check subca
+function checkca(id){
+   // console.log(id);
+    var inputca= $('input[name=inputca'+id+']').val();
+    var subca=$('#subjectId option:selected').attr('data-subca');
+
+    var calca=(inputca*subca)/100;
+    //$("#classId2").attr('value',classId);
+     $('input[name=ca'+id+']').attr('value',calca);
+
+   
+    }
+
+//check sub-mcq
+function checkmcq(id){
+   // console.log(id);
+    var inputmcq= $('input[name=inputmcq'+id+']').val();
+    var submcq=$('#subjectId option:selected').attr('data-submcq');
+
+    var calmcq=(inputmcq*submcq)/100;
+    //$("#classId2").attr('value',classId);
+     $('input[name=mcq'+id+']').attr('value',calmcq);
+
+   
+    }
+
+//check sub-written
+function checkwritting(id){
+   // console.log(id);
+    var inputwritting= $('input[name=inputwritting'+id+']').val();
+    var subwritten=$('#subjectId option:selected').attr('data-subwritten');
+
+    var calwritten=(inputwritting*subwritten)/100;
+    //$("#classId2").attr('value',classId);
+     $('input[name=writting'+id+']').attr('value',calwritten);
+
+   
+    }    
+
+//check sub-practical
+function checkpractical(id){
+   // console.log(id);
+    var inputpractical= $('input[name=inputpractical'+id+']').val();
+    var subpracticle=$('#subjectId option:selected').attr('data-subpracticle');
+
+    var calpractical=(inputpractical*subpracticle)/100;
+    //$("#classId2").attr('value',classId);
+     $('input[name=practical'+id+']').attr('value',calpractical);
+
+   
+    }      
 
 function checkGrade(id){
    // console.log(id);

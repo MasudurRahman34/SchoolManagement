@@ -64,7 +64,7 @@ class SubjectController extends Controller
             $subject->ca = $request->ca;
             $subject->mcq = $request->mcq;
             $subject->written = $request->written;
-            $subject->practical = $request->practical;
+            $subject->practicle = $request->practicle;
             if($request->optionalstatus==null){
                 $subject->optionalstatus = 0;
             }else{
@@ -140,7 +140,7 @@ class SubjectController extends Controller
             $subject->ca = $request->ca;
             $subject->mcq = $request->mcq;
             $subject->written = $request->written;
-            $subject->practical = $request->practical;
+            $subject->practicle = $request->practicle;
             if($request->optionalstatus==null){
                 $subject->optionalstatus = 0;
             }else{

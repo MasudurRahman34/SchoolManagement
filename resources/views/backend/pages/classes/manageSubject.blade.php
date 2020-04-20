@@ -30,7 +30,7 @@
                       <th>CA(%)</th>
                       <th>MCQ(%)</th>
                       <th>Written(%)</th>
-                      <th>Practical(%)</th>
+                      <th>practicle(%)</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -48,6 +48,7 @@
               <h3 class="tile-title border-bottom p-2" id="title"> Add Subject</h3>
             <div class="tile-body">
             <div class="form-group">
+              
                   <label for="exampleSelect1">Select Class</label>
                   <select class="form-control" id="classId" name="classId" multiple="multiple">
                    @foreach ($class as $class)
@@ -110,8 +111,8 @@
                     <input class="form-control exam"  type="number" min="0" value="0" id="written" name="written" placeholder="Enter Written Mark">
                 </div>
                 <div class="form-group">
-                  <label for="exampleSelect1">PRACTICAL(%)</label>
-                    <input class="form-control exam"  type="number" min="0" value="0" id="practical" name="practical" placeholder="Enter Practical Mark">
+                  <label for="exampleSelect1">practicle(%)</label>
+                    <input class="form-control exam"  type="number" min="0" value="0" id="practicle" name="practicle" placeholder="Enter practicle Mark">
                 </div>
 
 
@@ -167,7 +168,7 @@
                  { data: 'ca', name: 'ca' },
                  { data: 'mcq', name: 'mcq' },
                  { data: 'written', name: 'written' },
-                 { data: 'practical', name: 'practical' },
+                 { data: 'practicle', name: 'practicle' },
                  { data: 'action', name: 'action' }
              ]
          });
@@ -201,7 +202,7 @@
                     ca: $('#ca').val(),
                     mcq: $('#mcq').val(),
                     written: $('#written').val(),
-                    practical: $('#practical').val(),
+                    practicle: $('#practicle').val(),
                     },
                     success: function(result){
                         if (result.success) {
@@ -234,7 +235,7 @@
                     $('#ca').val(data.ca);
                     $('#mcq').val(data.mcq);
                     $('#written').val(data.written);
-                    $('#practical').val(data.practical);
+                    $('#practicle').val(data.practicle);
                     console.log(data);
                     $("input[name='group'][value='"+data.group+"']").prop('checked', true);
                     //$("input[name='optionalstatus'][value='"+data.optionalstatus+"']").prop('checked', true);
