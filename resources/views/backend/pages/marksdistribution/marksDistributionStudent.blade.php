@@ -115,14 +115,16 @@
                                 <th>Name</th>
                                 <th>Exam Atten</th>
                                 <th>CA</th>
-                                <th>CA <b id="thsubca" ></b> %</th>
+                                {{-- <th>CA <b id="thsubca" ></b> %</th> --}}
                                 <th>MCQ</th>
-                                <th>MCQ <b id="thsubmcq" ></b> %</th>
+                                {{-- <th>MCQ <b id="thsubmcq" ></b> %</th> --}}
                                 <th>Written</th>
-                                <th>written <b id="thsubwritten" ></b> %</th>
+                                {{-- <th>written <b id="thsubwritten" ></b> %</th> --}}
                                 <th>Practical</th>
-                                <th>Practical <b id="thsubpractcle" ></b> %</th>
-                                <th>Total</th>
+                                {{-- <th>Practical <b id="thsubpractcle" ></b> %</th> --}}
+                                <th style="visibility:collapse"></th>
+                                <th>Total in 80 %</th>
+                                <<th>Total</th>
                                 <th>Grade</th>
                                 <th>Point</th>
                                 <th>Action</th>
@@ -287,42 +289,36 @@
                             "<td>"+value.roll+"</td>"+
                             "<td>"+value.firstName+" "+value.lastName+"</td>"+
                             "<td>"+value.examAttendence+"</td>"+
-
                             "<td>"+
-                            '<input class="inputmarks validation" type="number" min="0" max="100" name="inputca'+value.id+'" value="'+value.ca+'" onblur="checkca('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
-                            +"</td>"+
-                            "<td>"+
-                            '<input class="marks validation" type="number" min="0" max="100" name="ca'+value.id+'" value="'+value.ca+'" onblur="checkGrade('+value.id+')" readonly >'
-                            +"</td>"+
-
-
-
-                            "<td>"+
-                                '<input class="inputmarks validation" type="number" min="0" max="100" name="inputmcq'+value.id+'" value="'+value.mcq+'" onblur="checkmcq('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
-                            +"</td>"+
-                            "<td>"+
-                                '<input class="marks validation" type="number" min="0" max="100" name="mcq'+value.id+'" value="'+value.mcq+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' readonly>'
-                            +"</td>"+
-
-
-                            "<td>"+
-                            '<input class="inputmarks validation" type="number" min="0" max="100" name="inputwritting'+value.id+'" value="'+value.written+'" onblur="checkwritting('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
-                            +"</td>"+
-                            "<td>"+
-                            '<input class="marks validation" type="number" min="0" max="100" name="writting'+value.id+'" value="'+value.written+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' readonly >'
-                            +"</td>"+
-
-
-                            "<td>"+
-                            '<input class="inputmarks validation" type="number" min="0" max="100" name="inputpractical'+value.id+'" value="'+value.practical+'" onblur="checkpractical('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
-                            +"</td>"+
-                            "<td>"+
-                            '<input class="marks validation" type="number" min="0" max="100" name="practical'+value.id+'" value="'+value.practical+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' readonly >'
+                            '<input class="marks validation" type="number" min="0" max="100" name="ca'+value.id+'" value="'+value.ca+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' >'
                             +"</td>"+
 
                             "<td>"+
-                            '<input class="totalMarks validation " type="number" min="0" max="100" name="totalMarks'+value.id+'" value="'+value.total+'" onblur="checkGrade('+value.id+')" readonly>'
+                                '<input class="marks validation" type="number" min="0" max="100" name="mcq'+value.id+'" value="'+value.mcq+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
                             +"</td>"+
+            
+
+                            "<td>"+
+                            '<input class="marks validation" type="number" min="0" max="100" name="writting'+value.id+'" value="'+value.written+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' >'
+                            +"</td>"+
+
+                            "<td>"+
+                            '<input class="marks validation" type="number" min="0" max="100" name="practical'+value.id+'" value="'+value.practical+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' >'
+                            +"</td>"+
+
+                            
+                            "<td>"+
+                            '<input class="totalMarks validation " type="number" min="0" max="100" name="totalMarks'+value.id+'" value="'+value.total+'"  hidden>'
+                            +"</td>"+
+
+                            "<td>"+
+                            '<input class="totalMarksin80 validation " type="number" min="0" max="100" name="totalMarksin80'+value.id+'" value="'+value.total+'" onblur="checktotalin80('+value.id+')" readonly>'
+                            +"</td>"+
+
+                            "<td>"+
+                            '<input class="caltotalMarks validation " type="number" min="0" max="100" name="caltotalMarks'+value.id+'" value="'+value.total+'" onblur="checkGrade('+value.id+')" readonly>'
+                            +"</td>"+
+
                             "<td>"+
                             '<input class="grade " type="text" name="grade'+value.id+'" value="'+value.gradeName+'" readonly>'
                             +"</td>"+
@@ -367,61 +363,41 @@
 
 });
 
-//check subca
-function checkca(id){
+
+//check 
+function checktotalin80(id){
    // console.log(id);
-    var inputca= $('input[name=inputca'+id+']').val();
-    var subca=$('#subjectId option:selected').attr('data-subca');
+    //var ca= $('input[name=ca'+id+']').val();
+    var mcq= $('input[name=mcq'+id+']').val()
+    var written= $('input[name=writting'+id+']').val();
+    var practical= $('input[name=practical'+id+']').val();
+    
+    var mwptotal = Number(mcq) + Number(written) + Number(practical);
+    
+   // console.log(mcq,written,practical,mwptotal);
+    var cal80percenttotal =(mwptotal*80)/100;
+    //console.log(cal80percenttotal);
 
-    var calca=(inputca*subca)/100;
+
+    //var calpractical=(inputpractical*subpracticle)/100;
     //$("#classId2").attr('value',classId);
-     $('input[name=ca'+id+']').attr('value',calca);
+     $('input[name=totalMarksin80'+id+']').attr('value',cal80percenttotal);
 
-   
-    }
+     var precent= $('input[name=totalMarksin80'+id+']').val();
 
-//check sub-mcq
-function checkmcq(id){
-   // console.log(id);
-    var inputmcq= $('input[name=inputmcq'+id+']').val();
-    var submcq=$('#subjectId option:selected').attr('data-submcq');
+     var ca= $('input[name=ca'+id+']').val();
 
-    var calmcq=(inputmcq*submcq)/100;
-    //$("#classId2").attr('value',classId);
-     $('input[name=mcq'+id+']').attr('value',calmcq);
+     var cal =Number(precent)+ Number(ca);
 
-   
-    }
-
-//check sub-written
-function checkwritting(id){
-   // console.log(id);
-    var inputwritting= $('input[name=inputwritting'+id+']').val();
-    var subwritten=$('#subjectId option:selected').attr('data-subwritten');
-
-    var calwritten=(inputwritting*subwritten)/100;
-    //$("#classId2").attr('value',classId);
-     $('input[name=writting'+id+']').attr('value',calwritten);
-
-   
-    }    
-
-//check sub-practical
-function checkpractical(id){
-   // console.log(id);
-    var inputpractical= $('input[name=inputpractical'+id+']').val();
-    var subpracticle=$('#subjectId option:selected').attr('data-subpracticle');
-
-    var calpractical=(inputpractical*subpracticle)/100;
-    //$("#classId2").attr('value',classId);
-     $('input[name=practical'+id+']').attr('value',calpractical);
+     $('input[name=caltotalMarks'+id+']').attr('value',cal);
 
    
     }      
 
 function checkGrade(id){
    // console.log(id);
-    var totalMarks= $('input[name=totalMarks'+id+']').val();
+   // change caltotal
+    var totalMarks= $('input[name=caltotalMarks'+id+']').val();
 //console.log(totalMarks);
 
 //change start from here
@@ -463,7 +439,8 @@ function sendMark(id){
     var mcq= $('input[name=mcq'+id+']').val();
     var written= $('input[name=writting'+id+']').val();
     var practical= $('input[name=practical'+id+']').val();
-    var totalMarks= $('input[name=totalMarks'+id+']').val();
+    //change caltotal
+    var totalMarks= $('input[name=caltotalMarks'+id+']').val();
 
     if(totalMarks>=100){
         alert("Total mark Can not be More then 100! please Check it Again");
