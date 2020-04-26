@@ -82,6 +82,7 @@
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" hidden>
                        <input type="text" name="classId2" id="classId2" hidden>
+                    <input type="date" name="created_date" value="{{date("Y/m/d")}}" hidden>
                         <div class="table-responsive" >
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>

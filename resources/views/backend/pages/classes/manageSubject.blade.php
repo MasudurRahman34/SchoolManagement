@@ -27,10 +27,6 @@
                       <th>Subject Code</th>
                       <th>Subject Type</th>
                       <th>Optional</th>
-                      <th>CA(%)</th>
-                      <th>MCQ(%)</th>
-                      <th>Written(%)</th>
-                      <th>practicle(%)</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -98,24 +94,6 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                  <label for="exampleSelect1">CA(%)</label>
-                    <input class="form-control exam"  type="number" min="0" value="0" id="ca" name="ca" placeholder="Enter CA Mark">
-                </div>
-                <div class="form-group">
-                  <label for="exampleSelect1">MCQ(%)</label>
-                    <input class="form-control exam"  type="number" min="0" value="0" id="mcq" name="mcq" placeholder="Enter MCQ Mark">
-                </div>
-                <div class="form-group">
-                  <label for="exampleSelect1">WRITTEN(%)</label>
-                    <input class="form-control exam"  type="number" min="0" value="0" id="written" name="written" placeholder="Enter Written Mark">
-                </div>
-                <div class="form-group">
-                  <label for="exampleSelect1">practicle(%)</label>
-                    <input class="form-control exam"  type="number" min="0" value="0" id="practicle" name="practicle" placeholder="Enter practicle Mark">
-                </div>
-
-
             </div>
             <div class="tile-footer">
                   <div class="row">
@@ -165,10 +143,6 @@
                  { data: 'subjectCode', name: 'subjectCode' },
                  { data: 'group', name: 'group' },
                  { data: 'optionalstatus', name: 'optionalstatus' },
-                 { data: 'ca', name: 'ca' },
-                 { data: 'mcq', name: 'mcq' },
-                 { data: 'written', name: 'written' },
-                 { data: 'practicle', name: 'practicle' },
                  { data: 'action', name: 'action' }
              ]
          });
@@ -194,7 +168,7 @@
                     url: url,
                     data: {
                     //classId: $('#classId option:selected').val(),
-                    classId:$('#classId').val() || [],
+                    classId:$('#classId option:selected').val() || [],
                     subjectName: $('#subjectName').val(),
                     subjectCode: $('#subjectCode').val(),
                     group: $('#group:checked').val(),
@@ -202,7 +176,7 @@
                     ca: $('#ca').val(),
                     mcq: $('#mcq').val(),
                     written: $('#written').val(),
-                    practicle: $('#practicle').val(),
+                    practical: $('#practical').val(),
                     },
                     success: function(result){
                         if (result.success) {
@@ -230,6 +204,7 @@
                 success:function(data) {
 
                     $('#classId').val(data.classId);
+                    $('#classId').trigger('change');
                     $('#subjectName').val(data.subjectName);
                     $('#subjectCode').val(data.subjectCode);
                     $('#ca').val(data.ca);

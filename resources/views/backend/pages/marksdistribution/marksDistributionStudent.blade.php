@@ -5,13 +5,13 @@
     {{--  <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">  --}}
     <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i>Section Wish Student Marks Distribution </h1>
+          <h1><i class="fa fa-edit"></i>Section Wise Student Marks Distribution </h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">ClassWise Student</a></li>
+          <li class="breadcrumb-item"><a href="#">Section Wise Student</a></li>
           <li class="breadcrumb-item"><a href="#">Mark Entry</a></li>
         </ul>
     </div>
@@ -113,8 +113,8 @@
                             <tr>
                                 <th>Roll</th>
                                 <th>Name</th>
-                                <th>Exam Atten</th>
-                                <th>CA</th>
+                                <th>Exam Attendance</th>
+                                
                                 {{-- <th>CA <b id="thsubca" ></b> %</th> --}}
                                 <th>MCQ</th>
                                 {{-- <th>MCQ <b id="thsubmcq" ></b> %</th> --}}
@@ -122,9 +122,10 @@
                                 {{-- <th>written <b id="thsubwritten" ></b> %</th> --}}
                                 <th>Practical</th>
                                 {{-- <th>Practical <b id="thsubpractcle" ></b> %</th> --}}
-                                <th style="visibility:collapse"></th>
                                 <th>Total in 80 %</th>
-                                <<th>Total</th>
+                                <th>CA</th>
+                                {{-- <th></th> --}}
+                                <th>Total</th>
                                 <th>Grade</th>
                                 <th>Point</th>
                                 <th>Action</th>
@@ -289,9 +290,7 @@
                             "<td>"+value.roll+"</td>"+
                             "<td>"+value.firstName+" "+value.lastName+"</td>"+
                             "<td>"+value.examAttendence+"</td>"+
-                            "<td>"+
-                            '<input class="marks validation" type="number" min="0" max="100" name="ca'+value.id+'" value="'+value.ca+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' >'
-                            +"</td>"+
+                            
 
                             "<td>"+
                                 '<input class="marks validation" type="number" min="0" max="100" name="mcq'+value.id+'" value="'+value.mcq+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+'>'
@@ -308,12 +307,16 @@
 
                             
                             "<td>"+
-                            '<input class="totalMarks validation " type="number" min="0" max="100" name="totalMarks'+value.id+'" value="'+value.total+'"  hidden>'
+                            '<input class="totalEightyPercentMark forTotal validation " type="number" min="0" max="100" name="totalEightyPercentMark'+value.id+'" value="'+value.total+'" >'
                             +"</td>"+
 
                             "<td>"+
-                            '<input class="totalMarksin80 validation " type="number" min="0" max="100" name="totalMarksin80'+value.id+'" value="'+value.total+'" onblur="checktotalin80('+value.id+')" readonly>'
+                            '<input class="forTotal validation" type="number" min="0" max="20" name="ca'+value.id+'" value="'+value.ca+'" onblur="checkGrade('+value.id+')" '+((value.examAttendence=="absent")? 'readonly' : '')+' >'
                             +"</td>"+
+
+                            // "<td>"+
+                            // '<input class="totalMarksin80 validation " type="number" min="0" max="100" name="totalMarksin80'+value.id+'" value="'+value.total+'" onblur="checktotalin80('+value.id+')" readonly>'
+                            // +"</td>"+
 
                             "<td>"+
                             '<input class="caltotalMarks validation " type="number" min="0" max="100" name="caltotalMarks'+value.id+'" value="'+value.total+'" onblur="checkGrade('+value.id+')" readonly>'
@@ -335,24 +338,31 @@
 
                     $('tbody').html(tr);
 
-
+                    //80 % mark
                     $(document).keyup(function(){
                         //alert("ok");
                         $("tr").each(function(){
-                            var total =0;
+                            var totalEightyPercentMark =0;
                             $(this).find(".marks").each(function(){
-
 
                                var marks=$(this).val();
                                 if(marks.length!==0){
-                                total +=parseInt(marks);
-
-
-
-
+                                    totalEightyPercentMark +=parseInt(marks)*.8;
                                 }
                            });
-                            var total= $(this).find(".totalMarks").attr('value', total);
+                            var totalEightyPercentMark= $(this).find(".totalEightyPercentMark").attr('value', totalEightyPercentMark);
+                            var total=0;
+                            $(this).find(".forTotal").each(function(){
+                                
+                                var forTotal=$(this).val();
+                                
+                                
+                                if(forTotal.length!==0){
+                                    total +=parseInt(forTotal);
+                                    console.log(total);
+                                }
+                            });
+                            var total= $(this).find(".caltotalMarks").attr('value', total);
 
                         });
                     });//end
@@ -365,34 +375,34 @@
 
 
 //check 
-function checktotalin80(id){
-   // console.log(id);
-    //var ca= $('input[name=ca'+id+']').val();
-    var mcq= $('input[name=mcq'+id+']').val()
-    var written= $('input[name=writting'+id+']').val();
-    var practical= $('input[name=practical'+id+']').val();
+// function checktotalin80(id){
+//    // console.log(id);
+//     //var ca= $('input[name=ca'+id+']').val();
+//     var mcq= $('input[name=mcq'+id+']').val()
+//     var written= $('input[name=writting'+id+']').val();
+//     var practical= $('input[name=practical'+id+']').val();
     
-    var mwptotal = Number(mcq) + Number(written) + Number(practical);
+//     var mwptotal = Number(mcq) + Number(written) + Number(practical);
     
-   // console.log(mcq,written,practical,mwptotal);
-    var cal80percenttotal =(mwptotal*80)/100;
-    //console.log(cal80percenttotal);
+//    // console.log(mcq,written,practical,mwptotal);
+//     var cal80percenttotal =(mwptotal*80)/100;
+//     //console.log(cal80percenttotal);
 
 
-    //var calpractical=(inputpractical*subpracticle)/100;
-    //$("#classId2").attr('value',classId);
-     $('input[name=totalMarksin80'+id+']').attr('value',cal80percenttotal);
+//     //var calpractical=(inputpractical*subpracticle)/100;
+//     //$("#classId2").attr('value',classId);
+//      $('input[name=totalMarksin80'+id+']').attr('value',cal80percenttotal);
 
-     var precent= $('input[name=totalMarksin80'+id+']').val();
+//      var precent= $('input[name=totalMarksin80'+id+']').val();
 
-     var ca= $('input[name=ca'+id+']').val();
+//      var ca= $('input[name=ca'+id+']').val();
 
-     var cal =Number(precent)+ Number(ca);
+//      var cal =Number(precent)+ Number(ca);
 
-     $('input[name=caltotalMarks'+id+']').attr('value',cal);
+//      $('input[name=caltotalMarks'+id+']').attr('value',cal);
 
    
-    }      
+//     }      
 
 function checkGrade(id){
    // console.log(id);
@@ -439,6 +449,7 @@ function sendMark(id){
     var mcq= $('input[name=mcq'+id+']').val();
     var written= $('input[name=writting'+id+']').val();
     var practical= $('input[name=practical'+id+']').val();
+    var totalEightyPercentMark= $('input[name=totalEightyPercentMark'+id+']').val();
     //change caltotal
     var totalMarks= $('input[name=caltotalMarks'+id+']').val();
 
@@ -470,6 +481,7 @@ function sendMark(id){
                 mcq: mcq,
                 written: written,
                 practical: practical,
+                totalEightyPercentMark: totalEightyPercentMark,
                 totalMarks: totalMarks,
                 grade: grade,
                 gradePoint: gradePoint,

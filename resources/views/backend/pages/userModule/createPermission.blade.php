@@ -87,9 +87,9 @@
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
-                var name=$(permissionName).val();
-                var role=$('#role').val() || [];
-                console.log(role);
+                // var name=$(permissionName).val();
+                // var role=$('#role').val() || [];
+                // console.log(role);
                 jQuery.ajax({
                     method: 'post',
                     url: "{{ url('/addPermission') }}",

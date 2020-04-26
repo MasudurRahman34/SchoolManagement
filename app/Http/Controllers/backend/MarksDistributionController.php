@@ -199,6 +199,7 @@ class MarksDistributionController extends Controller
             $examAttendance->mcq = 0;
             $examAttendance->written = 0;
             $examAttendance->practical = 0;
+            $examAttendance->totalEightyPercentMark = 0;
             $examAttendance->total = 0;
             $examAttendance->gradeName = "F";
             $examAttendance->gradePoint = 0.0;
@@ -226,6 +227,7 @@ class MarksDistributionController extends Controller
                 $marks->written = $request->written;
                 $marks->practical = $request->practical;
                 $marks->total = $request->totalMarks;
+                $marks->totalEightyPercentMark = $request->totalEightyPercentMark;
                 $marks->gradeName = $request->grade;
                 $marks->gradePoint = $request->gradePoint;
                 $marks->markEntrystatus = 1;

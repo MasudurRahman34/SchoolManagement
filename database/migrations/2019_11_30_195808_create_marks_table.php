@@ -17,11 +17,12 @@ class CreateMarksTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('studentId');
             $table->unsignedBigInteger('subjectId');
-            $table->string('ca');
-            $table->string('mcq');
-            $table->string('written');
-            $table->string('practical');
-            $table->string('total');
+            $table->double('ca',8,2);
+            $table->double('mcq',8,2);
+            $table->double('written',8,2);
+            $table->double('practical',8,2);
+            $table->double('totalEightyPercentMark',8,2);
+            $table->double('total',8,2);
             $table->string('gradeName');
             $table->double('gradePoint',8,2);
             $table->string('examType');

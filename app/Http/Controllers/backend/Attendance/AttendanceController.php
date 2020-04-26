@@ -71,7 +71,7 @@ public function storeAttendence(Request $request){
         foreach($absentStudentDetailes as $value){
             $msgAndContact[]=array(
                 "to"=>$value->mobile,
-                "message"=>$value->firstName." ".$value->lastName.",Class ".$value->Section->classes->className.",Section ".$value->Section->sectionName.", Roll ". $value->roll. " is absent on ".date("Y/m/d")." Thank You."
+                "message"=>$value->firstName." ".$value->lastName.",Class ".$value->Section->classes->className.",Section ".$value->Section->sectionName.", Roll ". $value->roll. " is absent on ".$stAttendence->created_at." Thank You."
             );
         }
         //dd($msgAndContact);

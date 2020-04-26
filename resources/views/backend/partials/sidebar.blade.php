@@ -249,12 +249,13 @@
           </li>
           @endcan --}}
 
-        {{-- @can('file')--}}
+        @can('Book')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Book</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{url('file/store')}}"><i class="icon fa fa-angle-right"></i>File Document</a></li>
             </ul>
           </li>
+          @endcan
 
            @can('Notification')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Notification</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -278,8 +279,8 @@
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Exam Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('exam.index') }}"><i class="icon fa fa-angle-right"></i> Exam list</a></li>
-              <li><a class="treeview-item" href="{{route('exam.index') }}"><i class="icon fa fa-angle-right"></i> Exam Slot</a></li>
-              <li><a class="treeview-item" href=""><i class="icon fa fa-angle-right"></i> Exam Schedule</a></li>
+              {{-- <li><a class="treeview-item" href="{{route('exam.index') }}"><i class="icon fa fa-angle-right"></i> Exam Slot</a></li>
+              <li><a class="treeview-item" href=""><i class="icon fa fa-angle-right"></i> Exam Schedule</a></li> --}}
               <li><a class="treeview-item" href="{{route('examattendance.index') }}"><i class="icon fa fa-angle-right"></i> Exam Attendance</a></li>
             </ul>
           </li>

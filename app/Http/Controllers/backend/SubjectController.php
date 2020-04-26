@@ -61,10 +61,7 @@ class SubjectController extends Controller
             $subject->subjectCode = $request->subjectCode;
             $subject->classId = $classId;
             $subject->group = $request->group;
-            $subject->ca = $request->ca;
-            $subject->mcq = $request->mcq;
-            $subject->written = $request->written;
-            $subject->practicle = $request->practicle;
+           
             if($request->optionalstatus==null){
                 $subject->optionalstatus = 0;
             }else{
@@ -137,10 +134,7 @@ class SubjectController extends Controller
             $subject->subjectCode = $request->subjectCode;
             $subject->classId = $request->classId;
             $subject->group = $request->group;
-            $subject->ca = $request->ca;
-            $subject->mcq = $request->mcq;
-            $subject->written = $request->written;
-            $subject->practicle = $request->practicle;
+            
             if($request->optionalstatus==null){
                 $subject->optionalstatus = 0;
             }else{
