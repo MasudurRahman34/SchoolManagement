@@ -117,7 +117,15 @@ public function storeAttendence(Request $request){
            Session::flash('success','Succesfully Saved Student Attendence Data ');
            $attendences=Attendance::orderBy('id','ASC')->get();
 
+            if((url()->previous())!==(url('/myclass/attendance'))){
+
+            return redirect()->route('myclass.attendancebydate');
+
+            }else{
+
             return redirect()->route('myclass.attendance');
+
+            }
 
        }
 
@@ -852,6 +860,89 @@ public function storeAttendence(Request $request){
             ->addIndexColumn()
             ->make(true);
         return $data_table_render;
+    }
+
+
+     //student credential
+
+     public function scholarShipIndex()
+      {
+       $userId= Auth::guard('web')->user()->id;
+         //dd($userId);
+         $bId= Auth::guard('web')->user()->bId;
+         //dd($bId);
+         $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->count();
+         //dd($teachers);
+         if($teachers<=0){
+
+              return "You are not enroled in any class";
+
+         }else{
+
+             $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+             foreach($teachers as $teacher){
+                     if($teacher->Section->sessionYear->status == 1){
+                         //dd($teacher->Section);
+                         $classId = $teacher->classId;
+                         $shift = $teacher->shift;
+                         $sessionYearId = $teacher->sessionYearId;
+                         $sessionYear = SessionYear::where('id',$sessionYearId)->pluck('sessionYear');
+
+                         $className= classes::where('id',$classId)->pluck('className');
+                         $sectionId = $teacher->sectionId;
+                         $sectionName= Section::where('id',$sectionId)->pluck('sectionName');
+
+                     return view('backend.pages.classTeacher.scholarshipList',['sectionId'=>$sectionId,'sectionName'=>$sectionName,'classId'=>$classId,'className'=>$className,'sessionYear'=>$sessionYear,'sessionYearId'=>$sessionYearId,'shift'=>$shift]);
+                 }else{
+                     return redirect()->back()->with('Session Expired!. You are not enroled in any class');
+                 }
+             }
+
+         }
+      }
+      //end 
+    
+    //find scholarship student list
+    public function scholarshiplist($classId,$sectionId,$sessionYearId){
+        $bId=Auth::guard('web')->user()->bId;
+        $scholarshiplist=DB::select("SELECT  students.id as id,students.roll,students.firstName,students.lastName,students.fatherName,students.motherName,
+                                    students.blood,students.birthDate,students.mobile,classes.className,sections.sectionName,sections.shift,scholarships.name,
+                                    session_years.sessionYear
+                                    FROM students,student_scholarships,classes,sections,scholarships,session_years
+                                    where students.id=student_scholarships.studentId
+                                    AND scholarships.id=student_scholarships.scholershipId
+                                    AND sections.id=students.sectionId
+                                    AND session_years.id=sections.sessionYearId
+                                    AND classes.id=sections.classid
+                                    And classes.id='$classId'
+                                    And sections.id='$sectionId'
+                                    AND sections.sessionYearId='$sessionYearId'
+                                    AND students.bId='$bId'
+                                    AND students.deleted_at IS NULL
+
+                                    ");
+
+       // $scholarshiplist=studentScholarship::orderBy('id','DESC')->where('bId',Auth::guard('web')->user()->bId)->with('Student')->with('Fee')->get();
+             $data_table_render = DataTables::of($scholarshiplist)
+
+             ->addColumn('action',function ($student){
+                $edit_url = url('mystudent/show/studentProfile/'.$student->id);
+                 return '<a href="'.$edit_url.'" class="btn btn-info btn-sm"><i class="fa fa-edit"></i></a>'.
+                 '<a  onClick="deleteStudent('.$student->id.')" class="btn btn-danger btn-sm delete_class"><i class="fa fa-trash-o"></i></a>';
+             })
+             ->editColumn('firstName', function($scholarshiplist)
+                          {
+                             return $scholarshiplist->firstName. " ".$scholarshiplist->lastName;
+                          })
+            //  ->editColumn('sections.classes', function($scholarshiplist)
+            //  {
+            //     return $scholarshiplist->Section->classes->className;
+            //  })
+             ->rawColumns(['action'])
+             ->addIndexColumn()
+             ->make(true);
+             return $data_table_render;
+
     }
 
 

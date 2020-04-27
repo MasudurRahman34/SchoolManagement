@@ -45,7 +45,7 @@
         <div class="col-md-10" >
             <div class="tile" >
                 <div class="tile-body" id="tblHidden" hidden>
-                    <form action="{{route('store.attendence')}}" method="post" id="attendence">
+                    <form action="{{route('myclass.store')}}" method="post" id="attendence">
                         @csrf
                        <input type="text" name="sectionId" id="sectionId2" value="{{$sectionId}}" hidden>
                        <input type="date" name="created_date" id="dateId2" hidden>

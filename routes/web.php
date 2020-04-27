@@ -161,7 +161,11 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher
     Route::get('/list/credentialIndex', 'MyStudentConttroller@credentialIndex')->name('mystudent.credentialIndex');
     Route::get('/credential/list', 'MyStudentConttroller@credentiallist')->name('mystudent.credential');
 
-     Route::post('/change/password','MyStudentConttroller@changePassword')->name('mystudent.change.password');
+    Route::post('/change/password','MyStudentConttroller@changePassword')->name('mystudent.change.password');
+
+    //all student list
+    Route::get('/list/index', 'MyStudentConttroller@index')->name('mystudent.index');
+    Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
 
     
 
@@ -434,6 +438,10 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teach
     //myclass credintial List
     Route::get('myclass/list/credentialIndex', 'backend\ClassTeacherController@credentialIndex')->name('myclass.credentialIndex');
     Route::get('myclass/credential/list/{classId}/{sectionId}/{sessionYearId}', 'backend\ClassTeacherController@credentiallist')->name('myclass.credential'); 
+
+    //schoershiplist
+    Route::get('myclass/list/scholarship', 'backend\ClassTeacherController@scholarShipIndex')->name('myclass.schoarship');
+    Route::get('myclass/schoarship/list/{classId}/{sectionId}/{sessionYearId}', 'backend\ClassTeacherController@scholarshiplist')->name('myclass.scholarshiplist');
 
 });
 

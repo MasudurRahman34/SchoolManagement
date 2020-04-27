@@ -154,8 +154,10 @@
                 <ul class="flex-column pl-2 nav">
                   {{-- second step --}}
                     <li class="nav-item"><a class="nav-link py-0"  href="{{route('myclass.studentlist')}}" style="color:#ffbc00;">Student List</a></li>
-                     <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.credentialIndex') }}" style="color:#ffbc00;">My Student Credential</a></li>
-                    <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.credentialIndex') }}" style="color:#ffbc00;">All Student Credential</a></li>
+                    <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.schoarship') }}" style="color:#ffbc00;"> Scholarship List</a></li>
+                    <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.credentialIndex') }}" style="color:#ffbc00;">Student Credential List</a></li>
+                    {{-- <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.credentialIndex') }}" style="color:#ffbc00;">All Student Credential</a></li> --}}
+                    <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.index') }}"  style="color:#ffbc00;">All Student list</a></li>
 
                 </ul>
             </div>
