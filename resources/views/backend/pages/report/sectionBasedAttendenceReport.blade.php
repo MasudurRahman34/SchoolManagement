@@ -1,14 +1,14 @@
 @extends('backend.layouts.master')
-	@section('title', 'Date Wise Income Expanse Report')
+	@section('title', 'Section Based Attendence Report')
     @section('content')
     <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i>Date Wise Income Expense Report</h1>
+          <h1><i class="fa fa-edit"></i>Section Based Attendence Report </h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="#">Income Expanse Report</a></li>
+          <li class="breadcrumb-item"><a href="#">Section Based Attendence Report</a></li>
         </ul>
     </div>
     @include('backend.partials._message')
@@ -59,8 +59,10 @@
       <div class="col-lg-12">
         <div class="bs-component">
           <div class="list-group">
-            <h4 class="text-center text-info">Date Wise Income & Expense Statement Report</h4><hr class="new3" align="center" width="30%">
-            <p class="text-center">01-1-2020 To 15-01-2020</p>
+            <h4 class="text-center text-info">Section Based Attendence Report</h4><hr class="new3" align="center" width="30%">
+            <p class="text-center">Year: 2020, Class: Nine, Section: A</p>
+            <p class="text-center"><i class="fa fa-money" aria-hidden="true"></i>
+              Total Number Of Class Days: 94</p>
           </div>
         </div>
         <br>
@@ -70,55 +72,62 @@
               <table class="table table-bordered">
                 <thead class="thead-light">
                   <tr>
-                    <th>Serial</th>
-                    <th>Date</th>
-                    <th>Income</th>
-                    <th>Expense</th>
-                    <th>Total Balance</th>
+                    <th>Id</th>
+                    <th>Roll</th>
+                    <th>Name</th>
+                    <th>Total Attendence</th>
+                    <th>Total Absent</th>
+                    <th>Attendence %</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>45455+</td>
+                    <td>5533</td>
+                    <td>Arif Khan</td>
+                    <td>166</td>
+                    <td>10</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
-                    <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>45455+</td>
+                    <td>5533</td>
+                    <td>Arif Khan</td>
+                    <td>166</td>
+                    <td>10</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
-                    <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>45455+</td>
+                    <td>5533</td>
+                    <td>Arif Khan</td>
+                    <td>166</td>
+                    <td>10</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
-                    <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>460</td>
-                    <td>200</td>
+                    <td>45455+</td>
+                    <td>5533</td>
+                    <td>Arif Khan</td>
+                    <td>166</td>
+                    <td>10</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
-                    <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>45455+</td>
+                    <td>5533</td>
+                    <td>Arif Khan</td>
+                    <td>166</td>
+                    <td>10</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
-                    <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>45455+</td>
+                    <td>5533</td>
+                    <td>Arif Khan</td>
+                    <td>166</td>
+                    <td>10</td>
+                    <td>Not Yet</td>
                   </tr>
                 </tbody>
               </table>

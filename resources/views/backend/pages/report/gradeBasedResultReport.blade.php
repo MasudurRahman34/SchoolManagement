@@ -1,14 +1,14 @@
 @extends('backend.layouts.master')
-	@section('title', 'Date Wise Income Expanse Report')
+	@section('title', 'Grade Based Result Analysiz Report')
     @section('content')
     <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i>Date Wise Income Expense Report</h1>
+          <h1><i class="fa fa-edit"></i>Grade Based Result Analysiz Report </h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="#">Income Expanse Report</a></li>
+          <li class="breadcrumb-item"><a href="#">Grade Based Result Report</a></li>
         </ul>
     </div>
     @include('backend.partials._message')
@@ -41,7 +41,7 @@
               <div class="bs-component">
                 <div class="list-group">
                     <h2 class="text-warning">Foridpur Girls & Boys Pilot High School.</h2>
-                    <h5>House:77, Level 2 & 3, Road: 08, Block A, Dhanmondi 9/A, Dhaka-1207 sed diam eget risus varius blandit sit amet non magna.</h5>
+                    <h5>House:77, Level 2 & 3, Road: 08, Block A, Dhanmondi 9/A, Dhaka-1207</h5>
                 </div>
               </div>
             </div>
@@ -59,8 +59,9 @@
       <div class="col-lg-12">
         <div class="bs-component">
           <div class="list-group">
-            <h4 class="text-center text-info">Date Wise Income & Expense Statement Report</h4><hr class="new3" align="center" width="30%">
-            <p class="text-center">01-1-2020 To 15-01-2020</p>
+            <h4 class="text-center text-info">Grade Based Result Analysiz Report</h4><hr class="new3" align="center" width="30%">
+            <p class="text-center"><i class="fa fa-money" aria-hidden="true"></i>
+              Total Passed: 18 (39%). Total Failed: 28 (61%). Total Absent: 0 (0%)</p>
           </div>
         </div>
         <br>
@@ -70,55 +71,62 @@
               <table class="table table-bordered">
                 <thead class="thead-light">
                   <tr>
-                    <th>Serial</th>
-                    <th>Date</th>
-                    <th>Income</th>
-                    <th>Expense</th>
-                    <th>Total Balance</th>
+                    <th>Letter Grade</th>
+                    <th>Students (with 4th subject)</th>
+                    <th>Percentage</th>
+                    <th>Students (without 4th subject)</th>
+                    <th>Percentage</th>
+                    <th>Comments</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                    <td>A+</td>
+                    <td>55</td>
+                    <td>46%</td>
                     <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>1%</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
+                    <td>A+</td>
+                    <td>55</td>
+                    <td>46%</td>
                     <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>1%</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
+                    <td>A+</td>
+                    <td>55</td>
+                    <td>46%</td>
                     <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>1%</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
+                    <td>A+</td>
+                    <td>55</td>
+                    <td>46%</td>
                     <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>460</td>
-                    <td>200</td>
+                    <td>1%</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
+                    <td>A+</td>
+                    <td>55</td>
+                    <td>46%</td>
                     <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>1%</td>
+                    <td>Not Yet</td>
                   </tr>
                   <tr>
+                    <td>A+</td>
+                    <td>55</td>
+                    <td>46%</td>
                     <td>1</td>
-                    <td>01-01-2020</td>
-                    <td>460</td>
-                    <td>200</td>
-                    <td>240</td>
+                    <td>1%</td>
+                    <td>Not Yet</td>
                   </tr>
                 </tbody>
               </table>

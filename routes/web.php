@@ -511,11 +511,27 @@ Route::get('/notification/notificationBoard','backend\notificationController@not
 Route::get('/notification/emailSms','backend\notificationController@notificationEmailSms')->name('notification.emailSms');
 Route::get('/notification/emailSmsLog','backend\notificationController@emailSmsLog')->name('notification.emailSmsLog');
 Route::post('/notification/create','backend\notificationController@create')->name('notification.create');
-    //Report
-    Route::get('/classBased/income/report','backend\report\ReportController@classbasedReport')->name('classBased.income.Report');
-    Route::get('/dateWise/income/expanse/report','backend\report\ReportController@dateWiseIncomeExpanseReport')->name('dateWise.income.expanse');
+//Report
+Route::get('/classBased/income/report','backend\report\ReportController@classbasedReport')->name('classBased.income.Report');
+Route::get('/dateWise/income/expanse/report','backend\report\ReportController@dateWiseIncomeExpanseReport')->name('dateWise.income.expanse');
+Route::get('grade/based/result/report','backend\report\ReportController@gradeBasedResultReport')->name('grade.result.report');
+Route::get('section/based/attendence/report','backend\report\ReportController@sectionBasedAttendenceRe')->name('section.attendence.report');
+Route::get('staff/attendence/report','backend\report\ReportController@staffAttendenceRe')->name('staff.attendence.report');
+
 
 //permission and role
 
 
 //misuk 03/019/2020
+
+//Student Admit Card Generate By admin
+Route::get('/sectionwise/student/admitCard', 'backend\AdmitCardController@AdmitCardController')->name('student.admit.card');
+Route::get('/student/admitCardSectionWiseList/{classId}/{sectionId}', 'backend\AdmitCardController@sectionwiselist')->name('student.sectionwiselist');
+
+Route::get('/sectionwise/individual/student/admitCard', 'backend\AdmitCardController@individualAdmitCardController')->name('individual.admit.card');
+Route::get('/individual/admitCardSectionWiseList/{classId}/{sectionId}', 'backend\AdmitCardController@individualsectionwiselist')->name('individual.sectionwiselist');
+
+Route::get('/print/studentAdmitCard/{id}/', 'backend\AdmitCardController@AdmitCardPrint')->name('print.admit');
+
+//Route::get('/sectionwiselist/{classId}/{sectionId}/{sessionYearId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
+
