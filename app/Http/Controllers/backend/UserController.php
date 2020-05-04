@@ -137,25 +137,37 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(["errors"=>$validator->errors(), 400]);
         }else{
-            $password=mt_rand(100000,999999);
-            $userId=mt_rand(100000,999999);
-
-            $user=new User;
-            $user->email=$request->email;
-            $user->userId=$userId;
-            $user->name=$request->name;
-            $user->mobile=$request->mobile;
-            $user->designation=$request->designation;
-            // $user->role=$request->role;
-            $user->joinDate=$request->joinDate;
-            $user->address=$request->address;
-            $user->bId=Auth::guard('web')->user()->bId;
-            $user->password=Hash::make($password);
-            $user->readablePassword=$password;
-
-            $user->save();
-            $user->assignRole($request->role);
+            
             if($request->sectionId >0){
+                $checkClassTeacherExist=ClassTeacher::where('sectionId', $request->sectionId)->where('sessionYearId', $request->sessionYearId)->exists();
+                if ($checkClassTeacherExist>0) {
+                    return response()->json([
+                        
+                        "classTeacherError" => "Class teacher Already Exist In This Section ! Please Try Another Section"
+                       
+                    ]);
+                }else{
+
+
+                $password=mt_rand(100000,999999);
+                $userId=mt_rand(100000,999999);
+
+                $user=new User;
+                $user->email=$request->email;
+                $user->userId=$userId;
+                $user->name=$request->name;
+                $user->mobile=$request->mobile;
+                $user->designation=$request->designation;
+                // $user->role=$request->role;
+                $user->joinDate=$request->joinDate;
+                $user->address=$request->address;
+                $user->bId=Auth::guard('web')->user()->bId;
+                $user->password=Hash::make($password);
+                $user->readablePassword=$password;
+
+                $user->save();
+                $user->assignRole($request->role);
+
                 $ClassTeacher= new ClassTeacher();
                 $ClassTeacher->classId=$request->classId;
                 $ClassTeacher->sectionId=$request->sectionId;
@@ -164,6 +176,28 @@ class UserController extends Controller
                 $ClassTeacher->userId=$user->id;
                 $ClassTeacher->bId=$user->bId;
                 $ClassTeacher->save();
+                }
+            }else{
+                $password=mt_rand(100000,999999);
+                $userId=mt_rand(100000,999999);
+
+                $user=new User;
+                $user->email=$request->email;
+                $user->userId=$userId;
+                $user->name=$request->name;
+                $user->mobile=$request->mobile;
+                $user->designation=$request->designation;
+                // $user->role=$request->role;
+                $user->joinDate=$request->joinDate;
+                $user->address=$request->address;
+                $user->bId=Auth::guard('web')->user()->bId;
+                $user->password=Hash::make($password);
+                $user->readablePassword=$password;
+
+                $user->save();
+                $user->assignRole($request->role);
+
+
             }
 
             return response()->json([

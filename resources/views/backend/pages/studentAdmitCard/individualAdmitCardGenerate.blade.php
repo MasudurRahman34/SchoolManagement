@@ -19,6 +19,15 @@
                 <div class="tile-body">
                     <div class="row">
                         <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1"> Session Year</label>
+                                <select class="form-control admission" id="sessionYear" >
+                                    <option value="">--Please Select--</option>
+                                    @foreach ($sessionYear as $year)
+                                        <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        <div class="form-group col-md-4">
                                 <label class="control-label mt-3">Shift</label><br>
                                     <div class="custom-control shift-radio custom-control-inline">
                                         <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
@@ -49,12 +58,19 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                        <label for="exampleFormControlSelect1"> Session Year</label>
-                            <select class="form-control admission" id="sessionYear" >
-                                <option value="">--Please Select--</option>
-                                @foreach ($sessionYear as $year)
-                                    <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                            <label for="exampleFormControlSelect1"> Exam</label>
+                            <select class="form-control" id="examName">
+                                <option value=""> --Please Select--  </option>
+                                @foreach ($exam as $exam)
+                                    <option value="{{$exam->examName}}" >{{$exam->examName}}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                        <label for="exampleFormControlSelect1"> student List</label>
+                            <select class="form-control" id="studentList" >
+                                <option value="">--Please Select--</option>
+                               
                             </select>
                         </div>
                     </div>
@@ -62,38 +78,15 @@
             </div>
         </div>
     </div>
-<div class="clearix"></div>
-<div class="row justify-content-md-center">
-    <div class="col-md-9">
-        <div class="tile">
-                <div class="tile-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>id</th>
-                                <th>Name</th>
-                                <th>St ID</th>
-                                <th>Roll</th>
-                                <th>Class</th>
-                                <th>Section</th>
-                                <th>Shift</th>
-                                <th>group</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+<div id="indivi">
+</div>
+        
 
       <div class="clearix"></div>
     @endsection
     @section('script')
-      @include('backend.partials.js.datatable');
+     
       <script>
     dynamicSectionSelection();
 
@@ -105,29 +98,45 @@
 
         console.log(classId, sectionId);
 
-        var table= $('#sampleTable').DataTable({
-        dom: 'lBfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
-        processing:true,
-        serverSide:true,
-        pagin:true,
-        destroy:true,
-        ajax:"{{url('individual/admitCardSectionWiseList/')}}"+'/'+classId+'/'+sectionId,
-        columns:[
-            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'id', name: 'id' },
-            { data: 'firstName', name: 'firstName' },
-            { data: 'studentId', name: 'studentId' },
-            { data: 'roll', name: 'roll' },
-            { data: 'className', name: 'className' },
-            { data: 'sectionName', name: 'sectionName'},
-            { data: 'shift', name: 'shift'},
-            { data: 'group', name: 'group'},
-            { data: 'action', name: 'action' }
-        ]
+        $.ajax({
+                type: "get",
+                url:"{{url('individual/admitCardSectionWiseList/')}}"+'/'+classId+'/'+sectionId,
+                
+                success: function (data) {
+                    console.log(data);
+                    var option="<option>--Please Select--</option>";
+                    data.forEach(element => {
+
+                        option+=("<option value='"+element.id+"'>"+element.firstName+' '+element.lastName+'('+element.roll+')'+"</option>");
+
+                    });
+                    $('#studentList').html(option);
+                }
+            });
+       // ajax:"{{url('individual/admitCardSectionWiseList/')}}"+'/'+classId+'/'+sectionId,
+        
+    //table.destroy();
+
     });
+    $('#studentList').change(function (e) {
+        e.preventDefault();
+
+        var studentId=$("#studentList").val();
+        var examName=$("#examName").val();
+
+        console.log(classId, sectionId);
+
+        $.ajax({
+                type: "get",
+                url:"{{url('print/studentAdmitCard')}}"+'/'+studentId+'/'+examName,
+                
+                success: function (data) {
+                    
+                    $('#indivi').html(data);
+                }
+            });
+       // ajax:"{{url('individual/admitCardSectionWiseList/')}}"+'/'+classId+'/'+sectionId,
+        
     //table.destroy();
 
     });

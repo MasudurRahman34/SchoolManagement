@@ -36,20 +36,7 @@
         border-top: 1px dotted red;
     }
 </style>
-@extends('backend.layouts.master')
-	@section('title', 'Admin|| Individual Student Admit Card')
-    @section('content')
-    <div class="app-title">
-        <div>
-          <h1><i class="fa fa-edit"></i>Section Wish Individual Student Admit Card</h1>
-          <p></p>
-        </div>
-        <ul class="app-breadcrumb breadcrumb">
-          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item"><a href="#">Individual Student Admit Card</a></li>
-        </ul>
-    </div>
+
 
 <div class="clearix"></div>
 <div class="row justify-content-md-center">
@@ -66,8 +53,8 @@
 								<div class="col-md-10">
 								  <div class="bs-component">
 									<div class="list-group">
-									  <h3 class="text-center text-warning">Foridpur Girls &amp; Boys Pilot High School.</h2>
-									  <h6 class="text-center">House:77, Level 2 &amp; 3, Road: 08, Block A, Dhanmondi 9/A, Dhaka-1207</h5>
+										<h3 class="text-center text-warning">{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h2>
+											<h6 class="text-center">{{Auth::guard('web')->user()->schoolBranch->address}}</h5>
 									  <h5 class="text-center text-info">Admit Card</h4><hr class="new3" align="center" width="30%">
 									</div>
 								  </div>
@@ -80,27 +67,27 @@
 									<tbody>
 									  <tr>
 										<td>Name:</td>
-										<td>firstName</td>
+										<td>{{$students->firstName}} {{$students->lastName}}</td>
 										<td>SID:</td>
-										<td>studentId</td>
+										<td>{{$students->studentId}}</td>
 									  </tr>
 									  <tr>
 										<td>Exam: </td>
-										<td>First Team</td>
-										<td>Class:</td>
-										<td>gfg</td>
+										<td>{{$examName}}</td>
+										<td>Class</td>
+										<td>{{$students->Section->classes->className}}</td>
 									  </tr>
 									  <tr>
 										<td>Roll:</td>
-										<td>gff</td>
+									  <td>{{$students->roll}}</td>
 										<td>Section:</td>
-										<td>sectionName</td>
+										<td>{{$students->Section->sectionName}}</td>
 									  </tr>
 									  <tr>
 										<td>Group:</td>
-										<td>group</td>
+										<td>{{$students->group}}</td>
 										<td>Shift:</td>
-										<td>shift</td>
+										<td>{{$students->Section->shift}}</td>
 									  </tr>
 									</tbody>
 							</table><br>
@@ -124,7 +111,7 @@
 						</div><br>
 			    </div>
 				<div id="footer">
-				  <h6><i class="fa fa-phone-square" aria-hidden="true"></i>Foridpur Girls &amp; Boys Pilot High School, Phone: +8801885 986814</h6>
+				  <h6><i class="fa fa-phone-square" aria-hidden="true"></i>{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}, {{Auth::guard('web')->user()->schoolBranch->phoneNumber}}</h6>
 				</div>
 			</div>
 			
@@ -136,7 +123,6 @@
     
 
 <div class="clearix"></div>
-    @endsection
     @section('script')
       @include('backend.partials.js.datatable');
       <script>

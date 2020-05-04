@@ -168,7 +168,7 @@
                     url: url,
                     data: {
                     //classId: $('#classId option:selected').val(),
-                    classId:$('#classId option:selected').val() || [],
+                    classId:$('#classId').val() || [],
                     subjectName: $('#subjectName').val(),
                     subjectCode: $('#subjectCode').val(),
                     group: $('#group:checked').val(),

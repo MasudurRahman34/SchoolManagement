@@ -72,7 +72,7 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Change Credential</h4>
+          <h4 class="modal-title">Fee Collection</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
 
@@ -164,7 +164,7 @@
        // });
 
         //delete
-        function deleteStudent(id) {
+        function deleteStudent(id) { 
             var url = "{{url('mystudent/student/delete')}}";
             deleteAttribute(url,id);
     }

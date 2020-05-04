@@ -45,7 +45,7 @@
 		<div class="table-responsive"  id="print_div">
 		@foreach( $class as $student)
 		
-			<div id="container">
+			<div id="container" class="" style="padding-top:px; padding-bottom:210px;">
 				<div id="middle">
 					
 						<div class="col-md-12">
@@ -53,8 +53,8 @@
 								<div class="col-md-10">
 								  <div class="bs-component">
 									<div class="list-group">
-									  <h3 class="text-center text-warning">Foridpur Girls &amp; Boys Pilot High School.</h2>
-									  <h6 class="text-center">House:77, Level 2 &amp; 3, Road: 08, Block A, Dhanmondi 9/A, Dhaka-1207</h5>
+									  <h3 class="text-center text-warning">{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h2>
+									  <h6 class="text-center">{{Auth::guard('web')->user()->schoolBranch->address}}</h5>
 									  <h5 class="text-center text-info">Admit Card</h4><hr class="new3" align="center" width="30%">
 									</div>
 								  </div>
@@ -67,13 +67,13 @@
 									<tbody>
 									  <tr>
 										<td>Name:</td>
-										<td>{{$student->firstName}}</td>
+										<td>{{$student->firstName}} {{$student->lastName}} </td>
 										<td>SID:</td>
 										<td>{{$student->studentId}}</td>
 									  </tr>
 									  <tr>
 										<td>Exam: </td>
-										<td>First Tearm</td>
+									  <td>{{$examName}}</td>
 										<td>Class:</td>
 										<td>{{$student->className}}</td>
 									  </tr>
@@ -111,7 +111,7 @@
 						</div><br>
 			    </div>
 				<div id="footer">
-				  <h6><i class="fa fa-phone-square" aria-hidden="true"></i>Foridpur Girls &amp; Boys Pilot High School, Phone: +8801885 986814</h6>
+				  <h6><i class="fa fa-phone-square" aria-hidden="true"></i>{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}, {{Auth::guard('web')->user()->schoolBranch->phoneNumber}}</h6>
 				</div>
 			</div>
 			

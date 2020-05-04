@@ -21,17 +21,18 @@ class AdmitCardController extends Controller
         $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
         $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        $exam= exam::where('bId', Auth::guard('web')->user()->bId)->get();
 
-        return view('backend.pages.studentAdmitCard.admitCardGenerate')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear);
+        return view('backend.pages.studentAdmitCard.admitCardGenerate')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('exam', $exam);
     }
 
-    public function sectionwiselist($classId, $sectionId)
+    public function sectionwiselist($classId, $sectionId, $examName)
     {
 
             $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
             // dd($class);
                 
-            return view('backend.pages.studentAdmitCard.admitCard',['class'=>$class]);
+            return view('backend.pages.studentAdmitCard.admitCard',['class'=>$class,'examName'=>$examName]);
     }
 
     //individual admit card
@@ -39,42 +40,27 @@ class AdmitCardController extends Controller
         $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
         $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
         $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+        $exam= exam::where('bId', Auth::guard('web')->user()->bId)->get();
 
-        return view('backend.pages.studentAdmitCard.individualAdmitCardGenerate')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear);
+        return view('backend.pages.studentAdmitCard.individualAdmitCardGenerate')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('exam', $exam);
 
     }
 
     public function individualsectionwiselist($classId, $sectionId)
     {
+        
         //$bId=Auth::guard('web')->user()->bId;
         //$class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
-        $student=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
+        $student=Student::where('sectionId', $sectionId)->get();
 
-            $data_table_render = DataTables::of($student)
-
-                        ->editColumn('firstName', function($student)
-                          {
-                             return $student->firstName. " ".$student->lastName;
-                          })
-                        ->addColumn('action',function ($student){
-                            
-                                $print_url = url('print/studentAdmitCard/'.$student->studentId);
-                                return '<a href="'.$print_url.'" class="btn btn-info btn-xs"><i class="fa fa-print" aria-hidden="true"></i>
-                                </a>';
-                            
-
-                         })
-                        ->rawColumns(['action'])
-                        ->addIndexColumn()
-                        ->make(true);
-            return $data_table_render;
+            return response()->json($student);
     }
 
-    public function AdmitCardPrint($id)
+    public function AdmitCardPrint($id,$examName)
     {
         
-        $studentinfo=Student::where('studentId', $id)->with('Section')->get();
-        return $studentinfo;
+        $studentinfo=Student::where('id', $id)->with('Section')->firstOrfail();
+        //return $studentinfo;
         // $students=Student::with('classes','Section')
         // ->where('bId', Auth::guard('web')->user()->bId)
         // ;
@@ -83,8 +69,8 @@ class AdmitCardController extends Controller
         // $classs=classes::where('bid', Auth::guard('web')->user()->bId)->get();
         // $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
 
-        $students=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$id' And sections.id='$id'");
+       // $students=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$id' And sections.id='$id'");
         //dd($students);
-        return view('backend.pages.studentAdmitCard.printIndividualAdmitCard',['students'=> $students]);
+        return view('backend.pages.studentAdmitCard.printIndividualAdmitCard',['students'=> $studentinfo, 'examName'=>$examName]);
     }
 }

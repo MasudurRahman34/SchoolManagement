@@ -19,6 +19,15 @@
                 <div class="tile-body">
                     <div class="row">
                         <div class="form-group col-md-4">
+                        <label for="exampleFormControlSelect1"> Session Year</label>
+                            <select class="form-control admission" id="sessionYear" >
+                                <option value="">--Please Select--</option>
+                                @foreach ($sessionYear as $year)
+                                    <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
                                 <label class="control-label mt-3">Shift</label><br>
                                     <div class="custom-control shift-radio custom-control-inline">
                                         <input type="radio" name="shift" id="shift1" value="Morning" class="custom-control-input admission" checked>
@@ -48,14 +57,17 @@
                                 <option value=""> --Please Select--  </option>
                             </select>
                         </div>
+                        
+                        
                         <div class="form-group col-md-4">
-                        <label for="exampleFormControlSelect1"> Session Year</label>
-                            <select class="form-control admission" id="sessionYear" >
+                        <label for="exampleFormControlSelect1"> Exam</label>
+                            <select class="form-control admission" id="exam" >
                                 <option value="">--Please Select--</option>
-                                @foreach ($sessionYear as $year)
-                                    <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
+                                @foreach ($exam as $exam)
+                                    <option value="{{$exam->examName}}" >{{$exam->examName}}</option>
                                 @endforeach
                             </select>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -73,12 +85,13 @@
       <script>
     dynamicSectionSelection();
 
-    $('#sectionId').change(function (e) {
+    $('#exam').change(function (e) {
         e.preventDefault();
 
         var classId=$("#classId").val();
         var sectionId=$("#sectionId").val();
-        var url = "{{url('student/admitCardSectionWiseList/')}}"+'/'+classId+'/'+sectionId;
+        var examName=$("#exam").val();
+        var url = "{{url('student/admitCardSectionWiseList/')}}"+'/'+classId+'/'+sectionId+'/'+examName;
 
         $.get(url).done(function(data){
             console.log(data);

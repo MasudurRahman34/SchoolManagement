@@ -526,12 +526,12 @@ Route::get('staff/attendence/report','backend\report\ReportController@staffAtten
 
 //Student Admit Card Generate By admin
 Route::get('/sectionwise/student/admitCard', 'backend\AdmitCardController@AdmitCardController')->name('student.admit.card');
-Route::get('/student/admitCardSectionWiseList/{classId}/{sectionId}', 'backend\AdmitCardController@sectionwiselist')->name('student.sectionwiselist');
+Route::get('/student/admitCardSectionWiseList/{classId}/{sectionId}/{examName}', 'backend\AdmitCardController@sectionwiselist')->name('student.sectionwiselist');
 
 Route::get('/sectionwise/individual/student/admitCard', 'backend\AdmitCardController@individualAdmitCardController')->name('individual.admit.card');
 Route::get('/individual/admitCardSectionWiseList/{classId}/{sectionId}', 'backend\AdmitCardController@individualsectionwiselist')->name('individual.sectionwiselist');
 
-Route::get('/print/studentAdmitCard/{id}/', 'backend\AdmitCardController@AdmitCardPrint')->name('print.admit');
+Route::get('/print/studentAdmitCard/{id}/{examName}', 'backend\AdmitCardController@AdmitCardPrint')->name('print.admit');
 
 //Route::get('/sectionwiselist/{classId}/{sectionId}/{sessionYearId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
 

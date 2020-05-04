@@ -128,11 +128,14 @@ class SubjectController extends Controller
 
             return response()->json(["errors"=>$validator->errors(),400]);
         }else{
-            $subject = Subject::find($id);
+            
+            foreach($request->classId as $classId)
+            {
+                $subject = Subject::find($id);
 
             $subject->subjectName = $request->subjectName;
             $subject->subjectCode = $request->subjectCode;
-            $subject->classId = $request->classId;
+            $subject->classId = $classId;
             $subject->group = $request->group;
             
             if($request->optionalstatus==null){
@@ -142,6 +145,7 @@ class SubjectController extends Controller
             }
             $subject->bId = Auth::user()->bId;
             $subject->save();
+        }
 
             return response()->json(["success"=>'Saved', "data"=>$subject, 201]);
 

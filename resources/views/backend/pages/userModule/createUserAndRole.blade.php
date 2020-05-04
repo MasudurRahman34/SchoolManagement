@@ -276,6 +276,8 @@
                         }
                         if(result.errors){
                             getError(result.errors);
+                        }else if(result.classTeacherError){
+                            alert(result.classTeacherError);
                         }
                 }, error: function(xhr, status, error){
                     var errorMessage = xhr.status + ': ' + xhr.statusText

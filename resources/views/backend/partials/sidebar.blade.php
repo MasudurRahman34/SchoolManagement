@@ -270,13 +270,13 @@
           </li>
           @endcan
 
-          @can('Grade Management')
+          
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Grade Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('grade.index') }}"><i class="icon fa fa-angle-right"></i> Grade list</a></li>
             </ul>
           </li>
-          @endcan
+          
           @can('Exam')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Exam Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">

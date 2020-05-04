@@ -50,7 +50,7 @@ class User extends Authenticatable
     ];
 
     public function schoolBranch(){
-        return $this->belongsTo(schoolBranch::class);
+        return $this->belongsTo(schoolBranch::class, 'bId', 'id');
     }
 
     public function file(){

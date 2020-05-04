@@ -89,6 +89,7 @@ public function storeAttendence(Request $request){
        //     // Session::flash('','Succesfully Student Attendence Data Saved');
        // }else{
            $attendence= $request->attend;
+           $absentStudentId[]=0;
            foreach ($attendence as $id => $value) {
             if ($value=="absent") {
                 $absentStudentId[]=$id;
@@ -105,15 +106,17 @@ public function storeAttendence(Request $request){
                $stAttendence->save();
            }
            $absentStudentDetailes=Student::whereIn('id', $absentStudentId)->with('Section')->get();
-        foreach($absentStudentDetailes as $value){
-            $msgAndContact[]=array(
-                "to"=>$value->mobile,
-                "message"=>$value->firstName." ".$value->lastName.",Class ".$value->Section->classes->className.",Section ".$value->Section->sectionName.", Roll ". $value->roll. " is absent on ".date("Y/m/d")." Thank You."
-            );
-        }
-        //dd($msgAndContact);
-        $notifyBy= $this->multipleSmsService;
-        $notifyBy->notification("dfas", $msgAndContact);
+           if(count($absentStudentDetailes)>0){
+           
+            foreach($absentStudentDetailes as $value){
+                $msgAndContact[]=array(
+                    "to"=>$value->mobile,
+                    "message"=>$value->firstName." ".$value->lastName.",Class ".$value->Section->classes->className.",Section ".$value->Section->sectionName.", Roll ". $value->roll. " is absent on ".$stAttendence->created_at." Thank You."
+                );
+                }
+                $notifyBy= $this->multipleSmsService;
+                $notifyBy->notification("dfas", $msgAndContact);
+             }
            Session::flash('success','Succesfully Saved Student Attendence Data ');
            $attendences=Attendance::orderBy('id','ASC')->get();
 
