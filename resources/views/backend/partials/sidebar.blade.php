@@ -305,6 +305,11 @@
               <li><a class="treeview-item" href="{{route('individual.admit.card') }}"><i class="icon fa fa-angle-right"></i>Individual Student Admit Card </a></li>
             </ul>
           </li>
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Seat Plan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('seat.plan') }}"><i class="icon fa fa-angle-right"></i>Student Exam Seat Plan </a></li>
+            </ul>
+          </li>
           {{-- end admin sidebar --}}
 
           {{-- student side bar --}}

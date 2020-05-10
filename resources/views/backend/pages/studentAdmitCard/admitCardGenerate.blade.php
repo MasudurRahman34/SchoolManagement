@@ -14,7 +14,7 @@
     </div>
 <div class="row justify-content-md-center">
     <div class="clearix"></div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="tile">
                 <div class="tile-body">
                     <div class="row">

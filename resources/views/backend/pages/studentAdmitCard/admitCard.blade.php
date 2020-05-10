@@ -1,13 +1,11 @@
 <style>
-	#middle{
-		height: 500px;
+	#middle {
+		height: 663px;
 		margin: 0px auto;
-		border:1px solid black;
-
-	}
+		border: 1px solid black;
+}
 	#footer{
-	height: 36px;
-		
+	   height: 36px;
 		margin: 0px auto;
 		border:1px solid black;
 		text-align: center;
@@ -38,85 +36,86 @@
 </style>
 
 <div class="row justify-content-md-center">
-    <div class="col-md-9">
+    <div class="col-md-10">
 	
         <div class="tile">
 		<input type='button' class="bg-warning text-dark float-right"  value=' Print ' id='doPrint'>
-		<div class="table-responsive"  id="print_div">
-		@foreach( $class as $student)
+		   <div class="table-responsive"  id="print_div">
+		     @foreach( $class as $student)
 		
-			<div id="container" class="" style="padding-top:px; padding-bottom:210px;">
-				<div id="middle">
-					
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-md-10">
-								  <div class="bs-component">
-									<div class="list-group">
-									  <h3 class="text-center text-warning">{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h2>
-									  <h6 class="text-center">{{Auth::guard('web')->user()->schoolBranch->address}}</h5>
-									  <h5 class="text-center text-info">Admit Card</h4><hr class="new3" align="center" width="30%">
-									</div>
-								  </div>
-								</div>
-
-								
-							</div>
+				<div id="container" class="" style="padding-top:px; padding-bottom:210px;">
+					<div id="middle">
+					<div class="row">
+                    <div class="col-lg-9">
+                      <div class="bs-component">
+                        <div class="list-group">
+						   <h3 class="text-center text-warning">{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h2>
+							<h6 class="text-center">{{Auth::guard('web')->user()->schoolBranch->address}}</h5>
+							<h5 class="text-center text-info">Admit Card</h4>
+							<h5 class="text-center text-info">{{$examName}}</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="bs-component">
+					  <div class="img-group float-right">
+					    <img src="{{asset('students/gggg.png')}}"/>
+                        </div>
+                      </div>
+                    </div>
 						</div>
+						<div class="clearfix"></div>
 							<table class="table" border="1" id="">
-									<tbody>
-									  <tr>
-										<td>Name:</td>
-										<td>{{$student->firstName}} {{$student->lastName}} </td>
-										<td>SID:</td>
-										<td>{{$student->studentId}}</td>
-									  </tr>
-									  <tr>
-										<td>Exam: </td>
-									  <td>{{$examName}}</td>
-										<td>Class:</td>
-										<td>{{$student->className}}</td>
-									  </tr>
-									  <tr>
-										<td>Roll:</td>
-										<td>{{$student->roll}}</td>
-										<td>Section:</td>
-										<td>{{$student->sectionName}}</td>
-									  </tr>
-									  <tr>
-										<td>Group:</td>
-										<td>{{$student->group}}</td>
-										<td>Shift:</td>
-										<td>{{$student->shift}}</td>
-									  </tr>
-									</tbody>
-							</table><br>
-						<div class="col-md-12">
-						  <div class="row">
-							<div class="col-md-6">
-							  <div class="bs-component">
-								<div class="list-group float-left">
-								<hr width="110%"><h6>Class Teacher</h6>
-								</div>
-							  </div>
-							</div>
-							<div class="col-md-6">
-							  <div class="bs-component">
-								<div class="list-group float-right">
-								<hr width="110%"><h6>Exam Controller</h6>
-								</div>
-							  </div>
-							</div>
-						  </div>
-						</div><br>
-			    </div>
-				<div id="footer">
-				  <h6><i class="fa fa-phone-square" aria-hidden="true"></i>{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}, {{Auth::guard('web')->user()->schoolBranch->phoneNumber}}</h6>
+								<tbody>
+								  <tr>
+									<td>Name:</td>
+									<td>{{$student->firstName}} {{$student->lastName}} </td>
+									<td>SID:</td>
+									<td>{{$student->studentId}}</td>
+								  </tr>
+								  <tr>
+									<td>Exam: </td>
+								  <td>{{$examName}}</td>
+									<td>Class:</td>
+									<td>{{$student->className}}</td>
+								  </tr>
+								  <tr>
+									<td>Roll:</td>
+									<td>{{$student->roll}}</td>
+									<td>Section:</td>
+									<td>{{$student->sectionName}}</td>
+								  </tr>
+								  <tr>
+									<td>Group:</td>
+									<td>{{$student->group}}</td>
+									<td>Shift:</td>
+									<td>{{$student->shift}}</td>
+								  </tr>
+								</tbody>
+							</table>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div class="tile">
+										<div class="tile-title-w-btn">
+										  <h6>Class Teacher</h6>
+										<div class="btn-group">
+										<h6>Exam Controller</h6>
+										</div>
+										</div>
+										<div class="tile-body">
+											  
+										
+										</div>
+										<!-- in this -->
+									</div>
+									<h5 class="text-center">{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h2>								</div>
+							 </div>
+
+					</div>
 				</div>
-			</div>
-			
-		@endforeach	
-		</div>
+		     @endforeach	
+		  </div>
         </div>
     </div>
 </div>

@@ -533,5 +533,7 @@ Route::get('/individual/admitCardSectionWiseList/{classId}/{sectionId}', 'backen
 
 Route::get('/print/studentAdmitCard/{id}/{examName}', 'backend\AdmitCardController@AdmitCardPrint')->name('print.admit');
 
-//Route::get('/sectionwiselist/{classId}/{sectionId}/{sessionYearId}', 'MyStudentConttroller@sectionwiselist')->name('mystudent.sectionwiselist');
+//Seat plan
+Route::get('/student/SeatPlan', 'backend\SeatPlanController@seatPlan')->name('seat.plan');
+Route::get('/student/seatPlanPrint/{classId}/{sectionId}/{examName}/{room}', 'backend\SeatPlanController@seatPlanPrint')->name('print.seat.plan');
 
