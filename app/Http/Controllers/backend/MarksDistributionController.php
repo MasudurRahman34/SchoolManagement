@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\model\studentoptionalsubject;
 
+use App\model\Grade;
+
 class MarksDistributionController extends Controller
 {
     /**
@@ -302,15 +304,163 @@ class MarksDistributionController extends Controller
         //
     }
 
-    public function resultIndex()
-    {
-        $subjects=Subject::where('bid', Auth::guard('web')->user()->bId)->get();
-        $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
-        $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
-        $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
-        $exams= exam::where('bId', Auth::guard('web')->user()->bId)->get();
+    // public function resultIndex()
+    // {
+    //     $subjects=Subject::where('bid', Auth::guard('web')->user()->bId)->get();
+    //     $class=classes::where('bid', Auth::guard('web')->user()->bId)->get();
+    //     $section=Section::where('bid', Auth::guard('web')->user()->bId)->get();
+    //     $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
+    //     $exams= exam::where('bId', Auth::guard('web')->user()->bId)->get();
 
-        return view('backend.pages.marksdistribution.result2')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('exams',$exams);
-    }
+    //     return view('backend.pages.marksdistribution.result2')->with('class', $class)->with('section', $section)->with('sessionYear',$sessionYear)->with('exams',$exams);
+    // }
+
+    // public function individualStudent2(Request $request)
+    // {
+    //     $sectionId= $request->sectionId;
+    //     $studentId= $request->studentId;
+    //         $students = DB::select("select firstName,lastName,roll,className,sectionName,sessionYear from students, sections, classes, session_years WHERE sections.classId=classes.id AND 
+    //             students.sectionId=sections.id And session_years.id=sections.sessionYearId 
+    //             AND students.id='$studentId' And sections.id='$sectionId'");
+
+
+    //         // Student::where('sectionId',$sectionId)->where('id',$studentId)
+    //         // ->where('bId', Auth::guard('web')->user()->bId)
+    //         // ->get();
+    //         //return $students;
+    //          $studentinformation="";
+    //     foreach ($students as $student) {
+    //         $studentinformation.='<tr>'.
+            
+    //          '<th> Student Name </th>'.
+    //         '<td>'.$student->firstName.' '.$student->lastName.'</td>'.'</tr><tr>'.
+    //         ' <th>Roll</th>'.
+    //         '<td>'.$student->roll.'</td>'.'</tr><tr>'.
+    //         '<th>Class</th>'.
+    //         '<td>'.$student->className.'</td>'.'</tr><tr>'.
+    //         ' <th>Section</th>'.
+    //         '<td>'.$student->sectionName.'</td>'.'</tr><tr>'.
+    //         '<th>Session Year</th>'.
+    //         '<td>'.$student->sessionYear.'</td>'.'</tr><tr>'.
+            
+            
+            
+    //         '</tr>';
+    //     }
+
+    //     $grade=Grade::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
+
+
+    //          $gradeinfo="";
+    //         foreach ($grade as $studentgrade) {
+    //         $gradeinfo.='<tr>'.
+            
+    //         '<td>'.$studentgrade->gradeName.'</td>'.
+    //         '<td>'.$studentgrade->maxValue.' - '.$studentgrade->minValue.'</td>'.
+    //         '<td>'.$studentgrade->gradePoint.'</td>'.
+            
+            
+    //         '</tr>';
+    //     }
+
+    //     $studentmarks=Mark::where('studentId',$request->studentId)
+    //                                            ->where('markEntrystatus',1)
+    //                                            ->where('sessionYearId',$request->sessionYearId)
+    //                                            ->where('examType',$request->examType)
+    //                                            ->where('sectionId',$request->sectionId)
+    //                                            ->with('Subject')
+    //                                            ->get();
+
+    //                                            //return $studentmarks;
+    //     $result="";
+    //     //     foreach ($studentmarks as $myresult) {
+
+    //     //         if(strstr($myresult->Subject->subjectName, "Bangla")){
+
+    //     //             $result.='<tr class="bangla">'.
+            
+    //     //     '<td>'.$myresult->Subject->subjectName.'</td>'.
+    //     //     '<td>'.$myresult->mcq.'</td>'.
+    //     //     '<td>'.$myresult->written.'</td>'.
+    //     //     '<td>'.$myresult->practical.'</td>'.
+    //     //     '<td>'.$myresult->ca.'</td>'.
+    //     //     '<td>'.$myresult->total.'</td>'.
+    //     //     '<td>'.$myresult->gradeName.'</td>'.
+    //     //     '<td>'.$myresult->gradePoint.'</td>'.
+            
+            
+    //     //     '</tr>';
+
+    //     //         }
+
+    //     // }
+
+    //     //  foreach ($studentmarks as $myresult) {
+
+                
+
+    //     //         if(strstr($myresult->Subject->subjectName, "English")){
+
+
+    //     //             $result.='<tr class="english">'.
+                    
+    //     //             '<td>'.$myresult->Subject->subjectName.'</td>'.
+    //     //             '<td>'.$myresult->mcq.'</td>'.
+    //     //             '<td>'.$myresult->written.'</td>'.
+    //     //             '<td>'.$myresult->practical.'</td>'.
+    //     //             '<td>'.$myresult->ca.'</td>'.
+    //     //             '<td>'.$myresult->total.'</td>'.
+    //     //             '<td>'.$myresult->gradeName.'</td>'.
+    //     //             '<td>'.$myresult->gradePoint.'</td>'.
+                    
+                    
+    //     //             '</tr>';
+    //     //         }
+
+    //     // }
+    //     //  foreach ($studentmarks as $myresult) {
+
+    //     //         if($myresult->Subject->subjectName !=similar_text($myresult->Subject->subjectName,'Bangla') && $myresult->Subject->subjectName !="English"){
+
+    //     //              $result.='<tr class="other">'.
+                    
+    //     //             '<td>'.$myresult->Subject->subjectName.'</td>'.
+    //     //             '<td>'.$myresult->mcq.'</td>'.
+    //     //             '<td>'.$myresult->written.'</td>'.
+    //     //             '<td>'.$myresult->practical.'</td>'.
+    //     //             '<td>'.$myresult->ca.'</td>'.
+    //     //             '<td>'.$myresult->total.'</td>'.
+    //     //             '<td>'.$myresult->gradeName.'</td>'.
+    //     //             '<td>'.$myresult->gradePoint.'</td>'.
+                    
+                    
+    //     //             '</tr>';
+    //     //         }
+                        
+
+    //     // }
+    //     // foreach ($studentmarks as $myresult) {
+
+            
+    //     //     $result.='<tr class="bangla">'.
+            
+    //     //     '<td>'.$myresult->Subject->subjectName.'</td>'.
+    //     //     '<td>'.$myresult->mcq.'</td>'.
+    //     //     '<td>'.$myresult->written.'</td>'.
+    //     //     '<td>'.$myresult->practical.'</td>'.
+    //     //     '<td>'.$myresult->ca.'</td>'.
+    //     //     '<td>'.$myresult->total.'</td>'.
+    //     //     '<td>'.$myresult->gradeName.'</td>'.
+    //     //     '<td>'.$myresult->gradePoint.'</td>'.
+            
+    //     //     '</tr>';
+    //     // }
+
+        
+    //     return view('backend.pages.result.individualresult')->with('result',$result);
+
+    //     return response()->json(["studentinformation"=>$studentinformation,"gradeinfo"=>$gradeinfo,"result"=>$result]);
+    // }
+
 
 }

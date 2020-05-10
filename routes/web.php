@@ -276,7 +276,9 @@ Route::group(['middleware' => ['auth','role_or_permission:Fee Collection']], fun
     //individual fee Collection Management for admin
     Route::get('/feecollection/individual','backend\FeeCollectionController@individualCollection')->name('individualFee.individualCollection');
     //Route::post('/feecollection/individualStudent','backend\FeeCollectionController@individualStudent')->name('individualFee.individualStudent');
+    Route::post('/feecollection/individualStudent2','backend\FeeCollectionController@individualStudent2')->name('individualFee.individualStudent2');
     Route::post('/feecollection/individualStudentfind','backend\FeeCollectionController@individualStudentfind')->name('individualFee.individualStudentfind');
+
     //Route::get('/feecollection/scholarshipAmount','backend\FeeCollectionController@scholarshipAmount')->name('individualFee.scholarshipAmount');
     Route::post('/feecollection/individual/store','backend\FeeCollectionController@storeIndividualy')->name('store.individualFeecollection');
     Route::post('/feecollection/individual/update','backend\FeeCollectionController@updateIndividualStudent')->name('update.individualFeecollection');
@@ -452,9 +454,12 @@ Route::group(['middleware' => ['auth','role_or_permission:Mark']], function () {
     Route::post('adminview/student/studenlist','backend\MarksDistributionController@studenlist')->name('studentlist.mark');
     Route::post('adminview/student/markstore','backend\MarksDistributionController@storemark')->name('store.mark');
 
-//Result management
-    Route::get('adminview/student/result','backend\MarksDistributionController@resultIndex')->name('result.index');
+
 });
+
+//Result management
+    Route::get('adminview/student/result','backend\resultController@index')->name('result.index');
+    Route::post('/adminview/student/resultlist','backend\resultController@resultlist')->name('resultlist.resultlist');
 
 //Result PUblished
 Route::get('adminview/student/resultPublished','backend\ResultPublish@index')->name('resultPublished.index');

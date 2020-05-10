@@ -264,7 +264,10 @@
      dynamicSectionSelection();
 
         //on change date
-         $('#dateId').change(function (e) {
+        //$('#dateId').change(function (e) {
+
+       //$('#dateId').keyup(function (e) {    
+        $('#dateId').mouseout(function (e) {    
             e.preventDefault();
 
             var classId=$("#classId").val();

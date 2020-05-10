@@ -34,7 +34,7 @@
                                 <th>Blood Group</th>
                                 <th>Date of Birth</th>
                                 <th>Contact</th>
-                                <th>Action</th>
+                               {{--  <th>Action</th> --}}
                             </tr>
                             </thead>
                         </table>
@@ -98,7 +98,7 @@
             { data: 'blood', name: 'blood'},
             { data: 'birthDate', name: 'birthDate'},
             { data: 'mobile', name: 'mobile'},
-            { data: 'action', name: 'action' }
+            //{ data: 'action', name: 'action' }
         ]
     });
     //table.destroy();

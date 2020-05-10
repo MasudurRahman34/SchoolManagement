@@ -95,58 +95,9 @@
                         <div class="tile">
                             <input class="bg-warning text-dark float-right" type='button' value='Print' id='doPrint'>
                             {{-- <h3 class=" row justify-content-md-center">Student Information</h3> --}}
-                            <div class="table-responsive">
-                                <table width="100%" class="header-table">
-                                    <tbody>
-                                    <tr>
-                                        <td style="padding-right:10px;vertical-align: top;"><p><b>Student Information</b></p>
-                                            <table class="table table-hover table-bordered" id="sampleTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Student Name </th>
-                                                        <th>Roll</th>
-                                                        <th>Class</th>
-                                                        <th>Section</th>
-                                                        <th>Session Year</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody  id="StudentInformation">
-                                                </tbody>
-                                            </table>
-
-                                        </td>
-                                        <td width="450px" style="padding-left:10px;text-align:center; vertical-align: top;"><p><b>Grade point chart</b></p>
-                                            <table class="table table-hover table-bordered" id="sampleTable">
-                                                <thead>
-                                                    <tr>
-
-                                                        <th>Letter Grade</th>
-                                                        <th>Marks Interval</th>
-                                                        <th>Grade point</th>
-
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="gradesInformation">
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                        {{-- <td width="200px" style="padding-left:10px;text-align:right;vertical-align: top;"><p style="padding:10px;"></p>
-
-                                            <img src="https://www.gstatic.com/tv/thumb/persons/545659/545659_v9_bb.jpg" class="img-fluid" alt="" width="160px">
-                                        </td> --}}
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="resultDiv">
-                    <div class="col-sm-12 ">
-                        <div class="tile">
-                            <h3 class=" row justify-content-md-center">Examination Result</h3>
-                            <div class="table-responsive">
+                            <div class="table"  id="result">
+                                
+                           {{--  <div class="table-responsive">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                         <tr>
@@ -162,10 +113,11 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody  id="StudentInformation">
+                                    <tbody  id="myresult">
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
+
                         </div>
                     </div>
                 </div>
@@ -177,21 +129,29 @@
 
 
     <div class="clearix"></div>
+   
     @endsection
     @section('script')
     @include('backend.partials.js.datatable');
 
-    //script section
+    
     <script>
-        {{-- $('#informationDiv').attr('hidden',true);
-        $('#resultDiv').attr('hidden',true); --}}
+        // $('#informationDiv').attr('hidden',true);
+        // $('#resultDiv').attr('hidden',true);
+        // 
+function show(){
+    $('#f').attr('hidden',false);
+}
+function hide(){
+    $('#f').attr('hidden',true);
+}
 
 
     $('.admission').change(function (e) {
         e.preventDefault();
 
-        $('#informationDiv').attr('hidden',true);
-        $('#resultDiv').attr('hidden',true);
+        // $('#informationDiv').attr('hidden',true);
+        // $('#resultDiv').attr('hidden',true);
         var classId= $("#classId").val();
         var sessionYearId=$('#sessionYear').val();
         var shift=$('input[name="shift"]:checked').val();
@@ -228,6 +188,8 @@
         e.preventDefault();
 
         sectionId=$(this).val();
+
+        
         console.log(sectionId);
                 $.ajax({
                     type: "POST",
@@ -251,25 +213,55 @@
     $('#studentId').change(function (e) {
         e.preventDefault();
 
-        sectionId=$(this).val();
-        console.log(sectionId);
+
+        $('#informationDiv').attr('hidden',false);
+        $('#resultDiv').attr('hidden',false);
+
+        sectionId=$('#sectionId option:selected').val();
+        var classId= $("#classId").val();
+        var studentId= $("#studentId option:selected").val();
+         var sessionYearId=$('#sessionYear option:selected').val();
+         var examType=$('#examType option:selected').val();
+         var examTypename=$('#examType option:selected').text();
+        console.log(sectionId,classId,studentId,sessionYearId,examType,examTypename);
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('feecollection/individualStudent')}}",
+                    url: "{{ url('adminview/student/resultlist')}}",
                     data: {
                     sectionId:sectionId,
+                    studentId:studentId,
+                    sessionYearId:sessionYearId,
+                    examType:examType,
                     //feeId:feeId,
                     // month:month,
                     },
                     success: function (data) {
+                        //console.log(data.studentinformation);
+                        console.log(data);
+                        console.log(data.studentinformation);
+
+                       $('#name').html(examTypename);
                     //change start from here
-                    var option="<option>--Please Select--</option>";
-                    data.forEach(element => {
-                        option+=("<option value='"+element.id+"'>"+element.firstName+' '+element.lastName+'/ Roll- '+element.roll+'/ ID- '+element.studentId+' '+"</option>");
-                        });
-                        $('#studentId').html(option);
+                    //
+                            // var tr='';
+                            // $.each (data, function (key, value) {
+                            // tr +=
+                            //     "<tr>"+
+                                    
+                            //         "<td>"+value.firstName+" "+value.lastName+"</td>"+
+                            //         "<td>"+value.roll+"</td>"+
+                                
+                            //     "</tr>";
+                            // });
+
+                            $('#StudentInformation').html(data.studentinformation);
+                            $('#gradesInformation').html(data.gradeinfo);
+                            // $('#myresult').html(data.result);
+                            $('#result').html(data);
+                    
                         }
                     });
+  
         });//end sectionId
 
 
@@ -309,8 +301,8 @@ $('#doPrint').on("click", function () {
         removeScripts: false,       // remove script tags from print content
         copyTagClasses: false,      // copy classes from the html & body tag
         beforePrintEvent: null,     // function for printEvent in iframe
-        beforePrint: null,          // function called before iframe is filled
-        afterPrint: null            // function called before iframe is removed
+        beforePrint: show,          // function called before iframe is filled
+        afterPrint: hide,            // function called before iframe is removed
     });
   });
 
