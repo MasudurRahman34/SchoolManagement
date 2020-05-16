@@ -461,9 +461,19 @@ Route::group(['middleware' => ['auth','role_or_permission:Mark']], function () {
     Route::get('adminview/student/result','backend\resultController@index')->name('result.index');
     Route::post('/adminview/student/resultlist','backend\resultController@resultlist')->name('resultlist.resultlist');
 
+
+
+//Promotion management 
+    Route::get('adminview/student/promotion','backend\PromotionController@index')->name('promotion.index');
+    Route::get('adminview/student/promotionlist/{classId}/{sectionId}/{sessionYearId}', 'backend\PromotionController@studentlist')->name('promotion.studentlist');
+    Route::post('adminview/promotionlist/store','backend\PromotionController@store')->name('promotion.store');
+
+
+
+
 //Result PUblished
-Route::get('adminview/student/resultPublished','backend\ResultPublish@index')->name('resultPublished.index');
-Route::post('adminview/student/resultPublished/update','backend\ResultPublish@update')->name('update.published');
+    Route::get('adminview/student/resultPublished','backend\ResultPublish@index')->name('resultPublished.index');
+    Route::post('adminview/student/resultPublished/update','backend\ResultPublish@update')->name('update.published');
 
 //Exam attendance
     Route::get('adminview/student/examattendance','backend\MarksDistributionController@examattendanceindex')->name('examattendance.index');
