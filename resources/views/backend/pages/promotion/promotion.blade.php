@@ -94,7 +94,7 @@
                               </div>
                             @endif
                             <br>
-                    <form action="{{route('promotion.store')}}" method="post">
+                    <form action="{{route('promotion.store')}}" method="post" id="submitform">
                @csrf
                {{-- <input type="text" name="stdID" id="stdID" hidden> --}}
                     <div class="table-responsive">
@@ -216,16 +216,17 @@ dynamicSectionSelection();
 // $('#searchoption').attr('hidden',false);
  function checkedAtlestOne(){
 
-    $("#myfeeform").submit(function () {
+    $("#submitform").submit(function () {
         var idChecked= new Array;
         var roll=true;
-        $("#myfeeform input[type=checkbox]:checked").each(function(){
+        $("#submitform input[type=checkbox]:checked").each(function(){
             idChecked.push(this.value);
         });
         if(idChecked.length>0){
+            
             return roll=true;
         }else{
-            alert('missing');
+            alert('pleace select one');
             roll= false;
         }return roll;
 

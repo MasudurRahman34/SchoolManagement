@@ -62,9 +62,11 @@
                         </select>
                     </div>  --}}
                     <div class="form-group col-md-4 pr-2" id="hidden" >
-                            <label for="exampleFormControlSelect1"> Fee Name</label>
+                        <label for="exampleFormControlSelect1"> Fee Name</label>
                             <select class="form-control feeChange" id="feeId">
+
                                     <option value="">--Select Fee--</option>
+
                             </select>
                     </div>
                     <div class="form-group col-md-4 pr-2" id="hidden1" >
@@ -114,28 +116,28 @@
                 <div class="tile-body" id="tblHidden" hidden>
                     <form action="{{route('myclass.feecollection.store')}}" method="Post"   id="myfeeform">
                         @csrf
-                       <input type="text" name="sectionId" id="sectionId2" value="{{$sectionId}}" hidden>
-                       <input type="text" name="classId2" id="classId2"  value="{{$classId}}" hidden>
-                       <input type="text" name="shift" id="shift"  value="{{$shift}}" hidden>
-                       <input type="text" name="feeId2" id="feeId2" hidden>
-                       <input type="text" name="amount2" id="amount2" hidden>
-                       <input type="text" name="month2" id="month2" hidden>
-                       <input type="text" name="sessionYear2" id="sessionYear2" value="{{$sessionYearId}}" hidden>
-                       <input type="text" name="paymentType2" id="paymentType2" hidden>
-                       <input type='button' class="bg-warning text-dark float-right"  value=' Print ' id='doPrint'>
-                        <div class="table-responsive"  id="print_div">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="allcb" /> Select All</th>
-                                <th>Student Roll</th>
-                                <th>Student Name</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        </div>
+                        <input type="text" name="sectionId" id="sectionId2" value="{{$sectionId}}" hidden>
+                        <input type="text" name="classId2" id="classId2"  value="{{$classId}}" hidden>
+                        <input type="text" name="shift" id="shift"  value="{{$shift}}" hidden>
+                        <input type="text" name="feeId2" id="feeId2" hidden>
+                        <input type="text" name="amount2" id="amount2" hidden>
+                        <input type="text" name="month2" id="month2" hidden>
+                        <input type="text" name="sessionYear2" id="sessionYear2" value="{{$sessionYearId}}" hidden>
+                        <input type="text" name="paymentType2" id="paymentType2" hidden>
+                        <input type='button' class="bg-warning text-dark float-right"  value=' Print ' id='doPrint'>
+                            <div class="table-responsive"  id="print_div">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" id="allcb" /> Select All</th>
+                                            <th>Student Roll</th>
+                                            <th>Student Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true"  ><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
                     </form>
                 </div>
@@ -147,50 +149,47 @@
   <div class="modal" id="newModal" >
     <div class="modal-dialog">
       <div class="modal-content">
-
         <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Fee Collection</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-            Fee has been Taken At This Type for This month, Do You Want to Update it!
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="unpaid" data-dismiss="modal">Update Un-Paid List</button>
-          <button type="button" class="btn btn-primary" id="paid" data-dismiss="modal">Update Paid List</button>
-          <button type="button" class="btn btn-danger" id="cancel" data-dismiss="modal">Close</button>
-        </div>
+            <div class="modal-header">
+              <h4 class="modal-title">Fee Collection</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                Fee has been Taken At This Type for This month, Do You Want to Update it!
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="unpaid" data-dismiss="modal">Update Un-Paid List</button>
+              <button type="button" class="btn btn-primary" id="paid" data-dismiss="modal">Update Paid List</button>
+              <button type="button" class="btn btn-danger" id="cancel" data-dismiss="modal">Close</button>
+            </div>
 
       </div>
     </div>
   </div>
-    @endsection
-    @section('script')
-    <script src="{{ asset('admin/js/printThis.js') }} "></script>
+
+@endsection
+@section('script')
+<script src="{{ asset('admin/js/printThis.js') }} "></script>
     <script>
 
         function checkedAtlestOne(){
-
             $("#myfeeform").submit(function () {
                 var idChecked= new Array;
                 var roll=true;
                 $("#myfeeform input[type=checkbox]:checked").each(function(){
+
                     idChecked.push(this.value);
                 });
+
                 if(idChecked.length>0){
                     return roll=true;
-                }else{
-                    alert(' Check At least one ');
-                    roll= false;
+                    }else{
+                        alert(' Check At least one ');
+                        roll= false;
                 }return roll;
-
-              });
-
+            });
         }
 
 
@@ -203,9 +202,6 @@
         //var shift=$('input[name="shift"]:checked').val();
         //var shift=$('shift').val();
         //var shift= {{$shift}};
-
-
-
         console.log(classId);
         //var url='/api/search/sectionbyclass';
         var data= {
@@ -228,6 +224,7 @@
                     {{--  console.log(data);  --}}
                     var option="<option>--Please Select--</option>";
                     data.forEach(element => {
+
                         option+=("<option value='"+element.id+"'>"+element.name+"</option>");
                     });
                     $('#feeId').html(option);
@@ -246,7 +243,6 @@
         var data= {
                 'feeId' : feeId,
             }
-
         $.ajax({
             type: "get",
             url:url,
@@ -276,11 +272,9 @@
         var sessionYear= {{$sessionYearId}};
         $("#sessionYear2").attr('value',sessionYear);
         console.log(month,sectionId,feeId,sessionYear);
-
-       // console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
+        // console.log(sectionId2,amount2,feeId2,month2,sessionYear2);
 
         if(sectionId>0){
-
             $.ajax({
               type: "post",
               url: "{{ url('/myclass/student/Data')}}",
@@ -291,83 +285,76 @@
                 sessionYear:sessionYear,
               },
               success: function (response) {
+                  if(response.dueStudent){
+                      //  console.log('if due student');
+                    //Un-Paid Student
+                    $("#newModal").modal("show");
+                    $("#unpaid").click(function(e){
+                        console.log(response.dueStudent.length);
+                        if(response.dueStudent.length>0){
 
-              if(response.dueStudent){
-                  //  console.log('if due student');
-
-
-
-                        //Un-Paid Student
-                        $("#newModal").modal("show");
-                        $("#unpaid").click(function(e){
                             $('#tblHidden').attr('hidden',false);
                             $('#btnFee').attr('disabled',false);
+                                var tr='';
+                                    $.each (response.dueStudent, function (key, value) {
+                                        tr +=
+                                            "<tr>"+
+                                                "<td>"+
+                                                    '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="'+value.id+'">'
+                                                +"</td>"+
+                                                "<td>"+value.roll+"</td>"+
+                                                "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                                            "</tr>";
+                                    });
+                                $('tbody').html(tr);
+                            checkedAtlestOne();
 
-
-
+                        }else{
+                            $('#tblHidden').attr('hidden',true);
+                        }
+                    });
+                    $("#paid").click(function(e){
+                        //for lode paid student list
+                        //  console.log('else paid student');
+                        $('#tblHidden').attr('hidden',false);
+                        $('#btnFee').attr('disabled',false);
                             var tr='';
-                            $.each (response.dueStudent, function (key, value) {
+                                $.each (response.paidStudent, function (key, value) {
 
-                            tr +=
-                                "<tr>"+
-                                    "<td>"+
-                                        '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="'+value.id+'">'
-                                    +"</td>"+
-                                    "<td>"+value.roll+"</td>"+
-                                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                            "</tr>";
-                        });
-
-                        $('tbody').html(tr);
-                        checkedAtlestOne();
-
-                        });
-
-                        $("#paid").click(function(e){
-
-                            //for lode paid student list
-                          //  console.log('else paid student');
-                            $('#tblHidden').attr('hidden',false);
-                            $('#btnFee').attr('disabled',false);
-                            var tr='';
-                            $.each (response.paidStudent, function (key, value) {
-
-                                $("input[id='fee'][value='"+value.id+"']").prop('checked', true);
-                            tr +=
-                                "<tr>"+
-                                    "<td>"+
-                                        '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="'+value.id+'"  checked>'
-                                    +"</td>"+
-                                    "<td>"+value.roll+"</td>"+
-                                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                            "</tr>";
-                            $('#btnFee').html("Update Fee");
+                                    $("input[id='fee'][value='"+value.id+"']").prop('checked', true);
+                                    tr +=
+                                        "<tr>"+
+                                            "<td>"+
+                                                '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="'+value.id+'"  checked>'
+                                            +"</td>"+
+                                            "<td>"+value.roll+"</td>"+
+                                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                                        "</tr>";
+                                $('#btnFee').html("Update Fee");
                             $('#myfeeform').attr("action", "{{route('myclass.feecollection.update')}}");
                         });
-                        $('tbody').html(tr);
-
-                    });
+                    $('tbody').html(tr);
+                });
                 }else{
                     if(response.length>0){
-
-                   // console.log('else new entry');
-                  //  console.log(response);
-                    //newly add  fee data
-                    $('#tblHidden').attr('hidden',false);
-                    $('#btnFee').attr('disabled',false);
-                    var tr='';
-                    $.each (response, function (key, value) {
-                    tr +=
-                        "<tr>"+
-                            "<td>"+
-                                '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" >'
-                            +"</td>"+
-                            "<td>"+value.roll+"</td>"+
-                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                        "</tr>";
-                    });
-                    $('tbody').html(tr);
-                    checkedAtlestOne();
+                        // console.log('else new entry');
+                        //  console.log(response);
+                        //newly add  fee data
+                        $('#tblHidden').attr('hidden',false);
+                        $('#btnFee').attr('disabled',false);
+                            var tr='';
+                                $.each (response, function (key, value) {
+                                    tr +=
+                                        "<tr>"+
+                                            "<td>"+
+                                                '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" >'
+                                            +"</td>"+
+                                            "<td>"+value.roll+"</td>"+
+                                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                                        "</tr>";
+                                });
+                            $('tbody').html(tr);
+                        checkedAtlestOne();
                         }//End if
                     }
                 }

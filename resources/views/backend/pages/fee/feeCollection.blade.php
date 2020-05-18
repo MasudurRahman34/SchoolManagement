@@ -92,9 +92,9 @@
                     </div>
                     <div class="form-group col-xs-2">
                         <label for="exampleFormControlSelect1"> Section</label>
-                        <select class="form-control feeChange" id="sectionId">
-                            <option value=""> --Please Select--  </option>
-                        </select>
+                            <select class="form-control feeChange" id="sectionId">
+                                <option value=""> --Please Select--  </option>
+                            </select>
                     </div>
 
                     </div>
@@ -120,74 +120,73 @@
                        <input type="text" name="paymentType2" id="paymentType2" hidden>
                        <input type='button' class="bg-warning text-dark float-right"  value=' Print ' id='doPrint'>
                         <div class="table-responsive"  id="print_div">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                            <tr>
-                                <th><input type="checkbox" id="allcb" /> Select All</th>
-                                <th>Student Roll</th>
-                                <th>Student Name</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="allcb" /> Select All</th>
+                                        <th>Student Roll</th>
+                                        <th>Student Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                         <button class="btn btn-primary" type="submit" id="btnFee"  disabled="true"  ><i class="fa fa-plus-square" aria-hidden="true"></i>Take Fee</button>
                     </form>
                 </div>
             </div>
-    </div>
+        </div>
     <div class="clearix"></div>
 
   <!-- The Modal -->
   <div class="modal" id="newModal" >
     <div class="modal-dialog">
       <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Fee Collection</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Fee Collection</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- Modal body -->
+            <div class="modal-body">
+                Fee has been Taken At This Type for This month, Do You Want to Update it!
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="unpaid" data-dismiss="modal">Update Un-Paid List</button>
+              <button type="button" class="btn btn-primary" id="paid" data-dismiss="modal">Update Paid List</button>
+              <button type="button" class="btn btn-danger" id="cancel" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-            Fee has been Taken At This Type for This month, Do You Want to Update it!
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="unpaid" data-dismiss="modal">Update Un-Paid List</button>
-          <button type="button" class="btn btn-primary" id="paid" data-dismiss="modal">Update Paid List</button>
-          <button type="button" class="btn btn-danger" id="cancel" data-dismiss="modal">Close</button>
-        </div>
-
-      </div>
     </div>
   </div>
-    @endsection
-    @section('script')
-    <script src="{{ asset('admin/js/printThis.js') }} "></script>
+@endsection
+@section('script')
+<script src="{{ asset('admin/js/printThis.js') }} "></script>
     <script>
 
-        function checkedAtlestOne(){
+    function checkedAtlestOne(){
+        $("#myfeeform").submit(function () {
+            var idChecked= new Array;
+            var roll=true;
+            $("#myfeeform input[type=checkbox]:checked").each(function(){
+                idChecked.push(this.value);
+            });
+            if(idChecked.length>0){
+                return roll=true;
+            }else{
+                alert('missing');
+                roll= false;
+            }return roll;
 
-            $("#myfeeform").submit(function () {
-                var idChecked= new Array;
-                var roll=true;
-                $("#myfeeform input[type=checkbox]:checked").each(function(){
-                    idChecked.push(this.value);
-                });
-                if(idChecked.length>0){
-                    return roll=true;
-                }else{
-                    alert('missing');
-                    roll= false;
-                }return roll;
-
-              });
-
-        }
+        });
+    }
+    
+    // action 
     $('.admission').change(function (e) {
         e.preventDefault();
         var classId= $("#classId").val();
@@ -285,83 +284,79 @@
                 sessionYear:sessionYear,
               },
               success: function (response) {
+                  if(response.dueStudent){
+                    //  console.log('if due student');
+                    //Un-Paid Student-list
+                    $("#newModal").modal("show");
+                    $("#unpaid").click(function(e){
+                        console.log(response.dueStudent.length);
+                            if(response.dueStudent.length>0){
 
-              if(response.dueStudent){
-                  //  console.log('if due student');
+                                $('#tblHidden').attr('hidden',false);
+                                $('#btnFee').attr('disabled',false);
+                                    var tr='';
+                                        $.each (response.dueStudent, function (key, value) {
+                                            tr +=
+                                                "<tr>"+
+                                                    "<td>"+
+                                                        '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="'+value.id+'">'
+                                                    +"</td>"+
+                                                    "<td>"+value.roll+"</td>"+
+                                                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                                            "</tr>";
+                                        });
+                                        $('tbody').html(tr);
+                                    checkedAtlestOne();
+                                 }else{
 
-
-
-                        //Un-Paid Student-list
-                        $("#newModal").modal("show");
-                        $("#unpaid").click(function(e){
-                            $('#tblHidden').attr('hidden',false);
-                            $('#btnFee').attr('disabled',false);
-
-
-
-                            var tr='';
-                            $.each (response.dueStudent, function (key, value) {
-
-                            tr +=
-                                "<tr>"+
-                                    "<td>"+
-                                        '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="'+value.id+'">'
-                                    +"</td>"+
-                                    "<td>"+value.roll+"</td>"+
-                                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                            "</tr>";
-                        });
-
-                        $('tbody').html(tr);
-                        checkedAtlestOne();
+                                     $('#tblHidden').attr('hidden',true);
+                                }
 
                         });
 
                         $("#paid").click(function(e){
 
-                            //for lode paid student list
-                          //  console.log('else paid student');
+                        //for lode paid student list
+                        //console.log('else paid student');
                             $('#tblHidden').attr('hidden',false);
                             $('#btnFee').attr('disabled',false);
                             var tr='';
-                            $.each (response.paidStudent, function (key, value) {
+                                $.each (response.paidStudent, function (key, value) {
 
                                 $("input[id='fee'][value='"+value.id+"']").prop('checked', true);
-                            tr +=
-                                "<tr>"+
-                                    "<td>"+
-                                        '<input class="roll" type="checkbox" name="studentId[]" value="'+value.id+'"  checked>'
-                                    +"</td>"+
-                                    "<td>"+value.roll+"</td>"+
-                                    "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                            "</tr>";
-                            $('#btnFee').html("Update Fee");
-                            $('#myfeeform').attr("action", "feecollection/update");
-                        });
+                                    tr +=
+                                        "<tr>"+
+                                            "<td>"+
+                                                '<input class="roll" type="checkbox" name="studentId[]" value="'+value.id+'"  checked>'
+                                            +"</td>"+
+                                            "<td>"+value.roll+"</td>"+
+                                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                                    "</tr>";
+                                $('#btnFee').html("Update Fee");
+                                $('#myfeeform').attr("action", "feecollection/update");
+                            });
                         $('tbody').html(tr);
-
                     });
-                }else{
-                    if(response.length>0){
-
-                   // console.log('else new entry');
-                  //  console.log(response);
-                    //newly add  fee data
-                    $('#tblHidden').attr('hidden',false);
-                    $('#btnFee').attr('disabled',false);
-                    var tr='';
-                    $.each (response, function (key, value) {
-                    tr +=
-                        "<tr>"+
-                            "<td>"+
-                                '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" >'
-                            +"</td>"+
-                            "<td>"+value.roll+"</td>"+
-                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                        "</tr>";
-                    });
-                    $('tbody').html(tr);
-                    checkedAtlestOne();
+                    }else{
+                        if(response.length>0){
+                            // console.log('else new entry');
+                            //  console.log(response);
+                            //newly add  fee data
+                            $('#tblHidden').attr('hidden',false);
+                            $('#btnFee').attr('disabled',false);
+                            var tr='';
+                                $.each (response, function (key, value) {
+                                    tr +=
+                                        "<tr>"+
+                                            "<td>"+
+                                                '<input class="roll" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" >'
+                                            +"</td>"+
+                                            "<td>"+value.roll+"</td>"+
+                                            "<td>"+value.firstName+' '+value.lastName+"</td>"+
+                                        "</tr>";
+                                    });
+                            $('tbody').html(tr);
+                        checkedAtlestOne();
                         }//End if
                     }
                 }

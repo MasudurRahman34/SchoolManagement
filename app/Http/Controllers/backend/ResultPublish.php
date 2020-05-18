@@ -92,9 +92,10 @@ class ResultPublish extends Controller
                         ->where('examType',$examType)
                         ->where('sectionId',$sectionId)
                         ->where('sessionYearId',$sessionYearId)
-                        ->where('published',1)
+                        ->where('published',0)
+                        ->where('markEntrystatus',1)
                         ->where('bId', Auth::guard('web')->user()->bId)
-                        ->update(['published'=>0]);
+                        ->update(['published'=>1]);
 
             //$resultPublish = Mark::WhereIn('studentId',$StudentID)->update(['published'=>1]);
 

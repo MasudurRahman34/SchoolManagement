@@ -235,7 +235,7 @@
           @endcan
 
           {{--  result published  --}}
-          @can('Mark')
+          @can('Result Publish')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Result Publish</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('resultPublished.index') }}"><i class="icon fa fa-angle-right"></i>Result Publish </a></li>
@@ -270,19 +270,22 @@
           </li>
           @endcan
 
-          
+          @can('Grade Management')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Grade Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('grade.index') }}"><i class="icon fa fa-angle-right"></i> Grade list</a></li>
             </ul>
           </li>
-
+          @endcan
+            
+          @can('Student Promotion')  
            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Promotion Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('promotion.index') }}"><i class="icon fa fa-angle-right"></i>Promotion</a></li>
             </ul>
           </li>
-          
+          @endcan
+
           @can('Exam')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Exam Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
@@ -303,6 +306,7 @@
             </ul>
           </li>
           @endcan
+
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Admit Card</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('student.admit.card') }}"><i class="icon fa fa-angle-right"></i>Student Admit Card </a></li>
@@ -311,6 +315,7 @@
               <li><a class="treeview-item" href="{{route('individual.admit.card') }}"><i class="icon fa fa-angle-right"></i>Individual Student Admit Card </a></li>
             </ul>
           </li>
+
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Seat Plan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('seat.plan') }}"><i class="icon fa fa-angle-right"></i>Student Exam Seat Plan </a></li>

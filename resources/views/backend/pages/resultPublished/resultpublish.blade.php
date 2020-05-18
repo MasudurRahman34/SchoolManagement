@@ -217,7 +217,7 @@ function publish(id){
     var subjectId=id;
     var sessionYearId=$('#sessionYear option:selected').val();
     var examType=$("#examType option:selected").val();
-    //var classId=$("#classId option:selected").val();
+    var classId=$("#classId option:selected").val();
     var sectionId=$("#sectionId option:selected").val();
     console.log(subjectId,sessionYearId,examType,classId,sectionId);
    // $('#submit'+id+'').html("Updated");
@@ -235,19 +235,21 @@ function publish(id){
             data: {
                 sessionYearId: sessionYearId,
                 subjectId: subjectId,
-                //classId: classId,
+                classId: classId,
                 sectionId: sectionId,
                 examType: examType,
             },
             success: function(result){
+
                 console.log(result);
+                
                 if (result.success) {
                     $( "div" ).remove( ".text-danger" );
-                console.log(result);
-                    successNotification3();
+                    console.log(result);
+                        successNotification3();
 
-                $('input[name=button'+id+']').html("Updated");
-                $('#submit'+id+'').html("Updated");
+                    $('input[name=button'+id+']').html("Updated");
+                    $('#submit'+id+'').html("Updated");
 
                 }
                 if(result.errors){

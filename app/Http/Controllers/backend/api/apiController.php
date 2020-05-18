@@ -90,20 +90,14 @@ class apiController extends Controller
                         ->where('sectionId', $sectionId)
                         ->where('examType',$examType)
                         ->where('markEntrystatus',1)
-                        //->where('bId', Auth::guard('web')->user()->bId)
+                        ->where('published',0)
+                        ->where('m.bId', Auth::guard('web')->user()->bId)
                         ->join('subjects as s', 'm.subjectId','=','s.id' )
                         ->select('subjectName','s.id', DB::raw("count(subjectId) as numberOfStudent"))
-                        //->DB::raw('count (SubjectId) as numberOfStudent')
+                        
                         ->groupBy('SubjectId')
                         ->get();
-                        //->with('Subject')->get();
-                        // $subjectlist= Mark::where('sectionId', $sectionId)
-                        // ->where('examType',$examType)
-                        // ->where('markEntrystatus',1)
-                        // ->where('bId', Auth::guard('web')->user()->bId)
-                        // //->DB::raw('count (SubjectId) as numberOfStudent')
-                        // ->groupBy('SubjectId')
-                        // ->count();
+                      
         return Response()->json($subjectlist);
     }
 
