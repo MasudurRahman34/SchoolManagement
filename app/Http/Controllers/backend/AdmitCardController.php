@@ -29,8 +29,9 @@ class AdmitCardController extends Controller
     public function sectionwiselist($classId, $sectionId, $examName)
     {
 
-            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
+            //$class=DB::select("select * from students, sections, files, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId' and files.studentId=students.Id");
             // dd($class);
+            $class=Student::where('sectionId',$sectionId)->with('Section', 'files')->get();
                 
             return view('backend.pages.studentAdmitCard.admitCard',['class'=>$class,'examName'=>$examName]);
     }

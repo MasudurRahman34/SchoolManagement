@@ -14,6 +14,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use App\model\File;
 
 class MyStudentConttroller extends Controller
 {
@@ -291,6 +292,7 @@ class MyStudentConttroller extends Controller
         //     'mobile'=>'',
         // ]);
         // 2. data update
+        //dd($request);
         $std = Student::find($id);
         $std->firstName = $request->firstName;
         $std->fatherName = $request->fatherName;
@@ -312,9 +314,18 @@ class MyStudentConttroller extends Controller
         if ($request->hasFile('image')){
             $image = $request->file('image');
             $filename = time().".".$image->getClientOriginalExtension();
-            $destination_path = public_path('images');
-            $image->move($destination_path,$filename);
-            $std->image = $filename;
+            $path = base_path('image/students',$filename);
+            $image->move($path,$filename);
+            $previous_profile=File::where('type', 'profile')->where("studentId", $std->id)->first();
+            if ($previous_profile){
+                unlink(base_path("image/students/".$previous_profile->image));
+                $previous_profile->delete();
+            }
+            $file = new File;
+            $file->studentId=$std->id;
+            $file->image=$filename;
+            $file->type='profile';
+            $file->Save();            
         }
         $std->save();
        // Session::flash('success','Successfully Student Profile Updated');

@@ -9,10 +9,12 @@ use App\Http\Controllers\Controller;
 use App\model\classes;
 use App\model\exam;
 use App\model\Mark;
+use App\model\studentHistory;
 use App\model\Student;
 use App\model\Subject;
 use App\model\Section;
 use App\model\SessionYear;
+use App\model\studentFee;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -98,7 +100,34 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        return $request; 
+        $request->promotesectionId;
+        
+        foreach ($request->student as $id => $promotionRoll) {
+
+            if($promotionRoll!=0){
+            $studentinfo=Student::findOrFail($id);
+            $studentHistory= new studentHistory;
+            $studentHistory->sId=$studentinfo->id;
+            $studentHistory->roll=$studentinfo->roll;
+            $studentHistory->group=$studentinfo->group;
+            $studentHistory->schoolarshipStatus=$studentinfo->schoolarshipId;
+            $studentHistory->sectionId=$studentinfo->sectionId;
+            $studentHistory->type=$studentinfo->type;
+            $studentHistory->bId=$studentinfo->bId;
+
+
+            $studentinfo->roll=$promotionRoll;
+            $studentinfo->group=$request->promoteGroup;
+            $studentinfo->sectionId=$request->promotesectionId;
+            if($studentinfo->save()){
+                $studentHistory->save();
+                
+                };//end if
+            }//end if
+        }//end foreacch
+        Session::flash('success','Successfully Promoted');
+        return redirect()->back();  
+        
     }
 
     /**

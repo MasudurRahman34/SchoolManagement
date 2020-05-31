@@ -78,15 +78,12 @@
             </div>
         </div>
     </div>
-
 <div id="indivi">
 </div>
-        
-
       <div class="clearix"></div>
     @endsection
     @section('script')
-     
+    @include('backend.partials.js.datatable');
       <script>
     dynamicSectionSelection();
 

@@ -84,49 +84,10 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-md-center">
-
-            <div class="col-sm-10" id="print_div">
-
-                <div class="row" id="informationDiv">
-
-                    <div class="col-md-12 ">
-
-                        <div class="tile">
-                            <input class="bg-warning text-dark float-right" type='button' value='Print' id='doPrint'>
-                            {{-- <h3 class=" row justify-content-md-center">Student Information</h3> --}}
-                            <div class="table"  id="result">
-                                
-                           {{--  <div class="table-responsive">
-                                <table class="table table-hover table-bordered" id="sampleTable">
-                                    <thead>
-                                        <tr>
-
-                                            <th>Subject</th>
-                                            <th>CA</th>
-                                            <th>MCQ</th>
-                                            <th>Written</th>
-                                            <th>Practical</th>
-                                            <th>Total</th>
-                                            <th>Grade</th>
-                                            <th>Point</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody  id="myresult">
-                                    </tbody>
-                                </table>
-                            </div> --}}
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            </div>
+        
+        <div class="table"  id="result">
+            
         </div>
-
-
 
     <div class="clearix"></div>
    
@@ -222,8 +183,8 @@ function hide(){
         var studentId= $("#studentId option:selected").val();
          var sessionYearId=$('#sessionYear option:selected').val();
          var examType=$('#examType option:selected').val();
-         var examTypename=$('#examType option:selected').text();
-        console.log(sectionId,classId,studentId,sessionYearId,examType,examTypename);
+         var examTypeName=$('#examType option:selected').text();
+        console.log(sectionId,classId,studentId,sessionYearId,examType,examTypeName);
                 $.ajax({
                     type: "POST",
                     url: "{{ url('adminview/student/resultlist')}}",
@@ -232,6 +193,7 @@ function hide(){
                     studentId:studentId,
                     sessionYearId:sessionYearId,
                     examType:examType,
+                    examTypeName:examTypeName
                     //feeId:feeId,
                     // month:month,
                     },
@@ -240,7 +202,7 @@ function hide(){
                         console.log(data);
                         console.log(data.studentinformation);
 
-                       $('#name').html(examTypename);
+                       $('#name').html(examTypeName);
                     //change start from here
                     //
                             // var tr='';
@@ -268,43 +230,20 @@ function hide(){
 
 
 
-        function printDiv(divName) {
-            var printContents = document.getElementById(divName).innerHTML;
-            var originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            document.getElementById("doPrint").style.visibility = "hidden";
-            //document.getElementById("more-result").style.visibility = "hidden";
-            window.print();
-            document.body.innerHTML = originalContents;
-            //document.location.reload();
-        }
+        // function printDiv(divName) {
+        //     var printContents = document.getElementById(divName).innerHTML;
+        //     var originalContents = document.body.innerHTML;
+        //     document.body.innerHTML = printContents;
+        //     document.getElementById("doPrint").style.visibility = "hidden";
+        //     //document.getElementById("more-result").style.visibility = "hidden";
+        //     window.print();
+        //     document.body.innerHTML = originalContents;
+        //     //document.location.reload();
+        // }
 
 
 //print button in table
-$('#doPrint').on("click", function () {
-    $('#print_div').printThis({
-        debug: false,               // show the iframe for debugging
-        importCSS: true,            // import parent page css
-        importStyle: true,         // import style tags
-        printContainer: true,       // print outer container/$.selector
-        loadCSS: "",                // path to additional css file - use an array [] for multiple
-        pageTitle: "",              // add title to print page
-        removeInline: false,        // remove inline styles from print elements
-        removeInlineSelector: "*",  // custom selectors to filter inline styles. removeInline must be true
-        printDelay: 533,            // variable print delay
-        header: null,               // prefix to html
-        footer: null,               // postfix to html
-        base: false,                // preserve the BASE tag or accept a string for the URL
-        formValues: true,           // preserve input/form values
-        canvas: false,              // copy canvas content
-        doctypeString: '...',       // enter a different doctype for older markup
-        removeScripts: false,       // remove script tags from print content
-        copyTagClasses: false,      // copy classes from the html & body tag
-        beforePrintEvent: null,     // function for printEvent in iframe
-        beforePrint: show,          // function called before iframe is filled
-        afterPrint: hide,            // function called before iframe is removed
-    });
-  });
+
 
     </script>
     @endsection

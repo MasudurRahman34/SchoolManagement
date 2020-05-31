@@ -8,7 +8,7 @@
                       <div class="card-body">
                           @foreach($students->files as $file)
                               @if($file->type=="profile")
-                                  <img class="rounded mx-auto d-block" src="{{asset('students/'.$file->image)}}" style="width: 50%; height: 50%;">
+                                  <img class="rounded mx-auto d-block" src="{{asset('image/students/'.$file->image)}}" style="width: 50%; height: 50%;">
                               @endif
                           @endforeach
                           <hr>
@@ -95,9 +95,9 @@
                                         <label class="control-label" name="gender">Gender : {{ $students->gender }}</label>
                                         <div class="form-check">
                                           <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="gender" value="m" {{ ($students->gender=='m') ? 'checked="checked"' : '' }}>Male
+                                            <input class="form-check-input" type="radio" name="gender" value="Male" {{ ($students->gender=='Male') ? 'checked' : '' }}>Male
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <input class="form-check-input" type="radio" name="gender" value="f" {{ ($students->gender=='f') ? 'checked="checked"' : ''}}>FeMale
+                                            <input class="form-check-input" type="radio" name="gender" value="Female" {{ ($students->gender=='Female') ? 'checked' : ''}}>FeMale
                                           </label>
                                         </div>
                                       </div>
@@ -143,7 +143,7 @@
                                       <!--End primary dev section-->
 
                                         <div class="form-group col-md-3">
-                                            <lable class="">Change Image</lable>
+                                            <lable class="">change image(Passport size)</lable>
                                             <input type="file" name="image" id="image" class="form-control btn btn-light">
                                         </div>
                                         <div class="form-group col-md-3">
@@ -169,16 +169,16 @@
                                             id="studentname" value="{{$students->MotherOccupation}}">
                                       </div>
                                       <div class="form group col-md-3">
-                                          <label class="control-label">FAther's income</label>
+                                          <label class="control-label">Father income</label>
                                           <input class="form-control" type="int" min="0" placeholder="Father's income" name="fatherIncome"
                                             id="studentname" value="{{$students->fatherIncome}}">
                                       </div>
                                       <div class="form group col-md-3">
-                                          <label class="control-label">Mother's income</label>
+                                          <label class="control-label">Mother income</label>
                                           <input class="form-control" type="int" min="0" placeholder="Mother's income" name="motherIncome"
                                             id="studentname" value="{{$students->motherIncome}}">
                                       </div>
-                                      <div class="form group col-md-3">
+                                      {{-- <div class="form group col-md-3">
                                         <label class="control-label">Village</label>
                                         <input class="form-control" type="text" placeholder="valiage name" name="village" id="village" value="{{$students->address}}">
                                       </div>
@@ -186,7 +186,7 @@
                                         <label class="control-label">Emergency Contact No</label>
                                         <input class="form-control" type="text" placeholder="Emergency Mobile Number" name="mobileno"
                                           id="mobileno" value="{{$students->mobile}}">
-                                      </div>
+                                      </div> --}}
                                       <!-- single section-->
                                       <!--End primary dev section-->
                                   </div>
@@ -214,6 +214,48 @@
         });
       });
 
+      
+
+        $("#image").change(function () {
+	    if(fileExtValidate(this)) { // file extension validation function
+	    	 if(fileSizeValidate(this)) { // file size validation function
+          readURL(this);
+	    	 }
+	    }
+    });
+      // function for  validate file extension
+      var validExt = ".png, .gif, .jpeg, .jpg";
+      function fileExtValidate(fdata) {
+      var filePath = fdata.value;
+      var getFileExt = filePath.substring(filePath.lastIndexOf('.') + 1).toLowerCase();
+      var pos = validExt.indexOf(getFileExt);
+      if(pos < 0) {
+        $('input[type=file]').val(null);
+        $('#image_preview').attr('src', '');
+        alert("Please upload image file.");
+
+        return false;
+        } else {
+          return true;
+        }
+      }
+      //function for validate file size
+      
+      function fileSizeValidate(fdata) {
+        var maxSize = 100;
+        if (fdata.files && fdata.files[0]) {
+              var fsize = fdata.files[0].size/1024;
+            if(fsize > maxSize) {
+                $('input[type=file]').val(null);
+                $('#image_preview').attr('src', '');
+                alert("file size not more than 100kb !");
+                return false;
+            } else {
+                return true;
+            }
+          }
+      }
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -223,8 +265,8 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        $("#image").change(function() {
-            readURL(this);
-        });
+        // $("#image").change(function() {
+        //     readURL(this);
+        // });
     </script>
 @endsection

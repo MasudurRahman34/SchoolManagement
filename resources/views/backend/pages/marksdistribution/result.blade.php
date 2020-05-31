@@ -4,7 +4,7 @@
     {{-- //main content --}}
     <div class="app-title">
         <div class="hmmm">
-          <h1><i class="fa fa-edit"></i> Result</h1>
+          <h1><i class="fa fa-edit"></i> Result2</h1>
           <p></p>
         </div>
         <ul class="app-breadcrumb breadcrumb">

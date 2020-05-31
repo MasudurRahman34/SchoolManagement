@@ -12,6 +12,6 @@ class Mark extends Model
         return $this->belongsTo(Student::class, 'studentId');
     }
     public function Subject(){
-        return $this->belongsTo(Subject::class,'subjectId');
+        return $this->belongsTo(Subject::class,'subjectId')->orderBy('subjectName','asc');
     }
 }

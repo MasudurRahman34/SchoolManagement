@@ -1,131 +1,119 @@
+
 <style>
-	#middle{
-		height: 500px;
-		margin: 0px auto;
-		border:1px solid black;
-
+	table, th, td {
+	  border: 1px solid black;
+	  border-collapse: collapse;
 	}
-	#footer{
-	height: 36px;
-		
-		margin: 0px auto;
-		border:1px solid black;
-		text-align: center;
-		padding-top: 10px;
+	th, td{
+		padding: 5px;
+  text-align: right;
+  }
+  h1,h2,h3,h4,h5,h6{
+	  margin-top: 20px;
+  }
+  .image img{
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+	/* padding: 5px; */
+	margin-top: -185px;
+	border: 1px solid black;
+    padding: 5px;
 	}
-	table{
-		height: 250px;
-		width: 600px;
-		margin-left:;
-	}
-	table tr{
-		text-align: center;
-	}
-	a{
-		text-decoration: none;
-	}
-	@media print{
-        .table-bordered{
-            background-color: green;
-        }
-        }
-        hr.new2 {
-            border-top: 1px dashed red;
-        }
-        hr.new3 {
-        border-top: 1px dotted red;
-    }
+	
 </style>
-
-
-<div class="clearix"></div>
-<div class="row justify-content-md-center">
-    <div class="col-md-9">
-        <div class="tile">
-		<input type='button' class="bg-warning text-dark float-right"  value=' Print ' id='doPrint'>
-		<div class="table-responsive"  id="print_div">
-		 
-			<div id="container">
-				<div id="middle">
-					
-						<div class="col-md-12">
-							<div class="row">
-								<div class="col-md-10">
-								  <div class="bs-component">
-									<div class="list-group">
-										<h3 class="text-center text-warning">{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h2>
-											<h6 class="text-center">{{Auth::guard('web')->user()->schoolBranch->address}}</h5>
-									  <h5 class="text-center text-info">Admit Card</h4><hr class="new3" align="center" width="30%">
-									</div>
-								  </div>
+	
+<div class="row justify-content-md-center" id="print_div">
+	<div class="col-md-12 mb-3">
+		<div class="">
+			<input type='button' class="btn btn-warning"  value=' Print ' id='doPrint'>
+		</div>	
+	</div>
+	<div class="col-md-10">
+	  <div class="tile" style="border-style: solid;
+								border-width: 5px;
+								border-color:green;">
+		<div class="tile-body">
+			<div class="row justify-content-md-center">
+				<div  class="col-md-12">
+					<div class="text-center">
+						<div class="row justify-content-end">
+							<div class="col-12">
+								<div id="headertop" class="">
+									<h1>{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h2>
+									<h4>{{Auth::guard('web')->user()->schoolBranch->address}}</h5>
+									<h3>Admit Card</h4>
+									<h4>{{$examName}}-{{date('Y')}}</h5>
 								</div>
-
 								
+								<div class="image float-right">
+									@foreach ($students->files as $file)
+									@if($file->type=="profile")
+									<img src="{{asset('image/students/'.$file->image)}}" alt="" width="200" height="200" >
+									@endif
+									@endforeach
+									{{-- <img src="{{asset('studentss/passport2.jpeg')}}" alt="" width="200" height="200" > --}}
+								</div>
 							</div>
 						</div>
-							<table class="table" border="1" id="">
-									<tbody>
-									  <tr>
-										<td>Name:</td>
-										<td>{{$students->firstName}} {{$students->lastName}}</td>
-										<td>SID:</td>
-										<td>{{$students->studentId}}</td>
-									  </tr>
-									  <tr>
-										<td>Exam: </td>
-										<td>{{$examName}}</td>
-										<td>Class</td>
-										<td>{{$students->Section->classes->className}}</td>
-									  </tr>
-									  <tr>
-										<td>Roll:</td>
-									  <td>{{$students->roll}}</td>
-										<td>Section:</td>
-										<td>{{$students->Section->sectionName}}</td>
-									  </tr>
-									  <tr>
-										<td>Group:</td>
-										<td>{{$students->group}}</td>
-										<td>Shift:</td>
-										<td>{{$students->Section->shift}}</td>
-									  </tr>
-									</tbody>
-							</table><br>
-						<div class="col-md-12">
-						  <div class="row">
-							<div class="col-md-6">
-							  <div class="bs-component">
-								<div class="list-group float-left">
-								<hr width="110%"><h6>Class Teacher</h6>
-								</div>
-							  </div>
-							</div>
-							<div class="col-md-6">
-							  <div class="bs-component">
-								<div class="list-group float-right">
-								<hr width="110%"><h6>Exam Controller</h6>
-								</div>
-							  </div>
-							</div>
-						  </div>
-						</div><br>
-			    </div>
-				<div id="footer">
-				  <h6><i class="fa fa-phone-square" aria-hidden="true"></i>{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}, {{Auth::guard('web')->user()->schoolBranch->phoneNumber}}</h6>
+				  	</div>
+				  </div>
+				  <div class="col-md-12 mt-2">
+					<div style="overflow-x:auto;">
+						<table style="width:100%">
+							<tr>
+							<th >Name:</th>
+							<td>{{$students->firstName}} {{$students->lastName}} </td>
+							<th>SID :</th>
+							<td>{{$students->studentId}}</td>
+							</tr>
+							<tr>
+								<th>Class :</th>
+								<td>Nine </td>
+								<th>{{$students->className}}</th>
+								<td>05</td>
+							</tr>
+							<tr>
+								<th>Roll :</th>
+								<td>{{$students->roll}} </td>
+								<th>Section :</th>
+								<td>{{$students->sectionName}} </td>
+							</tr>
+							<tr>
+								<th>Group :</th>
+								<td>{{$students->group}}</td>
+								<th>Shift :</th>
+								<td>{{$students->shift}}</td>
+							</tr>
+						</table>
+					</div>
+				  </div>
+				  <div class="col-md-12 mtb-2">
+						<ul>
+							<li>Stundent Must Bring Admit Card In The Examination Room</li>
+							<li>Mobile Phone Resticted Around School Area.</li>
+						</ul>
+					</div>
+					<div class="col-md-12 mtb-2">
+						<div id="signature" class="float-left">
+							<h6>Class Teacher</h6>
+						</div>
+						<div id="signature" class="float-right">
+							<h6>Class Teacher</h6>
+						</div>
+					</div>
+					<div class="col-md-12 mtb-2">
+						<div id="footer" class="text-center">
+							<h6>{{Auth::guard('web')->user()->schoolBranch->nameOfTheInstitution}}</h6>
+						</div>
+					</div>
 				</div>
 			</div>
-			
-
 		</div>
-        </div>
-    </div>
-</div>
-    
-
-<div class="clearix"></div>
-    @section('script')
-      @include('backend.partials.js.datatable');
-      <script>
+	  </div>
+	</div>
+  </div>
+<script>
 
 //print button in table
     $('#doPrint').on("click", function () {
@@ -154,4 +142,4 @@
       });
     </script>
 
-    @endsection
+    

@@ -395,7 +395,7 @@ public function storeAttendence(Request $request){
      {
 
          $bId=Auth::guard('web')->user()->bId;
-             $class=DB::select("select students.id as stdId, students.firstName, students.lastName, students.fatherName,students.motherName,students.roll, students.blood, students.birthDate,students.mobile
+             $class=DB::select("select students.id as stdId, students.firstName,students.gender,students.religion, students.lastName, students.fatherName,students.motherName,students.roll, students.blood, students.birthDate,students.mobile
                                  from students, sections, classes
                                  WHERE sections.classId=classes.id
                                  AND students.sectionId=sections.id

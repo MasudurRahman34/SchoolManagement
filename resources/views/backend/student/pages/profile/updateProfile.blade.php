@@ -190,16 +190,16 @@
                                 id="studentname" value="{{$students->MotherOccupation}}">
                            </div>
                            <div class="form group col-md-3">
-                              <label class="control-label">FAther's income</label>
+                              <label class="control-label">Father income</label>
                               <input class="form-control" type="int" min="0" name="fatherIncome"
                                 id="studentname" value="{{$students->fatherIncome}}">
                            </div>
                            <div class="form group col-md-3">
-                              <label class="control-label">Mother's income</label>
+                              <label class="control-label">Mother income</label>
                               <input class="form-control" type="int" min="0" name="motherIncome"
                                 id="studentname" value="{{$students->motherIncome}}">
                            </div>
-                          <div class="form group col-md-3">
+                          {{-- <div class="form group col-md-3">
                             <label class="control-label">Village</label>
                             <input class="form-control" type="text" name="village" id="village" value="{{$students->address}}">
                           </div>
@@ -208,7 +208,7 @@
                             <label class="control-label">Emergency Contact No</label>
                             <input class="form-control" type="text" name="mobileno"
                               id="mobileno" value="{{$students->mobile}}">
-                          </div>
+                          </div> --}}
                           <!-- single section-->
                           <!--End primary dev section-->
                       </div>
@@ -273,15 +273,12 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        $("#file").change(function() {
-            readURL(this);
-        });
 
 
         $("#file").change(function () {
 	    if(fileExtValidate(this)) { // file extension validation function
 	    	 if(fileSizeValidate(this)) { // file size validation function
-	    	 	showImg(this);
+          readURL(this);
 	    	 }
 	    }
     });
@@ -293,7 +290,8 @@
       var pos = validExt.indexOf(getFileExt);
       if(pos < 0) {
         $('input[type=file]').val(null);
-        alert("This file is not allowed, please upload valid file.");
+        $('#image_preview').attr('src', '');
+        alert("Please Upload image file");
         return false;
 
         } else {
@@ -304,13 +302,13 @@
       var maxSize = 100;
       function fileSizeValidate(fdata) {
         if (fdata.files && fdata.files[0]) {
-              var fsize = fdata.files[0].size/100;
+              var fsize = fdata.files[0].size/1024;
             if(fsize > maxSize) {
                 $('input[type=file]').val(null);
-                alert('Maximum file size exceed, This file size is: ' + fsize + "KB. You need 100 KB");
+                alert('file size not more than 100kb !');
                 return false;
             } else {
-                return true;
+                return true; 
             }
           }
       }

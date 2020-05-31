@@ -49,9 +49,9 @@
             </div>
             <div class="form group col-md-6">
                     <label class="control-label mt-3">Gender<span style="color: red;">*</span></label><br>
-                    <label class="radio-inline"><input type="radio" name="gender" checked value="0">Male</label>
-                    <label class="radio-inline"><input type="radio" name="gender" value="1">Female</label>
-                    <label class="radio-inline"><input type="radio" name="gender" value="2">Other</label>
+                    <label class="radio-inline"><input type="radio" name="gender" checked value="Male">Male</label>
+                    <label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
+                    <label class="radio-inline"><input type="radio" name="gender" value="Other">Other</label>
             </div>
             <div class="form group col-md-6 {{$errors->has('mobile') ? 'has-error' : ''}}">
               <label class="control-label">Mobile No<span style="color: red;">*</span></label>
@@ -149,7 +149,7 @@
               <div class="form-group col-md-12">
                     <label class="control-label mt-3 bg-secondary text-light"><h5>Group<span style="color: red;">*</span></h5></label><br>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" name="group" id="group1" value="General" class="custom-control-input opsub" checked>
+                        <input type="radio" name="group" id="group1" value="Gene ral" class="custom-control-input opsub" checked>
                         <label class="custom-control-label" for="group1">General (1 to 8)</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">

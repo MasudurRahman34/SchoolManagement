@@ -25,10 +25,8 @@
                                 {{--  <th>St ID</th>  --}}
                                 <th>Roll</th>
                                 <th>Name</th>
-                                {{--  <th>Roll</th>
-                                <th>Class</th>
-                                <th>Section</th>
-                                <th>Shift</th>  --}}
+                                <th>Gender</th>
+                               <th>Religion</th>
                                 <th>Father</th>
                                 <th>Mother</th>
                                 <th>Blood Group</th>
@@ -90,8 +88,8 @@
 
             { data: 'roll', name: 'roll' },
             { data: 'firstName', name: 'firstName' },
-            //{ data: 'className', name: 'className' },
-           // { data: 'sectionName', name: 'sectionName'},
+            { data: 'gender', name: 'gender' },
+         { data: 'religion', name: 'religion'},
            // { data: 'shift', name: 'shift'},
             { data: 'fatherName', name: 'fatherName'},
             { data: 'motherName', name: 'motherName'},

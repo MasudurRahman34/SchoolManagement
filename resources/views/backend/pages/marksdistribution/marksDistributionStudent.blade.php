@@ -97,7 +97,7 @@
     </div>
 <div class="clearix"></div>
 <div class="row justify-content-md-center">
-    <div class="col-md-10 ">
+    <div class="col-md-12 ">
         <div class="tile">
             {{-- need to add field for input --}}
                 <div class="tile-body" id="tblHidden" hidden>

@@ -102,14 +102,15 @@
                             <thead>
                             <tr>
                                
-                               <th><input type="checkbox" id="allcheckbox" /> Select All</th>
-                               <th>New Roll</th>
+                               {{-- <th><input type="checkbox" id="allcheckbox" /> Select All</th> --}}
+                               
                                 <th>ID</th>
                                 <th>Roll</th>
                                 <th>Name</th>
-                                <th>Class</th>
+                                {{-- <th>Class</th>
                                 <th>Section</th>
-                                <th>Shift</th>  
+                                <th>Shift</th> --}}
+                                <th>New Roll</th>
                                 
                             
                             </tr>
@@ -133,7 +134,7 @@
                             <div class="row">
                             <div class="form-group col-xs-3 pr-2">
                                 <label for="exampleFormControlSelect1">New Session Year</label>
-                                <select class="form-control " id="promotesessionYear" >
+                                <select class="form-control " id="promotesessionYear" required>
                                     <option value="">--Please Select--</option>
                                     @foreach ($sessionYear as $year)
                                         <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
@@ -154,7 +155,7 @@
                                         <input type="radio" name="promoteshift" id="shift3" value="Evening" class="custom-control-input promote">
                                         <label class="custom-control-label" for="shift3">Evening</label>
                                     </div> --}}
-                                <select class="form-control promote" id="promoteshift" name="promoteshift">
+                                <select class="form-control promote" id="promoteshift" name="promoteshift" required>
                                     <option value="Morning">Morning</option>
                                     <option value="Day">Day</option>
                                     <option value="Evening">Evening</option>
@@ -162,7 +163,7 @@
                             </div>
                             <div class="form-group col-xs-3 pr-2">
                                 <label for="exampleFormControlSelect1">Promote Class</label>
-                                <select class="form-control promote" id="promoteclassId" name="classId">
+                                <select class="form-control promote" id="promoteclassId" name="classId" required>
                                     <option value="">--Please Select--</option>
                                    @foreach (App\model\classes::where('bId', Auth::user('web')->bId)->get() as $class)
                                 <option value="{{$class->id}}">{{$class->className}}</option>
@@ -171,8 +172,19 @@
                             </div>
                             <div class="form-group col-xs-2 pr-2">
                                 <label for="exampleFormControlSelect1">Promote Section</label>
-                                <select class="form-control changeSubjectExamSection" id="promotesectionId">
+                                <select class="form-control changeSubjectExamSection" id="promotesectionId" name="promotesectionId" required>
                                     <option value=""> --Please Select--  </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-xs-2 pr-2">
+                                <label for="exampleFormControlSelect1">Promote Group</label>
+                                <select class="form-control changeSubjectExamSection" id="promoteGroup" name="promoteGroup" required>
+                                    <option value=""> --Please Select--  </option>
+                                    <option value="General">General (1-8)</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Arts">Arts</option>
+                                    <option value="Commerece">Commerece</option>
+                                    <option value="Vocational">Vocational</option>
                                 </select>
                             </div>
                             </div>
@@ -235,7 +247,7 @@ dynamicSectionSelection();
      //showmodel button
      $('#showmodel').click(function (e){
         e.preventDefault();
-         checkedAtlestOne();
+         //checkedAtlestOne();
           $("#newModal").modal("show");
 
      });
@@ -335,22 +347,23 @@ dynamicSectionSelection();
                     $.each (response, function (key, value) {
                     tr +=
                         "<tr>"+
-                            "<td>"+
-                                '<input class="stdid" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" required >'
-                            +"</td>"+
-                            "<td>"+
-                                '<input class="stdroll" type="number" name="studentroll['+value.roll+']" value="" >'
-                            +"</td>"+
+                            // "<td>"+
+                            //     '<input class="stdid" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" required >'
+                            // +"</td>"+
+                            
                             "<td>"+value.studentId+"</td>"+
                             "<td>"+value.roll+"</td>"+
                             "<td>"+value.firstName+' '+value.lastName+"</td>"+
-                            "<td>"+value.className+"</td>"+
-                            "<td>"+value.sectionName+"</td>"+
-                            "<td>"+value.shift+"</td>"+
+                            "<td>"+
+                                '<input class="stdroll" type="number" name="student['+value.id+']" value="0" >'
+                            +"</td>"+
+                            // "<td>"+value.className+"</td>"+
+                            // "<td>"+value.sectionName+"</td>"+
+                            // "<td>"+value.shift+"</td>"+
                         "</tr>";
                     });
                         $('tbody').html(tr);
-                        checkedAtlestOne();
+                        //checkedAtlestOne();
                 }//End if
             }
         });

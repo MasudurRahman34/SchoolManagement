@@ -130,7 +130,6 @@ class StudentController extends Controller
         //     'image' => 'required|image|mimes:jpeg,png|max:180',
         // ]);
 
-        
         $std = Student::find(Auth::guard('student')->user()->id);
         $std->firstName = $request->firstName;
         $std->fatherName = $request->fatherName;
@@ -201,29 +200,6 @@ class StudentController extends Controller
         return view('backend.student.pages.schoolCorner.about');
     }
 
-    //Student's other information updated method
-    // public function otherInfo(Request $request){
-    //     $this->validate($request,[
-    //         'fatherOccupation'=>'required',
-    //         'MotherOccupation'=>'',
-    //         'fatherIncome'=>'string',
-    //         'motherIncome'=>'',
-    //         'address'=>'string',
-    //         'mobile'=>'',
-    //     ]);
-    //     // 2. data update
-    //     $stud = Student::find(Auth::guard('student')->user()->id);
-    //     $stud->fatherOccupation = $request->fatherOccupation;
-    //     $stud->MotherOccupation = $request->MotherOccupation;
-    //     $stud->fatherIncome = $request->fatherIncome;
-    //     $stud->motherIncome = $request->motherIncome;
-    //     $stud->address = $request->address;
-    //     $stud->mobile = $request->mobile;
-
-    //     $stud->save();
-    //     Session::flash('success','Successfully Student Information Updated');
-    //     return redirect()->back();
-    // }
 
     public function changePassword(Request $request){
         $this->validate($request,[
