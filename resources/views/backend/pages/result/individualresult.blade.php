@@ -19,15 +19,17 @@
 				}
 </style>
 
-		<div class="row justify-content-md-center">
-			<div class="col-md-12">
-				<input class="bg-warning text-dark float-right" type='button' value='Print' id='doPrint'>
+		<div class="row justify-content-md-center" id="print_div">
+			<div class="col-md-12 mb-3">
+				<div class="text-center">
+					<input type='button' class="btn btn-warning"  value=' Print ' id='doPrint'>
+				</div>	
 			</div>
 			
 				<div class="col-md-12" id="resultDiv">
 					<div class="tile" style="border-style: solid;
 					border-width: 5px;
-					border-color:green;" id="print_div">
+					border-color:green;">
 						{{-- <h3 class=""><center><b id="name">  </b>  &nbsp Exam Result</center></h3> --}}
 						<div class="row justify-content-md-center">
 							<div  class="col-md-12">

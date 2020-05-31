@@ -9,7 +9,7 @@ use App\model\exam;
 use App\model\SessionYear;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\model\ClassTeacher;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -28,14 +28,49 @@ class SeatPlanController extends Controller
 
     public function seatPlanPrint($classId, $sectionId, $examName,$room)
     {
-
-            $class=DB::select("select * from students, sections, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId'");
+        $userId= Auth::guard('web')->user()->id;
+        //dd($userId);
+        $bId= Auth::guard('web')->user()->bId;
+            //$class=DB::select("select * from students, sections, files, classes WHERE sections.classId=classes.id AND students.sectionId=sections.id And classes.id='$classId' And sections.id='$sectionId' and files.studentId=students.Id");
+            // dd($class);
+            if ((Auth::guard('web')->user()->hasAllPermissions('Seat Plan'))) {
+                $class=Student::where('sectionId', $sectionId)->get();
             // dd($class);
                 
-            return view('backend.pages.seatPlan.printSeatPlan',[
-                'class'=>$class, 
-                'examName'=>$examName,
-                'room'=>$room
-                ]);
+                return view('backend.pages.seatPlan.printSeatPlan',[
+                    'class'=>$class, 
+                    'examName'=>$examName,
+                    'room'=>$room
+                    ]);
+               
+            } 
+            elseif((Auth::guard('web')->user()->hasAllPermissions('Class Teacher'))) {
+                $teachers= ClassTeacher::where('userId',$userId)->where('bId',$bId)->with('Section')->get();
+                foreach($teachers as $teacher){
+                        if($teacher->Section->sessionYear->status == 1){
+                            //dd($teacher->Section);
+                            $classId = $teacher->classId;
+                            $ClSectionId = $teacher->sectionId;
+                $class=Student::where('sectionId',$ClSectionId)->with('Section', 'files')->get();
+                
+                return view('backend.pages.seatPlan.printSeatPlan',[
+                    'class'=>$class, 
+                    'examName'=>$examName,
+                    'room'=>$room
+                    ]);
+                        }
+                    }
+               
+            }
+
+
+            // $class=Student::where('sectionId', $sectionId)->get();
+            // // dd($class);
+                
+            // return view('backend.pages.seatPlan.printSeatPlan',[
+            //     'class'=>$class, 
+            //     'examName'=>$examName,
+            //     'room'=>$room
+            //     ]);
     }
 }

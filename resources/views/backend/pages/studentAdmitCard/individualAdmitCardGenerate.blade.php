@@ -18,6 +18,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="row">
+                        @if (Auth::user()->hasPermissionTo('Admit Card'))
                         <div class="form-group col-md-4">
                             <label for="exampleFormControlSelect1"> Session Year</label>
                                 <select class="form-control admission" id="sessionYear" >
@@ -73,6 +74,40 @@
                                
                             </select>
                         </div>
+                        @elseif (Auth::user()->hasAllPermissions('Class Teacher'))
+                        <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1"> Exam</label>
+                            <select class="form-control" id="examName">
+                                <option value=""> --Please Select--  </option>
+                                @foreach ($exam as $exam)
+                                    <option value="{{$exam->examName}}" >{{$exam->examName}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1"> student List</label>
+                            <select class="form-control" id="studentList" >
+                                <option value=""> --Please Select--  </option>
+                            @foreach (App\model\ClassTeacher::where('userId', Auth::user()->id)->with('Section')->get() as $classTeacher)
+                                @if ($classTeacher->Section->sessionYear->status == 1)
+                                {{-- <option value="">{{$classTeacher->sectionId}}</option> --}}
+                                @foreach (App\model\Student::where('sectionId', $classTeacher->sectionId)->get() as $st)
+                                <option value="{{$st->id}}">{{$st->firstName}}</option>
+                                @endforeach
+                                {{-- @foreach (App\model\Student::get() as $st)
+                               
+                                    <option value="{{$st->id}}">{{$st->firstName}} {{$st->lastName}} {{'('$st->roll')'}}</option>
+                                   
+                                
+                                @endforeach --}}
+                                
+
+                                @endif
+                            @endforeach
+                        </select>
+                                
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -93,7 +128,7 @@
         var classId=$("#classId").val();
         var sectionId=$("#sectionId").val();
 
-        console.log(classId, sectionId);
+        //console.log(classId, sectionId);
 
         $.ajax({
                 type: "get",
@@ -121,7 +156,7 @@
         var studentId=$("#studentList").val();
         var examName=$("#examName").val();
 
-        console.log(classId, sectionId);
+        //console.log(classId, sectionId);
 
         $.ajax({
                 type: "get",

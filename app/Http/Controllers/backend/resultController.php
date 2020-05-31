@@ -62,7 +62,7 @@ class resultController extends Controller
         $studentId= $request->studentId;
             $students = DB::select("select firstName,lastName,roll,className,sectionName,sessionYear,students.group, sections.shift, students.studentId from students, sections, classes, session_years WHERE sections.classId=classes.id AND 
                 students.sectionId=sections.id And session_years.id=sections.sessionYearId 
-                AND students.id='$studentId' And sections.id='$sectionId'");
+                AND students.id='$studentId'");
 
         $grade=Grade::orderBy('id','DESC')->where('bId', Auth::guard('web')->user()->bId)->with('classes')->get();
 
@@ -71,7 +71,7 @@ class resultController extends Controller
                                                ->where('published', 1)
                                                ->where('sessionYearId',$request->sessionYearId)
                                                ->where('examType',$request->examType)
-                                               ->where('sectionId',$request->sectionId)
+                                               //->where('sectionId',$request->sectionId)
                                                ->with('Subject')
                                                ->get();
 

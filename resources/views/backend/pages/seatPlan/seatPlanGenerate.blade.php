@@ -19,6 +19,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="row">
+                        @if (Auth::user()->hasPermissionTo('Seat Plan'))
                     <div class="form-group col-md-4">
                         <label for="exampleFormControlSelect1"> Session Year</label>
                             <select class="form-control admission" id="sessionYear" >
@@ -67,11 +68,26 @@
                             <option value=""> --Please Select--  </option>
                         </select>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleFormControlSelect1"> Room Number</label>
+                        <input class="form-control col-md-10" type="text" id="roomNumber" value="" name="roomNumber">
+                </div>
+                    @elseif (Auth::user()->hasAllPermissions('Class Teacher'))
+                    <div class="form-group col-md-4">
+                        <label for="exampleFormControlSelect1"> Exam</label>
+                        <select class="form-control admission" id="exam" >
+                            <option value="">--Please Select--</option>
+                            @foreach ($exam as $exam)
+                                <option value="{{$exam->examName}}" >{{$exam->examName}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                         
                     <div class="form-group col-md-4">
                             <label for="exampleFormControlSelect1"> Room Number</label>
                             <input class="form-control col-md-10" type="text" id="roomNumber" value="" name="roomNumber">
                     </div>
+                    @endif
                     </div>
                     <div class="tile-footer">
                     <div class="row">
