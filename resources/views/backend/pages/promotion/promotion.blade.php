@@ -74,7 +74,7 @@
     <div class="col-md-10">
         <div class="tile">
                 <div class="tile-body">
-                  @if(count($errors)>0)
+                       {{--  @if(count($errors)>0)
                             <div class="alert alert-danger" role="alert">
                               <ul>
                                 @foreach($errors->all() as $error)
@@ -92,9 +92,9 @@
                             <div class="alert alert-danger" role="alert">
                                 {{ Session::get('failed') }}
                               </div>
-                            @endif
+                            @endif --}}
                             <br>
-                    <form action="{{route('promotion.store')}}" method="post" id="submitform">
+            <form action="{{route('promotion.store')}}" method="post" id="submitform">
                @csrf
                {{-- <input type="text" name="stdID" id="stdID" hidden> --}}
                     <div class="table-responsive">
@@ -104,6 +104,7 @@
                                
                                {{-- <th><input type="checkbox" id="allcheckbox" /> Select All</th> --}}
                                
+
                                 <th>ID</th>
                                 <th>Roll</th>
                                 <th>Name</th>
@@ -134,7 +135,9 @@
                             <div class="row">
                             <div class="form-group col-xs-3 pr-2">
                                 <label for="exampleFormControlSelect1">New Session Year</label>
-                                <select class="form-control " id="promotesessionYear" required>
+
+                                <select class="form-control " id="promotesessionYear"  name="promotesessionYear" >
+
                                     <option value="">--Please Select--</option>
                                     @foreach ($sessionYear as $year)
                                         <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
@@ -172,6 +175,7 @@
                             </div>
                             <div class="form-group col-xs-2 pr-2">
                                 <label for="exampleFormControlSelect1">Promote Section</label>
+
                                 <select class="form-control changeSubjectExamSection" id="promotesectionId" name="promotesectionId" required>
                                     <option value=""> --Please Select--  </option>
                                 </select>
@@ -179,6 +183,7 @@
                             <div class="form-group col-xs-2 pr-2">
                                 <label for="exampleFormControlSelect1">Promote Group</label>
                                 <select class="form-control changeSubjectExamSection" id="promoteGroup" name="promoteGroup" required>
+
                                     <option value=""> --Please Select--  </option>
                                     <option value="General">General (1-8)</option>
                                     <option value="Science">Science</option>
@@ -226,24 +231,24 @@
    
 dynamicSectionSelection();
 // $('#searchoption').attr('hidden',false);
- function checkedAtlestOne(){
+ // function checkedAtlestOne(){
 
-    $("#submitform").submit(function () {
-        var idChecked= new Array;
-        var roll=true;
-        $("#submitform input[type=checkbox]:checked").each(function(){
-            idChecked.push(this.value);
-        });
-        if(idChecked.length>0){
+ //    $("#submitform").submit(function () {
+ //        var idChecked= new Array;
+ //        var roll=true;
+ //        $("#submitform input[type=checkbox]:checked").each(function(){
+ //            idChecked.push(this.value);
+ //        });
+ //        if(idChecked.length>0){
             
-            return roll=true;
-        }else{
-            alert('pleace select one');
-            roll= false;
-        }return roll;
+ //            return roll=true;
+ //        }else{
+ //            alert('pleace select one');
+ //            roll= false;
+ //        }return roll;
 
-      });
-     }
+ //      });
+ //     }
      //showmodel button
      $('#showmodel').click(function (e){
         e.preventDefault();
@@ -320,7 +325,7 @@ dynamicSectionSelection();
 
 
         //$('#searchoption').attr('hidden',true);
-        $('#studentlist').attr('hidden',false);
+       
         sectionId=$('#sectionId option:selected').val();
         var classId= $("#classId option:selected").val();
         var sessionYearId=$('#sessionYear option:selected').val();
@@ -343,14 +348,12 @@ dynamicSectionSelection();
                  if(response.length>0){
                     // $('#tblHidden').attr('hidden',false);
                     // $('#btnFee').attr('disabled',false);
+                     $('#studentlist').attr('hidden',false);
                     var tr='';
                     $.each (response, function (key, value) {
                     tr +=
                         "<tr>"+
-                            // "<td>"+
-                            //     '<input class="stdid" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" required >'
-                            // +"</td>"+
-                            
+
                             "<td>"+value.studentId+"</td>"+
                             "<td>"+value.roll+"</td>"+
                             "<td>"+value.firstName+' '+value.lastName+"</td>"+
@@ -365,15 +368,20 @@ dynamicSectionSelection();
                         $('tbody').html(tr);
                         //checkedAtlestOne();
                 }//End if
+                else{
+                    $('#studentlist').attr('hidden',true);
+                    //no data found
+                }
             }
         });
 
-             $('#allcheckbox').change(function () {
-            $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
-        });
+        // $('#allcheckbox').change(function () {
+        // $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+        // });
 
     });//end sectionId
     //Get fee amount in change of fee name
+    //'<input class="stdroll" type="number" name="studentroll['+value.roll+']" >'
 
     
 

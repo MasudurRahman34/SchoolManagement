@@ -71,5 +71,11 @@
               <li><a class="treeview-item" href="{{route('section.index') }}"><i class="icon fa fa-angle-right"></i>Section</a></li>
             </ul>
           </li> -->
+
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;<span class="app-menu__label">Result</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('student.result.index') }}"><i class="icon fa fa-angle-right"></i>My Result</a></li>
+            </ul>
+          </li>
       </ul>
     </aside>

@@ -100,6 +100,7 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->promotesectionId;
         
         foreach ($request->student as $id => $promotionRoll) {
@@ -128,6 +129,26 @@ class PromotionController extends Controller
         Session::flash('success','Successfully Promoted');
         return redirect()->back();  
         
+// =======
+//         //return $request; 
+//         //$stdId= $request->studentId;
+//         $stdroll = $request->studentroll;
+
+
+//         // foreach ($stdId as $id => $value) {
+            
+//              foreach ($stdroll as $key => $value) {
+                      
+//                 $student = Student::findOrFail($key);    
+//                 $student->roll =$value;
+//                 $student->sectionId =$request->promotesectionId;
+//                 $student->update();
+//             }  
+//         // }
+//         return redirect()->back()->with('success','student information updated');
+        
+
+// >>>>>>> Stashed changes
     }
 
     /**

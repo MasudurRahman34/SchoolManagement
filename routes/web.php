@@ -124,6 +124,10 @@ Route::group(['prefix' => 'student', 'namespace'=>'backend\student'], function (
     Route::get('/due/fee/show', 'StudentFeeController@dueFee')->name('student.due.fee');
     Route::get('/due2/fee/show/{id}/{sessionYearId}/{classId}', 'StudentFeeController@dueFee2')->name('student.due.fee2');
 
+    //Result module
+    Route::get('/result/index','StudentResultController@index')->name('student.result.index');
+    Route::post('/result/list','StudentResultController@result')->name('student.result.list');
+
 });
 //endforstudent
 
