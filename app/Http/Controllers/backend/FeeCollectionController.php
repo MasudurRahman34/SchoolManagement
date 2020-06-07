@@ -301,7 +301,7 @@ class FeeCollectionController extends Controller
             ->count();
             //return($feeCollection);
             if($feeCollection>0){
-                return Response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge, "yearlypayment"=>"already taken"],);
+                return Response()->json(["paidAmount"=>$paidAmount, "discountAmount"=>$discountAmount,"percentage"=>$discountPercentAge, "yearlypayment"=>"already taken"]);
 
             }else{
                 $yearlypayment="";

@@ -43,13 +43,13 @@
         </ul>
     </div>
       <!-- Will be applied progress bar -->
-      <div class="row">
+     {{--  <div class="row">
           <div class="col-md-12">
             <div class="tile">
             <div class="progress-bar" role="progressbar" style="width: 50%;" >25% Profile Progress</div>
             </div>
           </div>
-      </div>
+      </div> --}}
       <div class="row mb-5">
         <div class="col-xl-3 col-sm-6 py-2 mb-2">
             <div class="card text-white bg-info h-100">

@@ -347,7 +347,10 @@
 
                                var marks=$(this).val();
                                 if(marks.length!==0){
-                                    totalEightyPercentMark +=parseInt(marks)*.8;
+                                  
+                                             totalEightyPercentMark +=parseInt(marks)*.8;
+
+                                                console.log(totalEightyPercentMark);
                                 }
                            });
                             var totalEightyPercentMark= $(this).find(".totalEightyPercentMark").attr('value', totalEightyPercentMark);

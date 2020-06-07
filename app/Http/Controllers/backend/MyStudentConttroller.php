@@ -33,6 +33,13 @@ class MyStudentConttroller extends Controller
        // $sessionYear= SessionYear::where('bId', Auth::guard('web')->user()->bId)->get();
         return view('backend.pages.mystudent.myStudentList');
     }
+
+     public function allstudent()
+    {
+       
+        return view('backend.pages.classTeacher.myStudentList');
+
+    }
     public function allstudentlist()
     {
 

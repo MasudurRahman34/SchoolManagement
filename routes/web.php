@@ -168,7 +168,7 @@ Route::group(['middleware' => ['auth', 'role_or_permission:Student|Class Teacher
     Route::post('/change/password','MyStudentConttroller@changePassword')->name('mystudent.change.password');
 
     //all student list
-    Route::get('/list/index', 'MyStudentConttroller@index')->name('mystudent.index');
+    Route::get('/allstudent', 'MyStudentConttroller@allstudent')->name('allstudent.index');
     Route::get('/list', 'MyStudentConttroller@allstudentlist')->name('mystudent.allstudentlist');
 
     
@@ -428,6 +428,9 @@ Route::group(['middleware' => ['auth','role_or_permission:Attendance|Class Teach
     Route::post('myclass/feecollection/individual/monthly/store','backend\ClassTeacherController@myclassStoreMonthly')->name('myclass.storeMonthly');
 
 
+    
+    //All student list
+    // Route::get('/list/index', 'ClassTeacherController@allstudent')->name('allstudent.index');
     //student list
     Route::get('/myclass/studentlist','backend\ClassTeacherController@studentlist')->name('myclass.studentlist');
     Route::get('/myclass/sectionwiselist/{classId}/{sectionId}/{sessionYearId}','backend\ClassTeacherController@sectionwiselist')->name('myclass.sectionwiselist');
@@ -505,6 +508,17 @@ Route::group(['middleware' => ['auth','role_or_permission:Mark']], function () {
     Route::get('/schoolarship/edit/{id}','backend\ScholarshipController@edit')->name('scholarship.edt');
     Route::post('/schoolarship/update/{id}','backend\ScholarshipController@update')->name('scholarship.update');
     Route::get('/schoolarship/delete/{id}','backend\ScholarshipController@destroy')->name('scholarship.delete');
+
+//student scholarship Management    
+Route::get('/schoolarship/list/student','backend\ScholarshipController@studentScholarshiplist')->name('student.scholarship');
+Route::get('/scholarship/list', 'backend\ScholarshipController@scholarshiplist')->name('scholarship.list');
+Route::post('/schoolarship/studentlist','backend\ScholarshipController@Studentlist')->name('studentlist.scholarship');
+Route::post('/schoolarship/feelist','backend\ScholarshipController@feelist')->name('feelist.scholarship');
+
+Route::post('/schoolarship/studentlist/store','backend\ScholarshipController@studentlistStore')->name('studentlist.schoarship.store');
+Route::get('/schoolarship/list/edit/{id}','backend\ScholarshipController@editstudentlist')->name('scholarship.studentlist.edt');
+Route::post('/scholarship/studentlist/update/{id}','backend\ScholarshipController@editstudentlist')->name('scholarship.studentlist.update');
+    // Route::get('/section/delete/{id}','backend\SectionController@destroy')->name('section.delete');
 
 
 //Notification

@@ -16,4 +16,17 @@ class scholarship extends Model
         'discount'=>'required',
     ];
 
+
+     public static $studentScholarshiprules = [
+    
+        'shift'=>'required', 'string',
+        'sessionYearId'=>'required',
+        'classId'=>'required',
+        'sectionId'=>'required',
+        'studentId'=>'required',
+        'scholarshipId'=>'required',
+        'feeId'=>'required',
+
+    ];
+
 }

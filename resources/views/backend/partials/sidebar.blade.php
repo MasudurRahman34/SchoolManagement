@@ -92,7 +92,8 @@
             @can('Scholarship')
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Scholarship Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
               <ul class="treeview-menu">
-                <li><a class="treeview-item" href="{{route('scholarship.management')}}"><i class="icon fa fa-angle-right"></i>Schoolarship</a></li>
+                <li><a class="treeview-item" href="{{route('scholarship.management')}}"><i class="icon fa fa-angle-right"></i>Manage Schoolarship </a></li>
+                <li><a class="treeview-item" href="{{route('student.scholarship')}}"><i class="icon fa fa-angle-right"></i>Student Schoolarship list </a></li>
               </ul>
             </li>
             @endcan
@@ -157,7 +158,7 @@
                     <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.schoarship') }}" style="color:#ffbc00;"> Scholarship List</a></li>
                     <li class="nav-item"><a class="nav-link py-0" href="{{route('myclass.credentialIndex') }}" style="color:#ffbc00;">Student Credential List</a></li>
                     {{-- <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.credentialIndex') }}" style="color:#ffbc00;">All Student Credential</a></li> --}}
-                    <li class="nav-item"><a class="nav-link py-0" href="{{route('mystudent.index') }}"  style="color:#ffbc00;">All Student list</a></li>
+                    <li class="nav-item"><a class="nav-link py-0" href="{{route('allstudent.index') }}"  style="color:#ffbc00;">All Student list</a></li>
 
                 </ul>
             </div>

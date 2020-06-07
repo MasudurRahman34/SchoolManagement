@@ -96,10 +96,10 @@
 					</div>
 					<div class="col-md-12 mtb-2">
 						<div id="signature" class="float-left">
-							<h6>Class Teacher</h6>
+							<h6>Principal</h6>
 						</div>
 						<div id="signature" class="float-right">
-							<h6>Class Teacher</h6>
+							<h6>Exam Controller</h6>
 						</div>
 					</div>
 					<div class="col-md-12 mtb-2">

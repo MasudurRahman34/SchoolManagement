@@ -76,7 +76,7 @@ public function storeAttendence(Request $request){
         foreach($absentStudentDetailes as $value){
             $msgAndContact[]=array(
                 "to"=>$value->mobile,
-                "message"=>$value->firstName." ".$value->lastName.",Class ".$value->Section->classes->className.",Section ".$value->Section->sectionName.", Roll ". $value->roll. " is absent on ".$stAttendence->created_at." Thank You."
+                "message"=>"Honorable guardian, your son/daughter ".$value->firstName." ".$value->lastName.",Class ".$value->Section->classes->className.",Section ".$value->Section->sectionName.", Roll ". $value->roll. " is absent on ".$stAttendence->updated_at." Thank You."
             );
             }
             $notifyBy= $this->multipleSmsService;
