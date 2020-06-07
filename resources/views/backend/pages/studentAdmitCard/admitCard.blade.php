@@ -28,7 +28,7 @@
 	
 <div class="row justify-content-md-center" id="print_div">
 	<div class="col-md-12 mb-3">
-		<div class="">
+		<div class="text-center">
 			<input type='button' class="btn btn-warning"  value=' Print ' id='doPrint'>
 		</div>	
 	</div>
@@ -73,9 +73,9 @@
 							</tr>
 							<tr>
 								<th>Class :</th>
-								<td>Nine </td>
-								<th>{{$student->Section->classes->className}}</th>
-								<td>05</td>
+								<td>{{$student->Section->classes->className}} </td>
+								<th>Session :</th>
+								<td>{{$student->Section->sessionYear->sessionYear}} </td>
 							</tr>
 							<tr>
 								<th>Roll :</th>

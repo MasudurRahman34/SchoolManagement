@@ -173,8 +173,53 @@
               </ul>
           </div>
       </li>
-        </ul> 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#submenu3" data-toggle="collapse" data-target="#submenu5" style="color:white;">Admit Card</a>
+        <div class="collapse" id="submenu5" aria-expanded="false">
+            <ul class="flex-column pl-2 nav">
+              {{-- second step --}}
+              
+                <li class="nav-item"><a class="nav-link py-0"  href="{{route('student.admit.card') }}" style="color:#ffbc00;">Sectionwise Admit Card</a></li>
+                <li class="nav-item"><a class="nav-link py-0" href="{{route('individual.admit.card') }}" style="color:#ffbc00;">Individual Admit Card</a></li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#submenu3" data-toggle="collapse" data-target="#submenu6" style="color:white;">Seat Plan</a>
+      <div class="collapse" id="submenu6" aria-expanded="false">
+          <ul class="flex-column pl-2 nav">
+            {{-- second step --}}
             
+              <li class="nav-item"><a class="nav-link py-0"  href="{{route('seat.plan') }}" style="color:#ffbc00;">Sectionwise Seat Plan</a></li>
+    
+          </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#submenu3" data-toggle="collapse" data-target="#submenu7" style="color:white;">Result</a>
+      <div class="collapse" id="submenu7" aria-expanded="false">
+          <ul class="flex-column pl-2 nav">
+            {{-- second step --}}
+            
+              <li class="nav-item"><a class="nav-link py-0"  href="{{route('result.index') }}" style="color:#ffbc00;">Individual Result</a></li>
+    
+          </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#submenu3" data-toggle="collapse" data-target="#submenu8" style="color:white;">Promotion</a>
+      <div class="collapse" id="submenu8" aria-expanded="false">
+          <ul class="flex-column pl-2 nav">
+            {{-- second step --}}
+            
+              <li class="nav-item"><a class="nav-link py-0"  href="{{route('promotion.index') }}" style="color:#ffbc00;"> Sectionwise Promotion</a></li>
+    
+          </ul>
+      </div>
+    </li>
+    
+
+        </ul>     
           </li>
           @endcan
 
@@ -280,9 +325,9 @@
           @endcan
             
           @can('Student Promotion')  
-           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Promotion Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Promotion</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-              <li><a class="treeview-item" href="{{route('promotion.index') }}"><i class="icon fa fa-angle-right"></i>Promotion</a></li>
+              <li><a class="treeview-item" href="{{route('promotion.index') }}"><i class="icon fa fa-angle-right"></i>Sectionwise Promotion</a></li>
             </ul>
           </li>
           @endcan
@@ -307,6 +352,7 @@
             </ul>
           </li>
           @endcan
+          @can('Admit Card')
 
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Admit Card</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
@@ -316,12 +362,14 @@
               <li><a class="treeview-item" href="{{route('individual.admit.card') }}"><i class="icon fa fa-angle-right"></i>Individual Admit Card </a></li>
             </ul>
           </li>
-
+          @endcan
+          @can('Seat Plan')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="fa fa-spinner fa-spin fa-fw"></i><span class="app-menu__label">Seat Plan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
               <li><a class="treeview-item" href="{{route('seat.plan') }}"><i class="icon fa fa-angle-right"></i>Seat Plan </a></li>
             </ul>
           </li>
+          @endcan
           {{-- end admin sidebar --}}
 
           {{-- student side bar --}}

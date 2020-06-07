@@ -20,9 +20,10 @@
             <div class="col-md-10">
                 <div class="tile">
 
-                    <h3 class="tile-title border-bottom p-2">Student Search</h3>
+                    <h3 class="tile-title border-bottom p-2">Individual Result</h3>
                     <div class="tile-body">
                     <div class="row">
+                        @if (Auth::user()->hasPermissionTo('Result'))
                         <div class="form-group col-xs-3 pr-2">
                             <label for="exampleFormControlSelect1">Session Year</label>
                             <select class="form-control " id="sessionYear" >
@@ -73,11 +74,45 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="exampleFormControlSelect1"> Student Name/Roll/ID</label>
+                            <label for="exampleFormControlSelect1"> Student Name/Roll/Id</label>
                             <select class="form-control studentIdAndfeeId" id="studentId" required>
                                 <option value=""> --Please Select--  </option>
                             </select>
                         </div>
+                        @elseif (Auth::user()->hasAllPermissions('Class Teacher'))
+                        <div class="form-group col-xs-2 pr-2">
+                            <label for="exampleFormControlSelect1"> Exam Type</label>
+                            <select class="form-control changeSubjectExamSection" id="examType" name="examType" required>
+                                <option value="">--Please Select--</option>
+                                @foreach ($exams as $exam)
+                                <option value="{{$exam->id}}">{{$exam->examName}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1"> student Name/Roll</label>
+                            <select class="form-control studentIdAndfeeId" id="studentId" >
+                                <option value=""> --Please Select--  </option>
+                            @foreach (App\model\ClassTeacher::where('userId', Auth::user()->id)->with('Section')->get() as $classTeacher)
+                                @if ($classTeacher->Section->sessionYear->status == 1)
+                                {{-- <option value="">{{$classTeacher->sectionId}}</option> --}}
+                                @foreach (App\model\Student::where('sectionId', $classTeacher->sectionId)->get() as $st)
+                                <option value="{{$st->id}}">{{$st->firstName}} {{$st->lastName}} ({{$st->roll}})</option>
+                                @endforeach
+                                {{-- @foreach (App\model\Student::get() as $st)
+                               
+                                    <option value="{{$st->id}}">{{$st->firstName}} {{$st->lastName}} {{'('$st->roll')'}}</option>
+                                   
+                                
+                                @endforeach --}}
+                                
+
+                                @endif
+                            @endforeach
+                        </select>
+                                
+                            </div>
+                        @endif
                         </div>
 
                     </div>
@@ -177,6 +212,11 @@ function hide(){
 
         $('#informationDiv').attr('hidden',false);
         $('#resultDiv').attr('hidden',false);
+        $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                    });
 
         sectionId=$('#sectionId option:selected').val();
         var classId= $("#classId").val();
