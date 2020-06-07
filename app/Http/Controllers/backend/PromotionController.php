@@ -100,7 +100,11 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< Updated upstream
 
+=======
+// <<<<<<< Updated upstream
+>>>>>>> Stashed changes
         $request->promotesectionId;
         
         foreach ($request->student as $id => $promotionRoll) {
