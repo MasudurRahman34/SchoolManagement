@@ -289,6 +289,12 @@
           </li>
           @endcan
 
+          <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Home work management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a class="treeview-item" href="{{route('homework.index') }}"><i class="icon fa fa-angle-right"></i>Home work</a></li>
+            </ul>
+          </li>
+
          {{--  @can('Scholarship')
           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__label">Scholarship Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">

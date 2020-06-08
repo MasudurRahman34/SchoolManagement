@@ -4,6 +4,8 @@ namespace App;
 use App\model\schoolBranch;
 use\App\model\File;
 use\App\model\ClassTeacher;
+use\App\model\Homework;
+
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -58,6 +60,10 @@ class User extends Authenticatable
     }
     public function ClassTeacher(){
         return $this->hasMany(ClassTeacher::class,'userId', 'id');
+    }
+
+    public function Homework(){
+        return $this->hasMany(Homework::class,'userId', 'id');
     }
 
 }

@@ -500,6 +500,16 @@ Route::group(['middleware' => ['auth','role_or_permission:Mark']], function () {
     //examlist
     Route::post('/exam/search/examlist', 'backend\ExamController@examlist')->name('api.examlist');
 
+//homework management
+    Route::get('/homework','backend\HomeworkController@index')->name('homework.index');
+    Route::post('/homework/store','backend\HomeworkController@store')->name('homework.store');
+    Route::get('/homework/show','backend\HomeworkController@show')->name('homework.show');
+    Route::get('/homework/edit/{id}','backend\HomeworkController@edit')->name('homework.edt');
+    Route::post('/exam/update/{id}','backend\HomeworkController@update')->name('homework.update');
+    Route::get('/exam/delete/{id}','backend\HomeworkController@destroy')->name('homework.delete');
+
+
+
 
 //schoolarship Management for admin
     Route::get('/schoolarship/Management','backend\ScholarshipController@index')->name('scholarship.management');

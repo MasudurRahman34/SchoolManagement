@@ -102,17 +102,7 @@
                             <thead>
                             <tr>
                                
-<<<<<<< Updated upstream
-                               {{-- <th><input type="checkbox" id="allcheckbox" /> Select All</th> --}}
-                               
-<<<<<<< Updated upstream
 
-=======
-=======
-                              {{--  <th><input type="checkbox" id="allcheckbox" /> Select All</th> --}}
-                               <th>New Roll</th>
->>>>>>> Stashed changes
->>>>>>> Stashed changes
                                 <th>ID</th>
                                 <th>Roll</th>
                                 <th>Name</th>
@@ -143,17 +133,9 @@
                             <div class="row">
                             <div class="form-group col-xs-3 pr-2">
                                 <label for="exampleFormControlSelect1">New Session Year</label>
-<<<<<<< Updated upstream
 
-                                <select class="form-control " id="promotesessionYear"  name="promotesessionYear" >
-
-=======
-<<<<<<< Updated upstream
                                 <select class="form-control " id="promotesessionYear" required>
-=======
-                                <select class="form-control " id="promotesessionYear"  name="promotesessionYear" >
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
                                     <option value="">--Please Select--</option>
                                     @foreach ($sessionYear as $year)
                                         <option value="{{$year->id}}" {{$year->status == 1 ? 'selected': ''}}>{{$year->sessionYear}}</option>
@@ -191,11 +173,7 @@
                             </div>
                             <div class="form-group col-xs-2 pr-2">
                                 <label for="exampleFormControlSelect1">Promote Section</label>
-<<<<<<< Updated upstream
 
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
                                 <select class="form-control changeSubjectExamSection" id="promotesectionId" name="promotesectionId" required>
                                     <option value=""> --Please Select--  </option>
                                 </select>
@@ -203,13 +181,7 @@
                             <div class="form-group col-xs-2 pr-2">
                                 <label for="exampleFormControlSelect1">Promote Group</label>
                                 <select class="form-control changeSubjectExamSection" id="promoteGroup" name="promoteGroup" required>
-<<<<<<< Updated upstream
 
-=======
-=======
-                                <select class="form-control changeSubjectExamSection" id="promotesectionId" name="promotesectionId">
->>>>>>> Stashed changes
->>>>>>> Stashed changes
                                     <option value=""> --Please Select--  </option>
                                     <option value="General">General (1-8)</option>
                                     <option value="Science">Science</option>
@@ -379,23 +351,8 @@ dynamicSectionSelection();
                     $.each (response, function (key, value) {
                     tr +=
                         "<tr>"+
-<<<<<<< Updated upstream
 
-=======
-                            // "<td>"+
-<<<<<<< Updated upstream
-                            //     '<input class="stdid" type="checkbox" name="studentId['+value.id+']" value="studentId['+value.id+']" required >'
-                            // +"</td>"+
-                            
-=======
-                            //     '<input class="stdid" type="checkbox" name="studentId['+value.id+']"  >'
-                            // +"</td>"+
-                            "<td>"+
-                                
-                                 '<input class="stdroll" type="number" name="studentroll['+value.id+']"  min="0"  required >'
-                            +"</td>"+
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+ 
                             "<td>"+value.studentId+"</td>"+
                             "<td>"+value.roll+"</td>"+
                             "<td>"+value.firstName+' '+value.lastName+"</td>"+

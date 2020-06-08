@@ -19,7 +19,7 @@ class scholarship extends Model
 
      public static $studentScholarshiprules = [
     
-        'shift'=>'required', 'string',
+        'shift'=>'required',
         'sessionYearId'=>'required',
         'classId'=>'required',
         'sectionId'=>'required',
